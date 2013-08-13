@@ -1,14 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-AU">
 <head>
-  <title>Solar</title>
+  <meta charset="UTF-8">
+  <meta name="author" content="Design Studio Spring">
+  <meta name="copyright" content="Design Studio Spring">
+  <title><%= full_title(yield(:title)) %></title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div id="holder">
+    <div id="banner">
+      <h1> 
+        <a href="/">
+          <img id="logo" src="/assets/images/logo.svg" alt="" />
+          Solario
+        </a>
+      </h1>
+    </div>
+    <div id="content" class="container-fluid">
+      <%= yield %>
+    </div>
+    <footer class="footer navbar">
+      <nav class="navbar-inner">
+        <ul class="nav">
+          <li><%# link_to "About", about_path %></li>
+          <li><%# link_to "Terms", terms_path %></li>
+        </ul>
+      </nav>
+      <span id="copyright">
+        <span class="copyright-symbol">&#169;</span> - Solario
+      </span>
+    </footer>
+  </div>
+  <%= debug(params) if Rails.env.development? %>
 </body>
 </html>
