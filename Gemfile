@@ -20,6 +20,10 @@ group :development, :test do
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
 end
+group :production do
+  gem 'pg', '0.15.1' #postgres
+  gem 'rails_12factor', '0.0.2', #used by Heroku
+end
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
