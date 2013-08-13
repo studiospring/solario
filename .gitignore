@@ -1,0 +1,13 @@
+db/*
+log/*.log
+tmp/*
+.DS_Store
+# Ignore other unneeded files.
+doc/
+*.swp
+*~
+.project
+.DS_Store
+script/*
+.shell_history
+/.bundle
