@@ -3,7 +3,9 @@ Solar::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root            to: 'static_pages#home'
+  #get '/about',   to: 'static_pages#about'
+  #get '/terms',   to: 'static_pages#terms'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
