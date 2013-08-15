@@ -19,7 +19,7 @@ class <%= controller_class_name %>Controller < ApplicationController
       flash[:success] = <%= "'#{human_name} was successfully created.'" %>
       redirect_to @<%= singular_table_name %>
     else
-      render <%= key_value :action, '"new"' %>
+      render "new"
     end
   end# >>>
   def update# <<<
@@ -28,7 +28,7 @@ class <%= controller_class_name %>Controller < ApplicationController
       flash[:success] = <%= "'#{human_name} was successfully updated.'" %>
       redirect_to @<%= singular_table_name %>
     else
-      render <%= key_value :action, '"edit"' %>
+      render "edit"
     end
   end# >>>
   def destroy# <<<
