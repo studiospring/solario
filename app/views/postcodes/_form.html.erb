@@ -1,0 +1,31 @@
+<%= form_for @postcode, :validate => true do |f| %>
+  <% if @postcode.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@postcode.errors.count, "error") %> prohibited this postcode from being saved:</h2>
+
+      <ul>
+      <% @postcode.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+    <%= f.label :postcode %><br />
+    <%= f.number_field :postcode %>
+  
+    <%= f.label :suburb %><br />
+    <%= f.text_field :suburb %>
+  
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  
+    <%= f.label :latitude %><br />
+    <%= f.number_field :latitude %>
+  
+    <%= f.label :longitude %><br />
+    <%= f.number_field :longitude %>
+  
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,42 @@
+<% content_for :body_id do %>
+index<% end %>
+
+<%= provide(:title, Postcode ) %>
+<h1>Postcode</h1>
+<p id="notice"><%= notice %></p>
+<table class="table">
+  <caption></caption>
+  <colgroup>
+    <col id="column1" />
+    <col id="column2" />
+  </colgroup>
+  <tbody>
+    
+      <tr>
+        <td>Postcode</td>
+        <td><%= @postcode.postcode %></td>
+      </tr>
+    
+      <tr>
+        <td>Suburb</td>
+        <td><%= @postcode.suburb %></td>
+      </tr>
+    
+      <tr>
+        <td>State</td>
+        <td><%= @postcode.state %></td>
+      </tr>
+    
+      <tr>
+        <td>Latitude</td>
+        <td><%= @postcode.latitude %></td>
+      </tr>
+    
+      <tr>
+        <td>Longitude</td>
+        <td><%= @postcode.longitude %></td>
+      </tr>
+    
+  </tbody>
+</table>
+<%= link_to 'List of Postcodes', postcodes_path %> | <%= link_to 'Edit', edit_postcode_path(@postcode) %>
