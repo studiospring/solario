@@ -2,6 +2,7 @@ db/*
 log/*.log
 tmp/*
 .DS_Store
+database.yml #more secure without this in repo
 # Ignore other unneeded files.
 doc/
 *.swp
