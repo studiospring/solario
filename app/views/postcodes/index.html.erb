@@ -1,0 +1,45 @@
+<% content_for :head_tags do %>
+  <%= stylesheet_link_tag "shared/tables" %>
+<% end %>
+<% content_for :body_id do %>
+index<% end %>
+
+<%= provide(:title, postcodes ) %>
+<h1>postcodes</h1>
+<table>
+  <caption></caption>
+  <colgroup>
+    <col />
+    <col />
+  </colgroup>
+  <thead>
+    <tr>
+        <th>Postcode</th>
+        <th>Suburb</th>
+        <th>State</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @postcodes.each do |postcode| %>
+    <tr>
+        <td><%= postcode.postcode %></td>
+        <td><%= postcode.suburb %></td>
+        <td><%= postcode.state %></td>
+        <td><%= postcode.latitude %></td>
+        <td><%= postcode.longitude %></td>
+        <td><%= link_to 'Show', postcode %></td>
+      <td><%= link_to 'Edit', edit_postcode_path(postcode) %></td>
+      <td><%= link_to 'Destroy', postcode, confirm: "Are you sure?", method: :delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Postcode', new_postcode_path %>
