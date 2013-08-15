@@ -1,7 +1,7 @@
 <%% content_for :body_id do %>
 index<%% end %>
 
-<%%= provide(:title, <%= table_name %> ) %>
+<%%= provide(:title, '<%= singular_table_name.capitalize %>' ) %>
 <h1>Add <%= singular_table_name.capitalize %></h1>
 <p id="enable_js" class="error">Please enable Javascript in your browser and reload the page for best results.</p> <!-- $('#enable_js').hide(); -->
 <%%= render 'form' %>

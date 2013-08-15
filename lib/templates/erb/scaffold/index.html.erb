@@ -4,8 +4,8 @@
 <%% content_for :body_id do %>
 index<%% end %>
 
-<%%= provide(:title, <%= table_name %> ) %>
-<h1><%= plural_table_name %></h1>
+<%%= provide(:title, '<%= table_name.capitalize %>' ) %>
+<h1><%= table_name.capitalize %></h1>
 <table>
   <caption></caption>
   <colgroup>
