@@ -1,8 +1,6 @@
 log/*.log
 tmp/*
 .DS_Store
-database.yml #more secure without this in repo
-.secret
 # Ignore other unneeded files.
 doc/
 *.swp
@@ -12,3 +10,6 @@ doc/
 script/*
 .shell_history
 /.bundle
+#more secure without this in repo
+database.yml 
+.secret
