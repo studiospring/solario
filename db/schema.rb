@@ -11,19 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130815065503) do
+ActiveRecord::Schema.define(version: 20130816005813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "postcodes", force: true do |t|
-    t.integer  "postcode"
-    t.string   "suburb"
-    t.string   "state"
-    t.integer  "latitude"
-    t.integer  "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "postcode"
+    t.string  "suburb"
+    t.string  "state"
+    t.integer "latitude"
+    t.integer "longitude"
   end
 
 end
