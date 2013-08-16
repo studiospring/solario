@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20130816005813) do
     t.integer "postcode"
     t.string  "suburb"
     t.string  "state"
-    t.integer "latitude"
-    t.integer "longitude"
+    t.decimal "latitude",  precision: 9, scale: 6
+    t.decimal "longitude", precision: 9, scale: 6
   end
 
 end
