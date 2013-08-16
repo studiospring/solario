@@ -20,6 +20,9 @@ group :development, :test do
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
   gem 'guard-rspec', '2.5.0'
+  gem 'spork-rails', github: 'sporkrb/spork-rails'
+  gem 'guard-spork', '1.5.0'
+  gem 'childprocess', '0.3.6'
 end
 group :production do
   gem 'rails_12factor', '0.0.2' #used by Heroku
