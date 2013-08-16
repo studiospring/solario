@@ -1,5 +1,7 @@
+#lib/tasks/import_csv.rake
 #import comma separated csv file with headers. Don't forget id and timestamps column
 #to run: rake 'import_csv[path/to/csv_file.csv, ModelName]'
+#need quotes to circumvent zsh bug
 require 'csv'    
 
 desc "Import csv file to db"
