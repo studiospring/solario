@@ -1,7 +1,6 @@
-
 class PostcodesController < ApplicationController
   def index# <<<
-    @postcodes = Postcode.all
+    @postcodes = Postcode.all.limit(10)
   end# >>>
   def show# <<<
     @postcode = Postcode.find(params[:id])

@@ -1,0 +1,18 @@
+/* generic styling for tables */
+
+table.table-striped{
+  tr{
+    &:hover td{
+      background-color: #e1f8fd;
+    }
+  }
+}
+/* can only change width and background properties with col */
+col.table-col1 {
+}
+
+.table{
+  tr>td{
+    text-align: right;
+  }
+}
