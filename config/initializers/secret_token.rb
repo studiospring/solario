@@ -9,4 +9,20 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Solar::Application.config.secret_key_base = '05f631010699c16c9768e141afce8173bc48c89207ee20599e2fc5489c725111b4f14f70b078a23cb673940c59f914a78577f4818ccf5812b955ea18a9b906f1'
+
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+Solar::Application.config.secret_key_base = secure_token
