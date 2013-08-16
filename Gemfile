@@ -23,6 +23,7 @@ group :development, :test do
   gem 'spork-rails', github: 'sporkrb/spork-rails'
   gem 'guard-spork', '1.5.0'
   gem 'childprocess', '0.3.6'
+  gem 'capybara', '2.1.0'
 end
 group :production do
   gem 'rails_12factor', '0.0.2' #used by Heroku
