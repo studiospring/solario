@@ -20,6 +20,7 @@ describe "Postcodes" do
         page.should have_selector('td', text: postcode.postcode)
         page.should have_link('Show', href: postcode_path(postcode))
         page.should have_link('Delete', href: postcode_path(postcode))
+        expect { click_link 'Delete', href: postcode_path(postcode) }.to change(Postcode, :count).by(-1)
       end
     end
 
