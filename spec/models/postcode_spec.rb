@@ -44,11 +44,11 @@ describe Postcode do
     it { should_not be_valid }
   end
   describe 'when latitude is outside range' do
-    before { @postcode.latitude = '12' }
+    before { @postcode.latitude = 42 }
     it { should_not be_valid }
   end
   describe 'when latitude is too long' do
-    before { @postcode.latitude = '-12.1111111' }
+    before { @postcode.latitude = -12.45678911 }
     it { should_not be_valid }
   end
 
@@ -57,11 +57,11 @@ describe Postcode do
     it { should_not be_valid }
   end
   describe 'when longitude is outside range' do
-    before { @postcode.longitude = '12' }
+    before { @postcode.longitude = 12 }
     it { should_not be_valid }
   end
   describe 'when longitude is too long' do
-    before { @postcode.longitude = '-12.1111111' }
+    before { @postcode.longitude = -12.1111111 }
     it { should_not be_valid }
   end
 end
