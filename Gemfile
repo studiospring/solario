@@ -17,6 +17,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'selenium-webdriver', '2.0.0'
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
   gem 'guard-rspec', '2.5.0'
