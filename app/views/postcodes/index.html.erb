@@ -40,7 +40,7 @@ index<% end %>
       <td><%= postcode.longitude %></td>
       <td><%= link_to 'Show', postcode %></td>
       <td><%= link_to 'Edit', edit_postcode_path(postcode) %></td>
-      <td><%= link_to 'Destroy', postcode, confirm: "Are you sure?", method: :delete %></td>
+      <td><%= link_to 'Delete', postcode, confirm: "Are you sure?", method: :delete %></td>
     </tr>
     <% end %>
   </tbody>
@@ -48,4 +48,4 @@ index<% end %>
 
 <br />
 
-<%= link_to 'New Postcode', new_postcode_path %>
+<%= link_to 'Add postcode', new_postcode_path %>
