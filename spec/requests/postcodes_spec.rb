@@ -26,6 +26,48 @@ describe "Postcodes" do
 
     it { should have_link 'Add postcode', href: new_postcode_path }
   end# >>>
+  describe 'new page' do# <<<
+    let(:heading) { 'Add postcode' }
+    let(:submit) { "Add Postcode" }
+    before { visit new_postcode_path }
+
+    it_should_behave_like 'all postcode pages'
+    it { should have_title(full_title(heading)) }
+
+    describe 'with invalid inputs' do
+      it "should not create a new postcode" do
+        expect { click_button submit }.not_to change(Postcode, :count)
+      end
+
+      describe "error message" do
+        before { click_button submit }
+        it_should_behave_like 'all postcode pages'
+        it { should have_content('error') }
+      end
+    end
+
+    describe 'with valid inputs' do
+      before do
+        fill_in "Postcode", with: postcode.postcode
+        fill_in "Suburb", with: postcode.suburb
+        fill_in "State", with: postcode.state
+        fill_in "Latitude", with: postcode.latitude
+        fill_in "Longitude", with: postcode.longitude
+      end
+
+      it "should create a new postcode" do
+        expect { click_button submit }.to change(Postcode, :count).by(1)
+      end
+    end
+
+    describe 'after saving the postcode' do
+      before { click_button submit }
+
+      it { should have_title("Postcode") }
+      it { should have_selector("div.alert.alert-success", text: "New postcode saved") }
+    end
+    it { should have_link 'List of postcodes', href: postcodes_path }
+  end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Postcode' }
     before { visit postcode_path(postcode) }
