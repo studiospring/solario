@@ -26,4 +26,16 @@ describe "Postcodes" do
 
     it { should have_link 'Add postcode', href: new_postcode_path }
   end# >>>
+  describe 'show page' do# <<<
+    let(:heading) { 'Postcode' }
+    before { visit postcode_path(postcode) }
+
+    it_should_behave_like 'all postcode pages'
+    it { should have_title(full_title('Postcode')) }
+
+    it { should have_content postcode.postcode }
+
+    it { should have_link 'List of postcodes', href: postcodes_path }
+    it { should have_link 'Edit', href: edit_postcode_path(postcode) }
+  end# >>>
 end
