@@ -49,7 +49,7 @@ describe "Postcodes" do
 
     describe 'with valid inputs' do
       before do
-        fill_in "Postcode", with: postcode.pcode
+        fill_in "Pcode", with: postcode.pcode
         fill_in "Suburb", with: postcode.suburb
         fill_in "State", with: postcode.state
         fill_in "Latitude", with: postcode.latitude
@@ -80,5 +80,47 @@ describe "Postcodes" do
 
     it { should have_link 'List of postcodes', href: postcodes_path }
     it { should have_link 'Edit', href: edit_postcode_path(postcode) }
+  end# >>>
+  describe 'edit page' do# <<<
+    let(:heading) { 'Update postcode' }
+    let(:submit) { "Update Postcode" }
+    before { visit edit_postcode_path(postcode) }
+
+    it_should_behave_like 'all postcode pages'
+    it { should have_title(full_title(heading)) }
+    it { should have_button("Update Postcode") }
+
+    describe 'with invalid inputs' do
+      before do
+        fill_in "State", with: " "
+        click_button submit 
+      end
+
+      describe "error message" do
+        it_should_behave_like 'all postcode pages'
+        it { should have_content('error') }
+      end
+    end
+
+    describe 'with valid inputs' do
+      before do
+        fill_in "Pcode", with: 8888
+        fill_in "Suburb", with: 'Simsville'
+        fill_in "State", with: 'WA'
+        fill_in "Latitude", with: 10
+        fill_in "Longitude", with: 130
+      end
+
+      it "should create a new postcode" do
+        expect { click_button submit }.to change(Postcode, :count).by(1)
+      end
+    end
+
+    describe 'after saving the postcode' do
+      before { click_button submit }
+
+      it { should have_title("Postcode") }
+      it { should have_selector("div.alert.alert-success", text: "New postcode saved") }
+    end
   end# >>>
 end
