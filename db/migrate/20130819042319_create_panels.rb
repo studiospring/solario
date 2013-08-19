@@ -4,8 +4,6 @@ class CreatePanels < ActiveRecord::Migration
       t.integer :tilt
       t.integer :bearing
       t.decimal :panel_size
-
-      t.timestamps
     end
   end
 end
