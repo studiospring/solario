@@ -1,19 +1,7 @@
 <%= form_for @pv_query, :validate => true do |f| %>
-  <% if @pv_query.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pv_query.errors.count, "error") %> prohibited this pv_query from being saved:</h2>
-
-      <ul>
-      <% @pv_query.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.label :postcode %><br />
+  <%= f.number_field :postcode %>
   
-    <%= f.label :postcode %><br />
-    <%= f.number_field :postcode %>
-  
-  <%= f.submit %>
+  <%= f.submit 'Get results' %>
 <% end %>
