@@ -49,7 +49,7 @@ describe "Postcodes" do
 
     describe 'with valid inputs' do
       before do
-        fill_in "Pcode", with: postcode.pcode
+        fill_in "Postcode", with: postcode.pcode
         fill_in "Suburb", with: postcode.suburb
         fill_in "State", with: postcode.state
         fill_in "Latitude", with: postcode.latitude
@@ -104,7 +104,7 @@ describe "Postcodes" do
 
     describe 'with valid inputs' do
       before do
-        fill_in "Pcode", with: 8888
+        fill_in "Postcode", with: 8888
         fill_in "Suburb", with: 'Simsville'
         fill_in "State", with: 'WA'
         fill_in "Latitude", with: 10
