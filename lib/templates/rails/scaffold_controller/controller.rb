@@ -13,7 +13,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
   end# >>>
   def create# <<<
-    @<%= singular_table_name %> = <%= orm_class.build(class_name, "params[:#{singular_table_name}]") %>
+    @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 
     if @<%= orm_instance.save %>
       flash[:success] = <%= "'#{human_name} was successfully created.'" %>
@@ -24,7 +24,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end# >>>
   def update# <<<
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
-    if @<%= orm_instance.update_attributes("params[:#{singular_table_name}]") %>
+    if @<%= orm_instance.update_attributes("#{singular_table_name}_params") %>
       flash[:success] = <%= "'#{human_name} was successfully updated.'" %>
       redirect_to @<%= singular_table_name %>
     else

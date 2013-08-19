@@ -1,4 +1,3 @@
-
 class PvQueriesController < ApplicationController
   def index# <<<
     @pv_queries = PvQuery.all
@@ -13,7 +12,7 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.find(params[:id])
   end# >>>
   def create# <<<
-    @pv_query = PvQuery.new(params[:pv_query])
+    @pv_query = PvQuery.new(pv_query_params)
 
     if @pv_query.save
       flash[:success] = 'Pv query was successfully created.'
@@ -24,7 +23,7 @@ class PvQueriesController < ApplicationController
   end# >>>
   def update# <<<
     @pv_query = PvQuery.find(params[:id])
-    if @pv_query.update(params[:pv_query])
+    if @pv_query.update(pv_query_params)
       flash[:success] = 'Pv query was successfully updated.'
       redirect_to @pv_query
     else
@@ -39,7 +38,7 @@ class PvQueriesController < ApplicationController
   private
     def pv_query_params# <<<
       #enter mass assignable fields here
-      params.require(:pv_query).permit()
+      params.require(:pv_query).permit(:postcode)
     end # >>>
 end
 
