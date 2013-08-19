@@ -9,7 +9,7 @@ Solar::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root            to: 'static_pages#home'
+  root            to: 'pv_queries#new'
   #get '/about',   to: 'static_pages#about'
   #get '/terms',   to: 'static_pages#terms'
 
