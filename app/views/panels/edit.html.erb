@@ -1,0 +1,7 @@
+<% content_for :body_id do %>
+index<% end %>
+
+<%= provide(:title, 'Edit Panel' ) %>
+<h1>Edit panel</h1>
+<%= render 'form' %>
+<%= link_to 'Show', @panel %> 

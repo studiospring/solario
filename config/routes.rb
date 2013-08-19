@@ -1,4 +1,8 @@
 Solar::Application.routes.draw do
+  resources :panels
+
+  resources :pv_queries
+
   resources :postcodes
 
   # The priority is based upon order of creation: first created -> highest priority.
