@@ -1,4 +1,5 @@
 ActiveRecord::Base.class_eval do
+  #incomplete. Does not seem to work with bigdecimal
   def self.custom_validate_range(*attr_names)
     options = attr_names.extract_options!
     validates_each(attr_names, options) do |record, attribute, value|
