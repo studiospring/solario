@@ -12,7 +12,7 @@ class PostcodesController < ApplicationController
     @postcode = Postcode.find(params[:id])
   end# >>>
   def create# <<<
-    @postcode = Postcode.new(params[:postcode])
+    @postcode = Postcode.new(postcode_params)
 
     if @postcode.save
       flash[:success] = 'Postcode was successfully created.'
@@ -23,7 +23,7 @@ class PostcodesController < ApplicationController
   end# >>>
   def update# <<<
     @postcode = Postcode.find(params[:id])
-    if @postcode.update(params[:postcode])
+    if @postcode.update(postcode_params)
       flash[:success] = 'Postcode was successfully updated.'
       redirect_to @postcode
     else
@@ -38,7 +38,7 @@ class PostcodesController < ApplicationController
   private
     def postcode_params# <<<
       #enter mass assignable fields here
-      params.require(:postcode).permit(:id, :pcode, :suburb, :state, :latitude, :longitude)
+      params.require(:postcode).permit(:pcode, :suburb, :state, :latitude, :longitude)
     end # >>>
 end
 
