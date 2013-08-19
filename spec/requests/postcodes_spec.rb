@@ -17,7 +17,7 @@ describe "Postcodes" do
 
     it "should list each postcode" do
       Postcode.all.each do |postcode|
-        page.should have_selector('td', text: postcode.postcode)
+        page.should have_selector('td', text: postcode.pcode)
         page.should have_link('Show', href: postcode_path(postcode))
         page.should have_link('Delete', href: postcode_path(postcode))
         expect { click_link 'Delete', href: postcode_path(postcode) }.to change(Postcode, :count).by(-1)
@@ -33,6 +33,7 @@ describe "Postcodes" do
 
     it_should_behave_like 'all postcode pages'
     it { should have_title(full_title(heading)) }
+    it { should have_button("Add Postcode") }
 
     describe 'with invalid inputs' do
       it "should not create a new postcode" do
@@ -48,7 +49,7 @@ describe "Postcodes" do
 
     describe 'with valid inputs' do
       before do
-        fill_in "Postcode", with: postcode.postcode
+        fill_in "Postcode", with: postcode.pcode
         fill_in "Suburb", with: postcode.suburb
         fill_in "State", with: postcode.state
         fill_in "Latitude", with: postcode.latitude
@@ -75,7 +76,7 @@ describe "Postcodes" do
     it_should_behave_like 'all postcode pages'
     it { should have_title(full_title('Postcode')) }
 
-    it { should have_content postcode.postcode }
+    it { should have_content postcode.pcode }
 
     it { should have_link 'List of postcodes', href: postcodes_path }
     it { should have_link 'Edit', href: edit_postcode_path(postcode) }

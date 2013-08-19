@@ -2,10 +2,10 @@
 
 FactoryGirl.define do
   factory :postcode do
-    postcode 1234
+    pcode 1234
     suburb "Sunnyville"
     state "NSW"
-    latitude 123.123456
+    latitude 3
     longitude 123.123456
   end
 end
