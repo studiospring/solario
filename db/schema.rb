@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819011449) do
+ActiveRecord::Schema.define(version: 20130819042319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "panels", force: true do |t|
+    t.integer "tilt"
+    t.integer "bearing"
+    t.decimal "panel_size"
+  end
 
   create_table "postcodes", force: true do |t|
     t.integer "pcode"
@@ -22,6 +28,12 @@ ActiveRecord::Schema.define(version: 20130819011449) do
     t.string  "state"
     t.decimal "latitude",  precision: 9, scale: 6
     t.decimal "longitude", precision: 9, scale: 6
+  end
+
+  create_table "pv_queries", force: true do |t|
+    t.integer  "postcode"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
