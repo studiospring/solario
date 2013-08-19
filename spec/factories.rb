@@ -8,4 +8,12 @@ FactoryGirl.define do
     latitude 3
     longitude 123.123456
   end
+  factory :pv_query do
+    postcode 2345
+  end
+  factory :panel do
+    tilt 80
+    bearing 180
+    panel_size 3.5
+  end
 end
