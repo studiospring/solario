@@ -13,7 +13,7 @@ describe "<%= class_name.pluralize %>" do
     before { visit <%= plural_table_name %>_path }
 
     it_should_behave_like 'all <%= singular_table_name %> pages'
-    it { should have_title(full_title('<%= class_name.pluralize %>')) }
+    it { should have_title(full_title(heading)) }
 
     it "should list each <%= singular_table_name %>" do
       <%= class_name %>.all.each do |<%= singular_table_name %>|
@@ -28,12 +28,12 @@ describe "<%= class_name.pluralize %>" do
     it { should have_link 'Add <%= singular_table_name %>', href: new_<%= singular_table_name %>_path }
   end# >>>
   describe 'new page' do# <<<
-    let(:heading) { 'Add <%= class_name.pluralize %>' }
+    let(:heading) { 'Add <%= class_name %>' }
     let(:submit) { "Add <%= class_name %>" }
     before { visit new_<%= singular_table_name %>_path }
 
     it_should_behave_like 'all <%= singular_table_name %> pages'
-    it { should have_title(full_title('<%= class_name.pluralize %>')) }
+    it { should have_title(full_title(heading)) }
     it { should have_button("Add <%= human_name %>") }
 
     describe 'with invalid inputs' do
@@ -50,7 +50,8 @@ describe "<%= class_name.pluralize %>" do
 
     describe 'with valid inputs' do
       before do
-          #fill_in 
+        #TODO
+        #fill_in 
       end
 
       it "should create a new <%= singular_table_name %>" do
@@ -65,5 +66,55 @@ describe "<%= class_name.pluralize %>" do
       it { should have_selector("div.alert-success", text: "New <%= singular_table_name %> saved") }
     end
     it { should have_link 'List of <%= table_name %>', href: <%= table_name %>_path }
+  end# >>>
+  describe 'show page' do# <<<
+    let(:heading) { '<%= class_name %>' }
+    let(:heading) { '<%= class_name %>' }
+    before { visit <%= singular_table_name %>_path(<%= singular_table_name %>) }
+
+    it_should_behave_like 'all <%= singular_table_name %> pages'
+    it { should have_title(full_title(heading)) }
+
+    #it { should have_content postcode.pcode }
+
+    it { should have_link 'List of <%= table_name %>', href: <%= table_name %>_path }
+    it { should have_link 'Edit', href: edit_<%= singular_table_name %>_path(<%= singular_table_name %>) }
+  end# >>>
+  describe 'edit page' do# <<<
+    let(:heading) { 'Update <%= class_name %>' }
+    let(:submit) { "Update <%= class_name %>" }
+    before { visit edit_<%= singular_table_name %>_path(<%= singular_table_name %>) }
+
+    it_should_behave_like 'all <%= singular_table_name %> pages'
+    it { should have_title(full_title(heading)) }
+    it { should have_button('Update <%= class_name %>') }
+
+    describe 'with invalid inputs' do
+      #before do
+        #TODO
+        #fill_in "State", with: " "
+        #click_button submit 
+      #end
+
+      describe "error message" do
+        it_should_behave_like 'all <%= singular_table_name %> pages'
+        it { should have_content('error') }
+      end
+    end
+
+    describe 'with valid inputs' do
+      before do
+        #TODO
+        #fill_in 
+      end
+
+    end
+
+    describe 'after saving the <%= singular_table_name %>' do
+      before { click_button submit }
+
+      it { should have_selector('h1', text: heading) }
+      it { should have_selector("div.alert-success", text: "<%= class_name %> updated") }
+    end
   end# >>>
 end
