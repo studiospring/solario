@@ -10,7 +10,7 @@ describe "PvQuery" do
   end
   describe 'index page' do# <<<
     let(:heading) { 'Queries' }
-    before { visit pv_query_path }
+    before { visit pv_queries_path }
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title('Queries')) }
@@ -22,6 +22,44 @@ describe "PvQuery" do
         page.should have_link('Delete', href: pv_query_path(query))
         expect { click_link 'Delete', href: pv_query_path(query) }.to change(PvQuery, :count).by(-1)
       end
+    end
+  end# >>>
+  describe 'new page' do# <<<
+    let(:heading) { 'Find your solar output' }
+    let(:submit) { 'Get results' }
+    before { visit new_pv_query_path }
+
+    it_should_behave_like 'all pv_query pages'
+    it { should have_title(full_title(heading)) }
+    it { should have_button('Get results') }
+
+    describe 'with invalid inputs' do
+      it "should not create a new pv_query" do
+        expect { click_button submit }.not_to change(PvQuery, :count)
+      end
+
+      describe "error message" do
+        before { click_button submit }
+        it_should_behave_like 'all pv_query pages'
+        it { should have_content('error') }
+      end
+    end
+
+    describe 'with valid inputs' do
+      before do
+        fill_in "Postcode", with: pv_query.postcode
+      end
+
+      it "should create a new pv_query" do
+        expect { click_button submit }.to change(PvQuery, :count).by(1)
+      end
+    end
+
+    describe 'after saving the pv_query' do
+      before { click_button submit }
+
+      it { should have_title("Results") }
+      it { should_not have_selector("div.alert.alert-success", text: "New pv_query saved") }
     end
   end# >>>
 end

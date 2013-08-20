@@ -20,6 +20,9 @@
       </h1>
     </div>
     <div id="content" class="container-fluid">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
       <%= yield %>
     </div>
     <footer class="footer navbar">
