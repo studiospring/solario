@@ -4,18 +4,20 @@
 <% content_for :body_id do %>
 index<% end %>
 
-<%= provide(:title, 'Pv_queries' ) %>
-<h1>Pv_queries</h1>
+<%= provide(:title, 'Queries' ) %>
+<h1>Queries</h1>
 <table class="table table-striped">
   <caption></caption>
   <colgroup>
     <col />
     <col />
+    <col />
+    <col />
   </colgroup>
   <thead>
     <tr>
-        <th>Postcode</th>
-        <th></th>
+      <th>Postcode</th>
+      <th></th>
       <th></th>
       <th></th>
     </tr>
@@ -23,15 +25,11 @@ index<% end %>
   <tbody>
   <% @pv_queries.each do |pv_query| %>
     <tr>
-        <td><%= pv_query.postcode %></td>
-        <td><%= link_to 'Show', pv_query %></td>
+      <td><%= pv_query.postcode %></td>
+      <td><%= link_to 'Show', pv_query %></td>
       <td><%= link_to 'Edit', edit_pv_query_path(pv_query) %></td>
       <td><%= link_to 'Delete', pv_query, confirm: "Are you sure?", method: :delete %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
-
-<br />
-
-<%= link_to 'Add Pv query', new_pv_query_path %>

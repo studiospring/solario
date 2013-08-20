@@ -16,7 +16,7 @@ class PvQueriesController < ApplicationController
 
     if @pv_query.save
       flash[:success] = 'Pv query was successfully created.'
-      redirect_to @pv_query
+      redirect_to results_pv_query_path(@pv_query)
     else
       render "new"
     end
@@ -34,6 +34,9 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.find(params[:id])
     @pv_query.destroy
     redirect_to pv_queries_url
+  end# >>>
+  def results# <<<
+    @pv_query = PvQuery.find(params[:id])
   end# >>>
   private
     def pv_query_params# <<<

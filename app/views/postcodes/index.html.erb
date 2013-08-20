@@ -17,9 +17,11 @@ index<% end %>
     <col />
     <col />
     <col />
+    <col />
   </colgroup>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Postcode</th>
       <th>Suburb</th>
       <th>State</th>
@@ -33,6 +35,7 @@ index<% end %>
   <tbody>
     <% @postcodes.each do |postcode| %>
     <tr>
+      <td><%= postcode.id %></td>
       <td><%= postcode.pcode %></td>
       <td><%= postcode.suburb %></td>
       <td><%= postcode.state %></td>

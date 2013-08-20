@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819042319) do
+ActiveRecord::Schema.define(version: 20130819233807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20130819042319) do
     t.integer "pcode"
     t.string  "suburb"
     t.string  "state"
-    t.decimal "latitude",  precision: 9, scale: 6
-    t.decimal "longitude", precision: 9, scale: 6
+    t.decimal "latitude"
+    t.decimal "longitude"
   end
 
   create_table "pv_queries", force: true do |t|

@@ -1,7 +1,11 @@
 Solar::Application.routes.draw do
   resources :panels
 
-  resources :pv_queries
+  resources :pv_queries do
+    member do
+      get 'results'
+    end
+  end
 
   resources :postcodes
 
