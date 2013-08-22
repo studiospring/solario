@@ -59,7 +59,7 @@ describe "PvQuery" do
       before { click_button submit }
 
       it { should have_title("Results") }
-      it { should_not have_selector("div.alert.alert-success", text: "New pv_query saved") }
+      it { should have_selector("div.alert.alert-success", text: "New pv_query saved") }
     end
   end# >>>
 end
