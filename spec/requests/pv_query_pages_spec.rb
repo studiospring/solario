@@ -63,4 +63,16 @@ describe "PvQuery" do
     end
 
   end# >>>
+  describe 'show page' do# <<<
+    let(:heading) { 'Pv_query' }
+    before { visit pv_query_path(pv_query) }
+
+    it_should_behave_like 'all pv_query pages'
+    it { should have_title(full_title('Pv_query')) }
+
+    it { should have_content pv_query.postcode }
+
+    it { should have_link 'List of Pv_queries', href: pv_queries_path }
+    it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
+  end# >>>
 end
