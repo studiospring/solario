@@ -49,8 +49,9 @@ describe "Panels" do
 
     describe 'with valid inputs' do
       before do
-        #TODO
-        #fill_in 
+        fill_in "Tilt", with: panel.tilt
+        fill_in "Bearing", with: panel.bearing
+        fill_in "Panel size", with: panel.panel_size
       end
 
       it "should create a new panel" do
@@ -61,8 +62,8 @@ describe "Panels" do
     describe 'after saving the panel' do
       before { click_button submit }
 
-      it { should have_selector('h1', text: "Add panel") }
-      it { should have_selector("div.alert-success", text: "New panel saved") }
+      it { should have_selector('h1', text: "Panel") }
+      it { should have_selector("div.alert-success", text: "Panel created") }
     end
     it { should have_link 'List of Panels', href: panels_path }
   end# >>>
@@ -74,7 +75,7 @@ describe "Panels" do
     it_should_behave_like 'all panel pages'
     it { should have_title(full_title(heading)) }
 
-    #it { should have_content postcode.pcode }
+    it { should have_content panel.bearing }
 
     it { should have_link 'List of Panels', href: panels_path }
     it { should have_link 'Edit', href: edit_panel_path(panel) }
@@ -89,11 +90,10 @@ describe "Panels" do
     it { should have_button('Update Panel') }
 
     describe 'with invalid inputs' do
-      #before do
-        #TODO
-        #fill_in "State", with: " "
-        #click_button submit 
-      #end
+      before do
+        fill_in "Tilt", with: " "
+        click_button submit 
+      end
 
       describe "error message" do
         it_should_behave_like 'all panel pages'
@@ -103,8 +103,9 @@ describe "Panels" do
 
     describe 'with valid inputs' do
       before do
-        #TODO
-        #fill_in 
+        fill_in "Tilt", with: 23
+        fill_in "Bearing", with: 360
+        fill_in "Panel size", with: 2444
       end
 
     end
@@ -112,8 +113,9 @@ describe "Panels" do
     describe 'after saving the panel' do
       before { click_button submit }
 
-      it { should have_selector('h1', text: heading) }
+      it { should have_selector('h1', text: 'Panel') }
       it { should have_selector("div.alert-success", text: "Panel updated") }
     end
+
   end# >>>
 end

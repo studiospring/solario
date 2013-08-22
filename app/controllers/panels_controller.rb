@@ -1,31 +1,30 @@
-
 class PanelsController < ApplicationController
   def index# <<<
     @panels = Panel.all
   end# >>>
-  def show# <<<
-    @panel = Panel.find(params[:id])
-  end# >>>
   def new# <<<
     @panel = Panel.new
   end# >>>
-  def edit# <<<
-    @panel = Panel.find(params[:id])
-  end# >>>
   def create# <<<
-    @panel = Panel.new(params[:panel])
+    @panel = Panel.new(panel_params)
 
     if @panel.save
-      flash[:success] = 'Panel was successfully created.'
+      flash[:success] = 'Panel created'
       redirect_to @panel
     else
       render "new"
     end
   end# >>>
+  def show# <<<
+    @panel = Panel.find(params[:id])
+  end# >>>
+  def edit# <<<
+    @panel = Panel.find(params[:id])
+  end# >>>
   def update# <<<
     @panel = Panel.find(params[:id])
-    if @panel.update(params[:panel])
-      flash[:success] = 'Panel was successfully updated.'
+    if @panel.update(panel_params)
+      flash[:success] = 'Panel updated'
       redirect_to @panel
     else
       render "edit"
@@ -39,7 +38,7 @@ class PanelsController < ApplicationController
   private
     def panel_params# <<<
       #enter mass assignable fields here
-      params.require(:panel).permit()
+      params.require(:panel).permit(:tilt, :bearing, :panel_size)
     end # >>>
 end
 
