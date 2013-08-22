@@ -11,7 +11,7 @@ module Rspec
         return unless options[:request_specs]
 
         template 'request_spec.rb',
-                 File.join('spec/requests', class_path, "#{table_name}_spec.rb")
+                 File.join('spec/requests', class_path, "#{singular_table_name}_pages_spec.rb")
       end
 
     protected
