@@ -59,14 +59,15 @@ describe "Postcodes" do
       it "should create a new postcode" do
         expect { click_button submit }.to change(Postcode, :count).by(1)
       end
+
+      describe 'after saving the postcode' do
+        before { click_button submit }
+
+        it { should have_selector('h1', text: "Postcode") }
+        it { should have_selector("div.alert-success", text: "Postcode created") }
+      end
     end
 
-    describe 'after saving the postcode' do
-      before { click_button submit }
-
-      it { should have_selector('h1', text: "Add postcode") }
-      it { should have_selector("div.alert-success", text: "New postcode saved") }
-    end
     it { should have_link 'List of postcodes', href: postcodes_path }
   end# >>>
   describe 'show page' do# <<<

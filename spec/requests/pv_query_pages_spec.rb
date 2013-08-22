@@ -53,13 +53,14 @@ describe "PvQuery" do
       it "should create a new pv_query" do
         expect { click_button submit }.to change(PvQuery, :count).by(1)
       end
+
+      describe 'after saving the pv_query' do
+        before { click_button submit }
+
+        it { should have_title("Results") }
+        it { should have_selector("div.alert.alert-success", text: "Pv query created") }
+      end
     end
 
-    describe 'after saving the pv_query' do
-      before { click_button submit }
-
-      it { should have_title("Results") }
-      it { should have_selector("div.alert.alert-success", text: "New pv_query saved") }
-    end
   end# >>>
 end
