@@ -62,7 +62,7 @@ describe "<%= class_name.pluralize %>" do
     describe 'after saving the <%= singular_table_name %>' do
       before { click_button submit }
 
-      it { should have_selector('h1', text: "Add <%= singular_table_name %>") }
+      it { should have_selector('h1', text: "<%= singular_table_name %>") }
       it { should have_selector("div.alert-success", text: "New <%= singular_table_name %> created") }
     end
     it { should have_link 'List of <%= table_name.capitalize %>', href: <%= table_name %>_path }
@@ -113,7 +113,7 @@ describe "<%= class_name.pluralize %>" do
     describe 'after saving the <%= singular_table_name %>' do
       before { click_button submit }
 
-      it { should have_selector('h1', text: heading) }
+      it { should have_selector('h1', text: "<%= singular_table_name %>)" }
       it { should have_selector("div.alert-success", text: "<%= class_name %> updated") }
     end
   end# >>>
