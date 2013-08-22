@@ -2,14 +2,8 @@ class PvQueriesController < ApplicationController
   def index# <<<
     @pv_queries = PvQuery.all
   end# >>>
-  def show# <<<
-    @pv_query = PvQuery.find(params[:id])
-  end# >>>
   def new# <<<
     @pv_query = PvQuery.new
-  end# >>>
-  def edit# <<<
-    @pv_query = PvQuery.find(params[:id])
   end# >>>
   def create# <<<
     @pv_query = PvQuery.new(pv_query_params)
@@ -20,6 +14,12 @@ class PvQueriesController < ApplicationController
     else
       render "new"
     end
+  end# >>>
+  def show# <<<
+    @pv_query = PvQuery.find(params[:id])
+  end# >>>
+  def edit# <<<
+    @pv_query = PvQuery.find(params[:id])
   end# >>>
   def update# <<<
     @pv_query = PvQuery.find(params[:id])
