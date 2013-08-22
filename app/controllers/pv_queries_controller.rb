@@ -15,7 +15,7 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.new(pv_query_params)
 
     if @pv_query.save
-      flash[:success] = 'Pv query was successfully created.'
+      flash[:success] = 'Pv query created'
       redirect_to results_pv_query_path(@pv_query)
     else
       render "new"
@@ -24,7 +24,7 @@ class PvQueriesController < ApplicationController
   def update# <<<
     @pv_query = PvQuery.find(params[:id])
     if @pv_query.update(pv_query_params)
-      flash[:success] = 'Pv query was successfully updated.'
+      flash[:success] = 'Pv query updated'
       redirect_to @pv_query
     else
       render "edit"

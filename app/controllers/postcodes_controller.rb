@@ -15,7 +15,7 @@ class PostcodesController < ApplicationController
     @postcode = Postcode.new(postcode_params)
 
     if @postcode.save
-      flash[:success] = 'New postcode saved'
+      flash[:success] = 'Postcode created'
       redirect_to @postcode
     else
       render "new"
