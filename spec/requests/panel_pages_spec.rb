@@ -27,7 +27,7 @@ describe "Panels" do
     it { should have_link 'Add panel', href: new_panel_path }
   end# >>>
   describe 'new page' do# <<<
-    let(:heading) { 'Add Panel' }
+    let(:heading) { 'Add panel' }
     let(:submit) { "Add Panel" }
     before { visit new_panel_path }
 
@@ -64,7 +64,7 @@ describe "Panels" do
       it { should have_selector('h1', text: "Add panel") }
       it { should have_selector("div.alert-success", text: "New panel saved") }
     end
-    it { should have_link 'List of panels', href: panels_path }
+    it { should have_link 'List of Panels', href: panels_path }
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Panel' }
@@ -76,11 +76,11 @@ describe "Panels" do
 
     #it { should have_content postcode.pcode }
 
-    it { should have_link 'List of panels', href: panels_path }
+    it { should have_link 'List of Panels', href: panels_path }
     it { should have_link 'Edit', href: edit_panel_path(panel) }
   end# >>>
   describe 'edit page' do# <<<
-    let(:heading) { 'Update Panel' }
+    let(:heading) { 'Update panel' }
     let(:submit) { "Update Panel" }
     before { visit edit_panel_path(panel) }
 
