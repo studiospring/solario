@@ -65,7 +65,7 @@ describe "<%= class_name.pluralize %>" do
       it { should have_selector('h1', text: "Add <%= singular_table_name %>") }
       it { should have_selector("div.alert-success", text: "New <%= singular_table_name %> created") }
     end
-    it { should have_link 'List of <%= table_name %>', href: <%= table_name %>_path }
+    it { should have_link 'List of <%= table_name.capitalize %>', href: <%= table_name %>_path }
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { '<%= class_name %>' }
@@ -77,7 +77,7 @@ describe "<%= class_name.pluralize %>" do
 
     #it { should have_content postcode.pcode }
 
-    it { should have_link 'List of <%= table_name %>', href: <%= table_name %>_path }
+    it { should have_link 'List of <%= table_name.capitalize %>', href: <%= table_name %>_path }
     it { should have_link 'Edit', href: edit_<%= singular_table_name %>_path(<%= singular_table_name %>) }
   end# >>>
   describe 'edit page' do# <<<
