@@ -63,7 +63,7 @@ describe "<%= class_name.pluralize %>" do
       before { click_button submit }
 
       it { should have_selector('h1', text: "Add <%= singular_table_name %>") }
-      it { should have_selector("div.alert-success", text: "New <%= singular_table_name %> saved") }
+      it { should have_selector("div.alert-success", text: "New <%= singular_table_name %> created") }
     end
     it { should have_link 'List of <%= table_name %>', href: <%= table_name %>_path }
   end# >>>
