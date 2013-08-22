@@ -75,4 +75,38 @@ describe "PvQuery" do
     it { should have_link 'List of Pv_queries', href: pv_queries_path }
     it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
   end# >>>
+  describe 'edit page' do# <<<
+    let(:heading) { 'Edit pv_query' }
+    let(:submit) { "Update Pv query" }
+    before { visit edit_pv_query_path(pv_query) }
+
+    it_should_behave_like 'all pv_query pages'
+    it { should have_title(full_title(heading)) }
+    it { should have_button("Update Pv query") }
+
+    describe 'with invalid inputs' do
+      before do
+        fill_in "Postcode", with: " "
+        click_button submit 
+      end
+
+      describe "error message" do
+        it_should_behave_like 'all pv_query pages'
+        it { should have_content('error') }
+      end
+    end
+
+    describe 'with valid inputs' do
+      before do
+        fill_in "Postcode", with: 130
+      end
+    end
+
+    describe 'after saving the pv_query' do
+      before { click_button submit }
+
+      it { should have_selector('h1', text: "Pv_query") }
+      it { should have_selector("div.alert-success", text: 'Pv query updated') }
+    end
+  end# >>>
 end
