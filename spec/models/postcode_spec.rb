@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Postcode do
-  before { @postcode =  Postcode.new(pcode: 4321, suburb: 'Simsville', state: 'WA', latitude: -12.123123, longitude: 123.456789) }
+  before { @postcode = Postcode.new(pcode: 4321, suburb: 'Simsville', state: 'WA', latitude: -12.123123, longitude: 123.456789) }
   subject { @postcode }
 
   it { should respond_to(:pcode) }
