@@ -6,8 +6,8 @@ describe <%= class_name %> do
   before { @<%= singular_table_name %> = <%= table_name %>.new() }
   subject { @<%= singular_table_name %> }
 
-  attributes.each do |name|
-    it { should respond_to(":#{name}") }
-  end
+  <% attributes.each do |attribute| -%>
+    it { should respond_to(:<%= attribute.name %>) }       
+  <% end -%>
 end
 <% end -%>
