@@ -3,10 +3,13 @@ class Panel < ActiveRecord::Base
 
   validates :tilt,        presence: true,
                           length: { maximum: 2 },
-                          numericality: { only_integer: true }
+                          numericality: { greater_than_or_equal_to: 0 },
+                          numericality: { less_than_or_equal_to: 90 }
   validates :bearing,     presence: true,
                           length: { maximum: 3 },
+                          numericality: { greater_than_or_equal_to: 0 },
+                          numericality: { less_than_or_equal_to: 360 }
+  validates :panel_size,  presence: true,
                           numericality: { only_integer: true }
-  validates :panel_size,  presence: true
 
 end
