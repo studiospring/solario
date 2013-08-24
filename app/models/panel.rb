@@ -1,5 +1,5 @@
 class Panel < ActiveRecord::Base
-  belongs_to :pv_query, dependent: :destroy
+  belongs_to :pv_query
 
   validates :tilt,        presence: true,
                           length: { maximum: 2 },
