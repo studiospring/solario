@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819233807) do
+ActiveRecord::Schema.define(version: 20130824051631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,10 @@ ActiveRecord::Schema.define(version: 20130819233807) do
     t.integer "tilt"
     t.integer "bearing"
     t.decimal "panel_size"
+    t.integer "pv_query_id"
   end
+
+  add_index "panels", ["pv_query_id"], name: "index_panels_on_pv_query_id", using: :btree
 
   create_table "postcodes", force: true do |t|
     t.integer "pcode"
