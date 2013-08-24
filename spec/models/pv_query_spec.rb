@@ -21,4 +21,16 @@ describe PvQuery do
     before { @pv_query.postcode = 'abcd' }
     it { should_not be_valid }
   end
+  describe 'panel association' do
+    before { @pv_query.save }
+
+    it "should destroy associated panels" do
+      panels = @pv_query.panels.to_a
+      @pv_query.destroy
+      expect(panels).not_to be_empty
+      panels.each do |panel|
+        expect(Panel.where(id: panel.id)).to be_empty
+      end
+    end
+  end
 end
