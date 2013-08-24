@@ -1,12 +1,16 @@
 require 'spec_helper'
 
 describe Panel do
-  before { @panel = Panel.new(tilt: 45, bearing: 100, panel_size: 31 ) }
+  let(:pv_query) { FactoryGirl.create(:pv_query) }
+  before { @panel = pv_query.panels.build(tilt: 45, bearing: 100, panel_size: 31 ) }
   subject { @panel }
 
   it { should respond_to(:tilt) }
   it { should respond_to(:bearing) }
   it { should respond_to(:panel_size) }
+  it { should respond_to(:pv_query_id) }
+  it { should respond_to(:pv_query) }
+  its(:pv_query) { should eq pv_query }
 
   it { should be_valid }
 
@@ -48,6 +52,10 @@ describe Panel do
   end
   describe 'when panel_size is not a number' do
     before { @panel.panel_size = 'ABC' }
+    it { should_not be_valid }
+  end
+  describe "when pv_query_id is not present" do
+    before { @panel.pv_query_id = nil }
     it { should_not be_valid }
   end
 end

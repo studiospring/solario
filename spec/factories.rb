@@ -15,5 +15,7 @@ FactoryGirl.define do
     tilt 80
     bearing 180
     panel_size 3.5
+
+    pv_query
   end
 end
