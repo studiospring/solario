@@ -10,7 +10,7 @@ class Panel < ActiveRecord::Base
                           numericality: { greater_than_or_equal_to: 0 },
                           numericality: { less_than_or_equal_to: 360 }
   validates :panel_size,  presence: true,
-                          numericality: { only_integer: true }
+                          format: { with: /^\d+\.?\d{0,2}$/, multiline: true }
   validates :pv_query_id, presence: true
 
 end
