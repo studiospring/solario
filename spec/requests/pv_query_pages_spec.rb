@@ -48,10 +48,12 @@ describe "PvQuery" do
     describe 'with valid inputs' do
       before do
         fill_in "Postcode", with: pv_query.postcode
+        fill_in "Tilt", with: pv_query.panels.tilt
       end
 
       it "should create a new pv_query" do
         expect { click_button submit }.to change(PvQuery, :count).by(1)
+        expect { click_button submit }.to change(Panel, :count).by(1)
       end
 
       describe 'after saving the pv_query' do

@@ -15,6 +15,9 @@ index<% end %>
       <tr>
         <td>Postcode</td>
         <td><%= @pv_query.postcode %></td>
+        <% @pv_query.panels.each do |panel| %>
+          <td><%= panel.tilt %></td>
+        <% end %>
       </tr>
     
   </tbody>
