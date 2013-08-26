@@ -1,7 +1,12 @@
 <fieldset class="nested_fields">
-  <%= f.text_field :tilt %>
-  <%= f.hidden_field :_destroy %>
-  <%#<%= link_to_remove_fields "remove", f %>%>
-  <%= link_to_add_fields "Add panel", f, :panels %>
+  <%= f.label :tilt %>
+  <%= f.number_field :tilt %>
+
+  <%= f.label :bearing %>
+  <%= f.number_field :bearing %>
+
+  <%= f.label :panel_size %>
+  <%= f.number_field :panel_size %>
+  <%#<%= link_to_add_fields "Add panel", f, :panels %>%>
 </fieldset>
 

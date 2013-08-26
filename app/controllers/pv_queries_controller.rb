@@ -4,7 +4,7 @@ class PvQueriesController < ApplicationController
   end# >>>
   def new# <<<
     @pv_query = PvQuery.new
-    3.times { @pv_query.panels.build }
+    @pv_query.panels.build
   end# >>>
   def create# <<<
     @pv_query = PvQuery.new(pv_query_params)
