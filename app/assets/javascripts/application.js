@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require_tree .
 
+alert('test');
 #creates link to remove form field. Requires accepts_nested_attributes_for association. See railscast #197
 jQuery ->
   window.remove_fields = (link) -> 
