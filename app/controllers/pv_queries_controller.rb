@@ -41,7 +41,6 @@ class PvQueriesController < ApplicationController
   private
     def pv_query_params# <<<
       #enter mass assignable fields here
-      params.require(:pv_query).permit(:postcode)
+      params.require(:pv_query).permit(:postcode, panels_attributes: [:tilt, :bearing, :panel_size])
     end # >>>
 end
-
