@@ -96,22 +96,16 @@ class PvQuery < ActiveRecord::Base
   def self.daily_elevation(declination, latitude)# <<<
     #hour angle, 0 is midday at local solar time
     hra = [ 0, 15, 30, 45, 60, 75, 90, 105, 120, 135 ]
-    daily_elev = Array.new
     pm_elev = Array.new
     hra.each do |angle|
       elevation = Math.asin(Math.sin(declination.degrees)*Math.sin(latitude.degrees) + Math.cos(declination.degrees)*Math.cos(latitude.degrees)*Math.cos(angle.degrees))
-      if elevation >= 0
-        pm_elev << elevation
-      else
-        break
-      end
+      elevation >= 0 ? pm_elev << elevation : break
     end
-    am_elev = pm_elev
-    am_elev.drop(1).reverse!
-    daily_elev = am_elev + pm_elev
+    daily_elev = Array.new
+    daily_elev = pm_elev.drop(1).reverse + pm_elev
   end# >>>
   #return { day1: [elev1, elev2...], day2: [elev1, elev2..]...}
-  def annual_elevation(declination, latitude)# <<<
+  def self.annual_elevation(declination, latitude)# <<<
     annual_elev = Hash.new
     declination.each do |d|
         #annual_elev[d.count + 1] = 
