@@ -48,7 +48,9 @@ describe "PvQuery" do
     describe 'with valid inputs' do
       before do
         fill_in "Postcode", with: pv_query.postcode
-        fill_in "Tilt", with: pv_query.panels.tilt
+        fill_in "Tilt", with: 15
+        fill_in "Bearing", with: 15
+        fill_in "Panel size", with: 15
       end
 
       it "should create a new pv_query" do
