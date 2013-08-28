@@ -9,6 +9,9 @@ index<% end %>
   <colgroup>
     <col id="column1" />
     <col id="column2" />
+    <col id="column3" />
+    <col id="column4" />
+    <col id="column5" />
   </colgroup>
   <tbody>
     
@@ -30,6 +33,10 @@ index<% end %>
           <td><%= panel.panel_size %></td>
         </tr>
       <% end %>
+      <tr>
+        <td>Created:</td>
+        <td><%= l @pv_query.created_at, format: :short %></td>
+      </tr>
     
   </tbody>
 </table>
