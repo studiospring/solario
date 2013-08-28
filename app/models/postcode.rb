@@ -7,12 +7,11 @@ class Postcode < ActiveRecord::Base
                         inclusion: { in: %w(ACT NSW NT QLD SA TAS VIC WA) }
   validates :latitude,  presence: true,
                         length: { maximum: 11 }
-  #problem with negative value?
-  #custom_validate_range :latitude, { min: -14, max: 14 }
-                        #numericality: { less_than: -10 },
-                        #numericality: { greater_than: -44 }
+  validates :latitude,  presence: true,
+                        numericality: { less_than: -10, 
+                                        greater_than: -44 }
   validates :longitude, presence: true,
                         length: { maximum: 10 },
-                        numericality: { less_than: 160 },
-                        numericality: { greater_than: 95 }
+                        numericality: { less_than: 160 ,
+                                        greater_than: 95 }
 end
