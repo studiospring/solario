@@ -14,4 +14,13 @@ class Panel < ActiveRecord::Base
                                     multiline: true }
   validates :pv_query_id, presence: true
 
+  #return hash: vector[:x], [:y], [:z]
+  def vector# <<<
+    vector = Hash.new
+    hypotenuse = Math.cos(self.tilt.to_rad)
+    vector[:x] = hypotenuse * Math.cos(self.bearing.to_rad)
+    vector[:y] = hypotenuse * Math.sin(self.bearing.to_rad)
+    vector[:z] = Math.sin(self.tilt.to_rad)
+    return vector
+  end# >>>
 end
