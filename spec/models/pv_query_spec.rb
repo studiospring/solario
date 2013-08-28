@@ -33,4 +33,9 @@ describe PvQuery do
       end
     end
   end
+  describe 'daily_elevation method' do
+    it "should return array of elevations" do
+       PvQuery.daily_elevation(23.0064928292, 33).should == [ 0.0107527379, 0.2122589922, 0.4233389472, 0.6403240951, 0.8599753406, 1.0778300947, 1.2811351692, 1.3959099513, 1.2811351692, 1.0778300947, 0.8599753406, 0.6403240951, 0.4233389472, 0.2122589922, 0.0107527379] 
+    end
+  end
 end
