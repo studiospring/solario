@@ -1,4 +1,6 @@
 class PvQuery < ActiveRecord::Base
+  require 'core_ext/numeric'
+
   has_many :panels, dependent: :destroy
   accepts_nested_attributes_for :panels#, reject_if: lambda { |a| a[:tilt].blank? }
 
@@ -6,6 +8,7 @@ class PvQuery < ActiveRecord::Base
                         length: { maximum: 4 },
                         numericality: { only_integer: true }
 
+  #return array
   def declination# <<<
     declination = [ 23.0064928292,
                     22.9250204422,
@@ -88,5 +91,31 @@ class PvQuery < ActiveRecord::Base
                     0.8065209106,
                     0.4033201129,
                     0]
+  end# >>>
+  #return positive values of [elev1, elev2 ...] in radians for one day
+  def self.daily_elevation(declination, latitude)# <<<
+    #hour angle, 0 is midday at local solar time
+    hra = [ 0, 15, 30, 45, 60, 75, 90, 105, 120, 135 ]
+    daily_elev = Array.new
+    pm_elev = Array.new
+    hra.each do |angle|
+      elevation = Math.asin(Math.sin(declination.degrees)*Math.sin(latitude.degrees) + Math.cos(declination.degrees)*Math.cos(latitude.degrees)*Math.cos(angle.degrees))
+      if elevation >= 0
+        pm_elev << elevation
+      else
+        break
+      end
+    end
+    am_elev = pm_elev
+    am_elev.drop(1).reverse!
+    daily_elev = am_elev + pm_elev
+  end# >>>
+  #return { day1: [elev1, elev2...], day2: [elev1, elev2..]...}
+  def annual_elevation(declination, latitude)# <<<
+    annual_elev = Hash.new
+    declination.each do |d|
+        #annual_elev[d.count + 1] = 
+    end
+    
   end# >>>
 end

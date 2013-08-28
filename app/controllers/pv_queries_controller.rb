@@ -18,6 +18,7 @@ class PvQueriesController < ApplicationController
   end# >>>
   def show# <<<
     @pv_query = PvQuery.find(params[:id])
+    @elevation = PvQuery.daily_elevation(23, 13)
   end# >>>
   def edit# <<<
     @pv_query = PvQuery.find(params[:id])
