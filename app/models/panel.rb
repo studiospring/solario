@@ -1,4 +1,6 @@
 class Panel < ActiveRecord::Base
+  require 'core_ext/numeric'
+
   belongs_to :pv_query
 
   validates :tilt,        presence: true,

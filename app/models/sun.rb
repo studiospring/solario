@@ -1,5 +1,6 @@
 class Sun
 
+  require 'core_ext/numeric'
   #return hash: vector[:x], [:y], [:z]
   #TODO
   def vector(azimuth, elevation)# <<<
