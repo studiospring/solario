@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Panel do
   let(:pv_query) { FactoryGirl.create(:pv_query) }
-  before { @panel = pv_query.panels.build(tilt: 45, bearing: 100, panel_size: 31 ) }
+  before { @panel = pv_query.panels.build(tilt: 60, bearing: 150, panel_size: 31 ) }
   subject { @panel }
 
   it { should respond_to(:tilt) }
@@ -57,5 +57,21 @@ describe Panel do
   describe "when pv_query_id is not present" do
     before { @panel.pv_query_id = nil }
     it { should_not be_valid }
+  end
+
+  describe 'vector instance method' do
+    before { @panel.vector }
+    it "should return correct value for @panel.vector[:x]" do
+      #when bearing is 150 deg
+      @panel.vector[:x].should == -0.43301270189221946
+    end
+    it "should return correct value for @panel.vector[:y]" do
+      #when bearing is 150 deg
+      @panel.vector[:y].should == 0.25
+    end
+    it "should return correct value for @panel.vector[:z]" do
+      #when tilt is 60 deg
+      @panel.vector[:z].should == 0.8660254037844386
+    end
   end
 end
