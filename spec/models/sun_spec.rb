@@ -20,18 +20,15 @@ describe Sun do
   end
   describe 'vector instance method' do# <<<
     #azimuth and elev figures pulled from ~/Documents/Spring/solar/elevations.ods
-    before { @sun.vector(0, 79.9693797693) }
+    before { @sun.vector(15, 79.9693797693) }
     it "should return correct value for @sun.vector[:x]" do
-      #when bearing is 150 deg
-      @panel.vector[:x].should == -0.43301270189221946
+      @sun.vector[:x].should == -0.13596743121474608
     end
     it "should return correct value for @sun.vector[:y]" do
-      #when bearing is 150 deg
-      @panel.vector[:y].should == 0.25
+      @sun.vector[:y].should == -0.03643236339092544
     end
     it "should return correct value for @sun.vector[:z]" do
-      #when tilt is 60 deg
-      @panel.vector[:z].should == 0.8660254037844386
+      @sun.vector[:z].should == 0.8660254037844386
     end
   end# >>>
 end
