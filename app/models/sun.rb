@@ -2,7 +2,6 @@ class Sun
 
   require 'core_ext/numeric'
   #return hash: vector[:x], [:y], [:z]
-  #TODO
   def vector(azimuth, elevation)# <<<
     vector = Hash.new
     hypotenuse = Math.cos(self.elevation.to_rad)
@@ -21,14 +20,26 @@ class Sun
     end
     return annual_elev
   end# >>>
+  #return hash of annual direct normal irradiance (KWh/sqm) for specific latitude
+  #table (or file) columns will be: latitude longitude dni(KWh/sqm)
+  #where dni will be a string to be converted in to a hash
+  #Array of dni values will be per EST hour
+  #0 values must be included so that time can be calculated from position in
+  #  array
+  #see ActiveRecord Serialize
+  #{ day1: [val1, val2...], day2: ... }
+  def annual_dni# <<<
+    #query database
+  end# >>>
   private
     #return declination in radians
     def self.declination(day)# <<<
       declination = Math.asin(Math.sin(0.40927970959267024) * Math.sin(0.017214206 * (day - 81))).abs
     end# >>>
     #enter latitude in degrees
-    #return elevation in radians for one day
+    #return hourly elevation in radians for one day
     #[elev1, elev2 ...] 
+    #TODO: match elevation times with time when DNI is measured.
     def self.daily_elevation(day, latitude)# <<<
       #hour angle, aka azimuth. 0 is midday at local solar time
       hra = [ 0, 15, 30, 45, 60, 75, 90, 105, 120, 135 ]
