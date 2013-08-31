@@ -59,7 +59,7 @@ describe Panel do
     it { should_not be_valid }
   end
 
-  describe 'vector instance method' do
+  describe 'vector instance method' do# <<<
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
       #when bearing is 150 deg
@@ -73,5 +73,5 @@ describe Panel do
       #when tilt is 60 deg
       @panel.vector[:z].should == 0.8660254037844386
     end
-  end
+  end# >>>
 end
