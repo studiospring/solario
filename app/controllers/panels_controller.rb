@@ -2,19 +2,6 @@ class PanelsController < ApplicationController
   def index# <<<
     @panels = Panel.all
   end# >>>
-  def new# <<<
-    @panel = Panel.new
-  end# >>>
-  def create# <<<
-    @panel = Panel.new(panel_params)
-
-    if @panel.save
-      flash[:success] = 'Panel created'
-      redirect_to @panel
-    else
-      render "new"
-    end
-  end# >>>
   def show# <<<
     @panel = Panel.find(params[:id])
   end# >>>
