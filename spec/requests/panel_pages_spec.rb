@@ -26,47 +26,6 @@ describe "Panels" do
 
     it { should have_link 'Add panel', href: new_panel_path }
   end# >>>
-  describe 'new page' do# <<<
-    let(:heading) { 'Add panel' }
-    let(:submit) { "Add Panel" }
-    before { visit new_panel_path }
-
-    it_should_behave_like 'all panel pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_button("Add Panel") }
-
-    describe 'with invalid inputs' do
-      it "should not create a new panel" do
-        expect { click_button submit }.not_to change(Panel, :count)
-      end
-
-      describe "error message" do
-        before { click_button submit }
-        it_should_behave_like 'all panel pages'
-        it { should have_content('error') }
-      end
-    end
-
-    describe 'with valid inputs' do
-      before do
-        fill_in "Tilt", with: panel.tilt
-        fill_in "Bearing", with: panel.bearing
-        fill_in "Panel size", with: panel.panel_size
-      end
-
-      it "should create a new panel" do
-        expect { click_button submit }.to change(Panel, :count).by(1)
-      end
-    end
-
-    describe 'after saving the panel' do
-      before { click_button submit }
-
-      it { should have_selector('h1', text: "Panel") }
-      it { should have_selector("div.alert-success", text: "Panel created") }
-    end
-    it { should have_link 'List of Panels', href: panels_path }
-  end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Panel' }
     let(:heading) { 'Panel' }
