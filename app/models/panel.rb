@@ -44,7 +44,9 @@ class Panel < ActiveRecord::Base
   #array
   def annual_dni_received(annual_dni)# <<<
     received_input = Hash.new
+    #TODO
     #how to get PvQuery.longitude?
+    #pass in as argument
     longitude = 130
     solar_time = SolarTime.new(longitude)
     365.times do |day|
@@ -57,7 +59,6 @@ class Panel < ActiveRecord::Base
           #pad with 0 values so that time can be deduced
           received_input[day] << 0
         else
-          #TODO: create this method!
           lst = SolarTime.to_lst(dni_time, time_correction)
           #TODO: create this method!
           #returns sun_position[:azimuth], sun_position[:elevation] sun_position = Sun.position_at(day, lst, latitude)
