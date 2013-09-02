@@ -30,5 +30,9 @@ class SolarTime
   def to_lst(local_hour, time_correction)# <<<
     lst = local_hour + (time_correction / 60)
   end# >>>
+  #return hour angle in radians
+  def hra(lst)# <<<
+    hra = 15.to_rad * (lst - 12)
+  end# >>>
   
 end
