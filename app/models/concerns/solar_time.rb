@@ -12,6 +12,11 @@ module SolarTime
     def b(day)# <<<
       b = (360 / 365.0)*(day - 81).to_rad
     end# >>>
+    #return Equation of Time in minutes
+    def eot(day)# <<<
+      b = self.b(day)
+      eot = 9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b)
+    end# >>>
     #convert EST to local solar time
     def to_lst# <<<
       lst = local_time + (self.time_correction_factor() / 60)
