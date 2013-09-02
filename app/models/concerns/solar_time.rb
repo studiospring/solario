@@ -17,10 +17,6 @@ module SolarTime
       b = self.b(day)
       eot = 9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b)
     end# >>>
-    #convert EST to local solar time
-    def to_lst# <<<
-      lst = local_time + (self.time_correction_factor() / 60)
-    end# >>>
   end# >>>
 
   #add instance methods here
@@ -28,9 +24,15 @@ module SolarTime
   #position and day of year
   def time_correction(day)# <<<
     #assume solar measurements are taken at EST (GMT/UTC + 10)
-    #therefore lstm is 15.to_rad * 10
+    #therefore lstm is 15 * 10
     lstm = 150
     time_correction = 4 * (self.longitude - lstm) + self.class.eot(day)
+  end# >>>
+  #convert local hour to local solar time in decimal notation
+  #insert 24hr hourly time: 9, 12, 13 ...
+  #and 13.5 is returned for 13:30pm
+  def to_lst(local_hour, time_correction)# <<<
+    lst = local_hour + (time_correction / 60)
   end# >>>
   
   #returns parent object of instance related by "has_child"

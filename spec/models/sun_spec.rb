@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Sun do
   let(:sun) { Sun.new }
+  before { @sun = sun }
   subject { @sun }
+
   describe 'declination method' do
     it "should return angle in radians" do
       Sun.declination(1).should == 0.4011850422065163
