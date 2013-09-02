@@ -8,7 +8,7 @@ module SolarTime
   module ClassMethods# <<<
     #refactor 'B' variable used in EoT and declination methods
     def b(day)# <<<
-      b = (360 / 365)*(day - 81)
+      b = (360 / 365.0)*(day - 81)
     end# >>>
     #convert EST to local solar time
     def to_lst# <<<
