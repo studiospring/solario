@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe SolarTime do
   let(:test_class) { Struct.new(:longitude) { include SolarTime } }
-  before { @solar_time = test_class.new(35) }
+  before { @solar_time = test_class.new(135) }
   subject { @solar_time }
 
   it "dummy instance has longitude attribute" do
-    @solar_time.longitude.should == 35
+    @solar_time.longitude.should == 135
   end
 
   describe 'class method' do
@@ -25,6 +25,12 @@ describe SolarTime do
     
   end
   describe 'instance method' do
+    describe 'time correction factor' do
+      before { @solar_time.time_correction(10) }
+      it "should correct the time wrt day and position" do
+        @solar_time.time_correction(10).should be_close(-67.499, 0.02)
+      end
+    end
     describe 'to_lst' do# <<<
       before { @solar_time.to_lst }
       it "should convert local time to local solar time" do
