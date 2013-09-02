@@ -19,8 +19,7 @@ describe SolarTime do
     describe 'EoT' do
       before { test_class.eot(10) }
       it "should return the Equation of Time for a given day" do
-        1.should == 1
-        #self.eot(10).should == 
+        test_class.eot(10).should be_close(-7.499, 0.002)
       end
     end
     
