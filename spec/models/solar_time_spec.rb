@@ -38,5 +38,11 @@ describe SolarTime do
         @solar_time.to_lst(14, -67.499).should be_close(12.88, 0.01)
       end
     end# >>>
+    describe 'hra' do
+      before { @solar_time.hra(12.88) }
+      it "should return the hour angle in radians" do
+        @solar_time.hra(12.88).should be_within(0.01).of(0.23)
+      end
+    end
   end
 end
