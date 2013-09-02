@@ -39,7 +39,6 @@ class Sun
     #enter latitude in degrees
     #return hourly elevation in radians for one day
     #[elev1, elev2 ...] 
-    #TODO: match elevation times with time when DNI is measured.
     def self.daily_elevation(day, latitude)# <<<
       #hour angle, aka azimuth. 0 is midday at local solar time
       hra = [ 0, 15, 30, 45, 60, 75, 90, 105, 120, 135 ]
