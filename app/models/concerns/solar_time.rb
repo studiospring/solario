@@ -1,14 +1,16 @@
 #add "include SolarTime" to model
 #To use this module, the base class must have a longitude attribute
 module SolarTime
+  require 'core_ext/numeric'
   def self.included(base)
     base.extend(ClassMethods)
   end
   
   module ClassMethods# <<<
     #refactor 'B' variable used in EoT and declination methods
+    #return radians
     def b(day)# <<<
-      b = (360 / 365.0)*(day - 81)
+      b = (360 / 365.0)*(day - 81).to_rad
     end# >>>
     #convert EST to local solar time
     def to_lst# <<<
