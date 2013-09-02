@@ -44,22 +44,23 @@ class Panel < ActiveRecord::Base
   #array
   def annual_dni_received(annual_dni)# <<<
     received_input = Hash.new
+    #how to get PvQuery.longitude?
+    longitude = 130
+    solar_time = SolarTime.new(longitude)
     365.times do |day|
       received_input[day] = Array.new
       #assume 5am is the Eastern Standard Time of first value
       dni_time = 5
-      #TODO: move method to Sun.rb
-      time_correction = Sun.time_correction(day)
+      time_correction = SolarTime.time_correction(day)
       annual_dni[day].each do |dni|
         if dni == 0
           #pad with 0 values so that time can be deduced
           received_input[day] << 0
         else
           #TODO: create this method!
-          lst = Sun.to_lst(dni_time, time_correction)
+          lst = SolarTime.to_lst(dni_time, time_correction)
           #TODO: create this method!
-          #returns sun_position[:azimuth], sun_position[:elevation]
-          sun_position = Sun.position_at(day, lst, latitude)
+          #returns sun_position[:azimuth], sun_position[:elevation] sun_position = Sun.position_at(day, lst, latitude)
           sun_vector = Sun.vector(sun_position[:azimuth], sun_position[:elevation])
           received_input[day] << self.relative_angle(sun_vector) * dni
         end
