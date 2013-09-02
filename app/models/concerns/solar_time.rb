@@ -24,6 +24,14 @@ module SolarTime
   end# >>>
 
   #add instance methods here
+  #return minutes by which local time should be corrected, to account for
+  #position and day of year
+  def time_correction(day)# <<<
+    #assume solar measurements are taken at EST (GMT/UTC + 10)
+    #therefore lstm is 15.to_rad * 10
+    lstm = 150
+    time_correction = 4 * (self.longitude - lstm) + self.class.eot(day)
+  end# >>>
   
   #returns parent object of instance related by "has_child"
   def parent# <<<
