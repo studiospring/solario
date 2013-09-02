@@ -32,10 +32,9 @@ describe SolarTime do
       end
     end
     describe 'to_lst' do# <<<
-      before { @solar_time.to_lst }
+      before { @solar_time.to_lst(14, -67.499) }
       it "should convert local time to local solar time" do
-        1.should == 1
-        #@dummy_class.to_lst.should == 
+        @solar_time.to_lst(14, -67.499).should be_close(12.88, 0.01)
       end
     end# >>>
   end
