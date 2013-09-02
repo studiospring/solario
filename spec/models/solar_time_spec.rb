@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe SolarTime do
-  let(:test_class) { Struct.new(:longitude) { include SolarTime } }
-  before { @solar_time = test_class.new(135) }
+  let(:solar_time) { SolarTime.new(:longitude) }
+  #let(:solar_time) { FactoryGirl.create(:solar_time) }
+  before { @solar_time = SolarTime.new(135) }
   subject { @solar_time }
 
   it "dummy instance has longitude attribute" do
@@ -11,15 +12,15 @@ describe SolarTime do
 
   describe 'class method' do
     describe 'b' do
-      before { test_class.b(10) }
+      before { @solar_time.b(10) }
       it "should return 'b' degrees for a given day" do
-        test_class.b(10).should be_close(-1.222, 0.002)
+        @solar_time.b(10).should be_close(-1.222, 0.002)
       end
     end
     describe 'EoT' do
-      before { test_class.eot(10) }
+      before { solar_time.eot(10) }
       it "should return the Equation of Time for a given day" do
-        test_class.eot(10).should be_close(-7.499, 0.002)
+        @solar_time.eot(10).should be_close(-7.499, 0.002)
       end
     end
     
