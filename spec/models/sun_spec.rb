@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Sun do
-  let(:sun) { Sun.new }
-  before { @sun = sun }
+  let(:sun) { Sun.new(:longitude, :day) }
+  before { @sun = Sun.new(135, 10) }
   subject { @sun }
 
   describe 'declination method' do
