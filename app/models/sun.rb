@@ -11,10 +11,15 @@ class Sun
   require 'core_ext/numeric'
   #return elevation of sun in radians
   def elevation(hra)# <<<
-    declination = self.declination
-    latitude = self.latitude.to_rad
-    hra = hra.to_rad
-    elevation = Math.asin(Math.sin(declination) * Math.sin(latitude) + Math.cos(declination) * Math.cos(latitude) * Math.cos(hra))
+    dec = self.declination
+    lat = self.latitude.to_rad
+    elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hra.to_rad))
+  end# >>>
+  #return azimuth in radians
+  def azimuth(hra)# <<<
+    dec = self.declination
+    lat = self.latitude.to_rad
+    azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra.to_rad) / Math.cos(self.elevation(hra))))
   end# >>>
   #return hash: vector[:x], [:y], [:z]
   def vector(azimuth, elevation)# <<<
