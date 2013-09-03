@@ -1,11 +1,16 @@
 class Sun
+  include SolarTime
+  attr_accessor :longitude, :day
+
+  def initialize(longitude, day)
+    @longitude = longitude
+    @day = day
+  end
 
   require 'core_ext/numeric'
   #return :azimuth and :elevation of sun
   def position# <<<
     #TODO
-    #should Sun and SolarTime be a subclass/superclass of pvquery, so that
-    #they can access longitude attribute?
     declination = Sun.declination()
     elevation = Math.asin(Math.sin(declination) * Math.sin(latitude) + Math.cos(declination) * Math.cos(latitude) * Math.cos(hra))
   end# >>>

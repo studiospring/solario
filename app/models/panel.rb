@@ -48,22 +48,23 @@ class Panel < ActiveRecord::Base
     #how to get PvQuery.longitude?
     #pass in as argument
     longitude = 130
-    solar_time = SolarTime.new(longitude)
-    365.times do |day|
-      received_input[day] = Array.new
+    sun = Sun.new(longitude)
+    365.times do |d|
+      sun.day = d
+      received_input[d] = Array.new
       #assume 5am is the Eastern Standard Time of first value
       dni_time = 5
-      time_correction = SolarTime.time_correction(day)
-      annual_dni[day].each do |dni|
+      time_correction = SolarTime.time_correction(d)
+      annual_dni[d].each do |dni|
         if dni == 0
           #pad with 0 values so that time can be deduced
-          received_input[day] << 0
+          received_input[d] << 0
         else
           lst = SolarTime.to_lst(dni_time, time_correction)
           #TODO: create this method!
-          #returns sun_position[:azimuth], sun_position[:elevation] sun_position = Sun.position_at(day, lst, latitude)
+          #returns sun_position[:azimuth], sun_position[:elevation] sun_position = Sun.position_at(d, lst, latitude)
           sun_vector = Sun.vector(sun_position[:azimuth], sun_position[:elevation])
-          received_input[day] << self.relative_angle(sun_vector) * dni
+          received_input[d] << self.relative_angle(sun_vector) * dni
         end
         dni_time = dni_time + 1
       end
