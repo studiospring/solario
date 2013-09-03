@@ -29,8 +29,8 @@ module SolarTime
   #convert local hour to local solar time in decimal notation
   #insert 24hr hourly time: 9, 12, 13 ...
   #and 13.5 is returned for 13:30pm
-  def to_lst(local_hour, time_correction)# <<<
-    lst = local_hour + (time_correction / 60)
+  def to_lst(local_hour)# <<<
+    lst = local_hour + (self.time_correction / 60)
   end# >>>
   #return hour angle in radians
   def hra(lst)# <<<
