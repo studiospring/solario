@@ -52,7 +52,7 @@ describe Panel do
     it { should_not be_valid }
   end
   describe 'when panel_size is not a number' do
-    before { @panel.panel_size = 'ABC' }
+    before { @panel.panel_size = 'abc' }
     it { should_not be_valid }
   end
   describe "when pv_query_id is not present" do

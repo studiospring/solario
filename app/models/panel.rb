@@ -12,8 +12,7 @@ class Panel < ActiveRecord::Base
                           numericality: { greater_than_or_equal_to: 0, 
                                           less_than_or_equal_to: 360 }
   validates :panel_size,  presence: true,
-                          format: { with: /^\d+\.?\d{0,2}$/,
-                                    multiline: true }
+                          numericality: { only_integer: true }
   validates :pv_query_id, presence: true
 
   #return hash: vector[:x], [:y], [:z]
@@ -24,11 +23,6 @@ class Panel < ActiveRecord::Base
     vector[:y] = hypotenuse * Math.sin(self.bearing.to_rad)
     vector[:z] = Math.sin(self.tilt.to_rad)
     return vector
-  end# >>>
-  #return angle of incident light relative to panel in radians (where 0 is
-  #directly perpendicular to panel surface)
-  def relative_angle(sun_vector)# <<<
-    angle = Math.acos((self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x]) / (Math.sqrt(Math.power(self.vector[:x]) + Math.power(self.vector[:y]) + Math.power(self.vector[:z])) + Math.sqrt(Math.power(sun_vector[:x]) + Math.power(sun_vector[:y]) + Math.power(sun_vector[:z]))))
   end# >>>
   #return input (Watts/sqm) for one hr from direct normal irradiance (dni)
   def hourly_direct_input(hourly_dni)# <<<
@@ -56,8 +50,8 @@ class Panel < ActiveRecord::Base
       #assume 5am is the Eastern Standard Time of first value
       dni_time = 5
       #time_correction = sun.time_correction
-      annual_dni[d].each do |dni|
-        if dni == 0
+      annual_dni[d].each do |hourly_dni|
+        if hourly_dni == 0
           #pad with 0 values so that time can be deduced
           received_input[d] << 0
         else
@@ -65,11 +59,17 @@ class Panel < ActiveRecord::Base
           lst = sun.to_lst(dni_time)
           hra = sun.hra(lst)
           sun_vector = sun.vector(hra)
-          received_input[d] << self.relative_angle(sun_vector) * dni
+          received_input[d] << self.relative_angle(sun_vector) * hourly_dni
         end
         dni_time = dni_time + 1
       end
     end
     return received_input
   end# >>>
+  private
+    #return angle of incident light relative to panel in radians (where 0 is
+    #directly perpendicular to panel surface)
+    def relative_angle(sun_vector)# <<<
+      angle = Math.acos((self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x]) / (Math.sqrt(Math.power(self.vector[:x]) + Math.power(self.vector[:y]) + Math.power(self.vector[:z])) + Math.sqrt(Math.power(sun_vector[:x]) + Math.power(sun_vector[:y]) + Math.power(sun_vector[:z]))))
+    end# >>>
 end
