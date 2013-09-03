@@ -38,7 +38,7 @@ class Panel < ActiveRecord::Base
   def hourly_output# <<<
     output = self.hourly_direct_input(dni)
   end# >>>
-  #return hash of hourly energy input received by panel for whole year (KWh/sqm)
+  #return hash of hourly Direct Normal Insolation received by panel for whole year (KWh/sqm)
   #{ day1: [KWh1, KWh2...]... }
   #0 KWh values must be included so that time can be calculated from position in
   #array
@@ -47,23 +47,24 @@ class Panel < ActiveRecord::Base
     #TODO
     #how to get PvQuery.longitude?
     #pass in as argument
+    latitude = -20
     longitude = 130
-    sun = Sun.new(longitude)
+    sun = Sun.new(latitude, longitude, 1)
     365.times do |d|
       sun.day = d
       received_input[d] = Array.new
       #assume 5am is the Eastern Standard Time of first value
       dni_time = 5
-      time_correction = SolarTime.time_correction(d)
+      #time_correction = sun.time_correction
       annual_dni[d].each do |dni|
         if dni == 0
           #pad with 0 values so that time can be deduced
           received_input[d] << 0
         else
-          lst = SolarTime.to_lst(dni_time, time_correction)
-          #TODO: create this method!
-          #returns sun_position[:azimuth], sun_position[:elevation] sun_position = Sun.position_at(d, lst, latitude)
-          sun_vector = Sun.vector(sun_position[:azimuth], sun_position[:elevation])
+          #TODO refactor
+          lst = sun.to_lst(dni_time)
+          hra = sun.hra(lst)
+          sun_vector = sun.vector(hra)
           received_input[d] << self.relative_angle(sun_vector) * dni
         end
         dni_time = dni_time + 1
