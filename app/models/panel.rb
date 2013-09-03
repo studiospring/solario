@@ -12,6 +12,7 @@ class Panel < ActiveRecord::Base
                           numericality: { greater_than_or_equal_to: 0, 
                                           less_than_or_equal_to: 360 }
   validates :panel_size,  presence: true,
+                          #tests for floating point numbers as well
                           numericality: { only_integer: true }
   validates :pv_query_id, presence: true
 

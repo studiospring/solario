@@ -1,7 +1,5 @@
 module SolarTime
   require 'core_ext/numeric'
-    #refactor 'B' variable used in EoT and declination methods
-    #return radians
   def self.included(base)
     base.extend(ClassMethods)
   end
@@ -9,6 +7,8 @@ module SolarTime
   module ClassMethods# <<<
   end
 
+  #refactor 'B' variable used in EoT and declination methods
+  #return radians
   def b# <<<
     b = (360 / 365.0)*(self.day - 81).to_rad
   end# >>>
