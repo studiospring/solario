@@ -31,16 +31,14 @@ describe Sun do
     end
   end
   describe 'vector instance method' do# <<<
-    #azimuth and elev figures pulled from ~/Documents/Spring/solar/elevations.ods
-    before { @sun.vector(15, 79.9693797693) }
     it "should return correct value for @sun.vector[:x]" do
-      @sun.vector[:x].should == -0.13596743121474608
+      @sun.vector(15)[:x].should be_within(0.001).of(0.5525055229287719)
     end
     it "should return correct value for @sun.vector[:y]" do
-      @sun.vector[:y].should == -0.03643236339092544
+      @sun.vector(15)[:y].should be_within(0.001).of(0.4302532563734195)
     end
     it "should return correct value for @sun.vector[:z]" do
-      @sun.vector[:z].should == 0.8660254037844386
+      @sun.vector(15)[:z].should be_within(0.001).of(0.7138765877329729)
     end
   end# >>>
 end
