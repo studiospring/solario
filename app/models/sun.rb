@@ -22,12 +22,14 @@ class Sun
     azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra.to_rad) / Math.cos(self.elevation(hra))))
   end# >>>
   #return hash: vector[:x], [:y], [:z]
-  def vector(azimuth, elevation)# <<<
+  def vector(hra)# <<<
     vector = Hash.new
-    hypotenuse = Math.cos(self.elevation.to_rad)
-    vector[:x] = hypotenuse * Math.cos(self.azimuth.to_rad)
-    vector[:y] = hypotenuse * Math.sin(self.azimuth.to_rad)
-    vector[:z] = Math.sin(self.elevation.to_rad)
+    elev = self.elevation(hra)
+    az = self.azimuth(hra)
+    hypotenuse = Math.cos(elev)
+    vector[:x] = hypotenuse * Math.cos(az)
+    vector[:y] = hypotenuse * Math.sin(az)
+    vector[:z] = Math.sin(elev)
     return vector
   end# >>>
   #enter latitude in degrees
