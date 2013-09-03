@@ -10,6 +10,11 @@ describe Sun do
       @sun.elevation(15).should be_within(0.001).of(0.795018539487432)
     end
   end
+  describe 'azimuth method' do
+    it "should return azimuth in radians" do
+      @sun.azimuth(15).should be_within(0.001).of(0.6616369131917649)
+    end
+  end
   describe 'declination method' do
     it "should return angle in radians" do
       @sun.declination.should be_within(0.001).of(0.38333384764823003) 
