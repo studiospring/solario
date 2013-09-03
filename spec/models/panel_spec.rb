@@ -14,7 +14,8 @@ describe Panel do
 
   it { should be_valid }
 
-  describe 'when tilt is not present' do
+  #validation
+  describe 'when tilt is not present' do# <<<
     before { @panel.tilt = ' ' }
     it { should_not be_valid }
   end
@@ -57,8 +58,7 @@ describe Panel do
   describe "when pv_query_id is not present" do
     before { @panel.pv_query_id = nil }
     it { should_not be_valid }
-  end
-
+  end# >>>
   describe 'vector instance method' do# <<<
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
@@ -74,4 +74,7 @@ describe Panel do
       @panel.vector[:z].should == 0.8660254037844386
     end
   end# >>>
+  #describe 'annual_dni_received method' do
+    #before { @panel.annual_dni_received() }
+  #end
 end
