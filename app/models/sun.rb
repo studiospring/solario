@@ -1,5 +1,6 @@
 class Sun
   include SolarTime
+  require 'core_ext/numeric'
   attr_accessor :latitude, :longitude, :day
 
   def initialize(latitude, longitude, day)
@@ -8,30 +9,6 @@ class Sun
     @day = day
   end
 
-  require 'core_ext/numeric'
-  #return elevation of sun in radians
-  def elevation(hra)# <<<
-    dec = self.declination
-    lat = self.latitude.to_rad
-    elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hra.to_rad))
-  end# >>>
-  #return azimuth in radians
-  def azimuth(hra)# <<<
-    dec = self.declination
-    lat = self.latitude.to_rad
-    azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra.to_rad) / Math.cos(self.elevation(hra))))
-  end# >>>
-  #return hash: vector[:x], [:y], [:z]
-  def vector(hra)# <<<
-    vector = Hash.new
-    elev = self.elevation(hra)
-    az = self.azimuth(hra)
-    hypotenuse = Math.cos(elev)
-    vector[:x] = hypotenuse * Math.cos(az)
-    vector[:y] = hypotenuse * Math.sin(az)
-    vector[:z] = Math.sin(elev)
-    return vector
-  end# >>>
   #enter latitude in degrees
   #return hourly elevation in radians for every day of year
   #{ day1: [elev1, elev2...], day2: [elev1, elev2..]...}
@@ -53,6 +30,17 @@ class Sun
   def annual_dni# <<<
     #query database
   end# >>>
+  #return hash: vector[:x], [:y], [:z]
+  def vector(hra)# <<<
+    vector = Hash.new
+    elev = self.elevation(hra)
+    az = self.azimuth(hra)
+    hypotenuse = Math.cos(elev)
+    vector[:x] = hypotenuse * Math.cos(az)
+    vector[:y] = hypotenuse * Math.sin(az)
+    vector[:z] = Math.sin(elev)
+    return vector
+  end# >>>
   #private
     #return declination in radians
     def declination# <<<
@@ -73,5 +61,17 @@ class Sun
       end
       daily_elev = Array.new
       daily_elev = pm_elev.drop(1).reverse + pm_elev
+    end# >>>
+    #return elevation of sun in radians
+    def elevation(hra)# <<<
+      dec = self.declination
+      lat = self.latitude.to_rad
+      elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hra.to_rad))
+    end# >>>
+    #return azimuth in radians
+    def azimuth(hra)# <<<
+      dec = self.declination
+      lat = self.latitude.to_rad
+      azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra.to_rad) / Math.cos(self.elevation(hra))))
     end# >>>
 end
