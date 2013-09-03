@@ -1,13 +1,18 @@
 require 'spec_helper'
 
 describe Sun do
-  let(:sun) { Sun.new(:longitude, :day) }
-  before { @sun = Sun.new(135, 10) }
+  let(:sun) { Sun.new(:latitude, :longitude, :day) }
+  before { @sun = Sun.new(-20, 135, 10) }
   subject { @sun }
 
+  describe 'elevation method' do
+    it "should return elevation in radians" do
+      @sun.elevation(15).should be_within(0.001).of(0.795018539487432)
+    end
+  end
   describe 'declination method' do
     it "should return angle in radians" do
-      Sun.declination(1).should == 0.4011850422065163
+      @sun.declination.should be_within(0.001).of(0.38333384764823003) 
     end
   end
   describe 'daily_elevation method' do

@@ -1,17 +1,19 @@
 class Sun
   include SolarTime
-  attr_accessor :longitude, :day
+  attr_accessor :latitude, :longitude, :day
 
-  def initialize(longitude, day)
+  def initialize(latitude, longitude, day)
+    @latitude = latitude
     @longitude = longitude
     @day = day
   end
 
   require 'core_ext/numeric'
-  #return :azimuth and :elevation of sun
-  def position# <<<
-    #TODO
-    declination = Sun.declination()
+  #return elevation of sun in radians
+  def elevation(hra)# <<<
+    declination = self.declination
+    latitude = self.latitude.to_rad
+    hra = hra.to_rad
     elevation = Math.asin(Math.sin(declination) * Math.sin(latitude) + Math.cos(declination) * Math.cos(latitude) * Math.cos(hra))
   end# >>>
   #return hash: vector[:x], [:y], [:z]
@@ -44,10 +46,10 @@ class Sun
   def annual_dni# <<<
     #query database
   end# >>>
-  private
+  #private
     #return declination in radians
-    def self.declination(day)# <<<
-      declination = Math.asin(Math.sin(0.40927970959267024) * Math.sin(0.017214206 * (day - 81))).abs
+    def declination# <<<
+      declination = Math.asin(0.3979486313076103 * Math.sin(0.017214206 * (self.day - 81))).abs
     end# >>>
     #enter latitude in degrees
     #return hourly elevation in radians for one day
