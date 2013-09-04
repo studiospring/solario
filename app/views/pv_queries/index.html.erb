@@ -17,6 +17,7 @@ index<% end %>
   <thead>
     <tr>
       <th>Postcode</th>
+      <th>Created</th>
       <th></th>
       <th></th>
       <th></th>
@@ -26,6 +27,7 @@ index<% end %>
   <% @pv_queries.each do |pv_query| %>
     <tr>
       <td><%= pv_query.postcode %></td>
+      <td><%= l pv_query.created_at, format: :short %></td>
       <td><%= link_to 'Show', pv_query %></td>
       <td><%= link_to 'Edit', edit_pv_query_path(pv_query) %></td>
       <td><%= link_to 'Delete', pv_query, confirm: "Are you sure?", method: :delete %></td>
