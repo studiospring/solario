@@ -1,21 +1,20 @@
 source 'https://rubygems.org'
-
+#ruby '2.0.0'
 #gem 'rails', '4.0.0'
 gem 'rails', github: 'rails/rails', branch: '4-0-stable'
 
-# Use sqlite3 as the database for Active Record
 gem 'pg', '0.15.1' #postgres
 
 group :assets do
   # Use CoffeeScript for .js.coffee assets and views
   gem 'coffee-rails'
   # Use SCSS for stylesheets
-  #gem 'sass-rails', '~> 4.0.0'
   # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '>= 1.3.0'
 end
   #put this outside assets group, or heroku will complain
   gem 'bootstrap-sass'
+  gem 'sass-rails', '~> 4.0.0'
 
 group :development, :test do
   gem 'rspec-rails'
