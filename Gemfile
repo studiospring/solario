@@ -11,10 +11,11 @@ group :assets do
   gem 'coffee-rails'
   # Use SCSS for stylesheets
   #gem 'sass-rails', '~> 4.0.0'
-  gem 'bootstrap-sass'
   # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '>= 1.3.0'
 end
+  #put this outside assets group, or heroku will complain
+  gem 'bootstrap-sass'
 
 group :development, :test do
   gem 'rspec-rails'
