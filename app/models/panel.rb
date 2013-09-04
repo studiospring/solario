@@ -16,7 +16,8 @@ class Panel < ActiveRecord::Base
                           #tests for floating point numbers as well
                           #numericality: { only_integer: true }
                           format: { with: /\A\d+\.?\d{0,2}\Z/ }
-  validates :pv_query_id, presence: true
+  #prevents form from being submitted
+  #validates :pv_query_id, presence: true
 
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
