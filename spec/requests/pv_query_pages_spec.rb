@@ -55,6 +55,8 @@ describe "PvQuery" do
 
       it "should create a new pv_query" do
         expect { click_button submit }.to change(PvQuery, :count).by(1)
+      end
+      it "should create a new panel" do
         expect { click_button submit }.to change(Panel, :count).by(1)
       end
 
