@@ -55,10 +55,11 @@ describe Panel do
     before { @panel.panel_size = 'abc' }
     it { should_not be_valid }
   end
-  describe "when pv_query_id is not present" do
-    before { @panel.pv_query_id = nil }
-    it { should_not be_valid }
-  end# >>>
+  #prevents form from being submitted
+  #describe "when pv_query_id is not present" do
+    #before { @panel.pv_query_id = nil }
+    #it { should_not be_valid }
+  #end# >>>
   describe 'vector instance method' do# <<<
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
