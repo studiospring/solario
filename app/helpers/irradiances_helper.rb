@@ -1,0 +1,2 @@
+module IrradiancesHelper
+end
