@@ -1,4 +1,6 @@
 Solar::Application.routes.draw do
+  resources :irradiances
+
   resources :panels
 
   resources :pv_queries do
