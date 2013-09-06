@@ -75,7 +75,21 @@ describe Panel do
       @panel.vector[:z].should == 0.8660254037844386
     end
   end# >>>
-  #describe 'annual_dni_received method' do
+  describe 'annual_dni_received method' do# <<<
     #before { @panel.annual_dni_received() }
-  #end
+    it "should return a very big hash" do
+      pending 'dummy data'
+    end
+  end# >>>
+  describe 'annual_diffuse_received method' do# <<<
+    #before { @panel.annual_dni_received() }
+    it "should return a very big hash" do
+      pending 'dummy data'
+    end
+  end# >>>
+  describe 'avg_annual_ouput method' do# <<<
+    it "should return the energy output of the panel" do
+      pending 'annual_dni_received method'
+    end
+  end# >>>
 end
