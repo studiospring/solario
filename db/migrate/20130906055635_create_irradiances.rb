@@ -8,6 +8,6 @@ class CreateIrradiances < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :irradiances, postcode_id
+    add_index :irradiances, [:postcode_id]
   end
 end
