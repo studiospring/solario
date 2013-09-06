@@ -5,7 +5,7 @@ module SolarTime
   end
   
   module ClassMethods# <<<
-  end
+  end# >>>
 
   #refactor 'B' variable used in EoT and declination methods
   #return radians

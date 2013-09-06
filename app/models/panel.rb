@@ -28,6 +28,7 @@ class Panel < ActiveRecord::Base
     vector[:z] = Math.sin(self.tilt.to_rad)
     return vector
   end# >>>
+  #no longer necessary?
   #return input (Watts/sqm) for one hr from direct normal irradiance (dni)
   def hourly_direct_input(hourly_dni)# <<<
     input = hourly_dni * Math.cos(self.relative_angle())
@@ -69,6 +70,42 @@ class Panel < ActiveRecord::Base
       end
     end
     return received_input
+  end# >>>
+  #return hash of hourly diffuse insolation received by panel for whole year (KWh/sqm)
+  #{ day1: [KWh1, KWh2...]... }
+  #0 KWh values must be included so that time can be calculated from position in
+  #array
+  def annual_diffuse_received# <<<
+    #TODO
+  end# >>>
+  #add annual insolation hash to return total energy received
+  def self.annual_received_total(annual_received_hash)# <<<
+    annual_total = 0
+    annual_received_hash. each do |day, hourly_dni|
+      #add array
+      daily_total = hourly_dni.inject(:+)
+      annual_total = annual_total + daily_total
+    end
+    return annual_total
+  end# >>>
+  #currently not in use
+  #efficiency must have 0 in front! eg 0.99
+  def self.average_efficiency(lifespan, efficiency)# <<<
+    total = 0
+    (1...lifespan).times do |year|
+      total = total + efficiency ** year
+    end
+    avg = total / lifespan
+  end# >>>
+  #return KW/yr? taking in to account compound depreciated inefficiency, age of panel, etc
+  def avg_annual_output(annual_dni_received, annual_diffuse_received)# <<<
+    lifespan = 20
+    total_dni = Panel.annual_received_total(annual_dni_received)
+    total_diffuse = Panel.annual_received_total(annual_diffuse_received)
+    annual_input = total_dni + total_diffuse
+    #assume compound efficiency of 99%pa
+    average_efficiency = 0.9
+    annual_output = annual_input * average_efficiency
   end# >>>
   private
     #return angle of incident light relative to panel in radians (where 0 is
