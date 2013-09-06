@@ -4,7 +4,7 @@ class PvQuery < ActiveRecord::Base
   accepts_nested_attributes_for :panels#, reject_if: lambda { |a| a[:tilt].blank? }
 
   validates :postcode,  presence: true,
-                        length: { maximum: 4 },
-                        numericality: { only_integer: true }
+    length: { maximum: 4 },
+    numericality: { only_integer: true }
 
 end

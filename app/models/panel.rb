@@ -4,18 +4,18 @@ class Panel < ActiveRecord::Base
   belongs_to :pv_query
 
   validates :tilt,        presence: true,
-                          length: { maximum: 2 },
-                          numericality: { greater_than_or_equal_to: 0,
-                                          less_than_or_equal_to: 90 }
+    length: { maximum: 2 },
+    numericality: { greater_than_or_equal_to: 0,
+      less_than_or_equal_to: 90 }
   validates :bearing,     presence: true,
-                          length: { maximum: 3 },
-                          numericality: { greater_than_or_equal_to: 0, 
-                                          less_than_or_equal_to: 360 }
+    length: { maximum: 3 },
+    numericality: { greater_than_or_equal_to: 0, 
+      less_than_or_equal_to: 360 }
   validates :panel_size,  presence: true,
-                          #TODO still not working
-                          #tests for floating point numbers as well
-                          #numericality: { only_integer: true }
-                          format: { with: /\A\d+\.?\d{0,2}\Z/ }
+    #TODO still not working
+    #tests for floating point numbers as well
+    #numericality: { only_integer: true }
+    format: { with: /\A\d+\.?\d{0,2}\Z/ }
   #prevents form from being submitted
   #validates :pv_query_id, presence: true
 
