@@ -1,11 +1,10 @@
 <%= form_for @irradiance, :validate => true do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-
   
-    <%= f.label :direct %><br />
+    <%= f.label :direct, "Direct irradiance" %><br />
     <%= f.text_area :direct %>
   
-    <%= f.label :diffuse %><br />
+    <%= f.label :diffuse, "Diffuse irradiance" %><br />
     <%= f.text_area :diffuse %>
   
     <%= f.label :postcode_id %><br />
