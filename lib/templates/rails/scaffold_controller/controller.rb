@@ -10,7 +10,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 
     if @<%= orm_instance.save %>
-      flash[:success] = <%= "'#{human_name} created'" %>
+      flash[:success] = <%= "'New #{singular_table_name} created'" %>
       redirect_to @<%= singular_table_name %>
     else
       render "new"
