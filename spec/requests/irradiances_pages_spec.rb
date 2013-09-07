@@ -17,7 +17,6 @@ describe "Irradiances" do
 
     it "should list each irradiance" do
       Irradiance.all.each do |irradiance|
-        page.should have_selector('td', text: irradiance)
         page.should have_selector('td', text: postcode)
         page.should have_link('Show', href: irradiance_path(irradiance))
         page.should have_link('Delete', href: irradiance_path(irradiance))
@@ -121,7 +120,7 @@ describe "Irradiances" do
     describe 'after saving the irradiance' do
       before { click_button submit }
 
-      it { should have_selector('h1', text: "irradiance") }
+      it { should have_selector('h1', text: "Irradiance") }
       it { should have_selector("div.alert-success", text: "Irradiance updated") }
     end
   end# >>>
