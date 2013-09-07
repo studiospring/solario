@@ -18,9 +18,11 @@ describe "Irradiances" do
     it "should list each irradiance" do
       Irradiance.all.each do |irradiance|
         page.should have_selector('td', text: irradiance)
+        page.should have_selector('td', text: postcode)
         page.should have_link('Show', href: irradiance_path(irradiance))
         page.should have_link('Delete', href: irradiance_path(irradiance))
         expect { click_link 'Delete', href: irradiance_path(irradiance) }.to change(Irradiance, :count).by(-1)
+        expect { click_link 'Delete', href: irradiance_path(irradiance) }.not_to change(Postcode, :count).by(-1)
       end
     end
 
@@ -49,12 +51,17 @@ describe "Irradiances" do
 
     describe 'with valid inputs' do
       before do
+        fill_in 'Direct irradiance', with: irradiance.direct
+        fill_in 'Diffuse irradiance', with: irradiance.diffuse
         #TODO
-        #fill_in 
+        #fill_in 'Postcode', with: #???
       end
 
       it "should create a new irradiance" do
         expect { click_button submit }.to change(Irradiance, :count).by(1)
+      end
+      it "should associate with the correct postcode" do
+        pending 'figuring out how to do it'
       end
     end
 
@@ -89,11 +96,11 @@ describe "Irradiances" do
     it { should have_button('Update Irradiance') }
 
     describe 'with invalid inputs' do
-      #before do
+      before do
         #TODO
-        #fill_in "State", with: " "
-        #click_button submit 
-      #end
+        fill_in "Direct irradiance", with: "  "
+        click_button submit 
+      end
 
       describe "error message" do
         it_should_behave_like 'all irradiance pages'
@@ -104,7 +111,9 @@ describe "Irradiances" do
     describe 'with valid inputs' do
       before do
         #TODO
-        #fill_in 
+        fill_in "Direct irradiance", with: "123"
+        fill_in "Diffuse irradiance", with: "321"
+        #fill_in "Postcode_id", with: "3211"
       end
 
     end
