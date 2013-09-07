@@ -97,7 +97,7 @@ describe "Irradiances" do
     describe 'with invalid inputs' do
       before do
         #TODO
-        fill_in "Direct irradiance", with: "  "
+        fill_in "Direct irradiance", with: ""
         click_button submit 
       end
 
