@@ -21,4 +21,11 @@ FactoryGirl.define do
     pv_query
   end
 
+  factory :irradiance do
+    direct "dummy"
+    diffuse "dummy"
+    
+    postcode
+  end
+
 end
