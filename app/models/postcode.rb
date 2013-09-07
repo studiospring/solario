@@ -1,4 +1,5 @@
 class Postcode < ActiveRecord::Base
+  has_one :irradiance
   validates :pcode,     presence: true,
     length: { maximum: 4 },
     numericality: { only_integer: true }
