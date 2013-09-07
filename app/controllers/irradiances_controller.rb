@@ -1,4 +1,3 @@
-
 class IrradiancesController < ApplicationController
   def index# <<<
     @irradiances = Irradiance.all
@@ -10,7 +9,7 @@ class IrradiancesController < ApplicationController
     @irradiance = Irradiance.new(irradiance_params)
 
     if @irradiance.save
-      flash[:success] = 'Irradiance created'
+      flash[:success] = 'New irradiance created'
       redirect_to @irradiance
     else
       render "new"
