@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Irradiance do
   let(:postcode) { FactoryGirl.create(:postcode) }
-  before { @irradiance = postcode.irradiance.build(direct: "dummy1", diffuse: "dummy2") }
+  before { @irradiance = postcode.build_irradiance(direct: "dummy1", diffuse: "dummy2") }
   subject { @irradiance }
 
   it { should respond_to(:direct) }
   it { should respond_to(:diffuse) }
-  it { should respond_to(:pv_query_id) }
-  it { should respond_to(:pv_query) }
-  its(:pv_query) { should eq pv_query }
+  it { should respond_to(:postcode_id) }
+  it { should respond_to(:postcode) }
+  its(:postcode) { should eq postcode }
 
   it { should be_valid }
 
