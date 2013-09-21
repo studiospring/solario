@@ -53,7 +53,7 @@ describe "Irradiances" do
         fill_in 'Direct irradiance', with: irradiance.direct
         fill_in 'Diffuse irradiance', with: irradiance.diffuse
         #TODO
-        #fill_in 'Postcode', with: #???
+        fill_in 'Postcode_id', with: 2
       end
 
       it "should create a new irradiance" do
@@ -67,7 +67,7 @@ describe "Irradiances" do
     describe 'after saving the irradiance' do
       before { click_button submit }
 
-      it { should have_selector('h1', text: "irradiance") }
+      it { should have_selector('h1', text: "Irradiance") }
       it { should have_selector("div.alert-success", text: "New irradiance created") }
     end
     it { should have_link 'List of Irradiances', href: irradiances_path }
