@@ -52,7 +52,6 @@ describe "Irradiances" do
       before do
         fill_in 'Direct irradiance', with: irradiance.direct
         fill_in 'Diffuse irradiance', with: irradiance.diffuse
-        #TODO
         fill_in 'Postcode_id', with: 2
       end
 

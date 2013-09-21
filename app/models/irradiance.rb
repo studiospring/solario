@@ -1,7 +1,7 @@
 class Irradiance < ActiveRecord::Base
   belongs_to :postcode
-  serialize :direct, JSON
-  serialize :diffuse, JSON
+  #serialize :direct
+  #serialize :diffuse
     
   validates :direct,       presence: true
   validates :diffuse,      presence: true

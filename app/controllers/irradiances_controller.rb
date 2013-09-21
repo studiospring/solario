@@ -7,7 +7,6 @@ class IrradiancesController < ApplicationController
   end# >>>
   def create# <<<
     @irradiance = Irradiance.new(irradiance_params)
-
     if @irradiance.save
       flash[:success] = 'New irradiance created'
       redirect_to @irradiance
