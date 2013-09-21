@@ -28,4 +28,3 @@ class PanelsController < ApplicationController
       params.require(:panel).permit(:tilt, :bearing, :panel_size)
     end # >>>
 end
-

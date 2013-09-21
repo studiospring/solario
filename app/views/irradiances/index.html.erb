@@ -13,10 +13,12 @@ index<% end %>
     <col />
     <col />
     <col />
+    <col />
   </colgroup>
   <thead>
     <tr>
       <th>Postcode</th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -25,10 +27,11 @@ index<% end %>
   <tbody>
   <% @irradiances.each do |irradiance| %>
     <tr>
-      <td><%= irradiance.postcode.pcode %></td>
+      <td><%= irradiance.postcode %></td>
+      <td><%= irradiance.direct %></td>
       <td><%= link_to 'Show', irradiance %></td>
       <td><%= link_to 'Edit', edit_irradiance_path(irradiance) %></td>
-      <td><%= link_to 'Delete', irradiance, confirm: "Are you sure?", method: :delete %></td>
+      <td><%= link_to 'Delete', irradiance, data: { confirm: 'Are you sure?' }, method: :delete %></td>
     </tr>
   <% end %>
   </tbody>
