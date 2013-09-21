@@ -30,7 +30,7 @@ index<% end %>
       <td><%= l pv_query.created_at, format: :short %></td>
       <td><%= link_to 'Show', pv_query %></td>
       <td><%= link_to 'Edit', edit_pv_query_path(pv_query) %></td>
-      <td><%= link_to 'Delete', pv_query, confirm: "Are you sure?", method: :delete %></td>
+      <td><%= link_to 'Delete', pv_query, data: { confirm: 'Are you sure?' }, method: :delete %></td>
     </tr>
   <% end %>
   </tbody>
