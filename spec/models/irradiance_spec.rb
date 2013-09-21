@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Irradiance do
   let(:postcode) { FactoryGirl.create(:postcode) }
-  before { @irradiance = postcode.build_irradiance(direct: "dummy1", diffuse: "dummy2") }
+  before { @irradiance = postcode.build_irradiance(FactoryGirl.attributes_for(:irradiance)) }
   subject { @irradiance }
 
   it { should respond_to(:direct) }
