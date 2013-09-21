@@ -38,7 +38,7 @@ class IrradiancesController < ApplicationController
   private
     def irradiance_params# <<<
       #enter mass assignable fields here
-      params.require(:irradiance).permit()
+      params.require(:irradiance).permit(:direct, :diffuse, :postcode_id)
     end # >>>
 end
 
