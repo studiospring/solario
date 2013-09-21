@@ -24,7 +24,12 @@ index<% end %>
     
       <tr>
         <td>Postcode</td>
-        <td><%= @irradiance.postcode_id %></td>
+        <td><%= @irradiance.postcode.pcode %></td>
+      </tr>
+    
+      <tr>
+        <td>Postcode_id</td>
+        <td><%= @irradiance.postcode.id %></td>
       </tr>
     
   </tbody>
