@@ -30,7 +30,7 @@ index<% end %>
         <td><%= panel.panel_size %></td>
         <td><%= link_to 'Show', panel %></td>
       <td><%= link_to 'Edit', edit_panel_path(panel) %></td>
-      <td><%= link_to 'Delete', panel, confirm: "Are you sure?", method: :delete %></td>
+      <td><%= link_to 'Delete', panel, data: { confirm: 'Are you sure?' }, method: :delete %></td>
     </tr>
   <% end %>
   </tbody>
