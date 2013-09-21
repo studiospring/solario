@@ -27,8 +27,8 @@ index<% end %>
   <tbody>
   <% @irradiances.each do |irradiance| %>
     <tr>
-      <td><%= irradiance.postcode %></td>
-      <td><%= irradiance.direct %></td>
+      <td><%= irradiance.postcode.pcode %></td>
+      <td><%= irradiance.postcode.suburb %></td>
       <td><%= link_to 'Show', irradiance %></td>
       <td><%= link_to 'Edit', edit_irradiance_path(irradiance) %></td>
       <td><%= link_to 'Delete', irradiance, data: { confirm: 'Are you sure?' }, method: :delete %></td>
