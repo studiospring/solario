@@ -57,14 +57,16 @@ class Panel < ActiveRecord::Base
     annual_dni.each do |key, daily_dni|
       #assume 6am is the Universal Time of first value
       dni_time = 6
-      daily_dni.map do |dni|
+      new_daily_dni = Array.new
+      daily_dni.collect do |dni|
         #TODO refactor
         lst = sun.to_lst(dni_time)
         hra = sun.hra(lst)
         sun_vector = sun.vector(hra)
-        dni * self.relative_angle(sun_vector)
+        new_daily_dni << (dni * self.relative_angle(sun_vector)).round(2)
         dni_time = dni_time + 3
       end
+      annual_dni[key] = new_daily_dni
     end
     #12.times do |m|# <<<
       #months = %w{jan feb mar apr may jun jul aug sep oct nov dec}
@@ -153,6 +155,6 @@ class Panel < ActiveRecord::Base
     #directly perpendicular to panel surface)
     def relative_angle(sun_vector)# <<<
       panel_vector = self.vector
-      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x]) / (Math.sqrt(panel_vector[:x] ** 2 + panel_vector[:y] ** 2 + panel_vector[:z] ** 2) + Math.sqrt(sun_vector[:x] ** 2 + sun_vector[:y] ** 2 + sun_vector[:z] ** 2)))
+      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x]) / (Math.sqrt(panel_vector[:x] ** 2 + panel_vector[:y] ** 2 + panel_vector[:z] ** 2) + Math.sqrt(sun_vector[:x] ** 2 + sun_vector[:y] ** 2 + sun_vector[:z] ** 2))).round(2)
     end# >>>
 end
