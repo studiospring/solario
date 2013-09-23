@@ -45,6 +45,7 @@ class Panel < ActiveRecord::Base
   #annual_dni is irradiances.direct string
   def annual_dni_received(annual_dni)# <<<
     annual_dni = annual_dni.data_string_to_hash(12, 5)
+    #return annual_dni
     #received_input = Hash.new
     #TODO
     #how to get PvQuery.longitude?

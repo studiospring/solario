@@ -12,9 +12,9 @@ class String
     annual_increment.times do |count|
       one_day = Array.new
       daily_increment.times do 
-        one_day << data_array.shift
+        one_day << data_array.shift.to_f
       end
-      data_hash[:count] = one_day
+      data_hash[count] = one_day
     end
     return data_hash
   end
