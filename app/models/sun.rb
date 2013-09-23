@@ -1,7 +1,7 @@
 class Sun
   include SolarTime
   require 'core_ext/numeric'
-  attr_accessor :latitude, :longitude, :day, :month
+  attr_accessor :latitude, :longitude, :day
 
   def initialize(latitude, longitude, day)
     @latitude = latitude

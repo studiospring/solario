@@ -1,23 +1,24 @@
 class Panel < ActiveRecord::Base
   require 'core_ext/numeric'
+  require 'core_ext/string'
 
   belongs_to :pv_query
 
-  validates :tilt,        presence: true,
-    length: { maximum: 2 },
-    numericality: { greater_than_or_equal_to: 0,
-      less_than_or_equal_to: 90 }
+  validates :tilt,        presence: true, 
+                          length: { maximum: 2 },
+                          numericality: { greater_than_or_equal_to: 0,
+                          less_than_or_equal_to: 90 }
   validates :bearing,     presence: true,
-    length: { maximum: 3 },
-    numericality: { greater_than_or_equal_to: 0, 
-      less_than_or_equal_to: 360 }
+                          length: { maximum: 3 },
+                          numericality: { greater_than_or_equal_to: 0, 
+                          less_than_or_equal_to: 360 }
   validates :panel_size,  presence: true,
-    #TODO still not working
-    #tests for floating point numbers as well
-    #numericality: { only_integer: true }
-    format: { with: /\A\d+\.?\d{0,2}\Z/ }
-  #prevents form from being submitted
-  #validates :pv_query_id, presence: true
+                          #TODO still not working
+                          #tests for floating point numbers as well
+                          #numericality: { only_integer: true }
+                          format: { with: /\A\d+\.?\d{0,2}\Z/ }
+                          #prevents form from being submitted
+                          #validates :pv_query_id, presence: true
 
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
@@ -41,35 +42,74 @@ class Panel < ActiveRecord::Base
   #{ day1: [KWh1, KWh2...]... }
   #0 KWh values must be included so that time can be calculated from position in
   #array
+  #annual_dni is irradiances.direct string
   def annual_dni_received(annual_dni)# <<<
-    received_input = Hash.new
+    annual_dni = annual_dni.data_string_to_hash(12, 5)
+    #received_input = Hash.new
     #TODO
     #how to get PvQuery.longitude?
     #pass in as argument
     latitude = -20
     longitude = 130
     sun = Sun.new(latitude, longitude, 1)
-    365.times do |d|
-      sun.day = d
-      received_input[d] = Array.new
-      #assume 5am is the Eastern Standard Time of first value
-      dni_time = 5
-      #time_correction = sun.time_correction
-      annual_dni[d].each do |hourly_dni|
-        if hourly_dni == 0
-          #pad with 0 values so that time can be deduced
-          received_input[d] << 0
-        else
-          #TODO refactor
-          lst = sun.to_lst(dni_time)
-          hra = sun.hra(lst)
-          sun_vector = sun.vector(hra)
-          received_input[d] << self.relative_angle(sun_vector) * hourly_dni
-        end
-        dni_time = dni_time + 1
+    #use this for dummy data (only, at present)
+    annual_dni.each do |key, daily_dni|
+      #assume 6am is the Universal Time of first value
+      dni_time = 6
+      daily_dni.map do |dni|
+        #TODO refactor
+        lst = sun.to_lst(dni_time)
+        hra = sun.hra(lst)
+        sun_vector = sun.vector(hra)
+        dni * self.relative_angle(sun_vector)
+        dni_time = dni_time + 3
       end
     end
-    return received_input
+    #12.times do |m|# <<<
+      #months = %w{jan feb mar apr may jun jul aug sep oct nov dec}
+      #month = months[m - 1]
+      #sun.month = month
+      #received_input[month] = Array.new
+      ##assume 6am is the Universal Time of first value
+      #dni_time = 6
+      ##time_correction = sun.time_correction
+      #annual_dni[m].each do |hourly_dni|
+        #if hourly_dni == 0
+          ##pad with 0 values so that time can be deduced
+          #received_input[month] << 0
+        #else
+          ##TODO refactor
+          #lst = sun.to_lst(dni_time)
+          #hra = sun.hra(lst)
+          #sun_vector = sun.vector(hra)
+          #received_input[month] << self.relative_angle(sun_vector) * hourly_dni
+        #end
+        #dni_time = dni_time + 3
+      #end
+    #end# >>>
+    #obsolete because dummy values are fewer
+    #may use in future
+    #365.times do |d|# <<<
+      #sun.day = d
+      #received_input[d] = Array.new
+      ##assume 5am is the Eastern Standard Time of first value
+      #dni_time = 5
+      ##time_correction = sun.time_correction
+      #annual_dni[d].each do |hourly_dni|
+        #if hourly_dni == 0
+          ##pad with 0 values so that time can be deduced
+          #received_input[d] << 0
+        #else
+          ##TODO refactor
+          #lst = sun.to_lst(dni_time)
+          #hra = sun.hra(lst)
+          #sun_vector = sun.vector(hra)
+          #received_input[d] << self.relative_angle(sun_vector) * hourly_dni
+        #end
+        #dni_time = dni_time + 1
+      #end
+    #end# >>>
+    return annual_dni
   end# >>>
   #return hash of hourly diffuse insolation received by panel for whole year (KWh/sqm)
   #{ day1: [KWh1, KWh2...]... }
@@ -107,7 +147,7 @@ class Panel < ActiveRecord::Base
     average_efficiency = 0.9
     annual_output = annual_input * average_efficiency
   end# >>>
-  private
+  #private
     #return angle of incident light relative to panel in radians (where 0 is
     #directly perpendicular to panel surface)
     def relative_angle(sun_vector)# <<<
