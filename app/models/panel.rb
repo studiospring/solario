@@ -151,6 +151,6 @@ class Panel < ActiveRecord::Base
     #return angle of incident light relative to panel in radians (where 0 is
     #directly perpendicular to panel surface)
     def relative_angle(sun_vector)# <<<
-      angle = Math.acos((self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x]) / (Math.sqrt(Math.power(self.vector[:x]) + Math.power(self.vector[:y]) + Math.power(self.vector[:z])) + Math.sqrt(Math.power(sun_vector[:x]) + Math.power(sun_vector[:y]) + Math.power(sun_vector[:z]))))
+      angle = Math.acos((self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x] + self.vector[:x] * sun_vector[:x]) / (Math.sqrt(self.vector[:x] ** 2 + self.vector[:y] ** 2 + self.vector[:z] ** 2) + Math.sqrt(sun_vector[:x] ** 2 + sun_vector[:y] ** 2 + sun_vector[:z] ** 2)))
     end# >>>
 end
