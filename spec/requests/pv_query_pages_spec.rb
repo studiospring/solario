@@ -81,6 +81,15 @@ describe "PvQuery" do
     it { should have_link 'List of Pv_queries', href: pv_queries_path }
     it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
   end# >>>
+  describe 'results page' do# <<<
+    let(:heading) { 'Results' }
+    before { visit results_pv_query_path(pv_query) }
+
+    it_should_behave_like 'all pv_query pages'
+    it { should have_title(full_title(heading)) }
+
+
+  end# >>>
   describe 'edit page' do# <<<
     let(:heading) { 'Edit pv_query' }
     let(:submit) { "Update Pv query" }

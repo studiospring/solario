@@ -1,7 +1,7 @@
 class Sun
   include SolarTime
   require 'core_ext/numeric'
-  attr_accessor :latitude, :longitude, :day
+  attr_accessor :latitude, :longitude, :day, :month
 
   def initialize(latitude, longitude, day)
     @latitude = latitude
@@ -22,7 +22,7 @@ class Sun
   #return hash of annual direct normal irradiance (KWh/sqm) for specific latitude
   #table (or file) columns will be: latitude longitude dni(KWh/sqm)
   #where dni will be a string to be converted in to a hash
-  #Array of dni values will be per EST hour
+  #Array of dni values will be per UT hour
   #0 values must be included so that time can be calculated from position in
   #  array
   #see ActiveRecord Serialize
