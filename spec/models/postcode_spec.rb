@@ -9,6 +9,7 @@ describe Postcode do
   it { should respond_to(:state) }
   it { should respond_to(:latitude) }
   it { should respond_to(:longitude) }
+  it { should respond_to(:pv_queries) }
 
   it { should be_valid }
 

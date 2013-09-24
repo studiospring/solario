@@ -48,7 +48,7 @@ describe "PvQuery" do
 
     describe 'with valid inputs' do
       before do
-        fill_in "Postcode", with: 123
+        fill_in "Postcode", with: 1234
         fill_in "Tilt", with: 15
         fill_in "Bearing", with: 15
         fill_in "Panel size", with: 15
