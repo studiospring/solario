@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :pv_query do
-    postcode 2345
+    postcode
   end
 
   factory :panel do
