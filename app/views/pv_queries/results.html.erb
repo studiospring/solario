@@ -14,7 +14,7 @@ index<% end %>
     
       <tr>
         <td>Postcode</td>
-        <td><%= @pv_query.postcode %></td>
+        <td><%= @pv_query.postcode.pcode %></td>
         <% @pv_query.panels.each do |panel| %>
           <td><%= panel.tilt %></td>
         <% end %>
@@ -22,4 +22,4 @@ index<% end %>
     
   </tbody>
 </table>
-<p>@panels: <%= @panels[:annual_dni_received] %></p>
+<p>@panels: <%# @panels[:annual_dni_received] %></p>

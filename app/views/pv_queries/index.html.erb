@@ -16,7 +16,7 @@ index<% end %>
   </colgroup>
   <thead>
     <tr>
-      <th>Postcode</th>
+      <th>Postcode_id</th>
       <th>Created</th>
       <th></th>
       <th></th>
@@ -26,7 +26,7 @@ index<% end %>
   <tbody>
   <% @pv_queries.each do |pv_query| %>
     <tr>
-      <td><%= pv_query.postcode %></td>
+      <td><%= pv_query.postcode_id %></td>
       <td><%= l pv_query.created_at, format: :short %></td>
       <td><%= link_to 'Show', pv_query %></td>
       <td><%= link_to 'Edit', edit_pv_query_path(pv_query) %></td>
