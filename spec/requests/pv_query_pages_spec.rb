@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "PvQuery" do
   let(:base_title) { "Solario" }
+  let(:postcode) { FactoryGirl.create(:postcode) }
   let(:pv_query) { FactoryGirl.create(:pv_query) }
   subject { page }
 
@@ -17,7 +18,7 @@ describe "PvQuery" do
 
     it "should list each query" do
       PvQuery.all.each do |query|
-        page.should have_selector('td', text: query.postcode)
+        page.should have_selector('td', text: query.postcode_id)
         page.should have_link('Show', href: pv_query_path(query))
         page.should have_link('Delete', href: pv_query_path(query))
         expect { click_link 'Delete', href: pv_query_path(query) }.to change(PvQuery, :count).by(-1)
@@ -47,7 +48,7 @@ describe "PvQuery" do
 
     describe 'with valid inputs' do
       before do
-        fill_in "Postcode", with: pv_query.postcode
+        fill_in "Postcode", with: 123
         fill_in "Tilt", with: 15
         fill_in "Bearing", with: 15
         fill_in "Panel size", with: 15
@@ -76,7 +77,7 @@ describe "PvQuery" do
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title('Pv_query')) }
 
-    it { should have_content pv_query.postcode }
+    it { should have_content pv_query.postcode_id }
 
     it { should have_link 'List of Pv_queries', href: pv_queries_path }
     it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
