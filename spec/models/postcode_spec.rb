@@ -66,4 +66,9 @@ describe Postcode do
     before { @postcode.longitude = -12.1111111 }
     it { should_not be_valid }
   end
+
+  describe 'pv_query associations' do
+    before { @postcode.save }
+    let(:pv_query) { FactoryGirl.create(:pv_query, postcode: @postcode) }
+  end
 end
