@@ -7,8 +7,7 @@ class PvQuery < ActiveRecord::Base
   validates :postcode_id,  presence: true,
     numericality: { only_integer: true }
 
-  before_save do
-    postcode = Postcode.where('pcode = ?', self.postcode_id).first
-    self.postcode_id = postcode.id
-  end
+  #before_save do
+    #self.postcode_id = Postcode.where('pcode = ?', self.postcode_id).select('id').first.id
+  #end
 end
