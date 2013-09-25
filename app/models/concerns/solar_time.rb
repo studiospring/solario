@@ -32,9 +32,9 @@ module SolarTime
   def to_lst(local_hour)# <<<
     lst = local_hour + (self.time_correction / 60)
   end# >>>
-  #return hour angle in radians
+  #return hour angle in degrees
   def hra(lst)# <<<
-    hra = 15.to_rad * (lst - 12)
+    hra = 15 * (lst - 12)
   end# >>>
   
 end

@@ -62,12 +62,14 @@ class Sun
       daily_elev = Array.new
       daily_elev = pm_elev.drop(1).reverse + pm_elev
     end# >>>
+    #input hra in degrees bc degs is easier to understand
     #return elevation of sun in radians
     def elevation(hra)# <<<
       dec = self.declination
       lat = self.latitude.to_rad
       elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hra.to_rad))
     end# >>>
+    #input hra in degrees bc degs is easier to understand
     #return azimuth in radians
     def azimuth(hra)# <<<
       dec = self.declination
