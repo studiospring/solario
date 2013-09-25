@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Panel do
+  #prevent tests from failing because of postcode_to_postcode_id callback
   PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
   let(:pv_query) { FactoryGirl.create(:pv_query) }
   before do
