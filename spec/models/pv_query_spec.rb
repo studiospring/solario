@@ -21,7 +21,9 @@ describe PvQuery do
     it { should_not be_valid }
   end
   describe 'panel association' do
-    before { @pv_query.save }
+    before do
+      @pv_query.save
+    end
     let!(:panel) { FactoryGirl.create(:panel, pv_query: @pv_query) }
 
     it "should destroy associated panels" do
