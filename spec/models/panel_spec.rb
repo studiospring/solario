@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe Panel do
+  PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
   let(:pv_query) { FactoryGirl.create(:pv_query) }
-  before { @panel = pv_query.panels.build(tilt: 60, bearing: 150, panel_size: 31 ) }
+  before do
+    @panel = pv_query.panels.build(tilt: 60, bearing: 150, panel_size: 31 )
+  end
   subject { @panel }
 
   it { should respond_to(:tilt) }

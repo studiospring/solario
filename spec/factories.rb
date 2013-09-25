@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :postcode do
-    id 1
     pcode 1234
     suburb "Sunnyville"
     state "NSW"

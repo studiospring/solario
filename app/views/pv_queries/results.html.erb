@@ -14,7 +14,7 @@ index<% end %>
     
       <tr>
         <td>Postcode</td>
-        <td><%= @pv_query.postcode.pcode %></td>
+        <td><%= @pv_query.postcode_id %> <%= @pv_query.postcode.id %> <%= @pv_query.postcode.pcode %></td>
         <% @pv_query.panels.each do |panel| %>
           <td><%= panel.tilt %></td>
         <% end %>
@@ -22,5 +22,5 @@ index<% end %>
     
   </tbody>
 </table>
-<p>@postcode_id: <%= @postcode_id %></p>
+<p>@postcode_id: <%# @postcode_id %></p>
 <p>@panels: <%# @panels[:annual_dni_received] %></p>
