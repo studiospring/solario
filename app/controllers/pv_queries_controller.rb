@@ -41,7 +41,7 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.find(params[:id])
   
     #TODO: bug
-    #postcode_id = Postcode.select('id').where("pcode = ?", @pv_query.postcode).first
+    @postcode_id = Postcode.select('id').where("pcode = ?", @pv_query.postcode_id).first.id
     #annual_dni = Irradiance.select('direct').where('postcode_id = ?', postcode_id).first.direct
     #@panels = Hash.new
     #@pv_query.panels.each do |panel|
