@@ -46,12 +46,8 @@ class Panel < ActiveRecord::Base
   def annual_dni_received(annual_dni)# <<<
     #set annual increment here
     annual_dni_hash = annual_dni.data_string_to_hash(12)
-    #TODO
-    #how to get PvQuery.longitude?
-    #query via relationships
-    #latitude = self.pv_query.latitude
-    latitude = -20
-    longitude = 130
+    latitude = self.pv_query.postcode.latitude
+    longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
     #use this for dummy data (only, at present)
     annual_dni_hash.each do |key, daily_dni|
