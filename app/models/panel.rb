@@ -59,11 +59,17 @@ class Panel < ActiveRecord::Base
         lst = sun.to_lst(dni_time)
         hra = sun.hra(lst)
         sun_vector = sun.vector(hra)
+        #new_daily_dni << dni
         new_daily_dni << (dni * self.relative_angle(sun_vector)).round(2)
         dni_time = dni_time + 3
       end
       annual_dni_hash[key] = new_daily_dni
     end
+      #dni_time = 6
+        #lst = sun.to_lst(dni_time)
+        #hra = sun.hra(lst)
+        #sun_vector = sun.vector(hra)
+    #return self.relative_angle(sun_vector).round(2)
     return annual_dni_hash
   end# >>>
   #return hash of hourly diffuse insolation received by panel for whole year (KWh/sqm)
@@ -107,6 +113,6 @@ class Panel < ActiveRecord::Base
     #directly perpendicular to panel surface)
     def relative_angle(sun_vector)# <<<
       panel_vector = self.vector
-      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x]) / (Math.sqrt(panel_vector[:x] ** 2 + panel_vector[:y] ** 2 + panel_vector[:z] ** 2) + Math.sqrt(sun_vector[:x] ** 2 + sun_vector[:y] ** 2 + sun_vector[:z] ** 2))).round(2)
+      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) + Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
     end# >>>
 end
