@@ -41,12 +41,12 @@ class Panel < ActiveRecord::Base
   #return hash of hourly Direct Normal Insolation received by panel for whole year (KWh/sqm)
   #{ day1: [KWh1, KWh2...]... }
   #0 KWh values must be included so that time can be calculated from position in array
-  #annual_dni is irradiances.direct ( string )
-  def annual_dni_received(annual_dni)# <<<
+  #dni_pa is irradiances.direct ( string )
+  def dni_received_pa(dni_pa)# <<<
     #set annual increment here
     annual_increment = 12
     days_in_increment = (365 / annual_increment).round
-    annual_dni_hash = annual_dni.data_string_to_hash(annual_increment)
+    annual_dni_hash = dni_pa.data_string_to_hash(annual_increment)
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
@@ -73,7 +73,7 @@ class Panel < ActiveRecord::Base
   #return hash of hourly diffuse insolation received by panel for whole year (KWh/sqm)
   #{ day1: [KWh1, KWh2...]... }
   #0 KWh values must be included so that time can be calculated from position in array
-  def annual_diffuse_received# <<<
+  def diffuse_received_pa# <<<
     #TODO
   end# >>>
   #currently not in use
@@ -97,10 +97,10 @@ class Panel < ActiveRecord::Base
     avg = total / lifespan
   end# >>>
   #return KW/yr? taking in to account compound depreciated inefficiency, age of panel, etc
-  def avg_annual_output(annual_dni_received, annual_diffuse_received)# <<<
+  def avg_annual_output(dni_received_pa, diffuse_received_pa)# <<<
     lifespan = 20
-    total_dni = Panel.annual_received_total(annual_dni_received)
-    total_diffuse = Panel.annual_received_total(annual_diffuse_received)
+    total_dni = Panel.annual_received_total(dni_received_pa)
+    total_diffuse = Panel.annual_received_total(diffuse_received_pa)
     annual_input = total_dni + total_diffuse
     #assume compound efficiency of 99%pa
     average_efficiency = 0.9

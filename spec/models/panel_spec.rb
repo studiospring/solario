@@ -79,15 +79,15 @@ describe Panel do
       @panel.vector[:z].should be_within(0.001).of(0.8660254037844386)
     end
   end# >>>
-  describe 'annual_dni_received method' do# <<<
+  describe 'dni_received_pa method' do# <<<
     before do
-      @annual_dni = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
+      @dni_pa = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
     end
     it "should return a very big hash" do
-      @panel.annual_dni_received(@annual_dni)[0][0].should == 0.4
+      @panel.dni_received_pa(@dni_pa)[0][0].should == 0.4
     end
   end# >>>
-  describe 'annual_diffuse_received method' do# <<<
+  describe 'diffuse_received_pa method' do# <<<
     #before { @panel.annual_dni_received() }
     it "should return a very big hash" do
       pending 'dummy data'
