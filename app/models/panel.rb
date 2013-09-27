@@ -52,20 +52,21 @@ class Panel < ActiveRecord::Base
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
     #use this for dummy data (only, at present)
-    annual_dni_hash.each do |key, daily_dni|
+    annual_dni_hash.each do |key, diurnal_dni|
       #assume 6am is the Universal Time of first value
       dni_time = 6
-      module_insolation = Array.new
-      daily_dni.collect do |dni|
+      panel_insolation = Array.new
+      diurnal_dni.collect do |dni|
         #TODO refactor
         lst = sun.to_lst(dni_time)
         hra = sun.hra(lst)
         sun_vector = sun.vector(hra)
-        module_insolation << (dni * Math.cos(self.relative_angle(sun_vector))).round(2)
+        relative_angle = self.relative_angle(sun_vector)
+        panel_insolation << self.panel_insolation(dni, relative_angle)
         #set daily increment here
         dni_time = dni_time + 3
       end
-      annual_dni_hash[key] = module_insolation
+      annual_dni_hash[key] = panel_insolation
       #increment sun's day so that sun vector is correct
       sun.day = sun.day + days_in_increment
     end
@@ -113,5 +114,10 @@ class Panel < ActiveRecord::Base
     def relative_angle(sun_vector)# <<<
       panel_vector = self.vector
       angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) + Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
+    end# >>>
+    #return insolation received by module via vector method
+    #S_module = S_incident * cos(relative_angle)
+    def panel_insolation(incident_light, relative_angle)# <<<
+      insolation_received = (incident_light * Math.cos(relative_angle)).round(2)      
     end# >>>
 end
