@@ -40,8 +40,7 @@ class Panel < ActiveRecord::Base
   end# >>>
   #return hash of hourly Direct Normal Insolation received by panel for whole year (KWh/sqm)
   #{ day1: [KWh1, KWh2...]... }
-  #0 KWh values must be included so that time can be calculated from position in
-  #array
+  #0 KWh values must be included so that time can be calculated from position in array
   #annual_dni is irradiances.direct ( string )
   def annual_dni_received(annual_dni)# <<<
     #set annual increment here
@@ -61,7 +60,7 @@ class Panel < ActiveRecord::Base
         hra = sun.hra(lst)
         sun_vector = sun.vector(hra)
         relative_angle = self.relative_angle(sun_vector)
-        panel_insolation << self.panel_insolation(dni, relative_angle)
+        panel_insolation << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         #set daily increment here
         dni_time = dni_time + 3
       end
@@ -73,11 +72,11 @@ class Panel < ActiveRecord::Base
   end# >>>
   #return hash of hourly diffuse insolation received by panel for whole year (KWh/sqm)
   #{ day1: [KWh1, KWh2...]... }
-  #0 KWh values must be included so that time can be calculated from position in
-  #array
+  #0 KWh values must be included so that time can be calculated from position in array
   def annual_diffuse_received# <<<
     #TODO
   end# >>>
+  #currently not in use
   #add annual insolation hash to return total energy received
   def self.annual_received_total(annual_received_hash)# <<<
     annual_total = 0
@@ -114,7 +113,7 @@ class Panel < ActiveRecord::Base
       panel_vector = self.vector
       angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) + Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
     end# >>>
-    #return insolation received by module via vector method
+    #return insolation received by 1sqm module via vector method
     #S_module = S_incident * cos(relative_angle)
     def panel_insolation(incident_light, relative_angle)# <<<
       insolation_received = (incident_light * Math.cos(relative_angle)).round(2)      
