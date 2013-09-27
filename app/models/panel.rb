@@ -116,6 +116,12 @@ class Panel < ActiveRecord::Base
     #return insolation received by 1sqm module via vector method
     #S_module = S_incident * cos(relative_angle)
     def panel_insolation(incident_light, relative_angle)# <<<
-      insolation_received = (incident_light * Math.cos(relative_angle)).round(2)      
+      #calculate only if relative angle <= 90 degrees, else return 0
+      if relative_angle <= 1.57
+        insolation_received = (incident_light * Math.cos(relative_angle)).round(2)      
+      else
+        insolation_received = 0
+      end
+      return insolation_received
     end# >>>
 end
