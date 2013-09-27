@@ -46,7 +46,6 @@ class Panel < ActiveRecord::Base
   def annual_dni_received(annual_dni)# <<<
     #set annual increment here
     annual_dni_hash = annual_dni.data_string_to_hash(12)
-    #return annual_dni_hash
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
@@ -54,23 +53,18 @@ class Panel < ActiveRecord::Base
     annual_dni_hash.each do |key, daily_dni|
       #assume 6am is the Universal Time of first value
       dni_time = 6
-      new_daily_dni = Array.new
+      module_insolation = Array.new
       daily_dni.collect do |dni|
         #TODO refactor
         lst = sun.to_lst(dni_time)
         hra = sun.hra(lst)
         sun_vector = sun.vector(hra)
-        #new_daily_dni << sun_vector
-        new_daily_dni << (dni * self.relative_angle(sun_vector)).round(2)
+        module_insolation << (dni * Math.cos(self.relative_angle(sun_vector))).round(2)
+        #set daily increment here
         dni_time = dni_time + 3
       end
-      annual_dni_hash[key] = new_daily_dni
+      annual_dni_hash[key] = module_insolation
     end
-      #dni_time = 6
-        #lst = sun.to_lst(dni_time)
-        #hra = sun.hra(lst)
-        #sun_vector = sun.vector(hra)
-    #return self.relative_angle(sun_vector).round(2)
     return annual_dni_hash
   end# >>>
   #return hash of hourly diffuse insolation received by panel for whole year (KWh/sqm)
