@@ -57,7 +57,6 @@ class Panel < ActiveRecord::Base
       dni_time = 6
       panel_insolation = Array.new
       diurnal_dni.collect do |dni|
-        #TODO refactor
         lst = sun.to_lst(dni_time)
         hra = sun.hra(lst)
         sun_vector = sun.vector(hra)
