@@ -46,6 +46,7 @@ class Panel < ActiveRecord::Base
   def annual_dni_received(annual_dni)# <<<
     #set annual increment here
     annual_dni_hash = annual_dni.data_string_to_hash(12)
+    #return annual_dni_hash
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
@@ -59,7 +60,7 @@ class Panel < ActiveRecord::Base
         lst = sun.to_lst(dni_time)
         hra = sun.hra(lst)
         sun_vector = sun.vector(hra)
-        #new_daily_dni << dni
+        #new_daily_dni << sun_vector
         new_daily_dni << (dni * self.relative_angle(sun_vector)).round(2)
         dni_time = dni_time + 3
       end
@@ -113,6 +114,6 @@ class Panel < ActiveRecord::Base
     #directly perpendicular to panel surface)
     def relative_angle(sun_vector)# <<<
       panel_vector = self.vector
-      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x] + panel_vector[:x] * sun_vector[:x]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) + Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
+      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) + Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
     end# >>>
 end
