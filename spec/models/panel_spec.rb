@@ -18,8 +18,8 @@ describe Panel do
 
   it { should be_valid }
 
-  #validation
-  describe 'when tilt is not present' do# <<<
+  #validation# <<<
+  describe 'when tilt is not present' do
     before { @panel.tilt = ' ' }
     it { should_not be_valid }
   end
@@ -68,25 +68,24 @@ describe Panel do
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
       #when bearing is 150 deg
-      @panel.vector[:x].should == -0.43301270189221946
+      @panel.vector[:x].should be_within(0.001).of(-0.43301270189221946)
     end
     it "should return correct value for @panel.vector[:y]" do
       #when bearing is 150 deg
-      @panel.vector[:y].should == 0.25
+      @panel.vector[:y].should be_within(0.01).of(0.25)
     end
     it "should return correct value for @panel.vector[:z]" do
       #when tilt is 60 deg
-      @panel.vector[:z].should == 0.8660254037844386
+      @panel.vector[:z].should be_within(0.001).of(0.8660254037844386)
     end
   end# >>>
   describe 'annual_dni_received method' do# <<<
-    #before { @panel.annual_dni_received() }
     before do
-      annual_dni = '2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5'
+      sun = Sun.new(-20, 135, 1) 
+      @annual_dni = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
     end
     it "should return a very big hash" do
-      pending
-      #@panel.annual_dni_received(annual_dni).should == 
+      @panel.annual_dni_received(@annual_dni)[0][0].should == 0.4
     end
   end# >>>
   describe 'annual_diffuse_received method' do# <<<
