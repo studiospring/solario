@@ -45,7 +45,9 @@ class Panel < ActiveRecord::Base
   #annual_dni is irradiances.direct ( string )
   def annual_dni_received(annual_dni)# <<<
     #set annual increment here
-    annual_dni_hash = annual_dni.data_string_to_hash(12)
+    annual_increment = 12
+    days_in_increment = (365 / annual_increment).round
+    annual_dni_hash = annual_dni.data_string_to_hash(annual_increment)
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
@@ -64,6 +66,8 @@ class Panel < ActiveRecord::Base
         dni_time = dni_time + 3
       end
       annual_dni_hash[key] = module_insolation
+      #increment sun's day so that sun vector is correct
+      sun.day = sun.day + days_in_increment
     end
     return annual_dni_hash
   end# >>>
