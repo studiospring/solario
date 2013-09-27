@@ -14,8 +14,8 @@ describe SolarTime do
     end# >>>
     describe 'hra' do
       before { @sun.hra(12.88) }
-      it "should return the hour angle in radians" do
-        @sun.hra(12.88).should be_within(0.01).of(0.23)
+      it "should return the hour angle in degrees" do
+        @sun.hra(12.88).should be_within(0.01).of(13.2)
       end
     end
 end
