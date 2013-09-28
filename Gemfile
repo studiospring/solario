@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', github: 'rails/rails', branch: '4-0-stable'
 
 gem 'pg', '0.15.1' #postgres
+gem 'devise'
 
 group :assets do
   # Use CoffeeScript for .js.coffee assets and views
