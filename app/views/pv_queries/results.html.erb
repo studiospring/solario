@@ -24,4 +24,7 @@ index<% end %>
 </table>
 <p>@postcode_id: <%# @postcode_id %></p>
 <p>@dni_pa: <%= @dni_pa %></p>
-<p>@panels: <%= @panels[:dni_received_pa] %> </p>
+<p>@panels: <%= @pv_query.panels.count %> </p>
+<% @panels.each do |k, panel| %>
+    <p><%= panel %></p>
+<% end %>
