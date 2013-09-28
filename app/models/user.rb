@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
     
-                          length: {},
-                        numericality: {},
-                        inclusion: {}
+                          #length: {},
+                        #numericality: {},
+                        #inclusion: {}
 
 end
