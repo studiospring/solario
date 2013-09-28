@@ -43,8 +43,10 @@ class PvQueriesController < ApplicationController
     #TODO: fails spectacularly if no postcode is found
     @dni_pa = Irradiance.select('direct').where('postcode_id = ?', @pv_query.postcode.id).first.direct
     @panels = Hash.new
+    key = 0
     @pv_query.panels.each do |panel|
-      @panels[:dni_received_pa] = panel.dni_received_pa(@dni_pa)
+      @panels[key] = panel.dni_received_pa(@dni_pa)
+      key = key + 1
     end
 
   end# >>>
