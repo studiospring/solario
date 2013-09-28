@@ -1,4 +1,5 @@
 Solar::Application.routes.draw do
+  devise_for :users
   resources :irradiances
 
   resources :panels
