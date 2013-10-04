@@ -24,10 +24,6 @@ describe "Authentication" do
 
     describe 'with invalid inputs' do
       before { click_button submit }
-      it "should not log the user in" do
-        pending
-      end
-
       describe "should have error message" do
         it_should_behave_like 'all authentication pages'
         it { should have_selector("div.alert", text: "Invalid") }
@@ -40,7 +36,7 @@ describe "Authentication" do
         fill_in 'Password', with: user.password
         click_button submit
       end
-      it { should have_selector("div.alert-success", text: "signed in") }
+      it { should have_selector("div.alert-notice", text: "Signed in") }
       it { should have_link 'Logout', href: destroy_user_session_path }
 
       #describe "log the user in" do
