@@ -1,5 +1,5 @@
 Solar::Application.routes.draw do
-  devise_for :users#, controllers: { registrations: 'users/registrations' }
+  devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :irradiances
 
   resources :panels
