@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe "Irradiances" do
   let(:base_title) { "Solario" }
-  let(:irradiance) { FactoryGirl.create(:irradiance) }
+  let(:postcode) { FactoryGirl.create(:postcode) }
+  let!(:irradiance) { FactoryGirl.create(:irradiance, postcode_id: postcode.id) }
   subject { page }
 
   shared_examples_for "all irradiance pages" do
@@ -52,7 +53,7 @@ describe "Irradiances" do
       before do
         fill_in 'Direct irradiance', with: irradiance.direct
         fill_in 'Diffuse irradiance', with: irradiance.diffuse
-        fill_in 'Postcode_id', with: 2
+        fill_in 'Postcode_id', with: irradiance.postcode_id
       end
 
       it "should create a new irradiance" do
