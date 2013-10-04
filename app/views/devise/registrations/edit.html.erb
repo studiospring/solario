@@ -6,6 +6,8 @@
   <div><%= f.label :username %><br />
   <%= f.text_field :username, :autofocus => true %></div>
 
+  <div><label for="user_admin"><%= f.check_box(:admin) %> Admin</label></div>
+
   <div><%= f.label :email %><br />
   <%= f.email_field :email %></div>
 
