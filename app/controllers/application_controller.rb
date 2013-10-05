@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
   protected
     #permit additional devise user parameters
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username, :admin, :password) }
-      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :admin, :password, :password_confirmation) }
-      devise_parameter_sanitizer.for(:edit_user) { |u| u.permit(:username, :email, :admin, :password, :password_confirmation) }
+      devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username) }
+      devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username) }
+      devise_parameter_sanitizer.for(:edit_user) { |u| u.permit(:username, :email) }
     end
 
     #for use with Devise

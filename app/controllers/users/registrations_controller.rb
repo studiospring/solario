@@ -9,11 +9,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render "new"
     end
   end# >>>
-  def edit# <<<
-    @user = current_user
-  end# >>>
   def update# <<<
     @user = current_user
+    @user.admin = params[:user][:admin]
     if @user.update(user_params)
       flash[:success] = 'User updated'
       redirect_to root_path
@@ -24,6 +22,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
     def user_params# <<<
       #enter mass assignable fields here
-      params.require(:user).permit(:username, :email, :admin)
+      params.require(:user).permit(:username, :email)
     end # >>>
 end
