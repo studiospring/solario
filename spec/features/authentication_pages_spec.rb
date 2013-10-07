@@ -41,12 +41,13 @@ describe "Authentication" do
       it { should have_selector("div.alert-notice", text: "Signed in") }
       it { should have_link 'Logout', href: destroy_user_session_path }
 
-      #describe "log the user in" do
-      #end
+      describe 'and logout' do
+        before { click_link "Logout" }
+        it { should have_link 'Login' }
+      end
     end
-
   end# >>>
-  describe 'admin edit page' do
+  describe 'admin edit page' do# <<<
     let(:heading) { 'Edit profile' }
     let(:submit) { "Update" }
     before do
@@ -57,5 +58,5 @@ describe "Authentication" do
     it_should_behave_like 'all authentication pages'
     it { should have_button(submit) }
     Warden.test_reset! 
-  end
+  end# >>>
 end
