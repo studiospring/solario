@@ -54,6 +54,7 @@ describe "PvQuery" do
         fill_in "Panel size", with: 15
       end
 
+      #try and fix this by fixing pv_queries_controller?
       it "should create a new pv_query" do
         expect { click_button submit }.to change(PvQuery, :count).by(1)
       end
