@@ -1,5 +1,7 @@
 require 'spec_helper'
 #devise tests must be in features directory (not requests) to use Capybara methods
+include Warden::Test::Helpers
+Warden.test_mode!
 
 describe "Authentication" do
   let(:base_title) { "Solario" }
@@ -44,4 +46,16 @@ describe "Authentication" do
     end
 
   end# >>>
+  describe 'admin edit page' do
+    let(:heading) { 'Edit profile' }
+    let(:submit) { "Update" }
+    before do
+      login_as(user, :scope => :user)
+      visit edit_user_registration_path
+    end
+
+    it_should_behave_like 'all authentication pages'
+    it { should have_button(submit) }
+    Warden.test_reset! 
+  end
 end
