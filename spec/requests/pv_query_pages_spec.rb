@@ -1,7 +1,11 @@
 require 'spec_helper'
 
+include Warden::Test::Helpers
+Warden.test_mode!
+
 describe "PvQuery" do
   let(:base_title) { "Solario" }
+  let(:admin) { FactoryGirl.create(:admin) }
   let(:postcode) { FactoryGirl.create(:postcode) }
   let(:pv_query) { FactoryGirl.create(:pv_query) }
   subject { page }
@@ -11,7 +15,10 @@ describe "PvQuery" do
   end
   describe 'index page' do# <<<
     let(:heading) { 'Queries' }
-    before { visit pv_queries_path }
+    before do
+      login_as(admin, :scope => :user)
+      visit pv_queries_path
+    end
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title('Queries')) }
@@ -24,6 +31,7 @@ describe "PvQuery" do
         expect { click_link 'Delete', href: pv_query_path(query) }.to change(PvQuery, :count).by(-1)
       end
     end
+    Warden.test_reset! 
   end# >>>
   describe 'new page' do# <<<
     let(:heading) { 'Find your solar output' }
@@ -73,7 +81,10 @@ describe "PvQuery" do
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Pv_query' }
-    before { visit pv_query_path(pv_query) }
+    before do 
+      login_as(admin, :scope => :user)
+      visit pv_query_path(pv_query)
+    end
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title('Pv_query')) }
@@ -82,6 +93,7 @@ describe "PvQuery" do
 
     it { should have_link 'List of Pv_queries', href: pv_queries_path }
     it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
+    Warden.test_reset! 
   end# >>>
   describe 'results page' do# <<<
     let(:heading) { 'Results' }
@@ -95,7 +107,10 @@ describe "PvQuery" do
   describe 'edit page' do# <<<
     let(:heading) { 'Edit pv_query' }
     let(:submit) { "Update Pv query" }
-    before { visit edit_pv_query_path(pv_query) }
+    before do 
+      login_as(admin, :scope => :user)
+      visit edit_pv_query_path(pv_query)
+    end
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title(heading)) }
@@ -125,5 +140,6 @@ describe "PvQuery" do
       it { should have_selector('h1', text: "Pv_query") }
       it { should have_selector("div.alert-success", text: 'Pv query updated') }
     end
+    Warden.test_reset! 
   end# >>>
 end
