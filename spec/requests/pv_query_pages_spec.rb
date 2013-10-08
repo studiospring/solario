@@ -32,6 +32,8 @@ describe "PvQuery" do
       end
     end
 
+    #ensure non-logged-in users cannot see this page, but does not differentiate
+    #between admin and non-admin
     describe 'when not logged in' do
       before do
         logout :user
