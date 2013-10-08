@@ -31,7 +31,18 @@ describe "PvQuery" do
         expect { click_link 'Delete', href: pv_query_path(query) }.to change(PvQuery, :count).by(-1)
       end
     end
-    Warden.test_reset! 
+
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit pv_queries_path
+      end
+      
+      it "should redirect to sign-in page" do
+        page.should have_selector("h1", text: "Sign in")
+      end
+    end
+
   end# >>>
   describe 'new page' do# <<<
     let(:heading) { 'Find your solar output' }
