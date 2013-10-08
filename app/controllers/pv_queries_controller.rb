@@ -1,4 +1,6 @@
 class PvQueriesController < ApplicationController
+  #before_filter :authenticate_user!, except: [:new, :results]
+  before_filter :require_admin, except: [:new, :results]
   def index# <<<
     @pv_queries = PvQuery.all
   end# >>>

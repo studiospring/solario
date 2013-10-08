@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
     #for use with Devise
     def require_admin
       unless current_user && current_user.admin
-        flash[:error] = "You are not an admin"
-        redirect_to root_path
+        flash[:alert] = "You must sign in to view this page"
+        redirect_to new_user_session_path
       end        
     end
 end
