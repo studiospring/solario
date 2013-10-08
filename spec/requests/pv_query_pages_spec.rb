@@ -60,10 +60,11 @@ describe "PvQuery" do
         expect { click_button submit }.not_to change(PvQuery, :count)
       end
 
-      describe "error message" do
+      describe "after submitting" do
         before { click_button submit }
+        #devise is redirecting to sign_in page
         it_should_behave_like 'all pv_query pages'
-        it { should have_content('error') }
+        it { should have_selector("div.alert.alert-error", text: "error") }
       end
     end
 
