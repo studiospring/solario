@@ -17,10 +17,14 @@ class PvQuery < ActiveRecord::Base
   validates :postcode_id,  presence: true,
     numericality: { only_integer: true }
 
-  before_validation :postcode_to_postcode_id
+  after_validation :postcode_to_postcode_id
 
   #change postcode param to postcode_id
   def postcode_to_postcode_id# <<<
-    self.postcode_id = Postcode.where('pcode = ?', self.postcode_id).select('id').first.id
+    postcode = Postcode.where('pcode = ?', self.postcode_id).select('id').first
+    #if there is no postcode, calling postcode.id will cause error
+    unless postcode.nil?
+      self.postcode_id = postcode.id
+    end
   end# >>>
 end

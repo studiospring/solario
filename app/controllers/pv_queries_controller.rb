@@ -43,7 +43,8 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.find(params[:id])
   
     #TODO: fails spectacularly if no postcode is found
-    @dni_pa = Irradiance.select('direct').where('postcode_id = ?', @pv_query.postcode.id).first.direct
+    irradiance = Irradiance.select('direct').where('postcode_id = ?', @pv_query.postcode.id).first
+    irradiance.nil? ? @dni_pa = nil : @dni_pa = irradiance.direct
     @panels = Hash.new
     key = 0
     @pv_query.panels.each do |panel|
