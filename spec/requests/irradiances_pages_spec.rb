@@ -24,13 +24,19 @@ describe "Irradiances" do
     it_should_behave_like 'all irradiance pages'
     it { should have_title(full_title(heading)) }
 
+    it "should be able to delete an irradiance" do
+        expect { click_link 'Delete', href: irradiance_path(irradiance) }.to change(Irradiance, :count).by(-1)
+    end
+
+    it "should not be able to delete a postcode" do
+        expect { click_link 'Delete', href: irradiance_path(irradiance) }.not_to change(Postcode, :count).by(-1)
+    end
+
     it "should list each irradiance" do
       Irradiance.all.each do |irradiance|
-        page.should have_selector('td', text: postcode)
+        page.should have_selector('td', text: postcode.pcode)
         page.should have_link('Show', href: irradiance_path(irradiance))
         page.should have_link('Delete', href: irradiance_path(irradiance))
-        expect { click_link 'Delete', href: irradiance_path(irradiance) }.to change(Irradiance, :count).by(-1)
-        expect { click_link 'Delete', href: irradiance_path(irradiance) }.not_to change(Postcode, :count).by(-1)
       end
     end
 
@@ -67,17 +73,19 @@ describe "Irradiances" do
       it "should create a new irradiance" do
         expect { click_button submit }.to change(Irradiance, :count).by(1)
       end
+
+      describe 'after saving the irradiance' do
+        before { click_button submit }
+
+        it { should have_selector('h1', text: "Irradiance") }
+        it { should have_selector("div.alert-success", text: "New irradiance created") }
+      end
+
       it "should associate with the correct postcode" do
         pending 'figuring out how to do it'
       end
     end
 
-    describe 'after saving the irradiance' do
-      before { click_button submit }
-
-      it { should have_selector('h1', text: "Irradiance") }
-      it { should have_selector("div.alert-success", text: "New irradiance created") }
-    end
     it { should have_link 'List of Irradiances', href: irradiances_path }
   end# >>>
   describe 'show page' do# <<<
