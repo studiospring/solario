@@ -52,6 +52,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     activerecord-deprecated_finders (1.0.3)
+    annotate (2.5.0)
+      rake
     arel (4.0.0)
     atomic (1.1.13)
     bcrypt-ruby (3.1.2)
@@ -215,6 +217,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  annotate (>= 2.5.0)
   bootstrap-sass
   capybara (= 2.1.0)
   childprocess (= 0.3.6)
