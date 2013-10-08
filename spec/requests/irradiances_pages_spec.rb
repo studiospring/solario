@@ -1,12 +1,20 @@
 require 'spec_helper'
 
+include Warden::Test::Helpers
+Warden.test_mode!
+
 describe "Irradiances" do
   let(:base_title) { "Solario" }
   let(:irradiance) { FactoryGirl.create(:irradiance) }
+  let(:admin) { FactoryGirl.create(:admin) }
   subject { page }
 
   shared_examples_for "all irradiance pages" do
     it { should have_selector('h1', text: heading) }
+  end
+
+  before do 
+    login_as(admin, :scope => :user)
   end
   describe 'index page' do# <<<
     let(:heading) { 'Irradiances' }
