@@ -30,8 +30,16 @@ describe "Postcodes" do
         expect { click_link 'Delete', href: postcode_path(postcode) }.to change(Postcode, :count).by(-1)
       end
     end
-
     it { should have_link 'Add postcode', href: new_postcode_path }
+
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit postcodes_path
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
   end# >>>
   describe 'new page' do# <<<
     let(:heading) { 'Add postcode' }
@@ -76,6 +84,7 @@ describe "Postcodes" do
     end
 
     it { should have_link 'List of postcodes', href: postcodes_path }
+
     describe 'when not logged in' do
       before do
         logout :user
