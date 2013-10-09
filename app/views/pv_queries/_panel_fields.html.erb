@@ -1,11 +1,11 @@
 <fieldset class="nested_fields">
   <%= f.label :tilt %>
-  <%= f.number_field :tilt %>
+  <%= f.number_field :tilt, step: 'any', min: '0', max: '180' %>
 
   <%= f.label :bearing %>
-  <%= f.number_field :bearing %>
+  <%= f.number_field :bearing, step: 'any', min: '0', max: '360' %>
 
   <%= f.label :panel_size %>
-  <%= f.number_field :panel_size %>
+  <%= f.number_field :panel_size, step: 'any', min: '0' %>
 </fieldset>
 
