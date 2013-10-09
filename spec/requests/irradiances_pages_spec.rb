@@ -111,33 +111,28 @@ describe "Irradiances" do
     it { should have_button('Update Irradiance') }
 
     describe 'with invalid inputs' do
-      before do
-        #TODO
-        fill_in "Direct irradiance", with: ""
-        click_button submit 
+      before { fill_in 'Direct irradiance', with: ' ' }
+      it "should not create a new irradiance" do
+        expect { click_button submit }.not_to change(Irradiance, :count)
       end
 
-      describe "error message" do
+      describe "after submitting" do
+        before { click_button submit }
         it_should_behave_like 'all irradiance pages'
-        it { should have_content('error') }
+        it { should have_selector("div.alert.alert-error", text: "error") }
       end
     end
 
     describe 'with valid inputs' do
+      let(:new_diffuse)  { "888" }
       before do
-        #TODO
-        fill_in "Direct irradiance", with: "123"
-        fill_in "Diffuse irradiance", with: "321"
-        #fill_in "Postcode_id", with: "3211"
+        fill_in "Diffuse irradiance", with: "888"
+        click_button submit 
       end
-
-    end
-
-    describe 'after saving the irradiance' do
-      before { click_button submit }
 
       it { should have_selector('h1', text: "Irradiance") }
       it { should have_selector("div.alert-success", text: "Irradiance updated") }
+      specify { expect(irradiance.reload.diffuse).to  eq new_diffuse }
     end
   end# >>>
 end
