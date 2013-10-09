@@ -1,12 +1,19 @@
 require 'spec_helper'
 
+include Warden::Test::Helpers
+Warden.test_mode!
+
 describe "Postcodes" do
   let(:base_title) { "Solario" }
+  let(:admin) { FactoryGirl.create(:admin) }
   let(:postcode) { FactoryGirl.create(:postcode) }
   subject { page }
 
   shared_examples_for "all postcode pages" do
     it { should have_selector('h1', text: heading) }
+  end
+  before do 
+    login_as(admin, :scope => :user)
   end
   describe 'index page' do# <<<
     let(:heading) { 'Postcodes' }
@@ -69,6 +76,14 @@ describe "Postcodes" do
     end
 
     it { should have_link 'List of postcodes', href: postcodes_path }
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit new_postcode_path
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Postcode' }
