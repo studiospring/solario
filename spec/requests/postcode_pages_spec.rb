@@ -104,21 +104,19 @@ describe "Postcodes" do
     end
 
     describe 'with valid inputs' do
+      let(:new_suburb)  { "Newville" }
       before do
         fill_in "Postcode", with: 8888
-        fill_in "Suburb", with: 'Simsville'
+        fill_in "Suburb", with: 'Newville'
         fill_in "State", with: 'WA'
         fill_in "Latitude", with: 10
         fill_in "Longitude", with: 130
+        click_button submit
       end
-
-    end
-
-    describe 'after saving the postcode' do
-      before { click_button submit }
 
       it { should have_selector('h1', text: "Postcode") }
       it { should have_selector("div.alert-success", text: 'Postcode updated') }
+      specify { expect(postcode.reload.suburb).to eq new_suburb }
     end
   end# >>>
 end

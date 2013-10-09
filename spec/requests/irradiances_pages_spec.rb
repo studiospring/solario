@@ -132,7 +132,7 @@ describe "Irradiances" do
 
       it { should have_selector('h1', text: "Irradiance") }
       it { should have_selector("div.alert-success", text: "Irradiance updated") }
-      specify { expect(irradiance.reload.diffuse).to  eq new_diffuse }
+      specify { expect(irradiance.reload.diffuse).to eq new_diffuse }
     end
   end# >>>
 end
