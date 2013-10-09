@@ -90,11 +90,11 @@ describe "<%= class_name.pluralize %>" do
     it { should have_button('Update <%= class_name %>') }
 
     describe 'with invalid inputs' do
-      #before do
+      before do
         #TODO
-        #fill_in "State", with: " "
-        #click_button submit 
-      #end
+        fill_in "", with: " "
+        click_button submit 
+      end
 
       describe "error message" do
         it_should_behave_like 'all <%= singular_table_name %> pages'
@@ -103,18 +103,16 @@ describe "<%= class_name.pluralize %>" do
     end
 
     describe 'with valid inputs' do
+      let(:new_value)  { "New value" }
       before do
         #TODO
-        #fill_in 
+        fill_in "some_attribute", with: 'New value'
+        click_button submit
       end
-
-    end
-
-    describe 'after saving the <%= singular_table_name %>' do
-      before { click_button submit }
-
       it { should have_selector('h1', text: "<%= singular_table_name %>") }
       it { should have_selector("div.alert-success", text: "<%= class_name %> updated") }
+      specify { expect(<%= singular_table_name %>.reload.some_attribute).to eq new_value }
     end
+
   end# >>>
 end
