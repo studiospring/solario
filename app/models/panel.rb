@@ -24,12 +24,7 @@ class Panel < ActiveRecord::Base
                           numericality: { greater_than_or_equal_to: 0, 
                           less_than_or_equal_to: 360 }
   validates :panel_size,  presence: true,
-                          #TODO still not working
-                          #tests for floating point numbers as well
-                          #numericality: { only_integer: true }
-                          format: { with: /\A\d+\.?\d{0,2}\Z/ }
-                          #prevents form from being submitted
-                          #validates :pv_query_id, presence: true
+                          inclusion: {:in => 1..500}
 
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
