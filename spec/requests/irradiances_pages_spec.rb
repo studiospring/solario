@@ -41,6 +41,15 @@ describe "Irradiances" do
     end
 
     it { should have_link 'Add irradiance', href: new_irradiance_path }
+
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit irradiances_path
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
   end# >>>
   describe 'new page' do# <<<
     let(:heading) { 'Add Irradiance' }
@@ -87,6 +96,14 @@ describe "Irradiances" do
     end
 
     it { should have_link 'List of Irradiances', href: irradiances_path }
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit new_irradiance_path
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Irradiance' }
@@ -100,6 +117,14 @@ describe "Irradiances" do
 
     it { should have_link 'List of Irradiances', href: irradiances_path }
     it { should have_link 'Edit', href: edit_irradiance_path(irradiance) }
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit irradiance_path(irradiance)
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
   end# >>>
   describe 'edit page' do# <<<
     let(:heading) { 'Update Irradiance' }
@@ -133,6 +158,14 @@ describe "Irradiances" do
       it { should have_selector('h1', text: "Irradiance") }
       it { should have_selector("div.alert-success", text: "Irradiance updated") }
       specify { expect(irradiance.reload.diffuse).to eq new_diffuse }
+    end
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit edit_irradiance_path(irradiance)
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
     end
   end# >>>
 end

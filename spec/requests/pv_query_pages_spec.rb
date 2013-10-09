@@ -108,6 +108,14 @@ describe "PvQuery" do
 
     it { should have_link 'List of Pv_queries', href: pv_queries_path }
     it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit pv_query_path(pv_query)
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
     Warden.test_reset! 
   end# >>>
   describe 'results page' do# <<<
@@ -154,6 +162,14 @@ describe "PvQuery" do
 
       it { should have_selector('h1', text: "Pv_query") }
       it { should have_selector("div.alert-success", text: 'Pv query updated') }
+    end
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit edit_pv_query_path(pv_query)
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
     end
     Warden.test_reset! 
   end# >>>
