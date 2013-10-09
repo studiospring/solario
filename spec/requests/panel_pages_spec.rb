@@ -69,20 +69,15 @@ describe "Panels" do
     end
 
     describe 'with valid inputs' do
+      let(:new_panel_size) { 244 }
       before do
-        fill_in "Tilt", with: 23
-        fill_in "Bearing", with: 360
-        fill_in "Panel size", with: 2444
+        fill_in "Panel size", with: 244
+        click_button submit
       end
 
-    end
-
-    describe 'after saving the panel' do
-      before { click_button submit }
-
+      specify { expect(panel.reload.panel_size).to eq new_panel_size }
       it { should have_selector('h1', text: 'Panel') }
       it { should have_selector("div.alert-success", text: "Panel updated") }
     end
-
   end# >>>
 end
