@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+#needed to check Devise authentication
 include Warden::Test::Helpers
 Warden.test_mode!
 
@@ -7,7 +8,9 @@ describe "PvQuery" do
   let(:base_title) { "Solario" }
   let(:admin) { FactoryGirl.create(:admin) }
   let(:postcode) { FactoryGirl.create(:postcode) }
-  let(:pv_query) { FactoryGirl.create(:pv_query) }
+  #necessary because pv_queries_controller calls irradiance method
+  let!(:irradiance) { FactoryGirl.create(:irradiance, postcode_id: postcode.id) }
+  let!(:pv_query) { FactoryGirl.create(:pv_query, postcode_id: postcode.id) }
   subject { page }
 
   shared_examples_for "all pv_query pages" do
@@ -62,7 +65,6 @@ describe "PvQuery" do
 
       describe "after submitting" do
         before { click_button submit }
-        #devise is redirecting to sign_in page
         it_should_behave_like 'all pv_query pages'
         it { should have_selector("div.alert.alert-error", text: "error") }
       end
@@ -76,7 +78,6 @@ describe "PvQuery" do
         fill_in "Panel size", with: 15
       end
 
-      #try and fix this by fixing pv_queries_controller?
       it "should create a new pv_query" do
         expect { click_button submit }.to change(PvQuery, :count).by(1)
       end
