@@ -1,12 +1,11 @@
 //= require jsapi
-//= require default
 //= require visualization
 //= require graph3d-min
 
 var data = null;
 var graph = null;
 
-google.load("visualization", "1");
+//google.load("visualization", "1");
 
 // Set callback to run when API is loaded
 google.setOnLoadCallback(drawVisualization); 
