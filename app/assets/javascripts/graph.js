@@ -1,4 +1,6 @@
 //= require jsapi
+//= require default
+//= require visualization
 //= require graph3d-min
 
 var data = null;
@@ -33,7 +35,7 @@ function drawVisualization() {
   }
 
   // specify options
-  options = {width:  "400px", 
+  options = {width:  "500px", 
              height: "400px",
              style: "surface",
              showPerspective: true,
