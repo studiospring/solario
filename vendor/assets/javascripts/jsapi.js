@@ -3,7 +3,7 @@ window['google'] = {};
 }
 if (!window['google']['loader']) {
 window['google']['loader'] = {};
-google.loader.ServiceBase = 'http://www.google.com/uds';
+//google.loader.ServiceBase = 'http://www.google.com/uds';
 google.loader.ApiKey = 'notsupplied';
 google.loader.KeyVerified = true;
 google.loader.LoadFailure = false;
