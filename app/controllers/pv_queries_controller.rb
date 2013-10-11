@@ -1,6 +1,8 @@
 class PvQueriesController < ApplicationController
   #before_filter :authenticate_user!, except: [:new, :results]
   before_filter :require_admin, except: [:new, :create, :results]
+
+  respond_to :html, :js
   def index# <<<
     @pv_queries = PvQuery.all
   end# >>>
@@ -45,6 +47,7 @@ class PvQueriesController < ApplicationController
     #TODO: fails spectacularly if no postcode is found
     irradiance = Irradiance.select('direct').where('postcode_id = ?', @pv_query.postcode.id).first
     irradiance.nil? ? @dni_pa = nil : @dni_pa = irradiance.direct
+    @dummy = 'dummy'
     @panels = Hash.new
     key = 0
     @pv_query.panels.each do |panel|

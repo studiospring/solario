@@ -4,9 +4,6 @@
 
 var data = null;
 var graph = null;
-
-//google.load("visualization", "1");
-
 // Set callback to run when API is loaded
 google.setOnLoadCallback(drawVisualization); 
 
@@ -29,8 +26,10 @@ function drawVisualization() {
   for (var x = 0; x < axisMax; x+=axisStep) {
     for (var y = 0; y < axisMax; y+=axisStep) {
       var value = custom(x,y);
-      data.addRow([x, y, value]);
+      row = [x, y, value]
+      data.addRow(row);
     }
+    //alert (row);
   }
 
   // specify options
