@@ -28,6 +28,5 @@ index<% end %>
 <% @panels.each do |k, panel| %>
     <p><%= panel %></p>
 <% end %>
-<%#<div id="mygraph"></div>%>
-<%= content_tag :div, id: "mygraph", data: {dni_pa: @dni_pa} do %>
+<%= content_tag :div, id: "mygraph", data: {dni: @dni_pa} do %>
 <% end %>
