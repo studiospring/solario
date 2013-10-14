@@ -28,5 +28,6 @@ index<% end %>
 <% @panels.each do |k, panel| %>
     <p><%= panel %></p>
 <% end %>
+<p>@dni_string_received_pa: <%= @dni_string_received_pa %></p>
 <%= content_tag :div, id: "mygraph", data: {dni: @dni_pa} do %>
 <% end %>

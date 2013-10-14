@@ -45,7 +45,48 @@ class Panel < ActiveRecord::Base
   def hourly_output# <<<
     output = self.hourly_direct_input(dni)
   end# >>>
-  #return hash of hourly Direct Normal Insolation received by panel for whole year (KWh/sqm)
+  #return string of hourly Direct Normal Insolation received by panel over the
+  #course of 1 year (in KWh) "0 2.4 3.0 ..."
+  #0 KWh values must be included so that time can be calculated from position in string
+  #dni_pa is irradiances.direct ( string )
+  #use this instead of dni_received_pa because graph uses string format 
+  def dni_string_received_pa(dni_pa)# <<<
+    #set annual increment here
+    annual_increment = 12
+    days_in_increment = (365 / annual_increment).round
+    latitude = self.pv_query.postcode.latitude
+    longitude = self.pv_query.postcode.longitude
+    sun = Sun.new(latitude, longitude, 1)
+    annual_dni = String.new
+    dni_pa_array = dni_pa.split(' ')
+    dni_count = dni_pa_array.count #say, 60 
+    dnis_per_day = dni_count / annual_increment #60 / 12 = 5
+    dni_time = 6
+    #use this for dummy data (only, at present)
+    dni_count.times do |i|
+      dni = dni_pa_array.shift.to_f
+      lst = sun.to_lst(dni_time)
+      hra = sun.hra(lst)
+      sun_vector = sun.vector(hra)
+      #refactor later
+      #sun_vector = sun.vector(dni_time)
+      relative_angle = self.relative_angle(sun_vector)
+      #refactor? (self.panel_insolation(dni, sun_vector) * self.panel_size).round(2)
+      annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2).to_s + ' '
+      #set daily increment here
+      dni_time = dni_time + 3
+      if (i - 4) % dnis_per_day == 0
+        #assume 6am is the Universal Time of first value
+        dni_time = 6
+        #increment sun's day so that sun vector is correct
+        sun.day = sun.day + days_in_increment
+      end
+    end
+    annual_dni.chop!
+    return annual_dni
+  end# >>>
+  #return hash of hourly Direct Normal Insolation received by panel over the
+  #course of 1 year (in KWh)
   #{ day1: [KWh1, KWh2...]... }
   #0 KWh values must be included so that time can be calculated from position in array
   #dni_pa is irradiances.direct ( string )
@@ -77,11 +118,19 @@ class Panel < ActiveRecord::Base
     end
     return annual_dni_hash
   end# >>>
-  #return hash of hourly diffuse insolation received by panel for whole year (KWh/sqm)
-  #{ day1: [KWh1, KWh2...]... }
+  #return array of hourly diffuse insolation received by panel over the course
+  #of 1 year (in KWh)
+  #[KWh1, KWh2...]
   #0 KWh values must be included so that time can be calculated from position in array
   def diffuse_received_pa# <<<
-    #TODO
+    #TODO: refactor, add test
+    #no diffuse data in database, so cannot debug
+    irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.pv_query.postcode_id).first
+    irradiance.nil? ? diffuse = nil : diffuse = irradiance.diffuse
+    #convert string to array
+    diffuse_array = diffuse.split(" ").map { |s| s.to_i }
+    diffuse_array.collect! { |value| (value * self.panel_size).to_i }
+    return diffuse_array
   end# >>>
   #currently not in use
   #add annual insolation hash to return total energy received
