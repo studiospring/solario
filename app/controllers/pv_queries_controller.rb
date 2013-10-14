@@ -53,9 +53,10 @@ class PvQueriesController < ApplicationController
       @panels[key] = panel.dni_received_pa(@dni_pa)
       key = key + 1
       @diffuse = panel.diffuse_received_pa
-      @dni_string_received_pa = panel.dni_string_received_pa(@dni_pa)
+      @dni_array_received_pa = panel.dni_array_received_pa(@dni_pa)
 
     end
+    @avg = @pv_query.avg_output_pa
 
   end# >>>
   private
