@@ -50,14 +50,14 @@ class Panel < ActiveRecord::Base
   #0 KWh values must be included so that time can be calculated from position in string
   #dni_pa is irradiances.direct ( string )
   #use this instead of dni_received_pa because graph uses string format 
-  def dni_string_received_pa(dni_pa)# <<<
+  def dni_array_received_pa(dni_pa)# <<<
     #set annual increment here
     annual_increment = 12
     days_in_increment = (365 / annual_increment).round
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
-    annual_dni = String.new
+    annual_dni = Array.new
     dni_pa_array = dni_pa.split(' ')
     dni_count = dni_pa_array.count #say, 60 
     dnis_per_day = dni_count / annual_increment #60 / 12 = 5
@@ -65,13 +65,9 @@ class Panel < ActiveRecord::Base
     #use this for dummy data (only, at present)
     dni_count.times do |i|
       dni = dni_pa_array.shift.to_f
-      #lst = sun.to_lst(dni_time)
-      #hra = sun.hra(lst)
-      #sun_vector = sun.vector(hra)
-      #refactor later
       sun_vector = sun.vector(dni_time)
       relative_angle = self.relative_angle(sun_vector)
-      annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2).to_s + ' '
+      annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
       #set daily increment here
       dni_time = dni_time + 3
       #change values only after 1 day has looped
@@ -82,7 +78,6 @@ class Panel < ActiveRecord::Base
         sun.day = sun.day + days_in_increment
       end
     end
-    annual_dni.chop!
     return annual_dni
   end# >>>
   #return hash of hourly Direct Normal Insolation received by panel over the

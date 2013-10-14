@@ -29,7 +29,7 @@ class PvQuery < ActiveRecord::Base
   end# >>>
   #return graph data (string) of combined output for all panels in pv array
   def avg_output_pa# <<<
-    irradiance_query = Irradiance.select('direct, diffuse').where('postcode_id = ?', @pv_query.postcode.id).first
+    irradiance_query = Irradiance.select('direct, diffuse').where('postcode_id = ?', self.postcode.id).first
     if irradiance_query.nil?
       dni_pa = nil
       diffuse_pa = nil
@@ -47,9 +47,13 @@ class PvQuery < ActiveRecord::Base
     
     panels_array = Array.new
     self.panels.each do |panel|
-      panels_array << panel.dni_received_pa(dni_pa) #return array?
+      panels_array << panel.dni_array_received_pa(dni_pa)
+      #method not created yet
+      #panels_array << panel.diffuse_string_received_pa(diffuse_pa)
     end
-
-    
+    return panels_array
+    #add direct and diffuse inputs of all panels, return array
+    total_pa = panels_array.transpose.map {|x| x.reduce(:+) }
+    #factor in inefficiency
   end# >>>
 end
