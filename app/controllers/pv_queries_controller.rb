@@ -52,6 +52,9 @@ class PvQueriesController < ApplicationController
     @pv_query.panels.each do |panel|
       @panels[key] = panel.dni_received_pa(@dni_pa)
       key = key + 1
+      @diffuse = panel.diffuse_received_pa
+      @dni_string_received_pa = panel.dni_string_received_pa(@dni_pa)
+
     end
 
   end# >>>
