@@ -34,13 +34,13 @@ describe Sun do
   #end
   describe 'vector instance method' do# <<<
     it "should return correct value for @sun.vector[:x]" do
-      @sun.vector(15)[:x].should be_within(0.001).of(0.5525055229287719)
+      @sun.vector(9)[:x].should be_within(0.001).of(0.48662785778917966)
     end
     it "should return correct value for @sun.vector[:y]" do
-      @sun.vector(15)[:y].should be_within(0.001).of(0.4302532563734195)
+      @sun.vector(9)[:y].should be_within(0.001).of(0.8265353226938301)
     end
     it "should return correct value for @sun.vector[:z]" do
-      @sun.vector(15)[:z].should be_within(0.001).of(0.7138765877329729)
+      @sun.vector(9)[:z].should be_within(0.001).of(0.28290049198069644)
     end
   end# >>>
 end
