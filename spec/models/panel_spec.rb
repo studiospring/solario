@@ -4,6 +4,7 @@ describe Panel do
   #prevent tests from failing because of postcode_to_postcode_id callback
   PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
   let(:pv_query) { FactoryGirl.create(:pv_query) }
+  let!(:irradiance) { FactoryGirl.create(:irradiance, postcode_id: pv_query.postcode_id) }
   before do
     @panel = pv_query.panels.build(tilt: 60, bearing: 150, panel_size: 31 )
   end
@@ -89,7 +90,7 @@ describe Panel do
   end# >>>
   describe 'diffuse_received_pa method' do# <<<
     #before { @panel.annual_dni_received() }
-    it "should return a very big hash" do
+    it "should return a very big array" do
       pending 'dummy data'
     end
   end# >>>
