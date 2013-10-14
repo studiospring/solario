@@ -43,7 +43,7 @@ class PvQueriesController < ApplicationController
   end# >>>
   def results# <<<
     @pv_query = PvQuery.find(params[:id])
-    @avg = @pv_query.avg_output_pa
+    @avg = @pv_query.avg_output_pa.join(' ') #convert from array to string
   end# >>>
   private
     def pv_query_params# <<<
