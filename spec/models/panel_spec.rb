@@ -82,10 +82,24 @@ describe Panel do
   end# >>>
   describe 'dni_received_pa method' do# <<<
     before do
+      dni_pa = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
+    end
+    it "should return a very big hash" do
+      pending ''
+    end
+  end# >>>
+  describe 'dni_hash_received_pa method' do# <<<
+    before do
       @dni_pa = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
     end
     it "should return a very big hash" do
-      @panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
+      pending 'if this method is really necessary'
+      #@panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
+    end
+  end# >>>
+  describe 'avg_efficiency method' do# <<<
+    it "should return a decimal fraction" do
+      pending 'figuring out how to calculate avg efficiency'
     end
   end# >>>
   describe 'diffuse_received_pa method' do# <<<
