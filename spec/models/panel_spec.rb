@@ -98,8 +98,8 @@ describe Panel do
     end
   end# >>>
   describe 'avg_efficiency method' do# <<<
-    it "should return a decimal fraction" do
-      pending 'figuring out how to calculate avg efficiency'
+    it "should return correct value" do
+      Panel.avg_efficiency(20, 0.98).should == 0.83 
     end
   end# >>>
   describe 'diffuse_received_pa method' do# <<<

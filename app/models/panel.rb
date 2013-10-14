@@ -136,7 +136,8 @@ class Panel < ActiveRecord::Base
     end
     return annual_total
   end# >>>
-  #TODO: check result, write test
+  #dummy method
+  #currently no data to confirm solar panels behave this way!
   #efficiency must have 0 in front! eg 0.99
   def self.avg_efficiency(lifespan, efficiency)# <<<
     total = 0
