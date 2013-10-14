@@ -49,8 +49,8 @@ class Panel < ActiveRecord::Base
   #course of 1 year (in KWh) "0 2.4 3.0 ..."
   #0 KWh values must be included so that time can be calculated from position in string
   #dni_pa is irradiances.direct ( string )
-  #use this instead of dni_received_pa because graph uses string format 
-  def dni_array_received_pa(dni_pa)# <<<
+  #use this instead of dni_hash_received_pa because graph uses string format 
+  def dni_received_pa(dni_pa)# <<<
     #set annual increment here
     annual_increment = 12
     days_in_increment = (365 / annual_increment).round
@@ -85,7 +85,7 @@ class Panel < ActiveRecord::Base
   #{ day1: [KWh1, KWh2...]... }
   #0 KWh values must be included so that time can be calculated from position in array
   #dni_pa is irradiances.direct ( string )
-  def dni_received_pa(dni_pa)# <<<
+  def dni_hash_received_pa(dni_pa)# <<<
     #set annual increment here
     annual_increment = 12
     days_in_increment = (365 / annual_increment).round
@@ -136,14 +136,14 @@ class Panel < ActiveRecord::Base
     end
     return annual_total
   end# >>>
-  #currently not in use
+  #TODO: check result, write test
   #efficiency must have 0 in front! eg 0.99
-  def self.average_efficiency(lifespan, efficiency)# <<<
+  def self.avg_efficiency(lifespan, efficiency)# <<<
     total = 0
-    (1...lifespan).times do |year|
+    lifespan.times do |year|
       total = total + efficiency ** year
     end
-    avg = total / lifespan
+    avg = (total / lifespan).round(2)
   end# >>>
   #return KW/yr? taking in to account compound depreciated inefficiency, age of panel, etc
   def avg_annual_output(dni_received_pa, diffuse_received_pa)# <<<
