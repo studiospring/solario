@@ -28,7 +28,7 @@ class PvQuery < ActiveRecord::Base
     end
   end# >>>
   #return array of combined output for all panels in pv array
-  #this data is (automatically converted to string when passed to view) used by graph 
+  #array must be converted to string to be used by graph (join(' '))
   def avg_output_pa# <<<
     irradiance_query = Irradiance.select('direct, diffuse').where('postcode_id = ?', self.postcode.id).first
     if irradiance_query.nil?
