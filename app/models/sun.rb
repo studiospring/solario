@@ -31,7 +31,11 @@ class Sun
     #query database
   end# >>>
   #return hash: vector[:x], [:y], [:z]
-  def vector(hra)# <<<
+  #insert 24hr hourly time: 9, 12, 13 ...
+  #and 13.5 is returned for 13:30pm
+  def vector(local_hour)# <<<
+    lst = self.to_lst(local_hour)
+    hra = self.hra(lst)
     vector = Hash.new
     elev = self.elevation(hra)
     az = self.azimuth(hra)

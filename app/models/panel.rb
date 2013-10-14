@@ -65,17 +65,17 @@ class Panel < ActiveRecord::Base
     #use this for dummy data (only, at present)
     dni_count.times do |i|
       dni = dni_pa_array.shift.to_f
-      lst = sun.to_lst(dni_time)
-      hra = sun.hra(lst)
-      sun_vector = sun.vector(hra)
+      #lst = sun.to_lst(dni_time)
+      #hra = sun.hra(lst)
+      #sun_vector = sun.vector(hra)
       #refactor later
-      #sun_vector = sun.vector(dni_time)
+      sun_vector = sun.vector(dni_time)
       relative_angle = self.relative_angle(sun_vector)
-      #refactor? (self.panel_insolation(dni, sun_vector) * self.panel_size).round(2)
       annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2).to_s + ' '
       #set daily increment here
       dni_time = dni_time + 3
-      if (i - 4) % dnis_per_day == 0
+      #change values only after 1 day has looped
+      if (i - dnis_per_day + 1) % dnis_per_day == 0
         #assume 6am is the Universal Time of first value
         dni_time = 6
         #increment sun's day so that sun vector is correct
@@ -104,9 +104,7 @@ class Panel < ActiveRecord::Base
       dni_time = 6
       panel_insolation = Array.new
       diurnal_dni.collect do |dni|
-        lst = sun.to_lst(dni_time)
-        hra = sun.hra(lst)
-        sun_vector = sun.vector(hra)
+        sun_vector = sun.vector(dni_time)
         relative_angle = self.relative_angle(sun_vector)
         panel_insolation << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         #set daily increment here
