@@ -22,13 +22,6 @@ index<% end %>
     
   </tbody>
 </table>
-<p>@postcode_id: <%# @postcode_id %></p>
-<p>@dni_pa: <%= @dni_pa %></p>
-<p>@panels: <%= @pv_query.panels.count %> </p>
-<% @panels.each do |k, panel| %>
-    <p><%= panel %></p>
-<% end %>
-<p>@dni_array_received_pa: <%= @dni_array_received_pa %></p>
 <p>@avg: <%= @avg %></p>
 <%= content_tag :div, id: "mygraph", data: {dni: @dni_pa} do %>
 <% end %>

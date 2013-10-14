@@ -43,21 +43,7 @@ class PvQueriesController < ApplicationController
   end# >>>
   def results# <<<
     @pv_query = PvQuery.find(params[:id])
-  
-    #TODO: fails spectacularly if no postcode is found
-    irradiance = Irradiance.select('direct').where('postcode_id = ?', @pv_query.postcode.id).first
-    irradiance.nil? ? @dni_pa = nil : @dni_pa = irradiance.direct
-    @panels = Hash.new
-    key = 0
-    @pv_query.panels.each do |panel|
-      @panels[key] = panel.dni_received_pa(@dni_pa)
-      key = key + 1
-      @diffuse = panel.diffuse_received_pa
-      @dni_array_received_pa = panel.dni_array_received_pa(@dni_pa)
-
-    end
     @avg = @pv_query.avg_output_pa
-
   end# >>>
   private
     def pv_query_params# <<<
