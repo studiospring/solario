@@ -81,11 +81,8 @@ describe Panel do
     end
   end# >>>
   describe 'dni_received_pa method' do# <<<
-    before do
-      dni_pa = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
-    end
-    it "should return a very big hash" do
-      pending ''
+    it "should return correct array" do
+      @panel.dni_received_pa(irradiance.direct).last.should == 10.85
     end
   end# >>>
   describe 'dni_hash_received_pa method' do# <<<
