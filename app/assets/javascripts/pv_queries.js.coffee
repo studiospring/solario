@@ -2,49 +2,56 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
-  alert $("#mygraph").data("dni")
+  #alert $("#mygraph").data("dni")
 
-data = null
-graph = null
-custom = (month, hour) ->
-  Math.sin(month/50) * Math.cos(hour/50) * 50 + 50
+  data = null
+  graph = null
+  custom = (month, hour) ->
+    Math.sin(month/50) * Math.cos(hour/50) * 50 + 50
 
 # Called when the Visualization API is loaded.
-drawVisualization = () ->
-  # Create and populate a data table.
-  data = new google.visualization.DataTable
-  data.addColumn('number', 'month')
-  data.addColumn('number', 'hour')
-  data.addColumn('number', 'kW')
+  drawVisualization = () ->
+    # Create and populate a data table.
+    data = new google.visualization.DataTable
+    data.addColumn('number', 'month')
+    data.addColumn('number', 'hour')
+    data.addColumn('number', 'kW')
 
-  # create some nice looking data with sin/cos
-  steps = 25  # number of datapoints will be steps*steps
-  axisMax = 314
-  axisStep = axisMax / steps
+    dni_string = $("#mygraph").data("dni")
+    dni_array = dni_string.split(" ")
+    for month in [1..12]
+      for hour in [0..4]
+        kW = parseFloat dni_array.shift()
+        row = [month, hour, kW]
+        data.addRow(row)
 
-  #data.addRow row for row in axisMax by axisStep
-  for month in [0..axisMax] by axisStep
-    for hour in [0..axisMax] by axisStep
-      kW = custom(month, hour)
-      row = [month, hour, kW]
-      data.addRow(row)
+    # create some nice looking data with sin/cos
+    #steps = 25  # number of datapoints will be steps*steps
+    #axisMax = 314
+    #axisStep = axisMax / steps
+    ##data.addRow row for row in axisMax by axisStep
+    #for month in [0..axisMax] by axisStep
+      #for hour in [0..axisMax] by axisStep
+        #kW = custom(month, hour)
+        #row = [month, hour, kW]
+        #data.addRow(row)
 
-  # specify options
-  options =
-    width:  "500px"
-    height: "400px"
-    style: "surface"
-    showPerspective: true
-    showGrid: true
-    showShadow: false
-    keepAspectRatio: true
-    verticalRatio: 0.5
+    # specify options
+    options =
+      width:  "500px"
+      height: "400px"
+      style: "surface"
+      showPerspective: true
+      showGrid: true
+      showShadow: false
+      keepAspectRatio: true
+      verticalRatio: 0.5
 
-  # Instantiate our graph object.
-  graph = new links.Graph3d(document.getElementById('mygraph'))
+    # Instantiate our graph object.
+    graph = new links.Graph3d(document.getElementById('mygraph'))
 
-  # Draw our graph with the created data and options 
-  graph.draw(data, options)
+    # Draw our graph with the created data and options 
+    graph.draw(data, options)
 
 # Set callback to run when API is loaded
-google.setOnLoadCallback(drawVisualization)
+  google.setOnLoadCallback(drawVisualization)
