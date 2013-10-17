@@ -69,7 +69,7 @@ class Panel < ActiveRecord::Base
       relative_angle = self.relative_angle(sun_vector)
       annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
       #set daily increment here
-      dni_time = dni_time + 3
+      dni_time = dni_time + 1
       #change values only after 1 day has looped
       if (i - dnis_per_day + 1) % dnis_per_day == 0
         #assume 6am is the Universal Time of first value

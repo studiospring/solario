@@ -2,39 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
-  #alert $("#mygraph").data("dni")
-
   data = null
   graph = null
-  custom = (month, hour) ->
-    Math.sin(month/50) * Math.cos(hour/50) * 50 + 50
 
 # Called when the Visualization API is loaded.
   drawVisualization = () ->
     # Create and populate a data table.
     data = new google.visualization.DataTable
-    data.addColumn('number', 'month')
     data.addColumn('number', 'hour')
+    data.addColumn('number', 'month')
     data.addColumn('number', 'kW')
 
     dni_string = $("#mygraph").data("dni")
-    dni_array = dni_string.split(" ")
+    dni_array = dni_string.split(" ").map(parseFloat)
     for month in [1..12]
-      for hour in [0..4]
-        kW = parseFloat dni_array.shift()
-        row = [month, hour, kW]
+      for hour in [6..16] by 1
+        kW = dni_array.shift()
+        row = [hour, month, kW]
         data.addRow(row)
-
-    # create some nice looking data with sin/cos
-    #steps = 25  # number of datapoints will be steps*steps
-    #axisMax = 314
-    #axisStep = axisMax / steps
-    ##data.addRow row for row in axisMax by axisStep
-    #for month in [0..axisMax] by axisStep
-      #for hour in [0..axisMax] by axisStep
-        #kW = custom(month, hour)
-        #row = [month, hour, kW]
-        #data.addRow(row)
 
     # specify options
     options =
@@ -46,6 +31,7 @@ $ ->
       showShadow: false
       keepAspectRatio: true
       verticalRatio: 0.5
+      cameraPosition: {"horizontal": 5.6, "vertical": 0.25, "distance": 1.7}
 
     # Instantiate our graph object.
     graph = new links.Graph3d(document.getElementById('mygraph'))
