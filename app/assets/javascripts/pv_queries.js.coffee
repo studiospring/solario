@@ -16,7 +16,7 @@ $ ->
     dni_string = $("#mygraph").data("dni")
     dni_array = dni_string.split(" ").map(parseFloat)
     for month in [1..12]
-      for hour in [6..16] by 1
+      for hour in [6..20] by 1
         kW = dni_array.shift()
         row = [hour, month, kW]
         data.addRow(row)
@@ -24,14 +24,14 @@ $ ->
     # specify options
     options =
       width:  "500px"
-      height: "400px"
+      height: "450px"
       style: "surface"
       showPerspective: true
       showGrid: true
       showShadow: false
       keepAspectRatio: true
-      verticalRatio: 0.5
-      cameraPosition: {"horizontal": 5.6, "vertical": 0.25, "distance": 1.7}
+      verticalRatio: 0.8
+      cameraPosition: {"horizontal": 5.6, "vertical": 0.2, "distance": 1.8}
 
     # Instantiate our graph object.
     graph = new links.Graph3d(document.getElementById('mygraph'))
