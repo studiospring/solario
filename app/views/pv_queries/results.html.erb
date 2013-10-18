@@ -11,17 +11,31 @@ index<% end %>
     <col id="column2" />
   </colgroup>
   <tbody>
-    
+    <tr>
+      <td>Postcode:</td>
+      <td><%= @pv_query.postcode.pcode %></td>
+    </tr>
+    <% @pv_query.panels.each_with_index do |panel, index| %>
       <tr>
-        <td>Postcode</td>
-        <td><%= @pv_query.postcode_id %> <%= @pv_query.postcode.id %> <%= @pv_query.postcode.pcode %></td>
-        <% @pv_query.panels.each do |panel| %>
-          <td><%= panel.tilt %></td>
-        <% end %>
+        <td>Panel <%= index + 1 %></td>
+        <td></td>
       </tr>
-    
+      <tr>
+        <td>Tilt:</td>
+        <td><%= panel.tilt %>&deg;</td>
+      </tr>
+      <tr>
+        <td>Bearing:</td>
+        <td><%= panel.bearing %>&deg;</td>
+      </tr>
+      <tr>
+        <td>Size:</td>
+        <td><%= panel.panel_size %> m<sup>2</sup></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
-<p>@avg: <%= @avg %></p>
-<%= content_tag :div, id: "mygraph", data: {dni: @avg} do %>
+
+<h3>Total panel output per annum, averaged over the panel's lifetime</h3>
+<%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
 <% end %>
