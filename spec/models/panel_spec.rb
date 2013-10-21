@@ -84,6 +84,12 @@ describe Panel do
     it "should return correct array" do
       @panel.dni_received_pa(irradiance.direct).last.should == 10.85
     end
+    describe 'when no associated postcode is found' do
+      before { @panel.pv_query.postcode = nil }
+      it "should not raise an error" do
+        lambda { @panel.dni_received_pa(irradiance.direct) }.should_not raise_error
+      end
+    end
   end# >>>
   describe 'dni_hash_received_pa method' do# <<<
     before do
