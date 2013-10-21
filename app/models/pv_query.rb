@@ -30,14 +30,14 @@ class PvQuery < ActiveRecord::Base
   #return array of combined output for all panels in pv array
   #array must be converted to string to be used by graph (join(' '))
   def avg_output_pa# <<<
-    irradiance_query = Irradiance.select('direct, diffuse').where('postcode_id = ?', self.postcode.id).first
-    if irradiance_query.nil?
-      dni_pa = nil
-      diffuse_pa = nil
-    else
-      dni_pa = irradiance_query.direct
-      diffuse_pa = irradiance_query.diffuse
+    postcode_id = self.postcode.try(:id)
+    if postcode_id.nil?
+      #handle error
+      return []
     end
+    irradiance_query = Irradiance.select('direct, diffuse').where('postcode_id = ?', postcode_id).first
+    dni_pa = irradiance_query.direct
+    diffuse_pa = irradiance_query.diffuse
 
     panels_array = Array.new
     self.panels.each do |panel|
