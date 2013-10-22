@@ -35,8 +35,9 @@ index<% end %>
     <% end %>
   </tbody>
 </table>
-
+<p>@annual_output: <%= @output_pa %></p>
 <h3>Total panel output per annum, averaged over the panel's lifetime</h3>
 <%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
+  Add js error message if @output_pa is an empty array
   Javascript is required to view this graph.
 <% end %>
