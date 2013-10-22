@@ -30,23 +30,27 @@ class PvQuery < ActiveRecord::Base
   #return array of combined output for all panels in pv array
   #array must be converted to string to be used by graph (join(' '))
   def avg_output_pa# <<<
-    postcode_id = self.postcode.try(:id)
+    postcode_id = self.postcode.try('id')
     if postcode_id.nil?
       #handle error
       return []
     end
     irradiance_query = Irradiance.select('direct, diffuse').where('postcode_id = ?', postcode_id).first
-    dni_pa = irradiance_query.direct
-    diffuse_pa = irradiance_query.diffuse
-
-    panels_array = Array.new
-    self.panels.each do |panel|
-      panels_array << panel.dni_received_pa(dni_pa)
-      #TODO: method not created yet
-      #panels_array << panel.diffuse_received_pa(diffuse_pa)
+    begin #in case values have not been input for this postcode
+      dni_pa = irradiance_query.direct
+      diffuse_pa = irradiance_query.diffuse
+    rescue
+      return []
+    else
+      panels_array = Array.new
+      self.panels.each do |panel|
+        panels_array << panel.dni_received_pa(dni_pa)
+        #TODO: method not created yet
+        #panels_array << panel.diffuse_received_pa(diffuse_pa)
+      end
+      efficiency = Panel.avg_efficiency(20, 0.99)
+      #add direct and diffuse inputs of all panels, factor in efficiency
+      return panels_array.transpose.map {|x| (x.reduce(:+) * efficiency).round(2) }
     end
-    efficiency = Panel.avg_efficiency(20, 0.99)
-    #add direct and diffuse inputs of all panels, factor in efficiency
-    return panels_array.transpose.map {|x| (x.reduce(:+) * efficiency).round(2) }
   end# >>>
 end
