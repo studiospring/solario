@@ -69,20 +69,20 @@ describe Panel do
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
       #when bearing is 150 deg
-      @panel.vector[:x].should be_within(0.001).of(-0.43301270189221946)
+      @panel.vector[:x].should be_within(0.001).of(-0.75000)
     end
     it "should return correct value for @panel.vector[:y]" do
       #when bearing is 150 deg
-      @panel.vector[:y].should be_within(0.01).of(0.25)
+      @panel.vector[:y].should be_within(0.01).of(0.433012701)
     end
     it "should return correct value for @panel.vector[:z]" do
       #when tilt is 60 deg
-      @panel.vector[:z].should be_within(0.001).of(0.8660254037844386)
+      @panel.vector[:z].should be_within(0.001).of(0.5)
     end
   end# >>>
   describe 'dni_received_pa method' do# <<<
     it "should return correct array" do
-      @panel.dni_received_pa(irradiance.direct).last.should == 10.85
+      @panel.dni_received_pa(irradiance.direct).last.should == 17.67
     end
     describe 'when no associated postcode is found' do
       before { @panel.pv_query.postcode = nil }
