@@ -30,10 +30,10 @@ class Panel < ActiveRecord::Base
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
     vector = Hash.new
-    hypotenuse = Math.cos((self.tilt + 90).to_rad)
+    hypotenuse = Math.cos((90 - self.tilt).to_rad).abs
     vector[:x] = hypotenuse * Math.cos(self.bearing.to_rad)
     vector[:y] = hypotenuse * Math.sin(self.bearing.to_rad)
-    vector[:z] = Math.sin(self.tilt.to_rad)
+    vector[:z] = Math.sin((90 - self.tilt).to_rad)
     return vector
   end# >>>
   #no longer necessary?
@@ -166,7 +166,7 @@ class Panel < ActiveRecord::Base
     #directly perpendicular to panel surface)
     def relative_angle(sun_vector)# <<<
       panel_vector = self.vector
-      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) + Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
+      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) * Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
     end# >>>
     #return insolation received by 1sqm module via vector method
     #S_module = S_incident * cos(relative_angle)
