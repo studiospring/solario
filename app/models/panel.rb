@@ -168,6 +168,22 @@ class Panel < ActiveRecord::Base
       panel_vector = self.vector
       angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) * Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
     end# >>>
+    #TODO: apparently above method is not accurate, try different formula
+    #http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
+    def relative_angle2(sun_vector)# <<<
+      panel_vector = self.vector
+
+      #dot_product(a,b) == length(a) * length(b) * cos(angle)
+      dot_product = (panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z])
+      #length(cross_product(a,b)) == length(a) * length(b) * sin(angle)
+
+#For a robust angle between 3-D vectors, your actual computation should be:
+
+  #s = length(cross_product(a,b))
+  #c = dot_product(a,b)
+  #angle = atan2(s, c)
+      
+    end# >>>
     #return insolation received by 1sqm module via vector method
     #S_module = S_incident * cos(relative_angle)
     def panel_insolation(incident_light, relative_angle)# <<<
