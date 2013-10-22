@@ -1,9 +1,9 @@
 <fieldset class="nested_fields">
   <legend>Panel</legend>
-  <%= f.label :tilt, 'Tilt (degrees from horizontal)' %>
+  <%= f.label :tilt, 'Tilt (measured from horizontal, with panel bottom facing bearing)' %>
   <%= f.number_field :tilt, step: 'any', min: '0', max: '180' %>
 
-  <%= f.label :bearing, 'Bearing (degrees from north)' %>
+  <%= f.label :bearing, 'Bearing (degrees clockwise from north)' %>
   <%= f.number_field :bearing, step: 'any', min: '0', max: '360' %>
 
   <%= f.label :panel_size, raw('Panel size (m<sup>2</sup>)') %>
