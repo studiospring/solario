@@ -71,7 +71,8 @@ class Panel < ActiveRecord::Base
         dni = dni_pa_array.shift.to_f
         sun_vector = sun.vector(dni_time)
         relative_angle = self.relative_angle(sun_vector)
-        annual_dni << relative_angle * 180 / Math::PI
+        annual_dni << ( sun.elevation(sun.hra(dni_time)) * 180 / Math::PI ).round
+        #annual_dni << (relative_angle * 180 / Math::PI).round
         #annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         #set daily increment here
         dni_time = dni_time + 1
