@@ -15,7 +15,7 @@ class Panel < ActiveRecord::Base
 
   belongs_to :pv_query
 
-  validates :tilt,        presence: true, 
+  validates :tilt,        presence: true, # <<<
                           length: { maximum: 2 },
                           numericality: { greater_than_or_equal_to: 0,
                           less_than_or_equal_to: 90 }
@@ -26,7 +26,7 @@ class Panel < ActiveRecord::Base
   validates :panel_size,  presence: true,
                           inclusion: {in: 1..500,
                                       message: 'is not a valid number'}
-
+# >>>
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
     vector = Hash.new
@@ -63,15 +63,16 @@ class Panel < ActiveRecord::Base
       sun = Sun.new(latitude, longitude, 1)
       annual_dni = Array.new
       dni_pa_array = dni_pa.split(' ')
-      dni_count = dni_pa_array.count #say, 60 
-      dnis_per_day = dni_count / annual_increment #60 / 12 = 5
+      dni_count = dni_pa_array.count #say, 180 
+      dnis_per_day = dni_count / annual_increment #180 / 12 = 15 
       dni_time = 6
       #use this for dummy data (only, at present)
       dni_count.times do |i|
         dni = dni_pa_array.shift.to_f
         sun_vector = sun.vector(dni_time)
         relative_angle = self.relative_angle(sun_vector)
-        annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
+        annual_dni << relative_angle * 180 / Math::PI
+        #annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         #set daily increment here
         dni_time = dni_time + 1
         #change values only after 1 day has looped
