@@ -35,6 +35,7 @@ index<% end %>
     <% end %>
   </tbody>
 </table>
+<p>@output_pa: <%= @output_pa %></p>
 <table class="table table-striped table-condensed">
   <caption>caption</caption>
   <colgroup>
@@ -43,6 +44,7 @@ index<% end %>
   </colgroup>
   <thead>
     <tr>
+      <th scope="col">Time</th>
       <th scope="col">Jan</th>
       <th scope="col">Feb</th>
       <th scope="col">Mar</th>
@@ -58,8 +60,9 @@ index<% end %>
     </tr>
   </thead>
   <tbody>
-    <% 16.times do %>
+    <% 15.times do |i| %>
       <tr>
+        <td><%= 6 + i %></td>
         <% 12.times do %>
           <td><%= @output_pa_array.shift %></td>
         <% end %>
