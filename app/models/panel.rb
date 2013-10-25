@@ -58,10 +58,11 @@ class Panel < ActiveRecord::Base
     begin #in case there is no postcode
       latitude = self.pv_query.postcode.latitude
       longitude = self.pv_query.postcode.longitude
+      state = self.pv_query.postcode.state
     rescue
       return ""
     else
-      sun = Sun.new(latitude, longitude, 1)
+      sun = Sun.new(latitude, longitude, state, 1)
       dni_pa_array = dni_pa.split(' ')
       dni_count = dni_pa_array.count #say, 180 
       dnis_per_day = dni_count / annual_increment #180 / 12 = 15 

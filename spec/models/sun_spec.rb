@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Sun do
-  let(:sun) { Sun.new(:latitude, :longitude, :day) }
-  before { @sun = Sun.new(-20, 135, 10) }
+  let(:sun) { Sun.new(:latitude, :longitude, :state, :day) }
+  before { @sun = Sun.new(-20, 135, 'NSW', 10) }
   subject { @sun }
 
   describe 'elevation method' do
@@ -18,6 +18,11 @@ describe Sun do
   describe 'declination method' do
     it "should return angle in radians" do
       @sun.declination.should be_within(0.001).of(0.38333384764823003) 
+    end
+  end
+  describe 'lstm method' do
+    it "should return local standard time meridian in degrees" do
+      @sun.lstm.should eq(150)
     end
   end
   describe 'vector instance method' do# <<<
