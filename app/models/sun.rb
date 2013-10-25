@@ -9,6 +9,8 @@ class Sun
     @day = day
   end
 
+  #convert azimuth and elevation in to vector notation:
+  #S = Sx + Sy + Sz
   #return hash: vector[:x], [:y], [:z]
   #insert 24hr hourly time: 9, 12, 13 ...
   #eg 13.5 is 13:30pm

@@ -27,6 +27,7 @@ class Panel < ActiveRecord::Base
                           inclusion: {in: 1..500,
                                       message: 'is not a valid number'}
 
+  #convert tilt and bearing to vector notation
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
     vector = Hash.new
