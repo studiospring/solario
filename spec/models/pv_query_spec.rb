@@ -46,5 +46,11 @@ describe PvQuery do
       #broken
       @pv_query.avg_output_pa.should == '1 2'
     end
+    describe 'when no associated postcode is found' do
+      before { @pv_query.postcode = nil }
+      it "should not raise an error" do
+        lambda { @pv_query.avg_output_pa }.should_not raise_error
+      end
+    end
   end# >>>
 end

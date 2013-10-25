@@ -15,7 +15,7 @@ class Panel < ActiveRecord::Base
 
   belongs_to :pv_query
 
-  validates :tilt,        presence: true, 
+  validates :tilt,        presence: true, # <<<
                           length: { maximum: 2 },
                           numericality: { greater_than_or_equal_to: 0,
                           less_than_or_equal_to: 90 }
@@ -26,15 +26,15 @@ class Panel < ActiveRecord::Base
   validates :panel_size,  presence: true,
                           inclusion: {in: 1..500,
                                       message: 'is not a valid number'}
-
+  # >>>
   #convert tilt and bearing to vector notation
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
     vector = Hash.new
-    hypotenuse = Math.cos(self.tilt.to_rad)
+    hypotenuse = Math.cos((90 - self.tilt).to_rad).abs
     vector[:x] = hypotenuse * Math.cos(self.bearing.to_rad)
     vector[:y] = hypotenuse * Math.sin(self.bearing.to_rad)
-    vector[:z] = Math.sin(self.tilt.to_rad)
+    vector[:z] = Math.sin((90 - self.tilt).to_rad)
     return vector
   end# >>>
   #no longer necessary?
@@ -55,31 +55,39 @@ class Panel < ActiveRecord::Base
     #set annual increment here
     annual_increment = 12
     days_in_increment = (365 / annual_increment).round
-    latitude = self.pv_query.postcode.latitude
-    longitude = self.pv_query.postcode.longitude
-    sun = Sun.new(latitude, longitude, 1)
-    annual_dni = Array.new
-    dni_pa_array = dni_pa.split(' ')
-    dni_count = dni_pa_array.count #say, 60 
-    dnis_per_day = dni_count / annual_increment #60 / 12 = 5
-    dni_time = 6
-    #use this for dummy data (only, at present)
-    dni_count.times do |i|
-      dni = dni_pa_array.shift.to_f
-      sun_vector = sun.vector(dni_time)
-      relative_angle = self.relative_angle(sun_vector)
-      annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
-      #set daily increment here
-      dni_time = dni_time + 1
-      #change values only after 1 day has looped
-      if (i - dnis_per_day + 1) % dnis_per_day == 0
-        #assume 6am is the Universal Time of first value
-        dni_time = 6
-        #increment sun's day so that sun vector is correct
-        sun.day = sun.day + days_in_increment
+    begin #in case there is no postcode
+      latitude = self.pv_query.postcode.latitude
+      longitude = self.pv_query.postcode.longitude
+    rescue
+      return ""
+    else
+      sun = Sun.new(latitude, longitude, 1)
+      dni_pa_array = dni_pa.split(' ')
+      dni_count = dni_pa_array.count #say, 180 
+      dnis_per_day = dni_count / annual_increment #180 / 12 = 15 
+      dni_time = 6
+      annual_dni = Array.new
+      #use this for dummy data (only, at present)
+      dni_count.times do |i|
+        dni = dni_pa_array.shift.to_f
+        sun_vector = sun.vector(dni_time)
+        relative_angle = self.relative_angle(sun_vector)
+        annual_dni << sun.hra(dni_time)
+        #annual_dni << ( sun.elevation(sun.hra(dni_time)) * 180 / Math::PI ).round
+        #annual_dni << (relative_angle * 180 / Math::PI).round
+        #annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
+        #set daily increment here
+        dni_time = dni_time + 1
+        #change sun values only after 1 day has looped
+        if (i - dnis_per_day + 1) % dnis_per_day == 0
+          #assume 6am is the Universal Time of first value
+          dni_time = 6
+          #increment sun's day so that sun vector is correct
+          sun.day = sun.day + days_in_increment
+        end
       end
+      return annual_dni
     end
-    return annual_dni
   end# >>>
   #return hash of hourly Direct Normal Insolation received by panel over the
   #course of 1 year (in KWh)
@@ -162,7 +170,23 @@ class Panel < ActiveRecord::Base
     #directly perpendicular to panel surface)
     def relative_angle(sun_vector)# <<<
       panel_vector = self.vector
-      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) + Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
+      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) * Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
+    end# >>>
+    #TODO: apparently above method is not accurate, try different formula
+    #http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
+    def relative_angle2(sun_vector)# <<<
+      panel_vector = self.vector
+
+      #dot_product(a,b) == length(a) * length(b) * cos(angle)
+      dot_product = (panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z])
+      #length(cross_product(a,b)) == length(a) * length(b) * sin(angle)
+
+#For a robust angle between 3-D vectors, your actual computation should be:
+
+  #s = length(cross_product(a,b))
+  #c = dot_product(a,b)
+  #angle = atan2(s, c)
+      
     end# >>>
     #return insolation received by 1sqm module via vector method
     #S_module = S_incident * cos(relative_angle)
