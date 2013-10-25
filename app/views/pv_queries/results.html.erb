@@ -37,7 +37,7 @@ index<% end %>
 </table>
 <p>@output_pa: <%= @output_pa %></p>
 <table class="table table-striped table-condensed">
-  <caption>caption</caption>
+  <caption>HRA in degrees</caption>
   <colgroup>
     <col />
     <col />
@@ -60,14 +60,11 @@ index<% end %>
     </tr>
   </thead>
   <tbody>
-    <% @output_pa_array.each do |day_array| %>
-       
-    <% end %>
-    <% 15.times do |i| %>
+    <% @output_pa_array.each_with_index do |day_array, i| %>
       <tr>
         <td><%= 6 + i %></td>
-        <% 12.times do %>
-          <td><%= @output_pa_array.shift %></td>
+        <% day_array.each do |value| %>
+          <td><%= value %>&deg;</td>
         <% end %>
       </tr>
     <% end %>

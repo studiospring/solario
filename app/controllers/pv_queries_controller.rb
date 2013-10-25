@@ -52,6 +52,7 @@ class PvQueriesController < ApplicationController
       end
       month << v
     end
+    @output_pa_array = @output_pa_array.transpose
     @output_pa = @pv_query.avg_output_pa.join(' ') #convert from array to string
   end# >>>
   private
