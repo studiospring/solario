@@ -46,8 +46,8 @@ class Panel < ActiveRecord::Base
   def hourly_output# <<<
     output = self.hourly_direct_input(dni)
   end# >>>
-  #return string of hourly Direct Normal Insolation received by panel over the
-  #course of 1 year (in KWh) "0 2.4 3.0 ..."
+  #return array of hourly Direct Normal Insolation received by panel over the
+  #course of 1 year (in KWh) [0, 2.4, 3.0, ...]
   #0 KWh values must be included so that time can be calculated from position in string
   #dni_pa is irradiances.direct ( string )
   #use this instead of dni_hash_received_pa because graph uses string format 
@@ -66,23 +66,50 @@ class Panel < ActiveRecord::Base
       dni_pa_array = dni_pa.split(' ')
       dni_count = dni_pa_array.count #say, 180 
       dnis_per_day = dni_count / annual_increment #180 / 12 = 15 
-      dni_time = 6
+      
+      #create [[jan values], [feb values],...]
+      dni_pa_nested_arrays = Array.new
+      dni_pa_array.each_slice(dnis_per_day) { |array| dni_pa_nested_arrays << array }
+
+      #time shown on graph starts from this number
+      local_time = 6
       annual_dni = Array.new
+      #remove dni values from beginning or end of day (depending on time zone)
+      #so that local time zone and times of insolation measurement match up
+      #case state
+        #when 'WA' #remove first 4 values per month (assuming 1/2 hrly dni readings)
+          #dni_pa_nested_arrays.each do |array|
+            #array.drop(4)
+          #end
+        #when 'SA', 'NT'
+          #dni_pa_nested_arrays.each do |array|
+            #array.drop(3)
+            #array.pop
+          #end
+        #else
+          #dni_pa_nested_arrays.each do |array|
+            #array.pop(4)
+          #end
+      #end 
+
+      dni_pa_array = dni_pa_nested_arrays.flatten
+      dni_count = dni_pa_array.count #say, 180 
+      dnis_per_day = dni_count / annual_increment #180 / 12 = 15 
+      
       #use this for dummy data (only, at present)
-      dni_count.times do |i|
-        dni = dni_pa_array.shift.to_f
-        sun_vector = sun.vector(dni_time)
+      dni_pa_array.each_with_index do |datum, i|
+        dni = datum.to_f
+        sun_vector = sun.vector(local_time)
         relative_angle = self.relative_angle(sun_vector)
-        annual_dni << sun.hra(dni_time)
-        #annual_dni << ( sun.elevation(sun.hra(dni_time)) * 180 / Math::PI ).round
-        #annual_dni << (relative_angle * 180 / Math::PI).round
-        #annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
+
+        #annual_dni << sun.hra(local_time)
+        annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
+        
         #set daily increment here
-        dni_time = dni_time + 1
+        local_time = local_time + 1#0.5 
         #change sun values only after 1 day has looped
         if (i - dnis_per_day + 1) % dnis_per_day == 0
-          #assume 6am is the Universal Time of first value
-          dni_time = 6
+          local_time = 6
           #increment sun's day so that sun vector is correct
           sun.day = sun.day + days_in_increment
         end
@@ -106,14 +133,14 @@ class Panel < ActiveRecord::Base
     #use this for dummy data (only, at present)
     annual_dni_hash.each do |key, diurnal_dni|
       #assume 6am is the Universal Time of first value
-      dni_time = 6
+      local_time = 6
       panel_insolation = Array.new
       diurnal_dni.collect do |dni|
-        sun_vector = sun.vector(dni_time)
+        sun_vector = sun.vector(local_time)
         relative_angle = self.relative_angle(sun_vector)
         panel_insolation << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         #set daily increment here
-        dni_time = dni_time + 3
+        local_time = local_time + 3
       end
       annual_dni_hash[key] = panel_insolation
       #increment sun's day so that sun vector is correct
