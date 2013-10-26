@@ -18,6 +18,7 @@ module SolarTime
     eot = 9.87 * Math.sin(2 * b) - 7.53 * Math.cos(b) - 1.5 * Math.sin(b)
   end# >>>
   #return lstm (local standard time meridian) in degrees (derived from timezone)
+  #AEST is (GMT/UTC + 10) therefore lstm (local standard time meridian) is 15 * 10
   #Broken Hill is actually 142.5
   #Does not account for DST
   def lstm# <<<
@@ -34,8 +35,6 @@ module SolarTime
   #return minutes by which local time should be corrected, to account for
   #position and day of year
   def time_correction# <<<
-    #assume solar measurements are taken at EST (GMT/UTC + 10)
-    #therefore lstm (local standard time meridian) is 15 * 10
     time_correction = 4 * (self.longitude - self.lstm) + self.eot
   end# >>>
   #convert local hour to local solar time in decimal notation
