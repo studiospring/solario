@@ -35,10 +35,9 @@ class PvQuery < ActiveRecord::Base
       #handle error
       return []
     end
-    irradiance_query = Irradiance.select('direct, diffuse').where('postcode_id = ?', postcode_id).first
     begin #in case values have not been input for this postcode
-      dni_pa = irradiance_query.direct
-      diffuse_pa = irradiance_query.diffuse
+      dni_pa = self.postcode.irradiance.time_zone_corrected_dni
+      #diffuse_pa = self.postcode.irradiance.time_zone_corrected_diffuse
     rescue
       return []
     else

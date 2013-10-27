@@ -60,41 +60,16 @@ class Panel < ActiveRecord::Base
       longitude = self.pv_query.postcode.longitude
       state = self.pv_query.postcode.state
     rescue
-      return ""
+      return []
     else
       sun = Sun.new(latitude, longitude, state, 1)
       dni_pa_array = dni_pa.split(' ')
       dni_count = dni_pa_array.count #say, 180 
       dnis_per_day = dni_count / annual_increment #180 / 12 = 15 
       
-      #create [[jan values], [feb values],...]
-      dni_pa_nested_arrays = Array.new
-      dni_pa_array.each_slice(dnis_per_day) { |array| dni_pa_nested_arrays << array }
-
       #time shown on graph starts from this number
       local_time = 6
       annual_dni = Array.new
-      #remove dni values from beginning or end of day (depending on time zone)
-      #so that local time zone and times of insolation measurement match up
-      #case state
-        #when 'WA' #remove first 4 values per month (assuming 1/2 hrly dni readings)
-          #dni_pa_nested_arrays.each do |array|
-            #array.drop(4)
-          #end
-        #when 'SA', 'NT'
-          #dni_pa_nested_arrays.each do |array|
-            #array.drop(3)
-            #array.pop
-          #end
-        #else
-          #dni_pa_nested_arrays.each do |array|
-            #array.pop(4)
-          #end
-      #end 
-
-      dni_pa_array = dni_pa_nested_arrays.flatten
-      dni_count = dni_pa_array.count #say, 180 
-      dnis_per_day = dni_count / annual_increment #180 / 12 = 15 
       
       #use this for dummy data (only, at present)
       dni_pa_array.each_with_index do |datum, i|
