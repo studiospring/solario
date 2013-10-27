@@ -19,7 +19,7 @@ module SolarTime
   end# >>>
   #return lstm (local standard time meridian) in degrees (derived from timezone)
   #AEST is (GMT/UTC + 10) therefore lstm (local standard time meridian) is 15 * 10
-  #Broken Hill is actually 142.5
+  #Broken Hill is actually 142.5, Xmas Is, Lord Howe have diff timezones
   #Does not account for DST
   def lstm# <<<
     case self.state

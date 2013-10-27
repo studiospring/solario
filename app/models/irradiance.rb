@@ -36,7 +36,7 @@ class Irradiance < ActiveRecord::Base
     self.correct_time_zone_diff(irradiance.diffuse)
   end# >>>
   
-  #private
+  protected
     #remove insolation values from beginning or end of day (depending on time zone)
     #so that local time zone and times of insolation measurement match up
     def correct_time_zone_diff(insolation_string)# <<<
