@@ -53,6 +53,7 @@ class Panel < ActiveRecord::Base
   #use this instead of dni_hash_received_pa because graph uses string format 
   def dni_received_pa(dni_pa)# <<<
     #set annual increment here
+    #use global variable?
     annual_increment = 12
     days_in_increment = (365 / annual_increment).round
     begin #in case there is no postcode
