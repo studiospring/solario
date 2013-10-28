@@ -54,10 +54,8 @@ describe PvQuery do
     end
   end# >>>
   describe 'time_zone_corrected_dni method' do# <<<
-    #broken, possibly same problem as avg_output_pa
-    before { @pv_query.postcode.state = 'NSW' }
     it "should return trimmed string" do
-      @pv_query.postcode.irradiance.time_zone_corrected_dni[0..7].should == "0.50 1.66"
+      @pv_query.postcode.irradiance.time_zone_corrected_dni[0..8].should == "0.50 1.66"
     end
   end# >>>
 end
