@@ -27,23 +27,28 @@ class Sun
     vector[:z] = Math.sin(elev)
     return vector
   end# >>>
-  #private
-    #return declination in radians
-    def declination# <<<
-      declination = Math.asin(0.3979486313076103 * Math.sin(0.017214206 * (self.day - 81))).abs
-    end# >>>
-    #input hra in degrees bc degs is easier to understand
-    #return elevation of sun in radians
-    def elevation(hra)# <<<
-      dec = self.declination
-      lat = self.latitude.to_rad
-      elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hra.to_rad))
-    end# >>>
-    #input hra in degrees bc degs is easier to understand
-    #return azimuth in radians
-    def azimuth(hra)# <<<
-      dec = self.declination
-      lat = self.latitude.to_rad
-      azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra.to_rad) / Math.cos(self.elevation(hra))))
-    end# >>>
+  #return declination in radians
+  def declination# <<<
+    declination = Math.asin(0.3979486313076103 * Math.sin(0.017214206 * (self.day - 81))).abs
+  end# >>>
+  #input hra in degrees bc degs is easier to understand
+  #return elevation of sun in radians
+  def elevation(hra)# <<<
+    dec = self.declination
+    lat = self.latitude.to_rad
+    elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hra.to_rad))
+  end# >>>
+  #input hra in degrees bc degs is easier to understand
+  #return azimuth in radians
+  def azimuth(hra)# <<<
+    dec = self.declination
+    lat = self.latitude.to_rad
+    azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra.to_rad) / Math.cos(self.elevation(hra))))
+    if hra > 0
+      azimuth = 360.to_rad - azimuth
+    elsif hra == 0
+      azimuth = 0
+    end
+    return azimuth
+  end# >>>
 end
