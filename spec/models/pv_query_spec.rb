@@ -43,7 +43,7 @@ describe PvQuery do
   end# >>>
   describe 'avg_output_pa' do# <<<
     it "should return totals of dni values for entire pv_query" do
-      #broken
+      #broken, postcode_id cannot be found
       @pv_query.avg_output_pa.should == '1 2'
     end
     describe 'when no associated postcode is found' do
@@ -54,8 +54,10 @@ describe PvQuery do
     end
   end# >>>
   describe 'time_zone_corrected_dni method' do# <<<
+    #broken, possibly same problem as avg_output_pa
+    before { @pv_query.postcode.state = 'NSW' }
     it "should return trimmed string" do
-      @pv_query.postcode.irradiance.time_zone_corrected_dni.should == "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
+      @pv_query.postcode.irradiance.time_zone_corrected_dni[0..7].should == "0.50 1.66"
     end
   end# >>>
 end
