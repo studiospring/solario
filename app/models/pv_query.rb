@@ -49,7 +49,7 @@ class PvQuery < ActiveRecord::Base
       end
       efficiency = Panel.avg_efficiency(20, 0.99)
       #add direct and diffuse inputs of all panels, factor in efficiency
-      return panels_array.transpose.map { |x| (x.reduce(:+)) } #* efficiency).round(2) }
+      return panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).round(2) }
     end
   end# >>>
 end
