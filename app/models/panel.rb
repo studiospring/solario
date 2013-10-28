@@ -52,9 +52,7 @@ class Panel < ActiveRecord::Base
   #dni_pa is irradiances.direct ( string )
   #use this instead of dni_hash_received_pa because graph uses string format 
   def dni_received_pa(dni_pa)# <<<
-    #set annual increment here
-    #TODO: refactor. use global variable?
-    annual_increment = 12
+    annual_increment = Irradiance.annual_increment
     days_in_increment = (365 / annual_increment).round
     begin #in case there is no postcode
       latitude = self.pv_query.postcode.latitude
@@ -70,7 +68,7 @@ class Panel < ActiveRecord::Base
       
       #time shown on graph starts from this number
       local_time = 6
-      annual_dni = Array.new
+      dni_received_pa = Array.new
       
       #use this for dummy data (only, at present)
       dni_pa_array.each_with_index do |datum, i|
@@ -78,8 +76,8 @@ class Panel < ActiveRecord::Base
         sun_vector = sun.vector(local_time)
         relative_angle = self.relative_angle(sun_vector)
 
-        #annual_dni << sun.hra(local_time)
-        annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
+        #dni_received_pa << sun.hra(local_time)
+        dni_received_pa << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         
         #set daily increment here
         local_time = local_time + 0.5 
@@ -90,7 +88,7 @@ class Panel < ActiveRecord::Base
           sun.day = sun.day + days_in_increment
         end
       end
-      return annual_dni
+      return dni_received_pa
     end
   end# >>>
   #return hash of hourly Direct Normal Insolation received by panel over the
@@ -99,15 +97,14 @@ class Panel < ActiveRecord::Base
   #0 KWh values must be included so that time can be calculated from position in array
   #dni_pa is irradiances.direct ( string )
   def dni_hash_received_pa(dni_pa)# <<<
-    #set annual increment here
-    annual_increment = 12
+    annual_increment = Irradiance.annual_increment
     days_in_increment = (365 / annual_increment).round
-    annual_dni_hash = dni_pa.data_string_to_hash(annual_increment)
+    dni_received_pa_hash = dni_pa.data_string_to_hash(annual_increment)
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1)
     #use this for dummy data (only, at present)
-    annual_dni_hash.each do |key, diurnal_dni|
+    dni_received_pa_hash.each do |key, diurnal_dni|
       #assume 6am is the Universal Time of first value
       local_time = 6
       panel_insolation = Array.new
@@ -118,11 +115,11 @@ class Panel < ActiveRecord::Base
         #set daily increment here
         local_time = local_time + 3
       end
-      annual_dni_hash[key] = panel_insolation
+      dni_received_pa_hash[key] = panel_insolation
       #increment sun's day so that sun vector is correct
       sun.day = sun.day + days_in_increment
     end
-    return annual_dni_hash
+    return dni_received_pa_hash
   end# >>>
   #return array of hourly diffuse insolation received by panel over the course
   #of 1 year (in KWh)
@@ -169,38 +166,37 @@ class Panel < ActiveRecord::Base
     average_efficiency = 0.9
     annual_output = annual_input * average_efficiency
   end# >>>
-  #private
-    #return angle of incident light relative to panel in radians (where 0 is
-    #directly perpendicular to panel surface)
-    def relative_angle(sun_vector)# <<<
-      panel_vector = self.vector
-      angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) * Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
-    end# >>>
-    #TODO: apparently above method is not accurate, try different formula
-    #http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
-    def relative_angle2(sun_vector)# <<<
-      panel_vector = self.vector
+  #return angle of incident light relative to panel in radians (where 0 is
+  #directly perpendicular to panel surface)
+  def relative_angle(sun_vector)# <<<
+    panel_vector = self.vector
+    angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) * Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
+  end# >>>
+  #TODO: apparently above method is not accurate, try different formula
+  #http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
+  def relative_angle2(sun_vector)# <<<
+    panel_vector = self.vector
 
-      #dot_product(a,b) == length(a) * length(b) * cos(angle)
-      dot_product = (panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z])
-      #length(cross_product(a,b)) == length(a) * length(b) * sin(angle)
+    #dot_product(a,b) == length(a) * length(b) * cos(angle)
+    dot_product = (panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z])
+    #length(cross_product(a,b)) == length(a) * length(b) * sin(angle)
 
 #For a robust angle between 3-D vectors, your actual computation should be:
 
-  #s = length(cross_product(a,b))
-  #c = dot_product(a,b)
-  #angle = atan2(s, c)
-      
-    end# >>>
-    #return insolation received by 1sqm module via vector method
-    #S_module = S_incident * cos(relative_angle)
-    def panel_insolation(incident_light, relative_angle)# <<<
-      #calculate only if relative angle <= 90 degrees, else return 0
-      if relative_angle <= 1.57
-        insolation_received = (incident_light * Math.cos(relative_angle)).round(2)      
-      else
-        insolation_received = 0
-      end
-      return insolation_received
-    end# >>>
+#s = length(cross_product(a,b))
+#c = dot_product(a,b)
+#angle = atan2(s, c)
+    
+  end# >>>
+  #return insolation received by 1sqm module via vector method
+  #S_module = S_incident * cos(relative_angle)
+  def panel_insolation(incident_light, relative_angle)# <<<
+    #calculate only if relative angle <= 90 degrees, else return 0
+    if relative_angle <= 1.57
+      insolation_received = (incident_light * Math.cos(relative_angle)).round(2)      
+    else
+      insolation_received = 0
+    end
+    return insolation_received
+  end# >>>
 end
