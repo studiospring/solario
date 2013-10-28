@@ -11,8 +11,14 @@ describe Sun do
     end
   end
   describe 'azimuth method' do
-    it "should return azimuth in radians" do
-      @sun.azimuth(15).should be_within(0.001).of(0.6616369131917649)
+    it "should return correct azimuth in radians in the morning" do
+      @sun.azimuth(-15).should be_within(0.001).of(0.6616369131917649)
+    end
+    it "should return correct azimuth in radians at solar noon" do
+      @sun.azimuth(0).should eq(0)
+    end
+    it "should return correct azimuth in radians in the afternoon" do
+      @sun.azimuth(30).should be_within(0.001).of(5.493424156038)
     end
   end
   describe 'declination method' do
