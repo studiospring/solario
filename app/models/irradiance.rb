@@ -35,7 +35,6 @@ class Irradiance < ActiveRecord::Base
     irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.postcode_id).first
     self.correct_time_zone_diff(irradiance.diffuse)
   end# >>>
-  
   protected
     #remove insolation values from beginning or end of day (depending on time zone)
     #so that local time zone and times of insolation measurement match up
