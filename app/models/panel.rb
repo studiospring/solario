@@ -53,7 +53,7 @@ class Panel < ActiveRecord::Base
   #use this instead of dni_hash_received_pa because graph uses string format 
   def dni_received_pa(dni_pa)# <<<
     #set annual increment here
-    #use global variable?
+    #TODO: refactor. use global variable?
     annual_increment = 12
     days_in_increment = (365 / annual_increment).round
     begin #in case there is no postcode
@@ -82,7 +82,7 @@ class Panel < ActiveRecord::Base
         annual_dni << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         
         #set daily increment here
-        local_time = local_time + 1#0.5 
+        local_time = local_time + 0.5 
         #change sun values only after 1 day has looped
         if (i - dnis_per_day + 1) % dnis_per_day == 0
           local_time = 6

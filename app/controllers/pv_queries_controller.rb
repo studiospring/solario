@@ -43,10 +43,11 @@ class PvQueriesController < ApplicationController
   end# >>>
   def results# <<<
     @pv_query = PvQuery.find(params[:id])
+    @tzc = @pv_query.postcode.irradiance.time_zone_corrected_dni
     @output_pa_array = Array.new
     month = Array.new
     @pv_query.avg_output_pa.each_with_index do |v, i|
-      if (i) % 15 == 0
+      if (i) % 31 == 0
         @output_pa_array << month
         month.clear
       end

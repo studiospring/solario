@@ -36,8 +36,9 @@ index<% end %>
   </tbody>
 </table>
 <p>@output_pa: <%= @output_pa %></p>
+<p>time zone corrected dni: <%= @tzc %></p>
 <table class="table table-striped table-condensed">
-  <caption>HRA in degrees</caption>
+  <caption>Avg output (kW)</caption>
   <colgroup>
     <col />
     <col />
@@ -64,7 +65,7 @@ index<% end %>
       <tr>
         <td><%= 6 + i %></td>
         <% day_array.each do |value| %>
-          <td><%= value %>&deg;</td>
+          <td><%= value %></td>
         <% end %>
       </tr>
     <% end %>
