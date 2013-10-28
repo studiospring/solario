@@ -40,8 +40,7 @@ class Irradiance < ActiveRecord::Base
     #so that local time zone and times of insolation measurement match up
     def correct_time_zone_diff(insolation_string)# <<<
       insolation_array = insolation_string.split(' ')
-      #refactor bc used in dni_pa_received?
-      annual_increment = 12
+      annual_increment = Irradiance.annual_increment
       data_count = insolation_array.count #say, 180 
       data_per_day = data_count / annual_increment #180 / 12 = 15 
       synced_array = Array.new
@@ -66,5 +65,9 @@ class Irradiance < ActiveRecord::Base
       end 
       
       return synced_array.flatten.join(' ')
+    end# >>>
+    #set annual increment of insolation data here
+    def self.annual_increment# <<<
+      return 12
     end# >>>
 end
