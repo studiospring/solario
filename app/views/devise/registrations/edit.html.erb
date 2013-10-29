@@ -1,5 +1,5 @@
-<%= provide(:title, 'Profile' ) %>
-<h1>Edit <%= resource_name.to_s.humanize %></h1>
+<%= provide(:title, 'Edit profile' ) %>
+<h1>Edit profile</h1>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -7,11 +7,7 @@
   <div><%= f.label :username %><br />
   <%= f.text_field :username, :autofocus => true %></div>
 
-  <div><label for="user_admin"><%# f.check_box(:admin) %> Admin</label></div>
-  <div class="field">
-    <%= f.label "Admin" %> <br />
-    <%= f.check_box :admin %> <br />
-</div>
+  <div><label for="user_admin"><%= f.check_box(:admin) %> Admin</label></div>
 
   <div><%= f.label :email %><br />
   <%= f.email_field :email %></div>

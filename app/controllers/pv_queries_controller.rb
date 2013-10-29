@@ -1,4 +1,8 @@
 class PvQueriesController < ApplicationController
+  #before_filter :authenticate_user!, except: [:new, :results]
+  before_filter :require_admin, except: [:new, :create, :results]
+
+  respond_to :html, :js
   def index# <<<
     @pv_queries = PvQuery.all
   end# >>>
@@ -39,16 +43,18 @@ class PvQueriesController < ApplicationController
   end# >>>
   def results# <<<
     @pv_query = PvQuery.find(params[:id])
-  
-    #TODO: fails spectacularly if no postcode is found
-    @dni_pa = Irradiance.select('direct').where('postcode_id = ?', @pv_query.postcode.id).first.direct
-    @panels = Hash.new
-    key = 0
-    @pv_query.panels.each do |panel|
-      @panels[key] = panel.dni_received_pa(@dni_pa)
-      key = key + 1
+    @output_pa_array = Array.new
+    month = Array.new
+    @pv_query.avg_output_pa.each_with_index do |v, i|
+      if (i) % 31 == 0
+        @output_pa_array << month
+        month.clear
+      end
+      month << v
     end
-
+    @output_pa_array = @output_pa_array.transpose
+    @output_pa = @pv_query.avg_output_pa.join(' ') #convert from array to string
+    #@output_pa = @pv_query.postcode.irradiance.time_zone_corrected_dni
   end# >>>
   private
     def pv_query_params# <<<

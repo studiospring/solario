@@ -1,12 +1,19 @@
 require 'spec_helper'
 
+include Warden::Test::Helpers
+Warden.test_mode!
+
 describe "Postcodes" do
   let(:base_title) { "Solario" }
+  let(:admin) { FactoryGirl.create(:admin) }
   let(:postcode) { FactoryGirl.create(:postcode) }
   subject { page }
 
   shared_examples_for "all postcode pages" do
     it { should have_selector('h1', text: heading) }
+  end
+  before do 
+    login_as(admin, :scope => :user)
   end
   describe 'index page' do# <<<
     let(:heading) { 'Postcodes' }
@@ -23,8 +30,16 @@ describe "Postcodes" do
         expect { click_link 'Delete', href: postcode_path(postcode) }.to change(Postcode, :count).by(-1)
       end
     end
-
     it { should have_link 'Add postcode', href: new_postcode_path }
+
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit postcodes_path
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
   end# >>>
   describe 'new page' do# <<<
     let(:heading) { 'Add postcode' }
@@ -69,6 +84,15 @@ describe "Postcodes" do
     end
 
     it { should have_link 'List of postcodes', href: postcodes_path }
+
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit new_postcode_path
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Postcode' }
@@ -104,21 +128,19 @@ describe "Postcodes" do
     end
 
     describe 'with valid inputs' do
+      let(:new_suburb)  { "Newville" }
       before do
         fill_in "Postcode", with: 8888
-        fill_in "Suburb", with: 'Simsville'
+        fill_in "Suburb", with: 'Newville'
         fill_in "State", with: 'WA'
         fill_in "Latitude", with: 10
         fill_in "Longitude", with: 130
+        click_button submit
       end
-
-    end
-
-    describe 'after saving the postcode' do
-      before { click_button submit }
 
       it { should have_selector('h1', text: "Postcode") }
       it { should have_selector("div.alert-success", text: 'Postcode updated') }
+      specify { expect(postcode.reload.suburb).to eq new_suburb }
     end
   end# >>>
 end

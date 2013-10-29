@@ -13,10 +13,15 @@ index<% end %>
     <col />
     <col />
     <col />
+    <col />
+    <col />
+    <col />
   </colgroup>
   <thead>
     <tr>
       <th>Postcode_id</th>
+      <th>Panel count</th>
+      <th>First panel</th>
       <th>Created</th>
       <th></th>
       <th></th>
@@ -27,6 +32,11 @@ index<% end %>
   <% @pv_queries.each do |pv_query| %>
     <tr>
       <td><%= pv_query.postcode_id %></td>
+      <td><%= pv_query.panels.count %></td>
+      <% pv_query.panels.each do |panel| %>
+        <td>tilt: <%= panel.tilt %>&deg; bearing: <%= panel.bearing %>&deg;</td>
+        <% break %>
+      <% end %>
       <td><%= l pv_query.created_at, format: :short %></td>
       <td><%= link_to 'Show', pv_query %></td>
       <td><%= link_to 'Edit', edit_pv_query_path(pv_query) %></td>

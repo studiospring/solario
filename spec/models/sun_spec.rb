@@ -1,18 +1,31 @@
 require 'spec_helper'
 
 describe Sun do
-  let(:sun) { Sun.new(:latitude, :longitude, :day) }
-  before { @sun = Sun.new(-20, 135, 10) }
+  let(:sun) { Sun.new(:latitude, :longitude, :state, :day, :local_time) }
+  before { @sun = Sun.new(-20, 135, 'NSW', 10, 8) }
   subject { @sun }
 
   describe 'elevation method' do
     it "should return elevation in radians" do
-      @sun.elevation(15).should be_within(0.001).of(0.795018539487432)
+      @sun.elevation.should be_within(0.001).of(0.0700345)
     end
   end
   describe 'azimuth method' do
-    it "should return azimuth in radians" do
-      @sun.azimuth(15).should be_within(0.001).of(0.6616369131917649)
+    it "should return correct azimuth in radians in the morning" do
+      @sun.azimuth.should be_within(0.001).of(1.133309310)
+    end
+    describe 'at solar noon' do
+      before { @sun.local_time = 16 }
+      it "should return correct azimuth in radians" do
+        pending
+        #@sun.azimuth.should eq(0)
+      end
+    end
+    describe 'in the afternoon' do
+      before { @sun.local_time = 16 }
+      it "should return correct azimuth in radians" do
+        @sun.azimuth.should be_within(0.001).of(5.3814629359)
+      end
     end
   end
   describe 'declination method' do
@@ -20,27 +33,20 @@ describe Sun do
       @sun.declination.should be_within(0.001).of(0.38333384764823003) 
     end
   end
-  #method no longer used
-  #describe 'daily_elevation method' do
-    #it "should return array of elevations" do
-       #Sun.daily_elevation(1, 33).should == [0.012858311423347368, 0.21432380448642885, 0.4252137951043474, 0.6419099839801242, 0.8612064961386582, 1.078663171526293, 1.2815459750954357, 1.396022715843284, 1.2815459750954357, 1.078663171526293, 0.8612064961386582, 0.6419099839801242, 0.4252137951043474, 0.21432380448642885, 0.012858311423347368]
-    #end
-  #end
-  #method no longer used
-  #describe 'annual_elevation method' do
-    #it "should include array of daily elevations within hash" do
-      #Sun.annual_elevation(33)[1].should == [0.012858311423347368, 0.21432380448642885, 0.4252137951043474, 0.6419099839801242, 0.8612064961386582, 1.078663171526293, 1.2815459750954357, 1.396022715843284, 1.2815459750954357, 1.078663171526293, 0.8612064961386582, 0.6419099839801242, 0.4252137951043474, 0.21432380448642885, 0.012858311423347368]
-    #end
-  #end
+  describe 'lstm method' do
+    it "should return local standard time meridian in degrees" do
+      @sun.lstm.should eq(150)
+    end
+  end
   describe 'vector instance method' do# <<<
     it "should return correct value for @sun.vector[:x]" do
-      @sun.vector(15)[:x].should be_within(0.001).of(0.5525055229287719)
+      @sun.vector[:x].should be_within(0.001).of(0.422625918)
     end
     it "should return correct value for @sun.vector[:y]" do
-      @sun.vector(15)[:y].should be_within(0.001).of(0.4302532563734195)
+      @sun.vector[:y].should be_within(0.001).of(0.903598645841)
     end
     it "should return correct value for @sun.vector[:z]" do
-      @sun.vector(15)[:z].should be_within(0.001).of(0.7138765877329729)
+      @sun.vector[:z].should be_within(0.001).of(0.0699772)
     end
   end# >>>
 end
