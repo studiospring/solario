@@ -1,3 +1,93 @@
 // Place all the styles related to the PvQueries controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.icon{
+  float: right;
+  margin-top: -20px;
+  margin-right: 100px;
+  height: 300px;
+  width: 300px;
+  border: 2px solid green;
+  perspective: 600px;
+  transform:  rotateX(60deg)
+              rotateZ(30deg);
+  -webkit-transform:  rotateX(60deg)
+                      rotateZ(30deg);
+  -moz-transform: rotateX(60deg)
+                  rotateZ(30deg);
+  -o-transform: rotateX(60deg)
+                rotateZ(30deg);
+}
+.north{
+  font-size: 1.7em;
+  text-align: center;
+}
+.south{
+  font-size: 1.7em;
+  text-align: center;
+  margin-top: 40px;
+  /*clear: both;*/
+}
+.east{
+  font-size: 1.7em;
+  margin-top: 115px;
+  float: right;
+}
+.west{
+  font-size: 1.7em;
+  margin-top: 115px;
+  float: left;
+}
+.compass-points{
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  height: 170px;
+  width: 170px;
+  background-color: red;
+  transform: rotateZ(45deg);
+  -webkit-transform: rotateZ(45deg);
+  -moz-transform: rotateZ(45deg); 
+  -o-transform: rotateZ(45deg);
+}
+$centres-compass: -22px;
+.compass{
+  height: 200px;
+  width: 200px;
+  background-color: #fff;
+  border: 6px solid #888;
+  border-radius: 106px;
+  -moz-border-radius: 106px; 
+  -webkit-border-radius: 106px;
+  /*centre compass with compass points*/
+  transform:  translateX($centres-compass)
+              translateY($centres-compass);
+}
+$centres-panels: 25px;
+.panels{
+  height: 148px;
+  width: 150px;
+  /*margin-top: 10px;*/
+  border: 1px solid #888;
+  /*compensate for 45deg transform of compass points*/
+  transform:  translateX($centres-panels)
+              translateY($centres-panels)
+              rotateZ(45deg);
+  -webkit-transform:  translateX($centres-panels) 
+                      translateY($centres-panels)
+                      rotateZ($centres-panels);
+  -moz-transform: translateX($centres-panels)
+                  translateY($centres-panels)
+                  rotateZ($centres-panels); 
+  -o-transform: translateX($centres-panels)
+                translateY($centres-panels)
+                rotateZ(45deg);
+}
+.panel{
+  float: left;
+  height: 47px;
+  width: 47px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  background-color: blue;
+}
