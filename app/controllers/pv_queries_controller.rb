@@ -43,7 +43,6 @@ class PvQueriesController < ApplicationController
   end# >>>
   def results# <<<
     @pv_query = PvQuery.find(params[:id])
-    @tzc = @pv_query.postcode.irradiance.time_zone_corrected_dni
     @output_pa_array = Array.new
     month = Array.new
     @pv_query.avg_output_pa.each_with_index do |v, i|
@@ -55,6 +54,7 @@ class PvQueriesController < ApplicationController
     end
     @output_pa_array = @output_pa_array.transpose
     @output_pa = @pv_query.avg_output_pa.join(' ') #convert from array to string
+    #@output_pa = @pv_query.postcode.irradiance.time_zone_corrected_dni
   end# >>>
   private
     def pv_query_params# <<<
