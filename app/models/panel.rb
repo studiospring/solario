@@ -60,29 +60,27 @@ class Panel < ActiveRecord::Base
     rescue
       return []
     else
-      sun = Sun.new(latitude, longitude, state, 1)
+      sun = Sun.new(latitude, longitude, state, 1, 6)
       dni_pa_array = time_zone_corrected_dni_pa.split(' ')
       dni_count = dni_pa_array.count #say, 420
       dnis_per_day = dni_count / annual_increment #420 / 12 = 31 
       
-      #time shown on graph starts from this number
-      local_time = 6
       dni_received_pa = Array.new
       
       #use this for dummy data (only, at present)
       dni_pa_array.each_with_index do |datum, i|
         dni = datum.to_f
-        sun_vector = sun.vector(local_time)
+        sun_vector = sun.vector
         relative_angle = self.relative_angle(sun_vector)
 
         #dni_received_pa << sun.hra(local_time)
         dni_received_pa << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         
         #set daily increment here
-        local_time = local_time + 0.5 
+        sun.local_time = sun.local_time + 0.5 
         #change sun values only after 1 day has looped
         if (i - dnis_per_day + 1) % dnis_per_day == 0
-          local_time = 6
+          sun.local_time = 6
           #increment sun's day so that sun vector is correct
           sun.day = sun.day + days_in_increment
         end

@@ -1,13 +1,14 @@
 class Sun
   include SolarTime
   require 'core_ext/numeric'
-  attr_accessor :latitude, :longitude, :state, :day
+  attr_accessor :latitude, :longitude, :state, :day, :local_time
 
-  def initialize(latitude, longitude, state, day)
+  def initialize(latitude, longitude, state, day, local_time)
     @latitude = latitude
     @longitude = longitude
     @state = state
     @day = day
+    @local_time = local_time
   end
 
   #convert azimuth and elevation in to vector notation:
@@ -15,12 +16,12 @@ class Sun
   #return hash: vector[:x], [:y], [:z]
   #insert 24hr hourly time: 9, 12, 13 ...
   #eg 13.5 is 13:30pm
-  def vector(local_hour)# <<<
-    lst = self.to_lst(local_hour)
-    hra = self.hra(lst)
+  def vector# <<<
+    lst = self.to_lst
+    hra = self.hra
     vector = Hash.new
-    elev = self.elevation(hra)
-    az = self.azimuth(hra)
+    elev = self.elevation
+    az = self.azimuth
     hypotenuse = Math.cos(elev)
     vector[:x] = hypotenuse * Math.cos(az)
     vector[:y] = hypotenuse * Math.sin(az)
@@ -33,20 +34,21 @@ class Sun
   end# >>>
   #input hra in degrees bc degs is easier to understand
   #return elevation of sun in radians
-  def elevation(hra)# <<<
+  def elevation# <<<
     dec = self.declination
     lat = self.latitude.to_rad
-    elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(hra.to_rad))
+    elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(self.hra.to_rad))
   end# >>>
   #input hra in degrees bc degs is easier to understand
   #return azimuth in radians
-  def azimuth(hra)# <<<
+  def azimuth# <<<
     dec = self.declination
     lat = self.latitude.to_rad
-    azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra.to_rad) / Math.cos(self.elevation(hra))))
-    if hra > 0
+    hra = self.hra.to_rad
+    azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra) / Math.cos(self.elevation)))
+    if self.hra > 0
       azimuth = 360.to_rad - azimuth
-    elsif hra == 0
+    elsif self.hra == 0
       azimuth = 0
     end
     return azimuth
