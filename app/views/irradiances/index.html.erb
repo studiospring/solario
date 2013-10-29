@@ -14,11 +14,13 @@ index<% end %>
     <col />
     <col />
     <col />
+    <col />
   </colgroup>
   <thead>
     <tr>
+      <th>Postcode ID</th>
       <th>Postcode</th>
-      <th></th>
+      <th>Suburb</th>
       <th></th>
       <th></th>
       <th></th>
@@ -27,6 +29,7 @@ index<% end %>
   <tbody>
   <% @irradiances.each do |irradiance| %>
     <tr>
+      <td><%= irradiance.postcode.id %></td>
       <td><%= irradiance.postcode.pcode %></td>
       <td><%= irradiance.postcode.suburb %></td>
       <td><%= link_to 'Show', irradiance %></td>

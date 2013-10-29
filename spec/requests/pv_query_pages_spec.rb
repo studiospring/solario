@@ -1,9 +1,16 @@
 require 'spec_helper'
 
+#needed to check Devise authentication
+include Warden::Test::Helpers
+Warden.test_mode!
+
 describe "PvQuery" do
   let(:base_title) { "Solario" }
+  let(:admin) { FactoryGirl.create(:admin) }
   let(:postcode) { FactoryGirl.create(:postcode) }
-  let(:pv_query) { FactoryGirl.create(:pv_query) }
+  #necessary because pv_queries_controller calls irradiance method
+  let!(:irradiance) { FactoryGirl.create(:irradiance, postcode_id: postcode.id) }
+  let!(:pv_query) { FactoryGirl.create(:pv_query, postcode_id: postcode.id) }
   subject { page }
 
   shared_examples_for "all pv_query pages" do
@@ -11,7 +18,10 @@ describe "PvQuery" do
   end
   describe 'index page' do# <<<
     let(:heading) { 'Queries' }
-    before { visit pv_queries_path }
+    before do
+      login_as(admin, :scope => :user)
+      visit pv_queries_path
+    end
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title('Queries')) }
@@ -24,6 +34,20 @@ describe "PvQuery" do
         expect { click_link 'Delete', href: pv_query_path(query) }.to change(PvQuery, :count).by(-1)
       end
     end
+
+    #ensure non-logged-in users cannot see this page, but does not differentiate
+    #between admin and non-admin
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit pv_queries_path
+      end
+      
+      it "should redirect to sign-in page" do
+        page.should have_selector("h1", text: "Sign in")
+      end
+    end
+
   end# >>>
   describe 'new page' do# <<<
     let(:heading) { 'Find your solar output' }
@@ -39,10 +63,10 @@ describe "PvQuery" do
         expect { click_button submit }.not_to change(PvQuery, :count)
       end
 
-      describe "error message" do
+      describe "after submitting" do
         before { click_button submit }
         it_should_behave_like 'all pv_query pages'
-        it { should have_content('error') }
+        it { should have_selector("div.alert.alert-error", text: "error") }
       end
     end
 
@@ -72,7 +96,10 @@ describe "PvQuery" do
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Pv_query' }
-    before { visit pv_query_path(pv_query) }
+    before do 
+      login_as(admin, :scope => :user)
+      visit pv_query_path(pv_query)
+    end
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title('Pv_query')) }
@@ -81,6 +108,15 @@ describe "PvQuery" do
 
     it { should have_link 'List of Pv_queries', href: pv_queries_path }
     it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit pv_query_path(pv_query)
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
+    Warden.test_reset! 
   end# >>>
   describe 'results page' do# <<<
     let(:heading) { 'Results' }
@@ -94,7 +130,10 @@ describe "PvQuery" do
   describe 'edit page' do# <<<
     let(:heading) { 'Edit pv_query' }
     let(:submit) { "Update Pv query" }
-    before { visit edit_pv_query_path(pv_query) }
+    before do 
+      login_as(admin, :scope => :user)
+      visit edit_pv_query_path(pv_query)
+    end
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title(heading)) }
@@ -124,5 +163,14 @@ describe "PvQuery" do
       it { should have_selector('h1', text: "Pv_query") }
       it { should have_selector("div.alert-success", text: 'Pv query updated') }
     end
+    describe 'when not logged in' do
+      before do
+        logout :user
+        visit edit_pv_query_path(pv_query)
+      end
+      
+      it { should have_selector("h1", text: "Sign in") }
+    end
+    Warden.test_reset! 
   end# >>>
 end
