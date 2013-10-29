@@ -60,27 +60,25 @@ class Panel < ActiveRecord::Base
     rescue
       return []
     else
-      sun = Sun.new(latitude, longitude, state, 1, 6)
+      #set graph start time here (and below) and in pv_queries.js.coffee
+      sun = Sun.new(latitude, longitude, state, 1, 5) 
       dni_pa_array = time_zone_corrected_dni_pa.split(' ')
       dni_count = dni_pa_array.count #say, 420
       dnis_per_day = dni_count / annual_increment #420 / 12 = 31 
-      
       dni_received_pa = Array.new
       
-      #use this for dummy data (only, at present)
       dni_pa_array.each_with_index do |datum, i|
         dni = datum.to_f
-        sun_vector = sun.vector
-        relative_angle = self.relative_angle(sun_vector)
+        relative_angle = self.relative_angle(sun.vector)
 
-        #dni_received_pa << sun.hra(local_time)
+        #dni_received_pa << sun.hra
         dni_received_pa << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         
         #set daily increment here
         sun.local_time = sun.local_time + 0.5 
         #change sun values only after 1 day has looped
         if (i - dnis_per_day + 1) % dnis_per_day == 0
-          sun.local_time = 6
+          sun.local_time = 5 #set graph start time here
           #increment sun's day so that sun vector is correct
           sun.day = sun.day + days_in_increment
         end
@@ -93,21 +91,21 @@ class Panel < ActiveRecord::Base
   #{ day1: [kW1, kW2...]... }
   #0 kW values must be included so that time can be calculated from position in array
   #dni_pa is irradiances.direct ( string )
+  #currently broken
   def dni_hash_received_pa(dni_pa)# <<<
     annual_increment = Irradiance.annual_increment
     days_in_increment = (365 / annual_increment).round
     dni_received_pa_hash = dni_pa.data_string_to_hash(annual_increment)
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
-    sun = Sun.new(latitude, longitude, 1)
+    sun = Sun.new(latitude, longitude, 1, 6)
     #use this for dummy data (only, at present)
     dni_received_pa_hash.each do |key, diurnal_dni|
       #assume 6am is the Universal Time of first value
       local_time = 6
       panel_insolation = Array.new
       diurnal_dni.collect do |dni|
-        sun_vector = sun.vector(local_time)
-        relative_angle = self.relative_angle(sun_vector)
+        relative_angle = self.relative_angle(sun.vector)
         panel_insolation << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         #set daily increment here
         local_time = local_time + 3
