@@ -1,24 +1,31 @@
 require 'spec_helper'
 
 describe Sun do
-  let(:sun) { Sun.new(:latitude, :longitude, :state, :day) }
-  before { @sun = Sun.new(-20, 135, 'NSW', 10) }
+  let(:sun) { Sun.new(:latitude, :longitude, :state, :day, :local_time) }
+  before { @sun = Sun.new(-20, 135, 'NSW', 10, 8) }
   subject { @sun }
 
   describe 'elevation method' do
     it "should return elevation in radians" do
-      @sun.elevation(15).should be_within(0.001).of(0.795018539487432)
+      @sun.elevation.should be_within(0.001).of(0.0700345)
     end
   end
   describe 'azimuth method' do
     it "should return correct azimuth in radians in the morning" do
-      @sun.azimuth(-15).should be_within(0.001).of(0.6616369131917649)
+      @sun.azimuth.should be_within(0.001).of(1.133309310)
     end
-    it "should return correct azimuth in radians at solar noon" do
-      @sun.azimuth(0).should eq(0)
+    describe 'at solar noon' do
+      before { @sun.local_time = 16 }
+      it "should return correct azimuth in radians" do
+        pending
+        #@sun.azimuth.should eq(0)
+      end
     end
-    it "should return correct azimuth in radians in the afternoon" do
-      @sun.azimuth(30).should be_within(0.001).of(5.493424156038)
+    describe 'in the afternoon' do
+      before { @sun.local_time = 16 }
+      it "should return correct azimuth in radians" do
+        @sun.azimuth.should be_within(0.001).of(5.3814629359)
+      end
     end
   end
   describe 'declination method' do
@@ -33,13 +40,13 @@ describe Sun do
   end
   describe 'vector instance method' do# <<<
     it "should return correct value for @sun.vector[:x]" do
-      @sun.vector(9)[:x].should be_within(0.001).of(0.48662785778917966)
+      @sun.vector[:x].should be_within(0.001).of(0.422625918)
     end
     it "should return correct value for @sun.vector[:y]" do
-      @sun.vector(9)[:y].should be_within(0.001).of(0.8265353226938301)
+      @sun.vector[:y].should be_within(0.001).of(0.903598645841)
     end
     it "should return correct value for @sun.vector[:z]" do
-      @sun.vector(9)[:z].should be_within(0.001).of(0.28290049198069644)
+      @sun.vector[:z].should be_within(0.001).of(0.0699772)
     end
   end# >>>
 end
