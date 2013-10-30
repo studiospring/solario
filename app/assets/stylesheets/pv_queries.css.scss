@@ -9,14 +9,14 @@
   width: 300px;
   border: 2px solid green;
   perspective: 600px;
-  transform:  rotateX(60deg)
-              rotateZ(30deg);
-  -webkit-transform:  rotateX(60deg)
-                      rotateZ(30deg);
-  -moz-transform: rotateX(60deg)
-                  rotateZ(30deg);
-  -o-transform: rotateX(60deg)
-                rotateZ(30deg);
+  /*transform:  rotateX(60deg)*/
+              /*rotateZ(30deg);*/
+  /*-webkit-transform:  rotateX(60deg)*/
+                      /*rotateZ(30deg);*/
+  /*-moz-transform: rotateX(60deg)*/
+                  /*rotateZ(30deg);*/
+  /*-o-transform: rotateX(60deg)*/
+                /*rotateZ(30deg);*/
 }
 .north{
   font-size: 1.7em;
@@ -82,6 +82,13 @@ $centres-panels: 25px;
   -o-transform: translateX($centres-panels)
                 translateY($centres-panels)
                 rotateZ(45deg);
+}
+.panel_pointer{
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 100px solid red;
 }
 .panel{
   float: left;
