@@ -68,32 +68,23 @@ $centres-compass: -22px;
   height: 148px;
   width: 150px;
   margin: 26px auto;
-  /*transform-origin: 40% 40%;*/
   /*compensate for 45deg transform of compass points*/
-  /*transform:  translateX($centres-panels)*/
-              /*translateY($centres-panels + 2)*/
-              /*rotateZ(45deg);*/
-  /*-webkit-transform:  translateX($centres-panels) */
-                      /*translateY($centres-panels + 2)*/
-                      /*rotateZ($centres-panels);*/
-  /*-moz-transform: translateX($centres-panels)*/
-                  /*translateY($centres-panels + 2)*/
-                  /*rotateZ($centres-panels); */
-  /*-o-transform: translateX($centres-panels)*/
-                /*translateY($centres-panels + 2)*/
-                /*rotateZ(45deg);*/
+  transform: rotateZ(-45deg);
+  -webkit-transform: rotateZ(-45deg);
+  -moz-transform: rotateZ(-45deg); 
+  -o-transform: rotateZ(-45deg);
   /*create pointer for panel*/
   position: relative;
     &:before { 
       content:"";
       position: absolute;
-      right: 100%;
-      top: 60px;
+      bottom: 100%;
+      left: 60px;
       width: 0;
       height: 0;
-      border-top: 15px solid transparent;
-      border-right: 15px solid red;
-      border-bottom: 15px solid transparent; 
+      border-right: 15px solid transparent;
+      border-bottom: 15px solid red;
+      border-left: 15px solid transparent; 
     } 
 }
 .panel{
