@@ -8,17 +8,20 @@ $ ->
     bearing = this.value - 45
     $('.compass').css({
       'transform-origin':   'center center 0',
-      'transform':          'rotateZ(' + bearing + 'deg)',
-      '-moz-transform':     'rotateZ(' + bearing + 'deg)',
+      'transform':          'translateX(-22px) translateY(-22px) rotateZ(' + bearing + 'deg)',
+      #'-moz-transform':     'rotateZ(' + bearing + 'deg)',
       '-webkit-transform':  'rotateZ(' + bearing + 'deg)',
       '-o-transform':       'rotateZ(' + bearing + 'deg)'
     })
   $("#pv_query_panels_attributes_0_tilt" ).change ->
     tilt = this.value
+    #$('.compass').css({
+      #'transform':          'rotateZ(-45deg)'
+    #})
     $('.panels').css({
       'transform-origin':   '0 top 0',
       'transform':          'rotateX(' + tilt + 'deg)',
-      '-moz-transform':     'rotateX(' + tilt + 'deg)',
+      #'-moz-transform':     'rotateX(' + tilt + 'deg)',
       '-webkit-transform':  'rotateX(' + tilt + 'deg)',
       '-o-transform':       'rotateX(' + tilt + 'deg)'
     })
