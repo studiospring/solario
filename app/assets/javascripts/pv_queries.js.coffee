@@ -8,9 +8,8 @@ $ ->
   
   $("#pv_query_panels_attributes_0_bearing" ).change ->
     bearing = this.value
-    alert( bearing )
     $('.panels').css({ 
-      'transform': 'rotateZ('+ bearing + 'deg)'
+      'transform': 'rotateY('+ bearing + 'deg)'
       #'-moz-transform': 'rotateX(' + bearing + ')'
     })
     #-webkit-transform: rotateZ(45deg);
