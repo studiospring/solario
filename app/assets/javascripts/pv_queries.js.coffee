@@ -19,7 +19,8 @@ $ ->
                             rotateZ(' + bearing + 'deg)',
       'transform':          'translateX(' + centres_compass + 'px)
                             translateY(' + centres_compass + 'px) 
-                            rotateZ(' + bearing + 'deg)'
+                            rotateZ(' + bearing + 'deg)',
+      'transition':         'transform 1s'
     })
   $("#pv_query_panels_attributes_0_tilt" ).change ->
     tilt = this.value
@@ -28,7 +29,8 @@ $ ->
       '-moz-transform':     'rotateX(' + tilt + 'deg)',
       '-webkit-transform':  'rotateX(' + tilt + 'deg)',
       '-o-transform':       'rotateX(' + tilt + 'deg)',
-      'transform':          'rotateX(' + tilt + 'deg)'
+      'transform':          'rotateX(' + tilt + 'deg)',
+      'transition':         'transform 1s'
     })
 
   data = null
