@@ -62,17 +62,15 @@ $centres-compass: -22px;
   height: 200px;
   width: 200px;
   background-color: #fff;
-  /*transform-origin: 50% 50%;*/
   border: 6px solid #888;
   border-radius: 106px;
   -moz-border-radius: 106px; 
   -webkit-border-radius: 106px;
   /*centre compass with compass points*/
-  /*margin: -20px auto 0 auto;*/
+  /*compensate for 45deg transform of compass points*/
   transform:  translateX($centres-compass)
               translateY($centres-compass)
               rotateZ(-45deg);
-  /*compensate for 45deg transform of compass points*/
   -webkit-transform-style: preserve-3d; 
   -moz-transform-style: preserve-3d; 
   -o-transform-style: preserve-3d; 
@@ -82,15 +80,6 @@ $centres-compass: -22px;
   height: 148px;
   width: 150px;
   margin: 26px auto;
-  /*compensate for 45deg transform of compass points*/
-  /*transform:  rotateZ(-45deg);*/
-              /*rotateX(30deg);*/
-              /*translateZ(10px);*/
-
-  /*-webkit-transform: rotateZ(-45deg);*/
-  /*-moz-transform: rotateZ(-45deg);*/
-                  
-  /*-o-transform: rotateZ(-45deg);*/
   /*create pointer for panel*/
   position: relative;
     &:before { 
