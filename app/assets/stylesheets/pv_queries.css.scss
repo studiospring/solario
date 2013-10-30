@@ -55,6 +55,7 @@ $centres-compass: -22px;
   height: 200px;
   width: 200px;
   background-color: #fff;
+  transform-origin: 50% 50%;
   border: 6px solid #888;
   border-radius: 106px;
   -moz-border-radius: 106px; 
@@ -63,23 +64,24 @@ $centres-compass: -22px;
   transform:  translateX($centres-compass)
               translateY($centres-compass);
 }
-$centres-panels: 26px;
 .panels{
   height: 148px;
   width: 150px;
+  margin: 26px auto;
+  /*transform-origin: 40% 40%;*/
   /*compensate for 45deg transform of compass points*/
-  transform:  translateX($centres-panels)
-              translateY($centres-panels + 2)
-              rotateZ(45deg);
-  -webkit-transform:  translateX($centres-panels) 
-                      translateY($centres-panels + 2)
-                      rotateZ($centres-panels);
-  -moz-transform: translateX($centres-panels)
-                  translateY($centres-panels + 2)
-                  rotateZ($centres-panels); 
-  -o-transform: translateX($centres-panels)
-                translateY($centres-panels + 2)
-                rotateZ(45deg);
+  /*transform:  translateX($centres-panels)*/
+              /*translateY($centres-panels + 2)*/
+              /*rotateZ(45deg);*/
+  /*-webkit-transform:  translateX($centres-panels) */
+                      /*translateY($centres-panels + 2)*/
+                      /*rotateZ($centres-panels);*/
+  /*-moz-transform: translateX($centres-panels)*/
+                  /*translateY($centres-panels + 2)*/
+                  /*rotateZ($centres-panels); */
+  /*-o-transform: translateX($centres-panels)*/
+                /*translateY($centres-panels + 2)*/
+                /*rotateZ(45deg);*/
   /*create pointer for panel*/
   position: relative;
     &:before { 
