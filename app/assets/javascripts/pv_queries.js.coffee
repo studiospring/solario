@@ -6,11 +6,21 @@ $ ->
   #animate panel icon
   $("#pv_query_panels_attributes_0_bearing" ).change ->
     bearing = this.value - 45
-    $('.panels').css({
-      'transform':          'rotateZ('+ bearing + 'deg)',
+    $('.compass').css({
+      'transform-origin':   'center center 0',
+      'transform':          'rotateZ(' + bearing + 'deg)',
       '-moz-transform':     'rotateZ(' + bearing + 'deg)',
       '-webkit-transform':  'rotateZ(' + bearing + 'deg)',
       '-o-transform':       'rotateZ(' + bearing + 'deg)'
+    })
+  $("#pv_query_panels_attributes_0_tilt" ).change ->
+    tilt = this.value
+    $('.panels').css({
+      'transform-origin':   '0 top 0',
+      'transform':          'rotateX(' + tilt + 'deg)',
+      '-moz-transform':     'rotateX(' + tilt + 'deg)',
+      '-webkit-transform':  'rotateX(' + tilt + 'deg)',
+      '-o-transform':       'rotateX(' + tilt + 'deg)'
     })
 
   data = null
