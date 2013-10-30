@@ -9,12 +9,16 @@
   width: 300px;
   border: 2px solid green;
   perspective: 600px;
-  transform:  rotateX(60deg)
-              rotateZ(30deg);
+  -webkit-transform-style: preserve-3d; 
+  -moz-transform-style: preserve-3d; 
+  -o-transform-style: preserve-3d; 
+  transform-style: preserve-3d;
+  transform:  rotateX(70deg)
+              rotateZ(45deg);
   -webkit-transform:  rotateX(60deg)
                       rotateZ(30deg);
-  -moz-transform: rotateX(60deg)
-                  rotateZ(30deg);
+  -moz-transform: rotateX(70deg)
+                  rotateZ(45deg);
   -o-transform: rotateX(60deg)
                 rotateZ(30deg);
 }
@@ -48,6 +52,10 @@
   -webkit-transform: rotateZ(45deg);
   -moz-transform: rotateZ(45deg); 
   -o-transform: rotateZ(45deg);
+  -webkit-transform-style: preserve-3d; 
+  -moz-transform-style: preserve-3d; 
+  -o-transform-style: preserve-3d; 
+  transform-style: preserve-3d;
 }
 $centres-compass: -22px;
 .compass{
@@ -60,17 +68,27 @@ $centres-compass: -22px;
   -moz-border-radius: 106px; 
   -webkit-border-radius: 106px;
   /*centre compass with compass points*/
+  /*margin: -22px auto;*/
   transform:  translateX($centres-compass)
               translateY($centres-compass);
+  -webkit-transform-style: preserve-3d; 
+  -moz-transform-style: preserve-3d; 
+  -o-transform-style: preserve-3d; 
+  transform-style: preserve-3d;
 }
 .panels{
   height: 148px;
   width: 150px;
   margin: 26px auto;
   /*compensate for 45deg transform of compass points*/
-  transform: rotateZ(-45deg);
+  /*transform-origin: right center 0;*/
+  transform:  rotateZ(-45deg);
+              /*rotateX(30deg);*/
+              /*translateZ(10px);*/
+
   -webkit-transform: rotateZ(-45deg);
-  -moz-transform: rotateZ(-45deg); 
+  /*-moz-transform: rotateZ(-45deg);*/
+                  
   -o-transform: rotateZ(-45deg);
   /*create pointer for panel*/
   position: relative;
@@ -85,6 +103,10 @@ $centres-compass: -22px;
       border-bottom: 15px solid red;
       border-left: 15px solid transparent; 
     } 
+  -webkit-transform-style: preserve-3d; 
+  -moz-transform-style: preserve-3d; 
+  -o-transform-style: preserve-3d; 
+  transform-style: preserve-3d;
 }
 .panel{
   float: left;
@@ -93,4 +115,7 @@ $centres-compass: -22px;
   margin-right: 3px;
   margin-bottom: 3px;
   background-color: blue;
+  &:before {
+    transform: translateZ(-5px);
+  }
 }
