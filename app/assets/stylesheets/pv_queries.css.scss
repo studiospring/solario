@@ -9,14 +9,14 @@
   width: 300px;
   border: 2px solid green;
   perspective: 600px;
-  /*transform:  rotateX(60deg)*/
-              /*rotateZ(30deg);*/
-  /*-webkit-transform:  rotateX(60deg)*/
-                      /*rotateZ(30deg);*/
-  /*-moz-transform: rotateX(60deg)*/
-                  /*rotateZ(30deg);*/
-  /*-o-transform: rotateX(60deg)*/
-                /*rotateZ(30deg);*/
+  transform:  rotateX(60deg)
+              rotateZ(30deg);
+  -webkit-transform:  rotateX(60deg)
+                      rotateZ(30deg);
+  -moz-transform: rotateX(60deg)
+                  rotateZ(30deg);
+  -o-transform: rotateX(60deg)
+                rotateZ(30deg);
 }
 .north{
   font-size: 1.7em;
@@ -63,32 +63,36 @@ $centres-compass: -22px;
   transform:  translateX($centres-compass)
               translateY($centres-compass);
 }
-$centres-panels: 25px;
+$centres-panels: 26px;
 .panels{
   height: 148px;
   width: 150px;
-  /*margin-top: 10px;*/
-  border: 1px solid #888;
   /*compensate for 45deg transform of compass points*/
   transform:  translateX($centres-panels)
-              translateY($centres-panels)
+              translateY($centres-panels + 2)
               rotateZ(45deg);
   -webkit-transform:  translateX($centres-panels) 
-                      translateY($centres-panels)
+                      translateY($centres-panels + 2)
                       rotateZ($centres-panels);
   -moz-transform: translateX($centres-panels)
-                  translateY($centres-panels)
+                  translateY($centres-panels + 2)
                   rotateZ($centres-panels); 
   -o-transform: translateX($centres-panels)
-                translateY($centres-panels)
+                translateY($centres-panels + 2)
                 rotateZ(45deg);
-}
-.panel_pointer{
-  width: 0;
-  height: 0;
-  border-left: 50px solid transparent;
-  border-right: 50px solid transparent;
-  border-bottom: 100px solid red;
+  /*create pointer for panel*/
+  position: relative;
+    &:before { 
+      content:"";
+      position: absolute;
+      right: 100%;
+      top: 60px;
+      width: 0;
+      height: 0;
+      border-top: 15px solid transparent;
+      border-right: 15px solid red;
+      border-bottom: 15px solid transparent; 
+    } 
 }
 .panel{
   float: left;
