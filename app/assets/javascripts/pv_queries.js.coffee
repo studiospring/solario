@@ -4,17 +4,14 @@
 $ ->
   $('#enable_js').hide()
   #animate panel icon
-
-  
   $("#pv_query_panels_attributes_0_bearing" ).change ->
     bearing = this.value - 45
-    $('.panels').css({ 
-      'transform': 'rotateZ('+ bearing + 'deg)'
-      #'-moz-transform': 'rotateX(' + bearing + ')'
+    $('.panels').css({
+      'transform':          'rotateZ('+ bearing + 'deg)',
+      '-moz-transform':     'rotateZ(' + bearing + 'deg)',
+      '-webkit-transform':  'rotateZ(' + bearing + 'deg)',
+      '-o-transform':       'rotateZ(' + bearing + 'deg)'
     })
-    #-webkit-transform: rotateZ(45deg);
-    #-moz-transform: rotateZ(45deg); 
-    #-o-transform: rotateZ(45deg);
 
   data = null
   graph = null
