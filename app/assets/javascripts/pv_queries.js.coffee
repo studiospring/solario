@@ -3,6 +3,20 @@
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
   $('#enable_js').hide()
+  #animate panel icon
+
+  
+  $("#pv_query_panels_attributes_0_bearing" ).change ->
+    bearing = this.value
+    alert( bearing )
+    $('.panels').css({ 
+      'transform': 'rotateZ('+ bearing + 'deg)'
+      #'-moz-transform': 'rotateX(' + bearing + ')'
+    })
+    #-webkit-transform: rotateZ(45deg);
+    #-moz-transform: rotateZ(45deg); 
+    #-o-transform: rotateZ(45deg);
+
   data = null
   graph = null
 
