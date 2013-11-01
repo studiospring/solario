@@ -7,8 +7,8 @@
   margin-right: 100px;
   height: 300px;
   width: 300px;
-  perspective: 1000px;
-  perspective-origin: 25% 15%;
+  perspective: 500px;
+  perspective-origin: left top;
   -webkit-transform-style: preserve-3d; 
   -moz-transform-style: preserve-3d; 
   -o-transform-style: preserve-3d; 
@@ -41,7 +41,7 @@
   margin-top: 115px;
   float: left;
 }
-.compass-points{
+.compass_points{
   margin-top: 50px;
   margin-right: auto;
   margin-left: auto;
@@ -80,6 +80,7 @@ $centres-compass: -22px;
   height: 148px;
   width: 150px;
   margin: 26px auto;
+  /*transform: translateZ(5px);*/
   /*create pointer for panel*/
   position: relative;
     &:before { 
@@ -93,20 +94,18 @@ $centres-compass: -22px;
       border-bottom: 15px solid red;
       border-left: 15px solid transparent; 
     } 
-  /*-webkit-transform-style: preserve-3d; */
-  /*-moz-transform-style: preserve-3d; */
-  /*-o-transform-style: preserve-3d; */
-  /*transform-style: preserve-3d;*/
+  -webkit-transform-style: preserve-3d; 
+  -moz-transform-style: preserve-3d; 
+  -o-transform-style: preserve-3d; 
+  transform-style: preserve-3d;
 }
 .panel{
   float: left;
   height: 46px;
   width: 46px;
-  /*margin-right: 3px;*/
-  /*margin-bottom: 3px;*/
   background-color: blue;
   border: 2px solid #ccc;
-  &:before {
-    transform: translateZ(-5px);
-  }
+  /*&:before {*/
+    /*transform: translateZ(-5px);*/
+  /*}*/
 }
