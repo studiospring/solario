@@ -3,10 +3,10 @@
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
   $('#enable_js').hide()
-  centres_compass = -22
   #animate panel icon
   $("#pv_query_panels_attributes_0_bearing" ).change ->
     bearing = this.value - 45
+    centres_compass = -22
     #use compass div not panel div to apply each rotation to separate divs
     $('.compass').css({
       '-moz-transform':     'translateX(' + centres_compass + 'px)
@@ -39,18 +39,25 @@ $ ->
     a = values[0]
     b = values[1]
     bearing = Math.round(Math.atan2(b,a) * (180 / Math.PI)) + 45
-    #if  70 < bearing < 160
-      #correction = -45
-    #else if 260 < bearing < 340
-      #correction = 45
-    new_compass_angle = bearing + 40 #correction
-    ##rotate compass for best viewing angle
+    correction = 0
+    if  0 < bearing <= 90 #&& tilt > 35
+      correction = 45
+    else if 90 < bearing <= 180
+      correction = -60
+    else if 180 < bearing <= 225
+      correction = 0
+    else if -134 < bearing <= -90 #bearing calculation switches to negative values here
+      correction = -90
+    else if -90 < bearing <= 0 
+      correction = 130
+    new_compass_angle = parseInt(45 + correction) #45 is original orientation of compass
+    #rotate compass for best viewing angle
     $('.icon').css({
       '-moz-transform':     'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       '-webkit-transform':  'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       '-o-transform':       'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       'transform':          'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
-      'transition':         'transform 1s'
+      'transition':         'transform 2s'
     })
 
   data = null
