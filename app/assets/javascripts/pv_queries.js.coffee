@@ -40,7 +40,7 @@ $ ->
     b = values[1]
     bearing = Math.round(Math.atan2(b,a) * (180 / Math.PI)) + 45
     correction = 0
-    if  0 < bearing <= 90 #&& tilt > 35
+    if  0 < bearing <= 90
       correction = 45
     else if 90 < bearing <= 180
       correction = -60
