@@ -22,21 +22,21 @@ $compass_points: #c8002F;
                 rotateZ(30deg);
 }
 .north{
-  font-size: 1.7em;
+  font-size: 1.9em;
   text-align: center;
 }
 .south{
-  font-size: 1.7em;
+  font-size: 1.8em;
   text-align: center;
   margin-top: 40px;
 }
 .east{
-  font-size: 1.7em;
+  font-size: 1.8em;
   margin-top: 115px;
   float: right;
 }
 .west{
-  font-size: 1.7em;
+  font-size: 1.8em;
   margin-top: 115px;
   float: left;
 }
@@ -60,8 +60,9 @@ $centres-compass: -23px;
 .compass{
   height: 194px;
   width: 194px;
-  background-color: #fff;
-  border: 14px double #888;
+  background-color: #FFF;
+  box-shadow: 2px 2px 0px 2px #CCC;
+  border: 14px double #510013;
   border-radius: 106px;
   -moz-border-radius: 106px; 
   -webkit-border-radius: 106px;
