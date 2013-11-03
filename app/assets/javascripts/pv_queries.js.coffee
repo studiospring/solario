@@ -4,11 +4,14 @@
 $ ->
   $('#enable_js').hide()
   #animate panel icon
-  $("#pv_query_panels_attributes_0_bearing" ).change ->
+  #TODO validate and prevent dud values from activating animation
+  $('.bearing_input').change ->
     bearing = this.value - 45
     centres_compass = -22
     #use compass div not panel div to apply each rotation to separate divs
-    $('.compass').css({
+    input = this.id
+    alert $('#' + input).parent().find('.compass').attr('class')
+    $('#' + input).parent().find('.compass').css({
       '-moz-transform':     'translateX(' + centres_compass + 'px)
                             translateY(' + centres_compass + 'px) 
                             rotateZ(' + bearing + 'deg)',
@@ -23,18 +26,27 @@ $ ->
                             rotateZ(' + bearing + 'deg)',
       'transition':         'transform 1s'
     })
-  $("#pv_query_panels_attributes_0_tilt" ).change ->
+  $('tilt_input' ).change ->
     tilt = this.value
-    $('.panels').css({
-      'transform-origin':   '0 top 0',
-      '-moz-transform':     'rotateX(' + tilt + 'deg)',
-      '-webkit-transform':  'rotateX(' + tilt + 'deg)',
-      '-o-transform':       'rotateX(' + tilt + 'deg)',
-      'transform':          'rotateX(' + tilt + 'deg)',
-      'transition':         'transform 1s'
-    })
+    input = this.id
+    this_icon = $('#' + input).parent()
+    this_compass = this_icon.find('.compass')
+    #TODO: bug, finds lots of panels
+    this_panels = this_icon.find('.panels')
+    this_panels.each( (i, el) -> 
+      alert 'panel'
+      $(el).css({
+      #$('.panels').css({
+        'transform-origin':   '0 top 0',
+        '-moz-transform':     'rotateX(' + tilt + 'deg)',
+        '-webkit-transform':  'rotateX(' + tilt + 'deg)',
+        '-o-transform':       'rotateX(' + tilt + 'deg)',
+        'transform':          'rotateX(' + tilt + 'deg)',
+        'transition':         'transform 1s'
+      })
+    )
     #get current bearing
-    bearing_matrix = $('.compass').css('transform')
+    bearing_matrix = this_compass.css('transform')
     values = bearing_matrix.split('(')[1].split(')')[0].split(',')
     a = values[0]
     b = values[1]
@@ -52,7 +64,7 @@ $ ->
       correction = 130
     new_compass_angle = parseInt(45 + correction) #45 is original orientation of compass
     #rotate compass for best viewing angle
-    $('.icon').css({
+    this_icon.css({
       '-moz-transform':     'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       '-webkit-transform':  'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       '-o-transform':       'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
