@@ -48,7 +48,7 @@ jQuery ->
         new_id = old_id.replace(new RegExp(/[0-9]+/), "#{last_icon_id_number + 1}")
         element.attr('id', new_id)
     new_fieldset.insertBefore($('.add_fields'))
-    $('<a class="btn remove_fields" href="">remove panel</a><br />').insertBefore($(event.target))
+    $('<a class="btn btn-default remove_fields" href="">remove panel</a><br />').insertBefore($(event.target))
 
   remove_fields = (event) ->
     $(event.target).prev('.nested_fields').hide()
