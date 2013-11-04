@@ -9,8 +9,8 @@ $ ->
     bearing = this.value - 45
     centres_compass = -22
     #use compass div not panel div to apply each rotation in order to separate divs
-    input = this.id
-    $('#' + input).parent().find('.compass').css({
+    icon = $(this).parent().find('.icon')
+    $(this).parent().find('.compass').css({
       '-moz-transform':     'translateX(' + centres_compass + 'px)
                             translateY(' + centres_compass + 'px) 
                             rotateZ(' + bearing + 'deg)',
@@ -25,6 +25,9 @@ $ ->
                             rotateZ(' + bearing + 'deg)',
       'transition':         'transform 1s'
     })
+    #optimise viewing angle only after tilt has been added
+    if !$(this).next('.tilt_input').val()
+      optimise_viewing_angle(icon)
 
   $('.tilt_input').change ->
     tilt = this.value
