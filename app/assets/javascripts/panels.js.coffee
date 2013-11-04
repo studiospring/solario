@@ -52,6 +52,7 @@ jQuery ->
 
   remove_fields = (event) ->
     $(event.target).prev('.nested_fields').hide()
+    $(event.target).hide()
     
 
   $(document).on 'click', '.add_fields', (event) ->
