@@ -14,7 +14,7 @@ group :assets do
   gem 'uglifier', '>= 1.3.0'
 end
   #put this outside assets group, or heroku will complain
-  gem 'bootstrap-sass'
+  gem 'bootstrap-sass', '~>3.0.1.0.rc'
   gem 'sass-rails', '~> 4.0.0'
 
 group :development, :test do
