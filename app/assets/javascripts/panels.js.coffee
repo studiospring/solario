@@ -50,13 +50,14 @@ jQuery ->
     new_fieldset.insertBefore($('.add_fields'))
     $('<a class="remove_fields" href="">Remove panel</a>').insertBefore($(event.target))
 
-  remove_fields = () ->
-    alert 'hello'
-    #$(this).closest('.nested_fields').css('border', '1px solid red')
+  remove_fields = (event) ->
+    $(event.target).prev('.nested_fields').hide()
+    
 
   $(document).on 'click', '.add_fields', (event) ->
+    event.preventDefault()
     add_fields(event)
 
   $(document).on 'click', '.remove_fields', (event) ->
-    #add_fields(event)
-    remove_fields()
+    event.preventDefault()
+    remove_fields(event)
