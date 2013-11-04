@@ -29,10 +29,8 @@ $ ->
   $('.tilt_input').change ->
     tilt = this.value
     input = this.id
-    this_icon = $('#' + input).parent().find('.icon')
-    this_compass = this_icon.find('.compass')
-    this_panels = this_compass.children('.panels')
-    this_panels.css({
+    icon = $('#' + input).parent().find('.icon')
+    icon.find('.compass').children('.panels').css({
       'transform-origin':   '0 top 0',
       '-moz-transform':     'rotateX(' + tilt + 'deg)',
       '-webkit-transform':  'rotateX(' + tilt + 'deg)',
@@ -40,26 +38,29 @@ $ ->
       'transform':          'rotateX(' + tilt + 'deg)',
       'transition':         'transform 1s'
     })
+    optimise_viewing_angle(icon)
+
+  optimise_viewing_angle = (icon) ->
+    compass = icon.find('.compass')
     #get current bearing
-    bearing_matrix = this_compass.css('transform')
+    bearing_matrix = compass.css('transform')
     values = bearing_matrix.split('(')[1].split(')')[0].split(',')
     a = values[0]
     b = values[1]
     bearing = Math.round(Math.atan2(b,a) * (180 / Math.PI)) + 45
-    correction = 0
+    new_compass_angle = 45
     if  0 < bearing <= 90
-      correction = 45
+      new_compass_angle = 90
     else if 90 < bearing <= 180
-      correction = -60
+      new_compass_angle = -15
     else if 180 < bearing <= 225
-      correction = 0
+      new_compass_angle = 0
     else if -134 < bearing <= -90 #bearing calculation switches to negative values here
-      correction = -90
-    else if -90 < bearing <= 0 
-      correction = 130
-    new_compass_angle = parseInt(45 + correction) #45 is original orientation of compass
+      new_compass_angle = -45
+    else if -90 < bearing <= 0
+      new_compass_angle = 175
     #rotate compass for best viewing angle
-    this_icon.css({
+    icon.css({
       '-moz-transform':     'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       '-webkit-transform':  'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       '-o-transform':       'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
