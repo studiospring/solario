@@ -21,12 +21,13 @@ jQuery ->
   add_fields = (event) ->
     #clone fields
     last_fieldset = $('fieldset.nested_fields').last()
-    new_fieldset = last_fieldset.clone()
+    new_fieldset = last_fieldset.clone(true, true)
     count_nested_fieldsets = $('fieldset.nested_fields').length
-    #modify ids
+    #modify elements of cloned fieldset
     new_fieldset.children().each ->
       element = $(this)
 
+      element.val('')
       if element.attr('for')
         old_for = element.attr('for')
         new_for = old_for.replace(new RegExp(/[0-9]+/), "#{count_nested_fieldsets}")
@@ -41,7 +42,7 @@ jQuery ->
         element.attr('name', new_name)
       #required for icon to work. This must go at end of each loop (so it does
       #not get overwritten by above code)
-      if $(this).is('#icon1')
+      if element.is('#icon1')
         last_icon_id_number = parseInt(last_fieldset.children('.icon').attr('id').slice(4))
         old_id = element.attr('id')
         new_id = old_id.replace(new RegExp(/[0-9]+/), "#{last_icon_id_number + 1}")

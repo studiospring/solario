@@ -8,9 +8,8 @@ $ ->
   $('.bearing_input').change ->
     bearing = this.value - 45
     centres_compass = -22
-    #use compass div not panel div to apply each rotation to separate divs
+    #use compass div not panel div to apply each rotation in order to separate divs
     input = this.id
-    alert $('#' + input).parent().find('.compass').attr('class')
     $('#' + input).parent().find('.compass').css({
       '-moz-transform':     'translateX(' + centres_compass + 'px)
                             translateY(' + centres_compass + 'px) 
@@ -26,25 +25,21 @@ $ ->
                             rotateZ(' + bearing + 'deg)',
       'transition':         'transform 1s'
     })
-  $('tilt_input' ).change ->
+
+  $('.tilt_input').change ->
     tilt = this.value
     input = this.id
-    this_icon = $('#' + input).parent()
+    this_icon = $('#' + input).parent().find('.icon')
     this_compass = this_icon.find('.compass')
-    #TODO: bug, finds lots of panels
-    this_panels = this_icon.find('.panels')
-    this_panels.each( (i, el) -> 
-      alert 'panel'
-      $(el).css({
-      #$('.panels').css({
-        'transform-origin':   '0 top 0',
-        '-moz-transform':     'rotateX(' + tilt + 'deg)',
-        '-webkit-transform':  'rotateX(' + tilt + 'deg)',
-        '-o-transform':       'rotateX(' + tilt + 'deg)',
-        'transform':          'rotateX(' + tilt + 'deg)',
-        'transition':         'transform 1s'
-      })
-    )
+    this_panels = this_compass.children('.panels')
+    this_panels.css({
+      'transform-origin':   '0 top 0',
+      '-moz-transform':     'rotateX(' + tilt + 'deg)',
+      '-webkit-transform':  'rotateX(' + tilt + 'deg)',
+      '-o-transform':       'rotateX(' + tilt + 'deg)',
+      'transform':          'rotateX(' + tilt + 'deg)',
+      'transition':         'transform 1s'
+    })
     #get current bearing
     bearing_matrix = this_compass.css('transform')
     values = bearing_matrix.split('(')[1].split(')')[0].split(',')
@@ -83,32 +78,33 @@ $ ->
     data.addColumn('number', 'month')
     data.addColumn('number', 'kW')
 
-    dni_string = $("#output_pa").data("datapoints")
-    dni_array = dni_string.split(" ").map(parseFloat)
-    for month in [1..12]
-      #if you change times here, remember to also change them in panel.dni_received_pa
-      for hour in [5..20] by 0.5 
-        kW = dni_array.shift()
-        row = [hour, month, kW]
-        data.addRow(row)
+    if $("#output_pa").length
+      dni_string = $("#output_pa").data("datapoints")
+      dni_array = dni_string.split(" ").map(parseFloat)
+      for month in [1..12]
+        #if you change times here, remember to also change them in panel.dni_received_pa
+        for hour in [5..20] by 0.5 
+          kW = dni_array.shift()
+          row = [hour, month, kW]
+          data.addRow(row)
 
-    # specify options
-    options =
-      width:  "500px"
-      height: "450px"
-      style: "surface"
-      showPerspective: true
-      showGrid: true
-      showShadow: false
-      keepAspectRatio: true
-      verticalRatio: 0.8
-      cameraPosition: {"horizontal": 5.6, "vertical": 0.2, "distance": 1.8}
+      # specify options
+      options =
+        width:  "500px"
+        height: "450px"
+        style: "surface"
+        showPerspective: true
+        showGrid: true
+        showShadow: false
+        keepAspectRatio: true
+        verticalRatio: 0.8
+        cameraPosition: {"horizontal": 5.6, "vertical": 0.2, "distance": 1.8}
 
-    # Instantiate our graph object.
-    graph = new links.Graph3d(document.getElementById('output_pa'))
+      # Instantiate our graph object.
+      graph = new links.Graph3d(document.getElementById('output_pa'))
 
-    # Draw our graph with the created data and options 
-    graph.draw(data, options)
+      # Draw our graph with the created data and options 
+      graph.draw(data, options)
 
 # Set callback to run when API is loaded
   google.setOnLoadCallback(drawVisualization)
