@@ -21,12 +21,12 @@
     <p class="south">S</p>
   </div>
   <legend>Panel</legend>
-  <%= f.label :bearing, 'Bearing (degrees clockwise from north)' %>
-  <%= f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input', autocomplete: 'off' %>
+  <%= f.label :bearing, 'Bearing' %>
+  <%= f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input', autocomplete: 'off' %><sup>&deg;</sup>
 
-  <%= f.label :tilt, 'Tilt (measured from horizontal, with panel bottom facing bearing)' %>
-  <%= f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input', autocomplete: 'off' %>
+  <%= f.label :tilt, 'Tilt (measured from horizontal)' %>
+  <%= f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input', autocomplete: 'off' %><sup>&deg;</sup>
 
-  <%= f.label :panel_size, raw('Panel size (m<sup>2</sup>)') %>
+  <%= f.label :panel_size, raw('Panel area (m<sup>2</sup>)') %>
   <%= f.number_field :panel_size, step: 'any', min: '0' %>
 </fieldset>
