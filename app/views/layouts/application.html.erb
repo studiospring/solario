@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="author" content="Design Studio Spring">
   <meta name="copyright" content="Design Studio Spring">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= full_title(yield(:title)) %></title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -19,14 +20,14 @@
         </a>
       </h1>
     </div>
-    <div id="content" class="container-fluid">
+    <div id="content" class="container">
       <% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>
       <% end %>
       <%= yield %>
     </div>
-    <footer class="footer navbar">
-      <nav class="navbar-inner">
+    <footer>
+      <nav>
         <ul class="nav">
           <% if user_signed_in? %>
             <li><%= link_to "Profile", edit_user_registration_path %></li>
