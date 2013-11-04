@@ -11,12 +11,16 @@ textarea{
   width: 25em;
   height: 3em;
 }
+label{
+  margin-top: .6em;
+}
 .btn{
-  margin-top: 1em;
+  margin-top: .5em;
 }
 input[type="radio"]{ /*show label next to radio button. Label must wrap button*/
   display: inline;
 }
 .btn-primary{
-  /*float: right;*/
+  margin-left: 2em;
+  font-size: 1.2em;
 }
