@@ -1,4 +1,16 @@
-<fieldset id="test" class="nested_fields">
+<fieldset class="nested_fields">
+  <div class="inputs">
+    <legend>Panel</legend>
+    <%= f.label :bearing, 'Bearing' %>
+    <%= f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input', autocomplete: 'off' %> <sup>&deg;</sup>
+
+    <%= f.label :tilt, 'Tilt (degrees from horizontal)' %>
+    <%= f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input', autocomplete: 'off' %> <sup>&deg;</sup>
+
+    <%= f.label :panel_size, raw('Panel area') %>
+    <%= f.number_field :panel_size, step: 'any', min: '0' %> m<sup>2</sup>
+  </div>
+
   <div id="icon1" class="icon">
     <p class="north">N</p>
     <p class="east">E</p>
@@ -20,13 +32,4 @@
     </div>
     <p class="south">S</p>
   </div>
-  <legend>Panel</legend>
-  <%= f.label :bearing, 'Bearing' %>
-  <%= f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input', autocomplete: 'off' %><sup>&deg;</sup>
-
-  <%= f.label :tilt, 'Tilt (measured from horizontal)' %>
-  <%= f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input', autocomplete: 'off' %><sup>&deg;</sup>
-
-  <%= f.label :panel_size, raw('Panel area (m<sup>2</sup>)') %>
-  <%= f.number_field :panel_size, step: 'any', min: '0' %>
 </fieldset>
