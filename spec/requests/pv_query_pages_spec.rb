@@ -51,12 +51,12 @@ describe "PvQuery" do
   end# >>>
   describe 'new page' do# <<<
     let(:heading) { 'Find your solar output' }
-    let(:submit) { 'Get results' }
+    let(:submit) { 'view output' }
     before { visit new_pv_query_path }
 
     it_should_behave_like 'all pv_query pages'
     it { should have_title(full_title(heading)) }
-    it { should have_button('Get results') }
+    it { should have_button('view output') }
 
     describe 'with invalid inputs' do
       it "should not create a new pv_query" do
@@ -66,7 +66,7 @@ describe "PvQuery" do
       describe "after submitting" do
         before { click_button submit }
         it_should_behave_like 'all pv_query pages'
-        it { should have_selector("div.alert.alert-error", text: "error") }
+        it { should have_selector("div.alert.alert-danger", text: "error") }
       end
     end
 
@@ -75,7 +75,7 @@ describe "PvQuery" do
         fill_in "Postcode", with: 1234
         fill_in "Tilt", with: 15
         fill_in "Bearing", with: 15
-        fill_in "Panel size", with: 15
+        fill_in "Area", with: 15
       end
 
       it "should create a new pv_query" do

@@ -144,7 +144,7 @@ describe "Irradiances" do
       describe "after submitting" do
         before { click_button submit }
         it_should_behave_like 'all irradiance pages'
-        it { should have_selector("div.alert.alert-error", text: "error") }
+        it { should have_selector("div.alert.alert-danger", text: "error") }
       end
     end
 
