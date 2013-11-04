@@ -5,6 +5,6 @@
   <%= f.fields_for :panels do |builder| %>
     <%= render 'panel_fields', f: builder %>
   <% end %>
-  <%= link_to 'Add panel', '', class: 'add_fields', remote: true %>
-  <%= f.submit 'Get results' %>
+  <%= link_to 'add panel', '', class: 'btn add_fields', remote: true %><br />
+  <%= f.submit 'view output', class: "btn btn-primary" %>
 <% end %>
