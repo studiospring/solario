@@ -26,7 +26,7 @@ $ ->
       'transition':         'transform 1s'
     })
     #optimise viewing angle only after tilt has been added
-    if !$(this).next('.tilt_input').val()
+    if $(this).siblings('.tilt_input').val()
       optimise_viewing_angle(icon)
 
   $('.tilt_input').change ->
@@ -55,13 +55,13 @@ $ ->
     if  0 < bearing <= 90
       new_compass_angle = 90
     else if 90 < bearing <= 180
-      new_compass_angle = -15
+      new_compass_angle = 105
     else if 180 < bearing <= 225
-      new_compass_angle = 0
+      new_compass_angle = 10
     else if -134 < bearing <= -90 #bearing calculation switches to negative values here
-      new_compass_angle = -45
+      new_compass_angle = 10
     else if -90 < bearing <= 0
-      new_compass_angle = 175
+      new_compass_angle = -80
     #rotate compass for best viewing angle
     icon.css({
       '-moz-transform':     'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
