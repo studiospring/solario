@@ -1,0 +1,22 @@
+/*Base styling for forms, used with Bootstrap*/
+$narrow: 7em;
+$narrower: 6em;
+.date_select{
+  width: $narrow;
+}
+.narrow-input{
+  width: $narrow;
+}
+textarea{
+  width: 25em;
+  height: 3em;
+}
+.btn{
+  margin-top: 1em;
+}
+input[type="radio"]{ /*show label next to radio button. Label must wrap button*/
+  display: inline;
+}
+.btn-primary{
+  /*float: right;*/
+}
