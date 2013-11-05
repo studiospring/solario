@@ -1,11 +1,11 @@
 <fieldset class="nested_fields">
-  <div class="inputs">
+  <div class="input-group">
     <legend>Panel</legend>
     <%= f.label :bearing, 'Bearing' %>
-    <%= f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input', autocomplete: 'off' %> <sup>&deg;</sup>
+    <%= f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input', autocomplete: 'off' %> <sup>&deg;</sup><br />
 
     <%= f.label :tilt, 'Tilt (degrees from horizontal)' %>
-    <%= f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input', autocomplete: 'off' %> <sup>&deg;</sup>
+    <%= f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input', autocomplete: 'off' %> <sup>&deg;</sup><br />
 
     <%= f.label :panel_size, raw('Area') %>
     <%= f.number_field :panel_size, step: 'any', min: '0' %> m<sup>2</sup>
@@ -17,16 +17,16 @@
     <p class="west">W</p>
     <div class="compass_points">
       <div class="compass">
-        <div class="panels">
-          <div class="panel"></div>
-          <div class="panel"></div>
-          <div class="panel"></div>
-          <div class="panel"></div>
-          <div class="panel"></div>
-          <div class="panel"></div>
-          <div class="panel"></div>
-          <div class="panel"></div>
-          <div class="panel"></div>
+        <div class="solar-panels">
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
+          <div class="solar-panel"></div>
         </div>
       </div>
     </div>

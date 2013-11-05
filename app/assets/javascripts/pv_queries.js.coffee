@@ -6,6 +6,7 @@ $ ->
   #animate panel icon
   #TODO validate and prevent dud values from activating animation
   $('.bearing_input').change ->
+    #alert 'change'
     bearing = this.value - 45
     centres_compass = -22
     #use compass div not panel div to apply each rotation in order to separate divs
@@ -33,7 +34,7 @@ $ ->
     tilt = this.value
     input = this.id
     icon = $('#' + input).parent().find('.icon')
-    icon.find('.compass').children('.panels').css({
+    icon.find('.compass').children('.solar-panels').css({
       'transform-origin':   '0 top 0',
       '-moz-transform':     'rotateX(' + tilt + 'deg)',
       '-webkit-transform':  'rotateX(' + tilt + 'deg)',
