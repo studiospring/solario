@@ -3,7 +3,7 @@
 
   <% attributes.each do |attribute| %>
     <%%= f.label :<%= attribute.name %> %><br />
-    <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>
+    <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %><br />
   <% end %>
-  <%%= f.submit %>
+  <%%= f.submit class: 'btn btn-primary' %>
 <%% end %>
