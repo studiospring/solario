@@ -1,7 +1,19 @@
 /*Base styling for forms, used with Bootstrap*/
-$narrow: 7em;
-$narrower: 6em;
+$default: 8em;
+$narrow: 6em;
+$narrower: 5em;
 fieldset{
+  margin-top: 2em;
+}
+legend{
+  padding-bottom: .5em;
+}
+.form-group{
+  /*keeps inputs below each other when inputs are short*/
+  clear: both;
+}
+.form-control{
+  width: $default;
 }
 .date_select{
   width: $narrow;

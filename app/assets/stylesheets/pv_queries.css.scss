@@ -1,17 +1,12 @@
 // Place all the styles related to the PvQueries controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-/*.inputs{*/
-  /*float: left;*/
-/*}*/
-/*input{*/
-  /*width: 3em;*/
-/*}*/
+.form-control{
+  width: 4em;
+}
 $compass_points: #c8002F;
 .icon{
-  float: left;
-  /*margin-top: -50px;*/
-  margin-left: 30px;
+  margin-top: -40px;
   height: 300px;
   width: 300px;
   -webkit-transform-style: preserve-3d; 
