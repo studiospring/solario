@@ -40,19 +40,19 @@ jQuery ->
         old_name = element.attr('name')
         new_name = old_name.replace(new RegExp(/[0-9]+/), "#{count_nested_fieldsets}")
         element.attr('name', new_name)
-      #required for icon to work. This must go at end of each loop (so it does
-      #not get overwritten by above code)
-      if element.is('#icon1')
-        last_icon_id_number = parseInt(last_fieldset.children('.icon').attr('id').slice(4))
-        old_id = element.attr('id')
-        new_id = old_id.replace(new RegExp(/[0-9]+/), "#{last_icon_id_number + 1}")
-        element.attr('id', new_id)
+    
+    #required for icon to work
+    last_icon_id = last_fieldset.children('.icon').attr('id')
+    last_icon_id_number = parseInt(last_icon_id.slice(4))
+    new_id = last_icon_id.replace(new RegExp(/[0-9]+/), "#{last_icon_id_number + 1}")
+    new_fieldset.children('.icon').attr('id', new_id)
+
     new_fieldset.insertBefore($('.add_fields'))
     $('<a class="btn btn-default remove_fields" href="">remove panel</a><br />').insertBefore($(event.target))
 
   remove_fields = (event) ->
-    $(event.target).prev('.nested_fields').hide()
-    $(event.target).hide()
+    $(event.target).prev('.nested_fields').remove()
+    $(event.target).remove()
     
 
   $(document).on 'click', '.add_fields', (event) ->
