@@ -6,23 +6,22 @@ $ ->
   #animate panel icon
   #TODO validate and prevent dud values from activating animation
   $('.bearing_input').change ->
-    #alert 'change'
     bearing = this.value - 45
-    centres_compass = -22
+    centres_compass = '-18px'
     #use compass div not panel div to apply each rotation in order to separate divs
-    icon = $(this).parent().find('.icon')
-    $(this).parent().find('.compass').css({
-      '-moz-transform':     'translateX(' + centres_compass + 'px)
-                            translateY(' + centres_compass + 'px) 
+    icon = $(this).parents('.nested_fields').find('.icon')
+    icon.find('.compass').css({
+      '-moz-transform':     'translateX(' + centres_compass + ')
+                            translateY(' + centres_compass + ') 
                             rotateZ(' + bearing + 'deg)',
-      '-webkit-transform':  'translateX(' + centres_compass + 'px) 
-                            translateY(' + centres_compass + 'px)
+      '-webkit-transform':  'translateX(' + centres_compass + ') 
+                            translateY(' + centres_compass + ')
                             rotateZ(' + bearing + 'deg)',
-      '-o-transform':       'translateX(' + centres_compass + 'px)
-                            translateY(' + centres_compass + 'px)
+      '-o-transform':       'translateX(' + centres_compass + ')
+                            translateY(' + centres_compass + ')
                             rotateZ(' + bearing + 'deg)',
-      'transform':          'translateX(' + centres_compass + 'px)
-                            translateY(' + centres_compass + 'px) 
+      'transform':          'translateX(' + centres_compass + ')
+                            translateY(' + centres_compass + ') 
                             rotateZ(' + bearing + 'deg)',
       'transition':         'transform 1s'
     })
@@ -33,7 +32,7 @@ $ ->
   $('.tilt_input').change ->
     tilt = this.value
     input = this.id
-    icon = $('#' + input).parent().find('.icon')
+    icon = $('#' + input).parents().find('.icon')
     icon.find('.compass').children('.solar-panels').css({
       'transform-origin':   '0 top 0',
       '-moz-transform':     'rotateX(' + tilt + 'deg)',
