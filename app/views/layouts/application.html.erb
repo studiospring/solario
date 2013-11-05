@@ -27,8 +27,12 @@
       <%= yield %>
     </div>
     <footer>
-      <nav>
-        <ul class="nav">
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <%= debug(params) if Rails.env.development? %>
+        <p id="copyright" class="navbar-text">
+          <span class="copyright-symbol">&#169;</span> - Solario
+        </p>
+        <ul class="nav nav-pills">
           <% if user_signed_in? %>
             <li><%= link_to "Profile", edit_user_registration_path %></li>
             <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
@@ -39,11 +43,7 @@
           <li><%# link_to "Terms", terms_path %></li>
         </ul>
       </nav>
-      <span id="copyright">
-        <span class="copyright-symbol">&#169;</span> - Solario
-      </span>
     </footer>
   </div>
-  <%= debug(params) if Rails.env.development? %>
 </body>
 </html>

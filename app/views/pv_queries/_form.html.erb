@@ -2,6 +2,7 @@
   <%= render 'shared/error_messages', object: f.object %>
   <%= f.label :postcode_id, 'Postcode', min: '221', max: '9999' %>
   <%= f.number_field :postcode_id %>
+
   <%= f.fields_for :panels do |builder| %>
     <%= render 'panel_fields', f: builder %>
   <% end %>

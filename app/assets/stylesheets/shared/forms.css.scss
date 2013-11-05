@@ -1,6 +1,8 @@
 /*Base styling for forms, used with Bootstrap*/
 $narrow: 7em;
 $narrower: 6em;
+fieldset{
+}
 .date_select{
   width: $narrow;
 }
@@ -10,6 +12,7 @@ $narrower: 6em;
 textarea{
   width: 25em;
   height: 3em;
+  margin-top: 2em;
 }
 label{
   margin-top: .6em;
