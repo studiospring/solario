@@ -1,14 +1,10 @@
 <%= form_for @pv_query, :validate => true, class: 'form-horizontal' do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <fieldset>
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="form-group">
-          <%= f.label :postcode_id, 'Postcode', min: '221', max: '9999', class: 'col-sm-3 control-label' %>
-          <div class="col-sm-2">
-            <%= f.number_field :postcode_id, class: 'form-control' %>
-          </div>
-        </div>
+  <fieldset class="row">
+    <div class="col-xs-12 col-sm-4">
+      <div class="form-group">
+        <%= f.label :postcode_id, 'Postcode', min: '221', max: '9999', class: 'col-xs-3 col-sm-5 control-label' %>
+        <%= f.number_field :postcode_id, class: 'form-control' %>
       </div>
     </div>
   </fieldset>

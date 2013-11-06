@@ -1,23 +1,19 @@
 // Place all the styles related to the PvQueries controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+/* Small devices (tablets, 768px and up) */
 .form-control{
   width: 4.5em;
+  display: inline;
 }
 .nested_fields{
   .control-label{
     /*space out query inputs*/
     margin-bottom: 2em;
   }
-  .form-control{
-    width: 4.5em;
-    /*enable text to be inline with form inputs*/
-    display: inline;
-  }
 }
 .icon{
-  margin-top: -40px;
-  margin-left: -40px;
+  margin: -40px -90px -40px -40px;
   height: 300px;
   width: 300px;
   -webkit-transform-style: preserve-3d; 
