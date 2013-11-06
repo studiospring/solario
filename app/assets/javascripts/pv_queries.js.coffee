@@ -3,6 +3,9 @@
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
   $('#enable_js').hide()
+  #form validation
+  $('#new_pv_query').validate
+    debug: true
   #animate panel icon
   #TODO validate and prevent dud values from activating animation
   $('.bearing_input').change ->

@@ -16,4 +16,5 @@
 //= require jsapi
 //= require visualization
 //= require graph3d-min
+//= require jquery.validate.min
 //= require_tree .
