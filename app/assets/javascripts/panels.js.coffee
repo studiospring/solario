@@ -2,21 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-#creates link to remove form field. Requires accepts_nested_attributes_for association. See railscast #197
 jQuery ->
-  #window.remove_fields = (link) -> 
-    #$(link).prev("input[type=hidden]").val("1")
-    #$(link).closest('.nested_fields').hide()
-
-#add fields. See railscast #197
-#  window.add_fields = (link, association, content) ->
-#   new_id = new Date().getTime()
-#   regexp = new RegExp("new_" + association, "g")
-#   $(link).before(content.replace(regexp, new_id))
-#   $('input.dob').datepicker({
-#     minDate: null,
-#     yearRange: 'c-100:c'
-#   });
 #nested forms without link_to_function (which has been deprecated)
   add_fields = (event) ->
     #clone fields
@@ -42,7 +28,7 @@ jQuery ->
         element.attr('name', new_name)
     
     #required for icon to work
-    last_icon_id = last_fieldset.children('.icon').attr('id')
+    last_icon_id = last_fieldset.find('.icon').attr('id')
     last_icon_id_number = parseInt(last_icon_id.slice(4))
     new_id = last_icon_id.replace(new RegExp(/[0-9]+/), "#{last_icon_id_number + 1}")
     new_fieldset.children('.icon').attr('id', new_id)
