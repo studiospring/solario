@@ -3,10 +3,41 @@
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
   $('#enable_js').hide()
-  #form validation
+  #form validation# <<<
   $('#new_pv_query').validate
-    debug: true
-  #animate panel icon
+    debug: true,
+    errorClass: 'alert-warning',
+    errorPlacement: (error, element) ->
+      element.parent().append(error)
+
+  $('#pv_query_postcode_id').rules(
+    'add',
+      required: true,
+      digits: true,
+      minlength: 4,
+      maxlength: 4
+  )
+  $('.bearing_input').rules(
+    'add',
+      required: true,
+      digits: true,
+      min: 0,
+      max: 360
+  )
+  $('.tilt_input').rules(
+    'add',
+      required: true,
+      digits: true,
+      min: 0,
+      max: 90
+  )
+  $('.area_input').rules(
+    'add',
+      required: true,
+      number: true,
+      min: 0
+  )# >>>
+  #animate panel icon# <<<
   #TODO validate and prevent dud values from activating animation
   $('.bearing_input').change ->
     bearing = this.value - 45
@@ -46,7 +77,7 @@ $ ->
     })
     optimise_viewing_angle(icon)
 
-  optimise_viewing_angle = (icon) ->
+  optimise_viewing_angle = (icon) -># <<<
     compass = icon.find('.compass')
     #get current bearing
     bearing_matrix = compass.css('transform')
@@ -72,8 +103,9 @@ $ ->
       '-o-transform':       'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       'transform':          'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       'transition':         'transform 2s'
-    })
-
+    })# >>>
+# >>>
+  #draw graph# <<<
   data = null
   graph = null
 
@@ -114,4 +146,4 @@ $ ->
       graph.draw(data, options)
 
 # Set callback to run when API is loaded
-  google.setOnLoadCallback(drawVisualization)
+  google.setOnLoadCallback(drawVisualization)# >>>
