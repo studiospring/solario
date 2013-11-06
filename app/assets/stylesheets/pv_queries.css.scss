@@ -1,6 +1,9 @@
 // Place all the styles related to the PvQueries controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.form-control{
+  width: 4.5em;
+}
 .nested_fields{
   .control-label{
     /*space out query inputs*/
