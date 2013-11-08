@@ -37,7 +37,7 @@ $ ->
       number: true,
       min: 0
   )# >>>
-  #nested forms without link_to_function (which has been deprecated)# <<<
+  #add/remove nested forms without link_to_function (which has been deprecated)# <<<
   add_fields = (event) ->
     #clone fields
     last_fieldset = $('fieldset.nested_fields').last()
@@ -59,12 +59,10 @@ $ ->
         old_name = element.attr('name')
         new_name = old_name.replace(new RegExp(/[0-9]+/), "#{count_nested_fieldsets}")
         element.attr('name', new_name)
-    
-    #required for icon to work
-    last_icon_id = last_fieldset.find('.icon').attr('id')
-    last_icon_id_number = parseInt(last_icon_id.slice(4))
-    new_id = last_icon_id.replace(new RegExp(/[0-9]+/), "#{last_icon_id_number + 1}")
-    new_fieldset.children('.icon').attr('id', new_id)
+    #reset styling (set compass to default position)
+    new_fieldset.find('.icon').removeAttr('style')
+    new_fieldset.find('.compass').removeAttr('style')
+    new_fieldset.find('.solar-panels').removeAttr('style')
 
     new_fieldset.insertBefore($('.add_fields'))
     $('<a class="btn btn-default remove_fields" href="">remove panel</a><br />').insertBefore($(event.target))
@@ -75,8 +73,8 @@ $ ->
     
   $(document).on 'click', '.add_fields', (event) ->
     event.preventDefault()
-    #remove validation error msg
     #this code must come after validation!
+    #remove validation error msg
     validation.resetForm()
     add_fields(event)
 
@@ -112,7 +110,7 @@ $ ->
   $('.tilt_input').change ->
     tilt = this.value
     input = this.id
-    icon = $('#' + input).parents().find('.icon')
+    icon = $(this).parents('.nested_fields').find('.icon')
     icon.find('.compass').children('.solar-panels').css({
       'transform-origin':   '0 top 0',
       '-moz-transform':     'rotateX(' + tilt + 'deg)',
