@@ -4,7 +4,7 @@
 $ ->
   $('#enable_js').hide()
   #form validation# <<<
-  validation = $('#new_pv_query').validate
+  form_validation = $('#new_pv_query').validate
     debug: true,
     errorClass: 'alert-warning',
     errorPlacement: (error, element) ->
@@ -75,7 +75,7 @@ $ ->
     event.preventDefault()
     #this code must come after validation!
     #remove validation error msg
-    validation.resetForm()
+    form_validation.resetForm()
     add_fields(event)
 
   $(document).on 'click', '.remove_fields', (event) ->
@@ -84,42 +84,44 @@ $ ->
   #animate panel icon# <<<
   #TODO validate and prevent dud values from activating animation
   $('.bearing_input').change ->
-    bearing = this.value - 45
-    centres_compass = '-18px'
-    #use compass div not panel div to apply each rotation in order to separate divs
-    icon = $(this).parents('.nested_fields').find('.icon')
-    icon.find('.compass').css({
-      '-moz-transform':     'translateX(' + centres_compass + ')
-                            translateY(' + centres_compass + ') 
-                            rotateZ(' + bearing + 'deg)',
-      '-webkit-transform':  'translateX(' + centres_compass + ') 
-                            translateY(' + centres_compass + ')
-                            rotateZ(' + bearing + 'deg)',
-      '-o-transform':       'translateX(' + centres_compass + ')
-                            translateY(' + centres_compass + ')
-                            rotateZ(' + bearing + 'deg)',
-      'transform':          'translateX(' + centres_compass + ')
-                            translateY(' + centres_compass + ') 
-                            rotateZ(' + bearing + 'deg)',
-      'transition':         'transform 1s'
-    })
-    #optimise viewing angle only after tilt has been added
-    if $(this).siblings('.tilt_input').val()
-      optimise_viewing_angle(icon)
+    if form_validation.valid()
+      bearing = this.value - 45
+      centres_compass = '-18px'
+      #use compass div not panel div to apply each rotation in order to separate divs
+      icon = $(this).parents('.nested_fields').find('.icon')
+      icon.find('.compass').css({
+        '-moz-transform':     'translateX(' + centres_compass + ')
+                              translateY(' + centres_compass + ') 
+                              rotateZ(' + bearing + 'deg)',
+        '-webkit-transform':  'translateX(' + centres_compass + ') 
+                              translateY(' + centres_compass + ')
+                              rotateZ(' + bearing + 'deg)',
+        '-o-transform':       'translateX(' + centres_compass + ')
+                              translateY(' + centres_compass + ')
+                              rotateZ(' + bearing + 'deg)',
+        'transform':          'translateX(' + centres_compass + ')
+                              translateY(' + centres_compass + ') 
+                              rotateZ(' + bearing + 'deg)',
+        'transition':         'transform 1s'
+      })
+      #optimise viewing angle only after tilt has been added
+      if $(this).siblings('.tilt_input').val()
+        optimise_viewing_angle(icon)
 
   $('.tilt_input').change ->
-    tilt = this.value
-    input = this.id
-    icon = $(this).parents('.nested_fields').find('.icon')
-    icon.find('.compass').children('.solar-panels').css({
-      'transform-origin':   '0 top 0',
-      '-moz-transform':     'rotateX(' + tilt + 'deg)',
-      '-webkit-transform':  'rotateX(' + tilt + 'deg)',
-      '-o-transform':       'rotateX(' + tilt + 'deg)',
-      'transform':          'rotateX(' + tilt + 'deg)',
-      'transition':         'transform 1s'
-    })
-    optimise_viewing_angle(icon)
+    if form_validation.valid()
+      tilt = this.value
+      input = this.id
+      icon = $(this).parents('.nested_fields').find('.icon')
+      icon.find('.compass').children('.solar-panels').css({
+        'transform-origin':   '0 top 0',
+        '-moz-transform':     'rotateX(' + tilt + 'deg)',
+        '-webkit-transform':  'rotateX(' + tilt + 'deg)',
+        '-o-transform':       'rotateX(' + tilt + 'deg)',
+        'transform':          'rotateX(' + tilt + 'deg)',
+        'transition':         'transform 1s'
+      })
+      optimise_viewing_angle(icon)
 
   optimise_viewing_angle = (icon) -># <<<
     compass = icon.find('.compass')
