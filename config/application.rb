@@ -16,6 +16,8 @@ module Solar
       g.test_framework  :rspec, :fixture => false
     end
 
+    config.assets.paths << "#{Rails.root}/app/assets/type"
+
     #load custom validation
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
