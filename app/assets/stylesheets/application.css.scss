@@ -12,8 +12,8 @@
  *= require_directory ./shared
  *= require_directory
  */
-$font-family-sans-serif:  Herculanum, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 @import "bootstrap";
+$font-family-sans-serif:  Herculanum, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 /*Sansation - freeware font family*/
 /*Version 1.3*/
 /*Bernd Montag © 2011 - All Rights Reserved*/
@@ -51,41 +51,84 @@ h1, h2, h3, h4, h5, h6,
   /*color: red;*/
 /*}*/
 /*prevent content getting obscured by footer*/
-$panel_blue: #1A3771;
-$octagon_size: 70px;
 body { padding-bottom: 170px; }
-.solario{
-  float: left;
-  margin-left: 1px;
-  text-align: center;
-  line-height: $octagon_size - 15;
-  font-size: 50px;
-  color: #fff;
-  /*create octagon*/
+@mixin octagon {
   width: $octagon_size;
   height: $octagon_size; 
-  background: $panel_blue; 
   position: relative; 
   &:before { 
-    content: "";
-    position: absolute;
+    @include octagon_parts;
     top: 0;
-    left: 0;
     border-bottom: 5px solid $panel_blue;
-    border-left: 6px solid #fff;
-    border-right: 6px solid #fff;
-    width: $octagon_size;
-    height: 0;
   }
   &:after { 
-    content: "";
-    position: absolute;
+    @include octagon_parts;
     bottom: 0;
-    left: 0;
     border-top: 5px solid $panel_blue;
-    border-left: 6px solid #fff;
-    border-right: 6px solid #fff;
-    width: $octagon_size;
-    height: 0;
   }
+}
+@mixin octagon_parts{
+  content: "";
+  position: absolute;
+  left: 0;
+  border-left: 6px solid #fff;
+  border-right: 6px solid #fff;
+  width: $octagon_size;
+  height: 0;
+}
+$octagon_size: 8.4em;
+$panel_blue: #1A3771;
+.banner_panel{
+  float: left;
+  margin-left: 1px;
+  margin-bottom: 1px;
+  text-align: center;
+  line-height: 1.3em;
+  font-size: 1.2em;
+  color: #fff;
+  /*create octagon*/
+  background: $panel_blue; 
+  @include octagon;
+}
+.unfilled_panel{
+  float: left;
+  margin-left: 1px;
+  margin-bottom: 1px;
+  text-align: center;
+  line-height: 1.3em;
+  font-size: 3.2em;
+  color: #fff;
+  /*create octagon*/
+  background: #fff; 
+  @include octagon;
+}
+.unfilled_panel_box{
+  /*background: red;*/
+  font-size: 1.2em;
+  height: $octagon_size;
+  border-left: 5px solid $panel_blue;
+  border-right: 5px solid $panel_blue;
+}
+#catch_copy{
+  float: left;
+  width: 2.8em;
+  height: $octagon_size;
+  font-size: .3em;
+}
+.box{
+	position: relative;
+  background: red;
+	width: 50%;		/* desired width */
+}
+.box:before{
+	content: "";
+	display: block;
+	padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+.panel_content{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
