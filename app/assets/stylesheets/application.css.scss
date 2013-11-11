@@ -54,7 +54,7 @@ h1, h2, h3, h4, h5, h6,
 body { padding-bottom: 170px; }
 @mixin octagon {
   width: $octagon_size;
-  height: $octagon_size; 
+  height: 0; 
   position: relative; 
   &:before { 
     @include octagon_parts;
@@ -73,10 +73,10 @@ body { padding-bottom: 170px; }
   left: 0;
   border-left: 6px solid #fff;
   border-right: 6px solid #fff;
-  width: $octagon_size;
+  width: $octagon_size * 5;
   height: 0;
 }
-$octagon_size: 8.4em;
+$octagon_size: 20%;
 $panel_blue: #1A3771;
 .banner_panel{
   float: left;
@@ -84,51 +84,22 @@ $panel_blue: #1A3771;
   margin-bottom: 1px;
   text-align: center;
   line-height: 1.3em;
-  font-size: 1.2em;
+  /*font-size: 1.2em;*/
   color: #fff;
-  /*create octagon*/
+    padding-bottom: 20%;
   background: $panel_blue; 
   @include octagon;
 }
-.unfilled_panel{
-  float: left;
-  margin-left: 1px;
-  margin-bottom: 1px;
-  text-align: center;
-  line-height: 1.3em;
-  font-size: 3.2em;
-  color: #fff;
-  /*create octagon*/
-  background: #fff; 
-  @include octagon;
-}
-.unfilled_panel_box{
-  /*background: red;*/
-  font-size: 1.2em;
-  height: $octagon_size;
-  border-left: 5px solid $panel_blue;
-  border-right: 5px solid $panel_blue;
-}
+
 #catch_copy{
   float: left;
   width: 2.8em;
   height: $octagon_size;
   font-size: .3em;
 }
-.box{
-	position: relative;
-  background: red;
-	width: 50%;		/* desired width */
-}
-.box:before{
-	content: "";
-	display: block;
-	padding-top: 100%; 	/* initial ratio of 1:1*/
-}
-.panel_content{
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
+.some_element {
+    position: relative;
+    width: 20%;
+    height: 0;
+    padding-bottom: 20%;
 }
