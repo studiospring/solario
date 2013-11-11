@@ -70,12 +70,12 @@ body {
   &:before { 
     @include octagon_before_after;
     top: 0;
-    border-bottom: 5px solid $panel_blue;
+    border-bottom: 3px solid $panel_blue;
   }
   &:after { 
     @include octagon_before_after;
     bottom: 0;
-    border-top: 5px solid $panel_blue;
+    border-top: 3px solid $panel_blue;
   }
 }// >>>
 @mixin octagon_before_after{// <<<
@@ -84,15 +84,12 @@ body {
   width: 100%;
   left: 0;
   height: 0;
-  border-left: 6px solid #fff;
-  border-right: 6px solid #fff;
+  border-left: 4px solid #fff;
+  border-right: 4px solid #fff;
 }// >>>
-$octagon_size: 33%;
+$octagon_size: 24.5%;
 $panel_blue: #1A3771;
-a .banner_panel{
-  font-size: 2em;
-}
-.banner_panel{
+.banner_panel{// <<<
   float: left;
   margin-left: 1px;
   margin-top: 1px;
@@ -105,7 +102,7 @@ a .banner_panel{
 }
 .left-col .banner_panel{
   float: right; /*removes gap between panels in bootstrap cols */
-}
+}// >>>
 $faint_panel_colour: #fff;
 .banner_panel.back_panel{
   background: $faint_panel_colour;
@@ -122,29 +119,28 @@ $faint_panel_colour: #fff;
   font-size: 5vw;
   padding: 5px;
 }
-@media (min-width: $screen-sm-min) { 
+@media (min-width: $screen-sm-min) { // <<<
+  .banner_panel{
+    &:before { 
+      border-left: 6px solid #fff;
+      border-right: 6px solid #fff;
+      border-bottom: 5px solid $panel_blue;
+    }
+    &:after { 
+      border-left: 6px solid #fff;
+      border-right: 6px solid #fff;
+      border-top: 5px solid $panel_blue;
+    }
+  }
   .panel_content{
     line-height: 2.5vw;
     font-size: 2.5vw;
   }
-}
-#catch_copy{// <<<
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  height: 3em;
-  width: 30%;
-  /*background: rgba(#ccc, .5);*/
-  font-size: 1.8em;
-  padding: .5em;
-  color: $panel_blue;
-  border-radius: 10px;
-  -moz-border-radius: 10px; 
-  -webkit-border-radius: 10px;
 }// >>>
 $logo_panel_color: #ffe900;
 .logo{
   background: $logo_panel_color;
+  font-size: 2em;
   &:before { 
     border-bottom: 5px solid $logo_panel_color;
   }
