@@ -109,11 +109,23 @@ a .banner_panel{
 $faint_panel_colour: #fff;
 .banner_panel.back_panel{
   background: $faint_panel_colour;
+  color: $panel_blue;
   &:before { 
     border-bottom: 5px solid $faint_panel_colour;
   }
   &:after { 
     border-top: 5px solid $faint_panel_colour;
+  }
+}
+.panel_content{ /*style text in panels */
+  line-height: 5.5vw;
+  font-size: 5vw;
+  padding: 5px;
+}
+@media (min-width: $screen-sm-min) { 
+  .panel_content{
+    line-height: 2.5vw;
+    font-size: 2.5vw;
   }
 }
 #catch_copy{// <<<
