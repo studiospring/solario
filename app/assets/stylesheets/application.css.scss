@@ -52,14 +52,12 @@ h1, h2, h3, h4, h5, h6,
 body { 
   padding-bottom: 170px; /*prevent content getting obscured by footer*/
 }
-$grid-gutter-width: 0px;
 #banner{
   position: relative; /*to position #catch_copy*/
   font-family: Sansation;  
 }
-#banner.container{
-  width: 100%;/*for full width layout */
-  padding: 0 auto; /*for full width layout */
+#banner.container{/*for full width layout */
+  width: 100%;
   .row > div {
     padding-left: 0;
     padding-right: 0;
@@ -89,13 +87,10 @@ $grid-gutter-width: 0px;
   border-left: 6px solid #fff;
   border-right: 6px solid #fff;
 }// >>>
-/*$octagon_size: 8.21%;*/
 $octagon_size: 33%;
 $panel_blue: #1A3771;
-a{
-.banner_panel{
-  font-size: 4.2em;
-  }
+a .banner_panel{
+  font-size: 2em;
 }
 .banner_panel{
   float: left;
@@ -110,9 +105,6 @@ a{
 }
 .left-col .banner_panel{
   float: right; /*removes gap between panels in bootstrap cols */
-}
-.banner_panel.name{
-  font-size: 2.8em;
 }
 $faint_panel_colour: #fff;
 .banner_panel.back_panel{
@@ -138,12 +130,13 @@ $faint_panel_colour: #fff;
   -moz-border-radius: 10px; 
   -webkit-border-radius: 10px;
 }// >>>
+$logo_panel_color: #ffe900;
 .logo{
-  background: #ffe900;
+  background: $logo_panel_color;
   &:before { 
-    border-bottom: 5px solid #ffe900;
+    border-bottom: 5px solid $logo_panel_color;
   }
   &:after { 
-    border-top: 5px solid #ffe900;
+    border-top: 5px solid $logo_panel_color;
   }
 }
