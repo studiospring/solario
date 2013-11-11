@@ -57,36 +57,36 @@ body { padding-bottom: 170px; }
   height: 0; 
   position: relative; 
   &:before { 
-    @include octagon_parts;
+    @include octagon_before_after;
     top: 0;
     border-bottom: 5px solid $panel_blue;
   }
   &:after { 
-    @include octagon_parts;
+    @include octagon_before_after;
     bottom: 0;
     border-top: 5px solid $panel_blue;
   }
 }
-@mixin octagon_parts{
+@mixin octagon_before_after{
   content: "";
   position: absolute;
+  width: 100%;
   left: 0;
+  height: 0;
   border-left: 6px solid #fff;
   border-right: 6px solid #fff;
-  width: $octagon_size * 5;
-  height: 0;
 }
-$octagon_size: 20%;
+$octagon_size: 8.21%;
 $panel_blue: #1A3771;
 .banner_panel{
   float: left;
   margin-left: 1px;
-  margin-bottom: 1px;
+  margin-top: 1px;
   text-align: center;
   line-height: 1.3em;
-  /*font-size: 1.2em;*/
+  font-size: 4.2em;
   color: #fff;
-    padding-bottom: 20%;
+  padding-bottom: $octagon_size;
   background: $panel_blue; 
   @include octagon;
 }
@@ -96,10 +96,4 @@ $panel_blue: #1A3771;
   width: 2.8em;
   height: $octagon_size;
   font-size: .3em;
-}
-.some_element {
-    position: relative;
-    width: 20%;
-    height: 0;
-    padding-bottom: 20%;
 }
