@@ -50,8 +50,18 @@ h1, h2, h3, h4, h5, h6,
   /*font-family: Molengo, serif;*/
   /*color: red;*/
 /*}*/
-/*prevent content getting obscured by footer*/
-body { padding-bottom: 170px; }
+
+body { 
+  padding-bottom: 170px; /*prevent content getting obscured by footer*/
+}
+#banner{
+  position: relative; /*to position #catch_copy*/
+  font-family: Sansation;  
+}
+#banner.container{
+  width: 100%;/*for full width layout */
+  padding: 0 15px; /*for full width layout */
+}
 @mixin octagon {
   width: $octagon_size;
   height: 0; 
@@ -76,15 +86,20 @@ body { padding-bottom: 170px; }
   border-left: 6px solid #fff;
   border-right: 6px solid #fff;
 }
-$octagon_size: 8.21%;
+/*$octagon_size: 8.21%;*/
+$octagon_size: 10%;
 $panel_blue: #1A3771;
+a{
+.banner_panel{
+  font-size: 4.2em;
+  }
+}
 .banner_panel{
   float: left;
   margin-left: 1px;
   margin-top: 1px;
   text-align: center;
   line-height: 1.3em;
-  font-size: 4.2em;
   color: #fff;
   padding-bottom: $octagon_size;
   background: $panel_blue; 
@@ -92,8 +107,25 @@ $panel_blue: #1A3771;
 }
 
 #catch_copy{
-  float: left;
-  width: 2.8em;
-  height: $octagon_size;
-  font-size: .3em;
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  height: 3em;
+  width: 15em;
+  background: rgba(#ccc, .5);
+  font-size: 1.8em;
+  padding: .5em;
+  color: #fff;
+  border-radius: 10px;
+  -moz-border-radius: 10px; 
+  -webkit-border-radius: 10px;
+}
+.logo{
+  background: #ffe900;
+  &:before { 
+    border-bottom: 5px solid #ffe900;
+  }
+  &:after { 
+    border-top: 5px solid #ffe900;
+  }
 }

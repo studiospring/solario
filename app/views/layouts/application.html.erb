@@ -12,17 +12,22 @@
 </head>
 <body>
   <div id="holder">
-    <div id="banner">
-        <a href="/">
-          <div class="banner_panel">s</div>
-          <div class="banner_panel">o</div>
-          <div class="banner_panel">l</div>
-          <div class="banner_panel">a</div>
-          <div class="banner_panel">r</div>
-          <div class="banner_panel">i</div>
-          <div class="banner_panel">o</div>
-        </a>
-          <div class="banner_panel"></div>
+    <div id="banner" class="container">
+      <div class="row">
+        <%#<div class="col-md-8">%>
+          <a href="/">
+            <div class="banner_panel logo">
+              <div class="glyphicon glyphicon-certificate"></div>
+            </div>
+            <div class="banner_panel">s</div>
+            <div class="banner_panel">o</div>
+            <div class="banner_panel">l</div>
+            <div class="banner_panel">a</div>
+            <div class="banner_panel">r</div>
+            <div class="banner_panel">i</div>
+            <div class="banner_panel">o</div>
+          </a>
+        <%#</div>%>
           <div class="banner_panel">solario</div>
           <div class="banner_panel"></div>
           <div class="banner_panel"></div>
@@ -41,8 +46,19 @@
           <div class="banner_panel"></div>
           <div class="banner_panel"></div>
           <div class="banner_panel"></div>
-          <div id="catch_copy"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div class="banner_panel"></div>
+          <div id="catch_copy">Solar panels... go or no go?</div>
           <%#<img id="logo" src="/assets/images/logo.svg" alt="" />%>
+      </div>
     </div>
     <main id="content" class="container">
       <% flash.each do |key, value| %>
