@@ -100,24 +100,46 @@ $panel_blue: #1A3771;
   background: $panel_blue; 
   @include octagon;
 }// >>>
+a > .banner_panel{
+  line-height: 37vw;
+  font-size: 7vw;
+}
 /*$faint_panel_colour: #d8e2f6;*/
 $faint_panel_colour: #6990dd;
 /*$faint_panel_colour: #2a56b6;*/
 /*$faint_panel_colour: #3f8fd2;*/
 .banner_panel.coloured_panel{
   background: $faint_panel_colour;
-  color: $panel_blue;
+  color: #fff;
   &:before { 
-    border-bottom: 5px solid $faint_panel_colour;
+    border-bottom: 3px solid $faint_panel_colour;
   }
   &:after { 
-    border-top: 5px solid $faint_panel_colour;
+    border-top: 3px solid $faint_panel_colour;
+  }
+}
+.banner_panel.white_panel{
+  background: #fff;
+  color: #fff;
+  &:before { 
+    border-bottom: 3px solid #fff;
+  }
+  &:after { 
+    border-top: 3px solid #fff;
   }
 }
 .panel_content{ /*style text in panels */
-  line-height: 5.5vw;
-  font-size: 5vw;
-  padding: 5px;
+  position: relative;
+  text-align: left;
+  color: #fff;
+  line-height: 5vw;
+  font-size: 4.5vw;
+  padding: 6px;
+}
+#last_slogan{
+  text-align: right;
+  position: absolute;
+  bottom: 0;
 }
 @media (min-width: $screen-sm-min) { // <<<
   .banner_panel{
@@ -133,22 +155,31 @@ $faint_panel_colour: #6990dd;
       border-top: 5px solid $panel_blue;
     }
   }
-  .left-col .banner_panel{
+  .banner_panel.coloured_panel{
+    &:before { 
+      border-bottom: 5px solid $faint_panel_colour;
+    }
+    &:after { 
+      border-top: 5px solid $faint_panel_colour;
+    }
+  }
+  .banner_panel.white_panel{
+    &:before { 
+      border-bottom: 5px solid #fff;
+    }
+    &:after { 
+      border-top: 5px solid #fff;
+    }
+  }
+  .left_col .banner_panel{
     float: right; /*removes gap between panels in bootstrap cols */
+  }
+  a > .banner_panel{
+    line-height: 5vw;
+    font-size: 3.5vw;
   }
   .panel_content{
     line-height: 2.5vw;
     font-size: 2.5vw;
   }
 }// >>>
-$logo_panel_color: #ffe900;
-.logo{
-  background: $faint_panel_colour;
-  font-size: 2em;
-  &:before { 
-    border-bottom: 5px solid $faint_panel_colour;
-  }
-  &:after { 
-    border-top: 5px solid $faint_panel_colour;
-  }
-}
