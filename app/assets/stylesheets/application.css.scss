@@ -90,7 +90,7 @@ body {
 $octagon_size: 24.5%;
 $panel_blue: #1A3771;
 .banner_panel{// <<<
-  float: left;
+  float: right;
   margin-left: 1px;
   margin-top: 1px;
   text-align: center;
@@ -99,12 +99,12 @@ $panel_blue: #1A3771;
   padding-bottom: $octagon_size;
   background: $panel_blue; 
   @include octagon;
-}
-.left-col .banner_panel{
-  float: right; /*removes gap between panels in bootstrap cols */
 }// >>>
-$faint_panel_colour: #fff;
-.banner_panel.back_panel{
+/*$faint_panel_colour: #d8e2f6;*/
+$faint_panel_colour: #6990dd;
+/*$faint_panel_colour: #2a56b6;*/
+/*$faint_panel_colour: #3f8fd2;*/
+.banner_panel.coloured_panel{
   background: $faint_panel_colour;
   color: $panel_blue;
   &:before { 
@@ -121,6 +121,7 @@ $faint_panel_colour: #fff;
 }
 @media (min-width: $screen-sm-min) { // <<<
   .banner_panel{
+    float: left;
     &:before { 
       border-left: 6px solid #fff;
       border-right: 6px solid #fff;
@@ -132,6 +133,9 @@ $faint_panel_colour: #fff;
       border-top: 5px solid $panel_blue;
     }
   }
+  .left-col .banner_panel{
+    float: right; /*removes gap between panels in bootstrap cols */
+  }
   .panel_content{
     line-height: 2.5vw;
     font-size: 2.5vw;
@@ -139,12 +143,12 @@ $faint_panel_colour: #fff;
 }// >>>
 $logo_panel_color: #ffe900;
 .logo{
-  background: $logo_panel_color;
+  background: $faint_panel_colour;
   font-size: 2em;
   &:before { 
-    border-bottom: 5px solid $logo_panel_color;
+    border-bottom: 5px solid $faint_panel_colour;
   }
   &:after { 
-    border-top: 5px solid $logo_panel_color;
+    border-top: 5px solid $faint_panel_colour;
   }
 }
