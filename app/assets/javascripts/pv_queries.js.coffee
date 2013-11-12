@@ -2,41 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
+#$(document).ready ->
   $('#enable_js').hide()
-  #form validation# <<<
-  form_validation = $('#new_pv_query').validate
-    debug: true,
+  
+  form_validation = $('#new_pv_query').validate# <<<
+    #debug: true,
     errorClass: 'alert-warning',
     errorPlacement: (error, element) ->
-      element.parent().append(error)
-
-  $('#pv_query_postcode_id').rules(
-    'add',
-      required: true,
-      digits: true,
-      minlength: 4,
-      maxlength: 4
-  )
-  $('.bearing_input').rules(
-    'add',
-      required: true,
-      digits: true,
-      min: 0,
-      max: 360
-  )
-  $('.tilt_input').rules(
-    'add',
-      required: true,
-      digits: true,
-      min: 0,
-      max: 90
-  )
-  $('.area_input').rules(
-    'add',
-      required: true,
-      number: true,
-      min: 0
-  )# >>>
+      element.parent().append(error)# >>>
   #add/remove nested forms without link_to_function (which has been deprecated)# <<<
   add_fields = (event) ->
     #clone fields
@@ -82,7 +55,6 @@ $ ->
     event.preventDefault()
     remove_fields(event)# >>>
   #animate panel icon# <<<
-  #TODO validate and prevent dud values from activating animation
   $('.bearing_input').change ->
     if form_validation.valid()
       bearing = this.value - 45
@@ -168,12 +140,11 @@ $ ->
       dni_array = dni_string.split(" ").map(parseFloat)
       for month in [1..12]
         #if you change times here, remember to also change them in panel.dni_received_pa
-        for hour in [5..20] by 0.5 
+        for hour in [5..20] by 0.5
           kW = dni_array.shift()
           row = [hour, month, kW]
           data.addRow(row)
 
-      # specify options
       options =
         width:  "500px"
         height: "450px"
@@ -193,3 +164,31 @@ $ ->
 
 # Set callback to run when API is loaded
   google.setOnLoadCallback(drawVisualization)# >>>
+  #rules must be here to work!
+  $('#pv_query_postcode_id').rules(# <<<
+    'add',
+      required: true,
+      digits: true,
+      minlength: 4,
+      maxlength: 4
+  )
+  $('.bearing_input').rules(
+    'add',
+      required: true,
+      digits: true,
+      min: 0,
+      max: 360
+  )
+  $('.tilt_input').rules(
+    'add',
+      required: true,
+      digits: true,
+      min: 0,
+      max: 90
+  )
+  $('.area_input').rules(
+    'add',
+      required: true,
+      number: true,
+      min: 0
+  )# >>>
