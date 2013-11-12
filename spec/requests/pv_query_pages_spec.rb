@@ -54,8 +54,7 @@ describe "PvQuery" do
     let(:submit) { 'view output' }
     before { visit new_pv_query_path }
 
-    it_should_behave_like 'all pv_query pages'
-    it { should have_title(full_title(heading)) }
+    #it_should_behave_like 'all pv_query pages'
     it { should have_button('view output') }
 
     describe 'with invalid inputs' do
@@ -65,7 +64,7 @@ describe "PvQuery" do
 
       describe "after submitting" do
         before { click_button submit }
-        it_should_behave_like 'all pv_query pages'
+        #it_should_behave_like 'all pv_query pages'
         it { should have_selector("div.alert.alert-danger", text: "error") }
       end
     end
