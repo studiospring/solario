@@ -18,6 +18,7 @@ Solar::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root            to: 'pv_queries#new'
   get '/about',   to: 'static_pages#about'
+  get '/contact',   to: 'static_pages#contact'
   #get '/terms',   to: 'static_pages#terms'
 
   # Example of regular route:
