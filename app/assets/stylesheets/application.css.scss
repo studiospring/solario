@@ -70,12 +70,12 @@ body {
   &:before { 
     @include octagon_before_after;
     top: 0;
-    border-bottom: 3px solid $panel_blue;
+    border-bottom: 4px solid $panel_blue;
   }
   &:after { 
     @include octagon_before_after;
     bottom: 0;
-    border-top: 3px solid $panel_blue;
+    border-top: 4px solid $panel_blue;
   }
 }// >>>
 @mixin octagon_before_after{// <<<
@@ -84,8 +84,8 @@ body {
   width: 100%;
   left: 0;
   height: 0;
-  border-left: 4px solid #fff;
-  border-right: 4px solid #fff;
+  border-left: 5px solid #fff;
+  border-right: 5px solid #fff;
 }// >>>
 $octagon_size: 24.5%;
 $panel_blue: #1A3771;
@@ -101,7 +101,7 @@ $panel_blue: #1A3771;
   @include octagon;
 }// >>>
 a > .banner_panel{
-  line-height: 37vw;
+  line-height: 7vw;
   font-size: 7vw;
 }
 /*$faint_panel_colour: #d8e2f6;*/
@@ -111,14 +111,15 @@ $faint_panel_colour: #6990dd;
 .banner_panel.coloured_panel{
   background: $faint_panel_colour;
   color: #fff;
-  &:before { border-bottom: 3px solid $faint_panel_colour; }
-  &:after { border-top: 3px solid $faint_panel_colour; }
+  &:before { border-bottom: 4px solid $faint_panel_colour; }
+  &:after { border-top: 4px solid $faint_panel_colour; }
 }
-.banner_panel.white_panel{
-  background: #fff;
+$bg_panel_colour: #d8e2f6;
+.banner_panel.bg_panel{
+  background: $bg_panel_colour;
   color: #fff;
-  &:before { border-bottom: 3px solid #fff; }
-  &:after { border-top: 3px solid #fff; }
+  &:before { border-bottom: 4px solid $bg_panel_colour; }
+  &:after { border-top: 4px solid $bg_panel_colour; }
 }
 .panel_content{ /*style text in panels */
   position: relative;
@@ -132,6 +133,12 @@ $faint_panel_colour: #6990dd;
   text-align: right;
   position: absolute;
   bottom: 0;
+}
+#graph_img{
+  position: absolute;
+  top: 38%;
+  left: 62%;
+  width: 22%;
 }
 @media (min-width: $screen-sm-min) { // <<<
   .banner_panel{
@@ -151,9 +158,9 @@ $faint_panel_colour: #6990dd;
     &:before { border-bottom: 5px solid $faint_panel_colour; }
     &:after { border-top: 5px solid $faint_panel_colour; }
   }
-  .banner_panel.white_panel{
-    &:before { border-bottom: 5px solid #fff; }
-    &:after { border-top: 5px solid #fff; }
+  .banner_panel.bg_panel{
+    &:before { border-bottom: 5px solid $bg_panel_colour; }
+    &:after { border-top: 5px solid $bg_panel_colour; }
   }
   .left_col .banner_panel{
     float: right; /*removes gap between panels in bootstrap cols */
