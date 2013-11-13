@@ -72,6 +72,5 @@ index<% end %>
 </table>
 <h3>Total panel output per annum, averaged over the panel's lifetime</h3>
 <%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
-  Add js error message if @output_pa is an empty array
-  Javascript is required to view this graph.
+  <p class="alert alert-warning">Oops. There should be a pretty graph here.</p>
 <% end %>
