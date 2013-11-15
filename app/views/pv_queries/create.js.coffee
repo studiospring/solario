@@ -39,3 +39,6 @@ drawVisualization = () ->
     graph.draw(data, options)
 
 drawVisualization() #>>>
+
+$('#reload_page').click ->
+  location.reload(true)
