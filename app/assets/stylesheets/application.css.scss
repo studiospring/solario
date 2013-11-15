@@ -12,8 +12,9 @@
  *= require_directory ./shared
  *= require_directory
  */
-@import "bootstrap";
 $font-family-sans-serif:  Herculanum, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$brand-primary:         #1A3771 !default;
+@import "bootstrap";
 /*Sansation - freeware font family*/// <<<
 /*Version 1.3*/
 /*Bernd Montag © 2011 - All Rights Reserved*/
@@ -55,6 +56,7 @@ body {
 #banner{
   position: relative; /*to position #catch_copy*/
   font-family: Sansation;  
+  margin-bottom: 1em;
 }
 #banner.container{/*for full width layout */
   width: 100%;
@@ -136,8 +138,8 @@ $bg_panel_colour: #d8e2f6;
 }
 #graph_img{
   position: absolute;
-  top: 38%;
-  left: 62%;
+  top: 40%;
+  left: 64%;
   width: 22%;
 }
 @media (min-width: $screen-sm-min) { // <<<
