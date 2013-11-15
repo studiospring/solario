@@ -53,21 +53,6 @@ class PvQueriesController < ApplicationController
     @pv_query.destroy
     redirect_to pv_queries_url
   end# >>>
-  def results# <<<
-    @pv_query = PvQuery.find(session[:query_id])
-    @output_pa_array = Array.new
-    month = Array.new
-    @pv_query.avg_output_pa.each_with_index do |v, i|
-      if (i) % 31 == 0
-        @output_pa_array << month
-        month.clear
-      end
-      month << v
-    end
-    @output_pa_array = @output_pa_array.transpose
-    @output_pa = @pv_query.avg_output_pa.join(' ') #convert from array to string
-    #@output_pa = @pv_query.postcode.irradiance.time_zone_corrected_dni
-  end# >>>
   private
     def pv_query_params# <<<
       #enter mass assignable fields here
