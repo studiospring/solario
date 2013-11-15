@@ -1,6 +1,6 @@
 class PvQueriesController < ApplicationController
   #before_filter :authenticate_user!, except: [:new, :results]
-  before_filter :require_admin, except: [:new, :create, :results]
+  before_filter :require_admin, except: [:new, :create]
 
   respond_to :html, :js
   def index# <<<
@@ -10,6 +10,7 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.new
     @pv_query.panels.build
   end# >>>
+  #renders in new page, via create.js.coffee
   def create# <<<
     @pv_query = PvQuery.new(pv_query_params)
 

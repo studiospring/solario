@@ -54,7 +54,7 @@ h1, h2, h3, h4, h5, h6,
 body { 
   padding-bottom: 170px; /*prevent content getting obscured by footer*/
 }
-#banner{
+#banner{// <<<
   position: relative; /*to position #catch_copy*/
   font-family: Sansation;  
   margin-bottom: 1em;
@@ -176,4 +176,16 @@ $bg_panel_colour: #d8e2f6;
     line-height: 2.5vw;
     font-size: 2.5vw;
   }
-}// >>>
+}// >>>// >>>
+#content{// <<<
+  width: 100%;
+}
+#admin_nav .nav-stacked > li{
+  float: left; /*horizontal for small screens */
+}
+@media (min-width: $screen-md-min) {
+  #admin_nav .nav-stacked > li{
+    float: none; /*vertical for large screens */
+  }
+}
+// >>>
