@@ -7,12 +7,12 @@ gem 'pg', '0.15.1' #postgres
 gem 'devise'
 
 group :assets do
-  # Use CoffeeScript for .js.coffee assets and views
-  gem 'coffee-rails'
   # Use SCSS for stylesheets
   # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '>= 1.3.0'
 end
+  # Use CoffeeScript for .js.coffee assets and views
+  gem 'coffee-rails'
   #put this outside assets group, or heroku will complain
   gem 'bootstrap-sass', '~>3.0.1.0.rc'
   gem 'sass-rails', '~> 4.0.0'
