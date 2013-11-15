@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 /* Small devices (tablets, 768px and up) */
+.control-label{
+  width: 7em; /* keep form labels from being crushed at small screen sizes */
+}
 .form-control{
   width: 4.5em;
   display: inline;
@@ -13,9 +16,9 @@
   }
 }
 .icon{
-  margin: -40px -90px -40px -40px;
+  margin: -40px -90px -40px -50px;
   height: 300px;
-  width: 300px;
+  width: 200px;
   -webkit-transform-style: preserve-3d; 
   -moz-transform-style: preserve-3d; 
   -o-transform-style: preserve-3d; 
