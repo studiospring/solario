@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-AU">
-<head>
+<head><%#<<<%>
   <meta charset="UTF-8">
   <meta name="author" content="Design Studio Spring">
   <meta name="copyright" content="Design Studio Spring">
@@ -9,10 +9,10 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
-</head>
+</head><%#>>>%>
 <body>
   <div id="holder">
-    <div id="banner" class="container">
+    <div id="banner" class="container"><%#<<<%>
       <div class="row">
         <div class="left_col col-xs-12 col-sm-6 col-md-6">
           <div class="banner_panel"></div>
@@ -63,14 +63,28 @@
           <%#<img id="logo" src="/assets/images/logo.svg" alt="" />%>
         <img id="graph_img" src="/assets/graph.png" alt="" />
       </div>
-    </div>
-    <main id="content" class="container">
-      <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>"><%= value %></div>
-      <% end %>
-      <%= yield %>
-    </main>
-    <footer>
+    </div><%#>>>%>
+    <main id="content" class="container"><%#<<<%>
+      <div class="row">
+        <% if user_signed_in? %>
+          <nav id="admin_nav" class="col-sm-12 col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+              <li><%= link_to 'Queries', pv_queries_path %></li>
+              <li><%= link_to 'Postcodes', postcodes_path %></li>
+              <li><%= link_to 'Irradiances', irradiances_path %></li>
+              <li><%= link_to 'Panels', panels_path %></li>
+            </ul>
+          </nav>
+        <% end %>
+        <div class="col-sm-10 col-md-10">
+          <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+          <% end %>
+          <%= yield %>
+        </div>
+      </div>
+    </main><%#>>>%>
+    <footer><%#<<<%>
       <nav class="navbar navbar-default navbar-fixed-bottom">
         <%= debug(params) if Rails.env.development? %>
         <p id="copyright" class="navbar-text">
@@ -88,7 +102,7 @@
           <li><%# link_to "Terms", terms_path %></li>
         </ul>
       </nav>
-    </footer>
+    </footer><%#>>>%>
   </div>
 </body>
 </html>
