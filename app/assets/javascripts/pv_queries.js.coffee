@@ -2,9 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 $ ->
-#$(document).ready ->
   $('#enable_js').hide()
-  
   form_validation = $('#new_pv_query').validate# <<<
     #debug: true,
     errorClass: 'alert-warning',

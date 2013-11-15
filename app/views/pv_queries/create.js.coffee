@@ -5,7 +5,6 @@ graph = null
 
 # Called when the Visualization API is loaded.
 drawVisualization = () ->
-  alert 'function called'
   # Create and populate a data table.
   data = new google.visualization.DataTable
   data.addColumn('number', 'hour')
@@ -13,7 +12,6 @@ drawVisualization = () ->
   data.addColumn('number', 'kW')
 
   if $("#output_pa").length
-    alert 'length'
     dni_string = $("#output_pa").data("datapoints")
     dni_array = dni_string.split(" ").map(parseFloat)
     for month in [1..12]
@@ -40,4 +38,4 @@ drawVisualization = () ->
     # Draw our graph with the created data and options 
     graph.draw(data, options)
 
-drawVisualization()
+drawVisualization() #>>>
