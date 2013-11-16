@@ -3,6 +3,8 @@ ready = ->
   #draw graph# <<<
   data = null
   graph = null
+  google.load("visualization", "1")
+  
   #Called when the Visualization API is loaded.
   drawVisualization = () ->
     # Create and populate a data table.
@@ -32,15 +34,15 @@ ready = ->
         verticalRatio: 0.8
         cameraPosition: {"horizontal": 5.6, "vertical": 0.2, "distance": 1.8}
 
+      alert 'before instantiating graph'
       # Instantiate our graph object.
       graph = new links.Graph3d(document.getElementById('output_pa'))
 
+      alert 'before draw'
       # Draw our graph with the created data and options 
       graph.draw(data, options)
-      alert 'end function'
 
   drawVisualization() #>>>
-  alert 'end graph'
 
   $('#reload_page').click ->
     location.reload(true)

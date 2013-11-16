@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require jsapi
-//= require visualization
-//= require graph3d-min
+/*//= require jsapi*/
+/*//= require visualization*/
+//= require graph3d
 //= require jquery.validate.min
 //= require_tree .
