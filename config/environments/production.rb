@@ -23,7 +23,7 @@ Solar::Application.configure do
   config.serve_static_assets = true
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  #config.assets.js_compressor = :uglifier
 
   # Use to debug js in production
   # Comment out when debugging is over
