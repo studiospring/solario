@@ -121,6 +121,9 @@ ready = ->
       'transition':         'transform 2s'
     })# >>>
 # >>>
+  #prevent double submit
+  $('#new_pv_query').submit ->
+    $('input[type=submit]', this).attr('disabled', 'disabled')
   #rules must be here to work!
   $('#pv_query_postcode_id').rules(# <<<
     'add',
