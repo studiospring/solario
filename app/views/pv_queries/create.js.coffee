@@ -3,7 +3,6 @@ ready = ->
   #draw graph# <<<
   data = null
   graph = null
-  alert 'pregraph'
   #Called when the Visualization API is loaded.
   drawVisualization = () ->
     # Create and populate a data table.
@@ -13,7 +12,6 @@ ready = ->
     data.addColumn('number', 'kW')
 
     if $("#output_pa").length
-      alert 'output exists'
       dni_string = $("#output_pa").data("datapoints")
       dni_array = dni_string.split(" ").map(parseFloat)
       for month in [1..12]
@@ -39,8 +37,10 @@ ready = ->
 
       # Draw our graph with the created data and options 
       graph.draw(data, options)
+      alert 'end function'
 
   drawVisualization() #>>>
+  alert 'end graph'
 
   $('#reload_page').click ->
     location.reload(true)
