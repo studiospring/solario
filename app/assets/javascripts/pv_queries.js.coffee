@@ -1,7 +1,7 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http:#coffeescript.org/
-$ ->
+ready = ->
   $('#enable_js').hide()
   form_validation = $('#new_pv_query').validate# <<<
     #debug: true,
@@ -149,3 +149,6 @@ $ ->
       number: true,
       min: 0
   )# >>>
+#get turbolinks to load js on page load, not second time around
+$(document).ready(ready)
+$(document).on('page:load', ready)
