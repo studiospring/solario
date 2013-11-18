@@ -4,45 +4,52 @@ ready = ->
   data = null
   graph = null
   google.load("visualization", "1")
-  
-  #Called when the Visualization API is loaded.
+
+  custom = (x, y) ->
+    Math.sin(x/50) * Math.cos(y/50) * 50 + 50
+
   drawVisualization = () ->
+    alert 'start fn'
     # Create and populate a data table.
     data = new google.visualization.DataTable
-    data.addColumn('number', 'hour')
-    data.addColumn('number', 'month')
-    data.addColumn('number', 'kW')
+    alert 'new g vis'
+    data.addColumn('number', 'x')
+    data.addColumn('number', 'y')
+    data.addColumn('number', 'value')
 
-    if $("#output_pa").length
-      dni_string = $("#output_pa").data("datapoints")
-      dni_array = dni_string.split(" ").map(parseFloat)
-      for month in [1..12]
-        #if you change times here, remember to also change them in panel.dni_received_pa
-        for hour in [5..20] by 0.5
-          kW = dni_array.shift()
-          row = [hour, month, kW]
-          data.addRow(row)
+    ## create some nice looking data with sin/cos
+    steps = 25  # number of datapoints will be steps*steps
+    axisMax = 314
+    axisStep = axisMax / steps
 
-      options =
-        width:  "500px"
-        height: "450px"
-        style: "surface"
-        showPerspective: true
-        showGrid: true
-        showShadow: false
-        keepAspectRatio: true
-        verticalRatio: 0.8
-        cameraPosition: {"horizontal": 5.6, "vertical": 0.2, "distance": 1.8}
+    #data.addRow row for row in axisMax by axisStep
+    for x in [0..axisMax] by axisStep
+      for y in [0..axisMax] by axisStep
+        value = custom(x,y)
+        row = [x, y, value]
+        data.addRow(row)
 
-      alert 'before instantiating graph'
-      # Instantiate our graph object.
-      graph = new links.Graph3d(document.getElementById('output_pa'))
+    # specify options
+    options =
+      width:  "500px"
+      height: "400px"
+      style: "surface"
+      showPerspective: true
+      showGrid: true
+      showShadow: false
+      keepAspectRatio: true
+      verticalRatio: 0.5
 
-      alert 'before draw'
-      # Draw our graph with the created data and options 
-      graph.draw(data, options)
+    alert 'graph predraw'
+    #fails here
+    # Instantiate our graph object.
+    graph = new links.Graph3d(document.getElementById('output_pa'))
+    alert 'graph instantiated'
+    # Draw our graph with the created data and options
+    graph.draw(data, options)
+    alert 'graph draw'
 
-  drawVisualization() #>>>
+  drawVisualization()
 
   $('#reload_page').click ->
     location.reload(true)
