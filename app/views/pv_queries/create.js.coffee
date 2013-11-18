@@ -13,6 +13,7 @@ ready = ->
     data.addColumn('number', 'kW')
  
     if $("#output_pa").length
+      alert 'output has length'
       dni_string = $("#output_pa").data("datapoints")
       dni_array = dni_string.split(" ").map(parseFloat)
       for month in [1..12]
