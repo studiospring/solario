@@ -16,6 +16,7 @@ ready = ->
       alert 'output has length'
       dni_string = $("#output_pa").data("datapoints")
       dni_array = dni_string.split(" ").map(parseFloat)
+      alert dni_array
       for month in [1..12]
         #if you change times here, remember to also change them in panel.dni_received_pa
         for hour in [5..20] by 0.5
