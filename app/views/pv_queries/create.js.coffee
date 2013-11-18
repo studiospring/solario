@@ -24,14 +24,14 @@ ready = ->
  
     options =
       width:  "500px"
-      height: "450px"
+      height: "400px"
       style: "surface"
       showPerspective: true
       showGrid: true
       showShadow: false
       keepAspectRatio: true
-      verticalRatio: 0.8
-      cameraPosition: {"horizontal": 5.6, "vertical": 0.2, "distance": 1.8}
+      verticalRatio: 0.5
+
 
     alert 'before instantiating graph'
     # Instantiate our graph object.
