@@ -10,6 +10,10 @@
   display: inline;
 }
 .nested_fields{
+  .control-label{
+    margin-left: 1em;
+    width: 5.5em;
+  }
   .form-group{
     /*space out query inputs*/
     margin-bottom: 2em;
