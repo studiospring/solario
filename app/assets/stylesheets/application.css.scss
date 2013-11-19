@@ -117,13 +117,6 @@ $faint_panel_colour: #6990dd;
   &:before { border-bottom: 4px solid $faint_panel_colour; }
   &:after { border-top: 4px solid $faint_panel_colour; }
 }
-$bg_panel_colour: #d8e2f6;
-.banner_panel.bg_panel{
-  background: $bg_panel_colour;
-  color: #fff;
-  &:before { border-bottom: 4px solid $bg_panel_colour; }
-  &:after { border-top: 4px solid $bg_panel_colour; }
-}
 .panel_content{ /*style text in panels */
   position: relative;
   text-align: left;
@@ -139,7 +132,7 @@ $bg_panel_colour: #d8e2f6;
 }
 #graph_img{
   position: absolute;
-  top: 40%;
+  top: 15%;
   left: 64%;
   width: 22%;
 }
@@ -160,10 +153,6 @@ $bg_panel_colour: #d8e2f6;
   .banner_panel.coloured_panel{
     &:before { border-bottom: 5px solid $faint_panel_colour; }
     &:after { border-top: 5px solid $faint_panel_colour; }
-  }
-  .banner_panel.bg_panel{
-    &:before { border-bottom: 5px solid $bg_panel_colour; }
-    &:after { border-top: 5px solid $bg_panel_colour; }
   }
   .left_col .banner_panel{
     float: right; /*removes gap between panels in bootstrap cols */
