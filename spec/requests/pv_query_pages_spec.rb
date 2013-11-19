@@ -50,7 +50,7 @@ describe "PvQuery" do
 
   end# >>>
   describe 'new page' do# <<<
-    let(:heading) { 'Find your solar output' }
+    #let(:heading) { 'Find your solar output' }
     let(:submit) { 'view output' }
     before { visit new_pv_query_path }
 
@@ -83,13 +83,6 @@ describe "PvQuery" do
       it "should create a new panel" do
         expect { click_button submit }.to change(Panel, :count).by(1)
       end
-
-      describe 'after saving the pv_query' do
-        before { click_button submit }
-
-        it { should have_title("Results") }
-        it { should have_selector("div.alert.alert-success", text: "Pv query created") }
-      end
     end
 
   end# >>>
@@ -116,15 +109,6 @@ describe "PvQuery" do
       it { should have_selector("h1", text: "Sign in") }
     end
     Warden.test_reset! 
-  end# >>>
-  describe 'results page' do# <<<
-    let(:heading) { 'Results' }
-    before { visit results_pv_query_path(pv_query) }
-
-    it_should_behave_like 'all pv_query pages'
-    it { should have_title(full_title(heading)) }
-
-
   end# >>>
   describe 'edit page' do# <<<
     let(:heading) { 'Edit pv_query' }
