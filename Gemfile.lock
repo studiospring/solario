@@ -1,4 +1,20 @@
 GIT
+  remote: git://github.com/pivotal/jasmine-gem.git
+  revision: 72dd6c06a776aa520bb41af03d29321b08842a46
+  specs:
+    jasmine (2.0.0.rc5)
+      jasmine-core (~> 2.0.0.rc5)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+
+GIT
+  remote: git://github.com/pivotal/jasmine.git
+  revision: 6bc87ad223d81d8e0afeec1bfe3c5b6e38101435
+  specs:
+    jasmine-core (2.0.0.rc5)
+
+GIT
   remote: git://github.com/sporkrb/spork-rails.git
   revision: 3224f84d8c31fcb0894e9a43f6c3ac67e3aa0d71
   specs:
@@ -79,6 +95,12 @@ GEM
       lumberjack (>= 1.0.2)
       pry (>= 0.9.10)
       thor (>= 0.14.6)
+    guard-jasmine (1.18.3)
+      childprocess
+      guard (>= 1.1.0)
+      multi_json
+      thor
+      tilt
     guard-rspec (2.5.0)
       guard (>= 1.1)
       rspec (~> 2.11)
@@ -113,6 +135,7 @@ GEM
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
     pg (0.15.1)
+    phantomjs (1.9.2.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
@@ -218,8 +241,11 @@ DEPENDENCIES
   coffee-rails
   devise
   factory_girl_rails
+  guard-jasmine
   guard-rspec (= 2.5.0)
   guard-spork (= 1.5.0)
+  jasmine!
+  jasmine-core!
   jbuilder (~> 1.2)
   jquery-rails
   pg (= 0.15.1)

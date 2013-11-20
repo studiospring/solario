@@ -20,6 +20,14 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver', '2.0.0'
+  #js unit testing
+  #to get jasmine working on rails 4
+  gem 'jasmine-core', github: 'pivotal/jasmine'
+  gem 'jasmine', github: 'pivotal/jasmine-gem'
+  #not compatible with latest version of jasmine
+  #gem 'jasmine-rails'
+  gem 'guard-jasmine'
+
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
   gem 'guard-rspec', '2.5.0'
