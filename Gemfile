@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 #ruby '2.0.0'
-gem 'rails', github: 'rails/rails', branch: 'master'
+gem 'rails', '4.0.1'
+#gem 'rails', github: 'rails/rails', branch: '4-0-stable'
 
 gem 'pg', '0.15.1' #postgres
 gem 'devise'
