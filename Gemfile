@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 #ruby '2.0.0'
-gem 'rails', '4.0.1'
-#gem 'rails', github: 'rails/rails', branch: '4-0-stable'
+#gem 'rails', '4.0.1'
+gem 'rails', github: 'rails/rails', branch: 'master'
 
 gem 'pg', '0.15.1' #postgres
 gem 'devise'
@@ -14,19 +14,19 @@ end
   # Use CoffeeScript for .js.coffee assets and views
   gem 'coffee-rails'
   #put this outside assets group, or heroku will complain
-  gem 'bootstrap-sass', '~>3.0.1.0.rc'
-  gem 'sass-rails', '~> 4.0.0'
+  gem 'bootstrap-sass', '~>3.0.3.0'
+  gem 'sass-rails', '~> 4.0.1'
 
 group :development, :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver', '2.0.0'
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
-  gem 'guard-rspec', '2.5.0'
+  gem 'guard-rspec', '4.2.0'
   gem 'spork-rails', github: 'sporkrb/spork-rails'
-  gem 'guard-spork', '1.5.0'
+  gem 'guard-spork', '1.5.1'
   gem 'childprocess', '0.3.6'
-  gem 'capybara', '2.1.0'
+  gem 'capybara', '2.2.0'
   gem 'annotate', '>=2.5.0'
 end
 group :production do
