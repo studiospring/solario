@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'minitest/autorun' #silences a rails 4.1 and rspec compatibility bug. Remove later.
 
 Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
