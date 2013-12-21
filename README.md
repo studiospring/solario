@@ -88,5 +88,5 @@ sean@studiospring.com.au
 License
 -------
 
-Copyright (c) 2013 Sean Loughman
 This software is licensed under the AGPL.
+Copyright (c) 2013 Sean Loughman.
