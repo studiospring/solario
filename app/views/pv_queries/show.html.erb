@@ -1,0 +1,43 @@
+<% content_for :body_id do %>
+index<% end %>
+
+<%= provide(:title, 'Pv_query' ) %>
+<h1>Pv_query</h1>
+<p id="notice"><%= notice %></p>
+<table class="table">
+  <caption></caption>
+  <colgroup>
+    <col id="column1" />
+    <col id="column2" />
+    <col id="column3" />
+    <col id="column4" />
+    <col id="column5" />
+  </colgroup>
+  <tbody>
+    
+      <tr>
+        <td>Postcode_id</td>
+        <td><%= @pv_query.postcode_id %></td>
+      </tr>
+      <% @pv_query.panels.each do |panel| %>
+        <tr>
+          <td>Tilt:</td>
+          <td><%= panel.tilt %></td>
+        </tr>
+        <tr>
+          <td>Bearing: </td>
+          <td><%= panel.bearing %></td>
+        </tr>
+        <tr>
+          <td>Panel size:</td>
+          <td><%= panel.panel_size %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td>Created:</td>
+        <td><%= l @pv_query.created_at, format: :short %></td>
+      </tr>
+    
+  </tbody>
+</table>
+<%= link_to 'List of Pv_queries', pv_queries_path %> | <%= link_to 'Edit', edit_pv_query_path(@pv_query) %>

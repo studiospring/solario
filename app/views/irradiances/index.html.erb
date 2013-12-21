@@ -1,0 +1,45 @@
+<% content_for :head_tags do %>
+  <%= stylesheet_link_tag "shared/tables" %>
+<% end %>
+<% content_for :body_id do %>
+index<% end %>
+
+<%= provide(:title, 'Irradiances' ) %>
+<h1>Irradiances</h1>
+<table class="table table-striped">
+  <caption></caption>
+  <colgroup>
+    <col />
+    <col />
+    <col />
+    <col />
+    <col />
+    <col />
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Postcode ID</th>
+      <th>Postcode</th>
+      <th>Suburb</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @irradiances.each do |irradiance| %>
+    <tr>
+      <td><%= irradiance.postcode.id %></td>
+      <td><%= irradiance.postcode.pcode %></td>
+      <td><%= irradiance.postcode.suburb %></td>
+      <td><%= link_to 'Show', irradiance %></td>
+      <td><%= link_to 'Edit', edit_irradiance_path(irradiance) %></td>
+      <td><%= link_to 'Delete', irradiance, data: { confirm: 'Are you sure?' }, method: :delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'Add irradiance', new_irradiance_path %>

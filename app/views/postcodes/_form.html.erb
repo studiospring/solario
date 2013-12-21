@@ -1,0 +1,20 @@
+<%= form_for @postcode, :validate => true do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :pcode, 'Postcode' %><br />
+  <%= f.number_field :pcode %>
+
+  <%= f.label :suburb %><br />
+  <%= f.text_field :suburb %>
+
+  <%= f.label :state %><br />
+  <%= f.text_field :state %>
+
+  <%= f.label :latitude %><br />
+  <%= f.number_field :latitude %>
+
+  <%= f.label :longitude %><br />
+  <%= f.number_field :longitude %>
+
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

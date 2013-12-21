@@ -1,0 +1,22 @@
+<%% content_for :body_id do %>
+index<%% end %>
+
+<%%= provide(:title, '<%= singular_table_name.capitalize %>' ) %>
+<h1><%= singular_table_name.capitalize %></h1>
+<p id="notice"><%%= notice %></p>
+<table class="table">
+  <caption></caption>
+  <colgroup>
+    <col id="column1" />
+    <col id="column2" />
+  </colgroup>
+  <tbody>
+    <% attributes.each do |attribute| %>
+      <tr>
+        <td><%= attribute.human_name %></td>
+        <td><%%= @<%= singular_table_name %>.<%= attribute.name %> %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%%= link_to 'List of <%= table_name.capitalize %>', <%= index_helper %>_path %> | <%%= link_to 'Edit', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>) %>

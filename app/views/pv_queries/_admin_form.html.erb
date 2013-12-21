@@ -1,0 +1,7 @@
+<%= form_for @pv_query, :validate => true do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.label :postcode_id, 'Postcode' %><br />
+  <%= f.number_field :postcode_id %>
+
+  <%= f.submit %>
+<% end %>

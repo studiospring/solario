@@ -1,0 +1,41 @@
+/*Base styling for forms, used with Bootstrap*/
+$default: 8em;
+$narrow: 6em;
+$narrower: 5em;
+fieldset{
+  margin-top: 2em;
+}
+legend{
+  padding-bottom: .5em;
+}
+.form-group{
+  /*keeps inputs below each other when inputs are short*/
+  clear: both;
+}
+.form-control{
+  width: $default;
+}
+.date_select{
+  width: $narrow;
+}
+.narrow-input{
+  width: $narrow;
+}
+textarea{
+  width: 25em;
+  height: 3em;
+  margin-top: 2em;
+}
+label{
+  margin-top: .6em;
+}
+.btn{
+  margin-top: .5em;
+}
+input[type="radio"]{ /*show label next to radio button. Label must wrap button*/
+  display: inline;
+}
+.btn-primary{
+  margin-left: 2em;
+  font-size: 1.2em;
+}
