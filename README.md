@@ -25,13 +25,30 @@ This project has been broken up in to the following tentative stages:
 Installation
 ------------
 
-You will need to [install Ruby on Rails 4](http://guides.rubyonrails.org/getting_started.html) and [Postgresql 9.2](http://wiki.postgresql.org/wiki/Detailed_installation_guides) first. Other dependencies are listed in the Gemfile. Database seed data is not supplied.
-After you have installed everything necessary to run a Rails app, you can install Solario:
+You will need [Ruby on Rails 4.1](http://rubyonrails.org/) and [Postgresql 9.2](http://www.postgresql.org/). Other dependencies are listed in the Gemfile. If you are not familiar with these, please read the [Rails Getting Started Guide](http://guides.rubyonrails.org/getting_started.html) and [PostgreSQL Installation Guide](http://wiki.postgresql.org/wiki/Detailed_installation_guides) first. 
+
+After you have installed the Rails dependencies and PostgreSQL, you can install Solario:
+    cd to/whereever/you/want/to/install
     git clone git@github.com:studiospring/solario.git
     cd solario
     bundle install
+
+### Security ###
+Generate new hashes for secret variables in config/secrets.yml. You can use
+    rake secret
+to generate hashes.
+
+### Database ###
+
+Configure your database name and username in config/database.yml. Then run:
     rake db:migrate
+
+Please note that database seed data is not supplied. The Irradiances.direct field is a space delimited text field that takes 180 datapoints (e.g. 3.4 4.0 4.4 ...) to generate the 3D graph. Other fields are pretty self-explanatory.
+
+Start up your local server:
     rails server
+
+View site at http://localhost:3000. When you have everything set up, you will want to create an admin account at http://localhost:3000/sign_up and add some dummy data.
 
 Testing
 -------
@@ -48,8 +65,8 @@ Solario has an admin section which is secured via the [Devise](https://github.co
 Credits
 -------
 
-Solario makes use of the following tech and IP:
-*[Ruby on Rails 4](http://www.rubyonrails.org)
+Solario makes use of the following tech and IP, among many others:
+*[Ruby on Rails 4.1](http://www.rubyonrails.org)
 *[Graph3D](http://almende.github.io/chap-links-library/graph3d.html)
 *[jQuery](http://www.jquery.com/)
 *[PostgreSQL](http://www.postgresql.org/)
