@@ -1,8 +1,8 @@
 development:
   adapter: postgresql
-  database: some_database
+  database: solar
   encoding: unicode
-  username: some_username
+  username: tadpole
   pool: 5
   timeout: 5000
 
@@ -17,9 +17,9 @@ test:
 
 production:
   adapter: postgresql
-  database: some_database
+  database: solar
   encoding: unicode
-  username: some_username
+  username: tadpole
   pool: 5
   timeout: 5000
 
