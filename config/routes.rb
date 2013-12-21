@@ -21,7 +21,6 @@ Solar::Application.routes.draw do
   get '/contact',   to: 'static_pages#contact'
   #get '/terms',   to: 'static_pages#terms'
 
-  mount JasmineRails::Engine => "/specs" if defined?(JasmineRails)
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

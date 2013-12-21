@@ -10,6 +10,7 @@ doc/
 script/*
 .shell_history
 /.bundle
-#more secure without this in repo
-database.yml 
+#more secure without these in repo
+config/database.yml 
+config/secrets.yml 
 .secret
