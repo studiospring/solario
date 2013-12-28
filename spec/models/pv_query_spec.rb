@@ -53,6 +53,11 @@ describe PvQuery do
       end
     end
   end# >>>
+  describe 'total_annual_output' do
+    it "should return the volume under the graph" do
+      @pv_query.total_annual_output.should == '1234'
+    end
+  end
   describe 'time_zone_corrected_dni method' do# <<<
     it "should return trimmed string" do
       @pv_query.postcode.irradiance.time_zone_corrected_dni[0..8].should == "0.50 1.66"

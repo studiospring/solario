@@ -113,9 +113,4 @@ describe Panel do
       pending 'dummy data'
     end
   end# >>>
-  describe 'avg_annual_ouput method' do# <<<
-    it "should return the energy output of the panel" do
-      pending 'annual_dni_received method'
-    end
-  end# >>>
 end
