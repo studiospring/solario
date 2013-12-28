@@ -54,4 +54,18 @@ class PvQuery < ActiveRecord::Base
       return panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).round(2) }
     end
   end# >>>
+  #return volume under graph (kW)
+  def total_annual_output# <<<
+
+  end# >>>
+  protected
+    #convert avg_output_pa string to nested array of graph's column heights
+    #returns [[a1, b1, c1, d1], [a2, b2, c2, d2]...]
+    def column_heights# <<<
+      
+    end# >>>
+    #return volume of 1 column of graph
+    def column_volume# <<<
+      
+    end# >>>
 end

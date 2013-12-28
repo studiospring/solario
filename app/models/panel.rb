@@ -151,16 +151,6 @@ class Panel < ActiveRecord::Base
     end
     avg = (total / lifespan).round(2)
   end# >>>
-  #return kW/yr? taking in to account compound depreciated inefficiency, age of panel, etc
-  def avg_annual_output(dni_received_pa, diffuse_received_pa)# <<<
-    lifespan = 20
-    total_dni = Panel.annual_received_total(dni_received_pa)
-    total_diffuse = Panel.annual_received_total(diffuse_received_pa)
-    annual_input = total_dni + total_diffuse
-    #assume compound efficiency of 99%pa
-    average_efficiency = 0.99
-    annual_output = annual_input * average_efficiency
-  end# >>>
   #return angle of incident light relative to panel in radians (where 0 is
   #directly perpendicular to panel surface)
   def relative_angle(sun_vector)# <<<
