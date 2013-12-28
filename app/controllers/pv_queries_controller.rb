@@ -15,18 +15,7 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.new(pv_query_params)
 
     if @pv_query.save
-      @output_pa_array = Array.new
-      month = Array.new
-      @pv_query.avg_output_pa.each_with_index do |v, i|
-        if (i) % 31 == 0
-          @output_pa_array << month
-          month.clear
-        end
-        month << v
-      end
-      @output_pa_array = @output_pa_array.transpose
       @output_pa = @pv_query.avg_output_pa.join(' ') #convert from array to string
-      #@output_pa = @pv_query.postcode.irradiance.time_zone_corrected_dni
 
       respond_with({output_pa: @output_pa}, location: new_pv_query_url)
     else
