@@ -158,7 +158,7 @@ class Panel < ActiveRecord::Base
     total_diffuse = Panel.annual_received_total(diffuse_received_pa)
     annual_input = total_dni + total_diffuse
     #assume compound efficiency of 99%pa
-    average_efficiency = 0.9
+    average_efficiency = 0.99
     annual_output = annual_input * average_efficiency
   end# >>>
   #return angle of incident light relative to panel in radians (where 0 is
