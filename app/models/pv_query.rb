@@ -60,22 +60,20 @@ class PvQuery < ActiveRecord::Base
   end# >>>
   #protected
     #convert avg_output_pa array to nested array of graph's column heights
-    #this method traverses graph data's grid "the wrong way" (columns and rows are reversed),
-    #but this way is marginally cleaner. Therefore, do not rely on this to provide monthly totals.
     #returns [[a, b, f, g], [b, c, g, h]...]
     def column_heights# <<<
-      annual_increment = Irradiance.annual_increment
       graph_data = self.avg_output_pa
+      daily_increment = Irradiance.daily_increment
       columns = Array.new #[[a, b, f, g], [b, c, g, h]...]
       graph_data.each_with_index do |height, i| 
         column_data = Array.new #[a, b, f, g]
-        if i + 1 % annual_increment == 0 #prevent column being created with last and first values in month
+        if i + 1 % daily_increment == 0 #prevent column being created with last and first values in month
           break
         else
-          if i + annual_increment + 1 == graph_data.length #reach last column
+          if i + daily_increment + 1 == graph_data.length #reach last column
             return columns
           else
-            column_data << graph_data[i].to_f << graph_data[i + 1].to_f << graph_data[i + annual_increment].to_f << graph_data[i + annual_increment + 1].to_f
+            column_data << graph_data[i].to_f << graph_data[i + 1].to_f << graph_data[i + daily_increment].to_f << graph_data[i + daily_increment + 1].to_f
           end
         end
         unless column_data.inject(:+) == 0 #ignore columns with zero height
