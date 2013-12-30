@@ -16,6 +16,7 @@ class PvQueriesController < ApplicationController
 
     if @pv_query.save
       @output_pa = @pv_query.avg_output_pa.join(' ') #convert from array to string
+      @column_heights = @pv_query.column_heights
 
       respond_with({output_pa: @output_pa}, location: new_pv_query_url)
     else
