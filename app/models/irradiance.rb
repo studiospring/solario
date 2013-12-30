@@ -70,4 +70,8 @@ class Irradiance < ActiveRecord::Base
     def self.annual_increment# <<<
       return 12
     end# >>>
+    #set daily increment of insolation data here
+    def self.daily_increment# <<<
+      return 31
+    end# >>>
 end
