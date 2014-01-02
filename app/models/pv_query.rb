@@ -62,24 +62,29 @@ class PvQuery < ActiveRecord::Base
     #convert avg_output_pa array to nested array of graph's column heights
     #returns [[a, b, f, g], [b, c, g, h]...]
     def column_heights# <<<
-      graph_data = self.avg_output_pa
+      annual_increment = Irradiance.annual_increment
       daily_increment = Irradiance.daily_increment
+      graph_array = self.avg_output_pa
+      #[[jan1, jan2...], [feb1, feb2...]...]
+      data_by_month = Array.new
+      annual_increment.times { data_by_month << graph_array.shift(daily_increment) }
+      #duplicate and append jan data so that dec-jan volume can be easily calculated
+      data_by_month << data_by_month[0]
+
       columns = Array.new #[[a, b, f, g], [b, c, g, h]...]
-      graph_data.each_with_index do |height, i| 
-        column_data = Array.new #[a, b, f, g]
-        if i + 1 % daily_increment == 0 #prevent column being created with last and first values in month
-          break
-        else
-          if i + daily_increment + 1 == graph_data.length #reach last column
-            return columns
-          else
-            column_data << graph_data[i].to_f << graph_data[i + 1].to_f << graph_data[i + daily_increment].to_f << graph_data[i + daily_increment + 1].to_f
+      annual_increment.times do |month|
+        (daily_increment - 1).times do |time|
+          column_data = [data_by_month[month][time].to_f,
+                         data_by_month[month][time + 1].to_f,
+                         data_by_month[month + 1][time].to_f, 
+                         data_by_month[month + 1][time + 1].to_f]
+          #remove 0 height columns
+          if column_data.any? { |datum| datum > 0 }
+            columns << column_data
           end
         end
-        unless column_data.inject(:+) == 0 #ignore columns with zero height
-          columns << column_data
-        end
       end
+      return columns
     end# >>>
     #return volume of 1 column of graph
     def column_volume# <<<
