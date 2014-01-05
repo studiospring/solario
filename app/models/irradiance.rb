@@ -71,6 +71,10 @@ class Irradiance < ActiveRecord::Base
       return 12
     end# >>>
     #set daily increment of insolation data here
+    #irradiance data spans 17 hours, but 2 hours are chopped off to account for
+    #timezone differences. Graph shows irradiance from 5am to 8pm, local
+    #standard time.
+    #Currently set at 30min intervals. Therefore (15 * 2) + 1 (fencepost) = 31
     def self.daily_increment# <<<
       return 31
     end# >>>
