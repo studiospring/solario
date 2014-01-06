@@ -54,9 +54,24 @@ class PvQuery < ActiveRecord::Base
       return panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).round(2) }
     end
   end# >>>
+  #formula is approximation. Cannot confirm accuracy of result yet
+  #untested because factory is not set up correctly
+  #http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
   #return volume under graph (kW)
-  def total_annual_output# <<<
-
+  def total_output_pa# <<<
+    annual_increment = Irradiance.annual_increment
+    daily_increment = Irradiance.daily_increment
+    #15hrs in seconds divided by number of data intervals per day
+    length_of_insolation_reading = 54000 / (daily_increment - 1)
+    #number of times that length_of_insolation_reading is used per year
+    readings_per_annual_increment = 365 / annual_increment
+    volume_constant = 0.25 * length_of_insolation_reading * readings_per_annual_increment
+    total_volume = 0
+    self.column_heights.each do |column|
+      #vol = 0.25 * length_of_insolation_reading * readings_per_annual_increment * column.inject(:+)
+      total_volume = total_volume + (volume_constant * column.inject(:+))
+    end
+    return (total_volume * 0.000001).round #convert to MW
   end# >>>
   #protected
     #convert avg_output_pa array to nested array of graph's column heights
@@ -85,9 +100,5 @@ class PvQuery < ActiveRecord::Base
         end
       end
       return columns
-    end# >>>
-    #return volume of 1 column of graph
-    def column_volume# <<<
-      
     end# >>>
 end
