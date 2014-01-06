@@ -4,10 +4,16 @@ index<% end %>
 <%= provide(:title, 'Results' ) %>
 <h2>Average annual panel output</h2>
 <p class="alert alert-warning">This app is an alpha release and uses dummy data! Enjoy!</p>
+<% @query_params.each_with_index do |panel, i| %>
+  <p>Panel <%= i + 1 %>:</p>
+  <ul>
+    <li>bearing: <%= panel.bearing %><sup>&deg;</sup></li>
+    <li>tilt: <%= panel.tilt %><sup>&deg;</sup></li>
+    <li>area: <%= panel.panel_size %>m<sup>2</sup></li>
+  </ul>
+<% end %>
 <p>Drag to rotate graph, scroll to zoom.</p>
-<p>Total output p.a.: <%= @total_output_pa %>kW</p>
-<p>Datapoints: <%= @output_pa %></p>
-<p>Column heights: <%= @column_heights %></p>
+<p>Total output p.a.: <%= @total_output_pa %>megawatts</p>
 <%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
   <p class="alert alert-warning">Oops. There should be a pretty graph here.</p>
 <% end %>
