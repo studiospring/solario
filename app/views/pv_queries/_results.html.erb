@@ -13,7 +13,7 @@ index<% end %>
   </ul>
 <% end %>
 <p>Drag to rotate graph, scroll to zoom.</p>
-<p>Search results: <%= @search_results.inspect %>, <%= @search_results.body %></p>
+<p>Search results: <%= @pvoutput_search %></p>
 <p>Total output p.a.: <%= @total_output_pa %>megawatts</p>
 <%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
   <p class="alert alert-warning">Oops. There should be a pretty graph here.</p>
