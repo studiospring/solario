@@ -1,8 +1,9 @@
 class PvOutput
-  require 'net/http' #for api call to pvoutput.org
+  require 'net/http'
   
-  #search pvoutput. Query is string
+  #search pvoutput. Query must be 'string'
   #http://pvoutput.org/help.html#search
+  #returns array of systems [{name: 'some_name', size: 'size,...}, {...}]
   def self.search(query)# <<<
     uri = URI('http://pvoutput.org/service/r2/search.jsp')
     req = Net::HTTP::Post.new(uri)
@@ -13,9 +14,20 @@ class PvOutput
                'country'  => 'Australia' }
     req.set_form_data(params)
 
-    results = Net::HTTP.start(uri.hostname, uri.port) do |http|
+    raw_results = Net::HTTP.start(uri.hostname, uri.port) do |http|
       http.request(req)
     end
-    return results.body
+    case raw_results
+      when Net::HTTPSuccess, Net::HTTPRedirection
+        results = Array.new
+        keys = [ 'name', 'size', 'postcode', 'orientation', 'outputs', 'last_output', 'system_id', 'panel', 'inverter', 'distance', 'latitude', 'longitude' ]
+        raw_results.body.split("\n").each do |system_string|
+          #merges keys and system data to hash
+          results << Hash[keys.zip system_string.split(/,/)]
+        end
+        return results
+      else
+        return 'error'
+    end
   end# >>>
 end
