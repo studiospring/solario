@@ -37,9 +37,13 @@ class PvOutput
     uri = URI.parse('http://pvoutput.org/service/r2/getsystem.jsp')
     params = { 'key' => 'a0ac0021b1351c9658e4ff80c2bc5944405af134',
                'sid' => '26011' }
-
-    # Add params to URI
-    uri.query = URI.encode_www_form( params )
-    return uri.open.read
+    uri.query = URI.encode_www_form( params ) #add params to uri
+    response = uri.read
+    case response.status[0][0]
+      when '2', '3' 
+        return response
+      else
+        return 'error'
+    end
   end# >>>
 end
