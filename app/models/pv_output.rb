@@ -1,7 +1,9 @@
 class PvOutput
   require 'net/http'
+  require 'uri'
+  require 'open-uri'
   
-  #search pvoutput. Query must be 'string'
+  #search pvoutput via POST request. Query must be 'string'
   #http://pvoutput.org/help.html#search
   #returns array of systems [{name: 'some_name', size: 'size,...}, {...}]
   def self.search(query)# <<<
@@ -14,14 +16,14 @@ class PvOutput
                'country'  => 'Australia' }
     req.set_form_data(params)
 
-    raw_results = Net::HTTP.start(uri.hostname, uri.port) do |http|
+    response = Net::HTTP.start(uri.hostname, uri.port) do |http|
       http.request(req)
     end
-    case raw_results
+    case response
       when Net::HTTPSuccess, Net::HTTPRedirection
         results = Array.new
         keys = [ 'name', 'size', 'postcode', 'orientation', 'outputs', 'last_output', 'system_id', 'panel', 'inverter', 'distance', 'latitude', 'longitude' ]
-        raw_results.body.split("\n").each do |system_string|
+        response.body.split("\n").each do |system_string|
           #merges keys and system data to hash
           results << Hash[keys.zip system_string.split(/,/)]
         end
@@ -29,5 +31,15 @@ class PvOutput
       else
         return 'error'
     end
+  end# >>>
+  #send GET request to get info about system that contributes to pvoutput
+  def self.get_system# <<<
+    uri = URI.parse('http://pvoutput.org/service/r2/getsystem.jsp')
+    params = { 'key' => 'a0ac0021b1351c9658e4ff80c2bc5944405af134',
+               'sid' => '26011' }
+
+    # Add params to URI
+    uri.query = URI.encode_www_form( params )
+    return uri.open.read
   end# >>>
 end
