@@ -24,6 +24,7 @@ class Panel < ActiveRecord::Base
                           numericality: { greater_than_or_equal_to: 0, 
                           less_than_or_equal_to: 360 }
   validates :panel_size,  presence: true,
+    #TODO: not producing error on 0. Numericality does not work either.
                           inclusion: {in: 1..500,
                                       message: 'is not a valid number'}
   # >>>
