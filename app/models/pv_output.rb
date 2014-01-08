@@ -6,13 +6,9 @@ class PvOutput
   #http://pvoutput.org/help.html#search
   #returns array of systems [{name: 'some_name', size: 'size,...}, {...}]
   def self.search(query)# <<<
-    uri = URI.parse('http://pvoutput.org/service/r2/search.jsp')
-    params = { 'key'      => Rails.application.secrets.pv_output_api_key,
-               'sid'      => Rails.application.secrets.pv_output_system_id,
-               'q'        => query,
+    params = { 'q'        => query,
                'country'  => 'Australia' }
-    uri.query = URI.encode_www_form( params ) #add params to uri
-    response = uri.read
+    response = self.request('search', params)
     case response.status[0][0]
       when '2', '3' 
         results = Array.new
@@ -29,11 +25,7 @@ class PvOutput
   #send GET request to get info about system that contributes to pvoutput
   #returns hash of system info
   def self.get_system# <<<
-    uri = URI.parse('http://pvoutput.org/service/r2/getsystem.jsp')
-    params = { 'key' => Rails.application.secrets.pv_output_api_key,
-               'sid' => Rails.application.secrets.pv_output_system_id }
-    uri.query = URI.encode_www_form( params ) #add params to uri
-    response = uri.read
+    response = self.request('getsystem')
     case response.status[0][0]
       when '2', '3' 
         keys = [ 'system_watts', 'panel_count', 'panel_watts', 'bearing', 'tilt', 'shade', 'sec_panel_count', 'sec_panel_watts', 'sec_bearing', 'sec_tilt' ]
@@ -45,5 +37,14 @@ class PvOutput
       else
         return 'error'
     end
+  end# >>>
+  #make request to pvoutput api and return response
+  def self.request(uri, params = {})# <<<
+    uri = URI.parse('http://pvoutput.org/service/r2/' + uri + '.jsp')
+    auth_params = { 'key' => Rails.application.secrets.pv_output_api_key,
+                    'sid' => Rails.application.secrets.pv_output_system_id }
+    
+    uri.query = URI.encode_www_form( auth_params.merge(params) ) #add params to uri
+    return uri.read
   end# >>>
 end
