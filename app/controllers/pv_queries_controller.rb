@@ -19,7 +19,7 @@ class PvQueriesController < ApplicationController
       #@column_heights = @pv_query.column_heights
       @total_output_pa = @pv_query.total_output_pa
       @query_params = @pv_query.panels
-      #@pvoutput_search = PvOutput.search('2031')
+      @pvoutput_search = PvOutput.search('2031')
       @pvo_system_info = PvOutput.get_system
 
       respond_with({output_pa: @output_pa}, location: new_pv_query_url)
