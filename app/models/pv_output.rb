@@ -31,7 +31,8 @@ class PvOutput
   end# >>>
   #return array of hashes of daily output of system
   #use to compare with theoretical daily output
-  #TODO: untested, unfinished. Query by system id after donating
+  #query_params include: 'df' (date from), 'dt' (date to), 'sid1'
+  #TODO: untested, unfinished. Query by system id and date after donating
   def get_output(query_params = {})# <<<
     response = self.request('getoutput', query_params)
     keys = [ 'date', 'output' ] #output is in watt hours
@@ -39,6 +40,16 @@ class PvOutput
     response.split(/;/).each do |daily_output|
       results << Hash[keys.zip daily_output.values_at(0, 1)]
     end
+    return results
+  end# >>>
+  #query_params include: 'df' (date from), 'dt' (date to), 'sid1'
+  #TODO: untested, unfinished. Query by system id and dates after donating
+  def get_statistic(query_params = {})# <<<
+    response = self.request('getstatistic', query_params)
+    keys = [ 'output', 'avg_efficiency', 'outputs', 'date_from', 'date_to' ] #output is in watt hours
+    results_array = response.split(/,/)
+    results_array.values_at(0, 5, 6, 7, 8)]
+    results = Hash[keys.zip results_array]
     return results
   end# >>>
   private
