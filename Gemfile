@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+ruby '2.2.0'
 gem 'rails', github: 'rails/rails', branch: 'master'
 
 gem 'pg', '0.15.1' #postgres
