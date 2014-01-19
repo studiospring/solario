@@ -2,7 +2,7 @@ class PvOutput
   require 'uri'
   require 'open-uri'
   
-  #search pvoutput via GET request. Query must be 'string'
+  #Query must be 'string'
   #http://pvoutput.org/help.html#search
   #returns array of systems [{name: 'some_name', size: 'size,...}, {...}]
   def self.search(query)# <<<
@@ -17,8 +17,7 @@ class PvOutput
     end
     return results
   end# >>>
-  #send GET request to get info about system that contributes to pvoutput
-  #returns hash of system info
+  #returns hash of system info data
   #TODO: query by system id after donating
   def self.get_system# <<<
     response = self.request('getsystem')
@@ -43,6 +42,7 @@ class PvOutput
     return results
   end# >>>
   #query_params include: 'df' (date from), 'dt' (date to), 'sid1'
+  #return hash of system data
   #TODO: untested, unfinished. Query by system id and dates after donating
   def get_statistic(query_params = {})# <<<
     response = self.request('getstatistic', query_params)
