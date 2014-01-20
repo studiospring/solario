@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe PvOutput do
 
+  #stubs are defined in spec_helper.rb
   describe 'search' do# <<<
     before { @systems_array = PvOutput.search('2031') }
     it 'returns array of systems from pvoutput.org' do
