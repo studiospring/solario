@@ -32,6 +32,7 @@ class PvQuery < ActiveRecord::Base
   #return array of combined output for all panels in pv array
   #array must be converted to string to be used by graph (join(' '))
   def avg_output_pa# <<<
+    #return self.postcode_id
     postcode_id = self.postcode.try('id')
     if postcode_id.nil?
       #handle error
@@ -39,6 +40,7 @@ class PvQuery < ActiveRecord::Base
     end
     begin #in case values have not been input for this postcode
       dni_pa = self.postcode.irradiance.time_zone_corrected_dni
+      #TODO: method not created yet
       #diffuse_pa = self.postcode.irradiance.time_zone_corrected_diffuse
     rescue
       return []
@@ -48,10 +50,12 @@ class PvQuery < ActiveRecord::Base
         panels_array << panel.dni_received_pa(dni_pa)
         #TODO: method not created yet
         #panels_array << panel.diffuse_received_pa(diffuse_pa)
+        #returns [0.0, 0.0,...] even though panel spec passes
+        #return panel.dni_received_pa(dni_pa)
       end
       efficiency = Panel.avg_efficiency(20, 0.99)
       #add direct and diffuse inputs of all panels, factor in efficiency
-      return panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).round(2) }
+      return panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).to_f.round(2) }
     end
   end# >>>
   #formula is approximation. Cannot confirm accuracy of result yet
@@ -68,9 +72,11 @@ class PvQuery < ActiveRecord::Base
     volume_constant = 0.25 * length_of_insolation_reading * readings_per_annual_increment
     total_volume = 0
     self.column_heights.each do |column|
+      #dummy = 2
       #vol = 0.25 * length_of_insolation_reading * readings_per_annual_increment * column.inject(:+)
       total_volume = total_volume + (volume_constant * column.inject(:+))
     end
+    #return dummy 
     return (total_volume * 0.000001).round #convert to MW
   end# >>>
   #protected
