@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'spork'
 require 'minitest/autorun' #silences a rails 4.1 and rspec compatibility bug. Remove later.
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
 
 Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
