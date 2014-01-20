@@ -9,15 +9,22 @@ describe PvOutput do
     end
   end# >>>
   describe 'get_system' do# <<<
-    #before { system_info = PvOutput.get_system }
-    #it 'returns system data from pvoutput.org' do
-      #uri = URI('http://pvoutput.org/service/r2/')
-
-      #response = Net::HTTP.get(uri)
-
-      #expect(response).to be_an_instance_of(String)
-    #end
-    #before { @pv_query.postcode_id = nil }
-    #it { should_not be_valid }
+    #before { system_info = PvOutput.get_system(system_id) }
+    it 'returns system data from pvoutput.org' do
+      pending 'query by system_id'
+    end
   end# >>>
+  describe 'get_output' do# <<<
+    #before { system_info = PvOutput.get_output(system_id) }
+    it 'returns output of system from pvoutput.org' do
+      pending 'query by system_id'
+    end
+  end# >>>
+  describe 'get_statistic' do# <<<
+    #before { statistics = PvOutput.get_statistic(system_id) }
+    it 'returns hash of system data from pvoutput.org' do
+      pending 'query by system_id'
+    end
+  end# >>>
+  
 end
