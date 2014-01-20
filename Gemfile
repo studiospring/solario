@@ -18,7 +18,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'selenium-webdriver', '2.0.0'
+  #gem 'selenium-webdriver', '2.0.0'
+  gem 'poltergeist' #headless driver for js testing
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
   gem 'guard-rspec', '4.2.4'
