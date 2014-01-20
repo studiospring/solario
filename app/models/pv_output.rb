@@ -48,7 +48,7 @@ class PvOutput
     response = self.request('getstatistic', query_params)
     keys = [ 'output', 'avg_efficiency', 'outputs', 'date_from', 'date_to' ] #output is in watt hours
     results_array = response.split(/,/)
-    results_array.values_at(0, 5, 6, 7, 8)]
+    results_array.values_at(0, 5, 6, 7, 8)
     results = Hash[keys.zip results_array]
     return results
   end# >>>
