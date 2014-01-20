@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 gem 'rails', github: 'rails/rails', branch: 'master'
 
-gem 'pg', '0.15.1' #postgres
+gem 'pg', '0.17.1' #postgres
 gem 'devise'
 
 group :assets do
@@ -21,12 +21,13 @@ group :development, :test do
   gem 'selenium-webdriver', '2.0.0'
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
-  gem 'guard-rspec', '4.2.0'
+  gem 'guard-rspec', '4.2.4'
   gem 'spork-rails', github: 'sporkrb/spork-rails'
   gem 'guard-spork', '1.5.1'
   gem 'childprocess', '0.3.6'
-  gem 'capybara', '2.2.0'
+  gem 'capybara'#, '2.2.0'
   gem 'annotate', '>=2.5.0'
+  gem 'webmock' #for testing http requests to pvoutput.org
 end
 group :production do
   gem 'rails_12factor', '0.0.2' #used by Heroku
