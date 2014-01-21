@@ -3,7 +3,8 @@
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 ready = ->
   $('#enable_js').hide()
-  form_validation = $('#new_pv_query').validate# <<<
+  form = $('#new_pv_query')
+  form_validation = form.validate# <<<
     #debug: true,
     errorClass: 'alert-warning',
     errorPlacement: (error, element) ->
@@ -108,7 +109,7 @@ ready = ->
       new_compass_angle = 105
     else if 180 < bearing <= 225
       new_compass_angle = 10
-    else if -134 < bearing <= -90 #bearing calculation switches to negative values here
+    else if -134 < bearing <= -90 #bearing calculation switches to )egative values here
       new_compass_angle = 10
     else if -90 < bearing <= 0
       new_compass_angle = -80
@@ -123,7 +124,13 @@ ready = ->
 # >>>
   #prevent double submit
   $('#new_pv_query').submit ->
+    $('input[type=submit]', this).addClass('.test')
+
     $('input[type=submit]', this).attr('disabled', 'disabled')
+  #reenable submit button
+  $('input.form-control').change ->
+    if $('input[type=submit]').attr('disabled') == 'disabled' && form.valid() 
+      $('input[type=submit]').removeAttr('disabled')
   #rules must be here to work!
   $('#pv_query_postcode_id').rules(# <<<
     'add',
