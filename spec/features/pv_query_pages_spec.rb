@@ -61,7 +61,7 @@ describe "PV Query" do
     end
     
   end# >>>
-  describe 'results page, js: true' do# <<<
+  describe 'results page', js: true do# <<<
     subject { page }
     before do
       fill_in "Postcode", with: 1234
@@ -70,9 +70,12 @@ describe "PV Query" do
       fill_in "Area", with: 15
       click_button submit
     end
-    it { should_not have_selector('legend') }
-    it "spec_name" do
-      save_and_open_page
+    #it { should_not have_selector('legend') }
+    it "should load when form is submitted" do
+      #sleep(10)
+      find 'body'
+      should_not have_selector('legend')
+      #save_and_open_page
       #print page.html
     end
     it { should have_css('input.test') }
