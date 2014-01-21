@@ -23,10 +23,20 @@ describe "PV Query" do
     describe 'with invalid inputs' do
       before do
         fill_in "Postcode", with: 123
-        fill_in "Bearing", with: 15
+        fill_in "Bearing", with: '1234'
+        fill_in "Tilt", with: ''
+        fill_in "Area", with: ''
+        click_button submit
       end
+      #test incorrectly fails with alphabet
       it { should have_selector("label.alert-warning",
                                 text: "Please enter at least 4 characters.") }
+      it { should have_selector("label.alert-warning",
+                                text: "Please enter a value less than or equal to 360.") }
+      it { should have_selector("label.alert-warning",
+                                text: "This field is required.") }
+      it { should have_selector("label.alert-warning",
+                                text: "This field is required.") }
     end
     
   end# >>>
