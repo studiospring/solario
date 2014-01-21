@@ -14,12 +14,18 @@ describe "PV Query" do
     before do
       visit new_pv_query_path
     end
+    describe 'with javascript enabled' do
+      it { should have_selector("#enable_js", visible: false) }
+    end
     describe 'with valid inputs' do
       before do
         fill_in "Postcode", with: 1234
         fill_in "Bearing", with: 15
         fill_in "Tilt", with: 15
+        fill_in "Area", with: '15'
+        click_button submit
       end
+
     end
     describe "after clicking 'add panel'" do
       before { click_link 'add panel' }
