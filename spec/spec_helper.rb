@@ -69,8 +69,13 @@ Spork.prefork do
     config.order = "random"
     config.include Capybara::DSL
   end
+  Capybara.register_driver :poltergeist do |app|
+    options = { debug: false,
+                js_errors: true, #false causes phantomjs to crash
+                time_out: 130 }
+    Capybara::Poltergeist::Driver.new(app, options)
+  end
 end
-
 Spork.each_run do
   # This code will be run each time you run your specs.
 
