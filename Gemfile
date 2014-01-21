@@ -18,7 +18,6 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  #gem 'selenium-webdriver', '2.0.0'
   gem 'poltergeist' #headless driver for js testing
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
@@ -26,7 +25,7 @@ group :development, :test do
   gem 'spork-rails', github: 'sporkrb/spork-rails'
   gem 'guard-spork', '1.5.1'
   gem 'childprocess', '0.3.6'
-  gem 'capybara'#, '2.2.0'
+  gem 'capybara'
   gem 'annotate', '>=2.5.0'
 end
 group :test do
