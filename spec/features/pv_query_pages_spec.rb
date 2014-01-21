@@ -72,7 +72,7 @@ describe "PV Query" do
     end
     it { should_not have_selector('legend') }
     it "spec_name" do
-      #save_and_open_page
+      save_and_open_page
       #print page.html
     end
     it { should have_css('input.test') }
