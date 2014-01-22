@@ -49,42 +49,74 @@ describe "PvQuery" do
     end
 
   end# >>>
-  describe 'new page' do# <<<
-    #let(:heading) { 'Find your solar output' }
+  describe 'new page', js: true do# <<<
+    let(:heading) { 'Average annual panel output' }
     let(:submit) { 'view output' }
     before { visit new_pv_query_path }
 
-    #it_should_behave_like 'all pv_query pages'
     it { should have_button('view output') }
 
+    describe 'with javascript enabled' do
+      it { should have_selector("#enable_js", visible: false) }
+    end
+    describe "after clicking 'add panel'" do
+      before { click_link 'add panel' }
+      it { should have_selector("input#pv_query_panels_attributes_1_bearing") }
+
+      describe "and clicking 'remove panel'" do
+        before { click_link 'remove panel' }
+        it { should_not have_selector("input#pv_query_panels_attributes_1_bearing") }
+      end
+    end
     describe 'with invalid inputs' do
+      before do
+        fill_in "Postcode", with: 123
+        fill_in "Bearing", with: '1234'
+        fill_in "Tilt", with: ''
+        fill_in "Area", with: ''
+      end
       it "should not create a new pv_query" do
-        expect { click_button submit }.not_to change(PvQuery, :count)
+        expect { click_button submit }.not_to change(PvQuery, :count).by(1)
       end
 
       describe "after submitting" do
+        
         before { click_button submit }
         #it_should_behave_like 'all pv_query pages'
-        it { should have_selector("div.alert.alert-danger", text: "error") }
+        #test incorrectly fails with alphabet
+        it { should have_selector("label.alert-warning",
+                                  text: "Please enter at least 4 characters.") }
+        it { should have_selector("label.alert-warning",
+                                  text: "Please enter a value less than or equal to 360.") }
+        it { should have_selector("label.alert-warning",
+                                  text: "This field is required.") }
+        it { should have_selector("label.alert-warning",
+                                  text: "This field is required.") }
       end
-    end
 
+      it { should_not have_selector('h2', text: heading) }
+    end
     describe 'with valid inputs' do
       before do
         fill_in "Postcode", with: 1234
-        fill_in "Tilt", with: 15
         fill_in "Bearing", with: 15
+        fill_in "Tilt", with: 15
         fill_in "Area", with: 15
       end
-
       it "should create a new pv_query" do
         expect { click_button submit }.to change(PvQuery, :count).by(1)
       end
-      it "should create a new panel" do
-        expect { click_button submit }.to change(Panel, :count).by(1)
-      end
-    end
+      #it "should load when form is submitted" do
+        #click_button submit
+        ##sleep(10)
+        ##find 'body'
+        #should_not have_selector('legend')
+        ##save_and_open_page
+        ##print page.html
+      #end
 
+    end
+    
   end# >>>
   describe 'show page' do# <<<
     let(:heading) { 'Pv_query' }
