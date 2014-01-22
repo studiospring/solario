@@ -11,8 +11,8 @@ guard 'spork', :wait => 60, :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_e
   watch('Gemfile')
   watch('Gemfile.lock')
   watch('spec/spec_helper.rb') { :rspec }
-  watch('test/test_helper.rb') { :test_unit }
-  watch(%r{features/support/}) { :cucumber }
+  #watch('test/test_helper.rb') { :test_unit }
+  #watch(%r{features/support/}) { :cucumber }
 end
 
 guard 'rspec', all_after_pass: false do
