@@ -66,7 +66,7 @@ ready = ->
                               rotateZ(' + bearing + 'deg)',
         '-webkit-transform':  'translateX(' + centres_compass + ') 
                               translateY(' + centres_compass + ')
-                              rotateZ(' + bearing + 'deg)',
+                              rotate(' + bearing + 'deg)',
         '-o-transform':       'translateX(' + centres_compass + ')
                               translateY(' + centres_compass + ')
                               rotateZ(' + bearing + 'deg)',
@@ -116,7 +116,7 @@ ready = ->
     #rotate compass for best viewing angle
     icon.css({
       '-moz-transform':     'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
-      '-webkit-transform':  'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
+      '-webkit-transform':  'rotateX(70deg) rotate(' + new_compass_angle + 'deg)',
       '-o-transform':       'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       'transform':          'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       'transition':         'transform 2s'
