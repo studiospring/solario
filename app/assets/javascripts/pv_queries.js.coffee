@@ -92,12 +92,17 @@ ready = ->
         'transform':          'rotateX(' + tilt + 'deg)',
         'transition':         'transform 1s'
       })
-      optimise_viewing_angle(icon)
+      #
+      unless typeof(icon.find('.compass').css('transform')) == 'undefined'
+        optimise_viewing_angle(icon)
 
   optimise_viewing_angle = (icon) -># <<<
+    #if typeof(icon.find('.compass').css('transform')) == 'undefined'
+      #return false
     compass = icon.find('.compass')
     #get current bearing
     bearing_matrix = compass.css('transform')
+    console.log('bearing_matrix: ' + bearing_matrix)
     values = bearing_matrix.split('(')[1].split(')')[0].split(',')
     a = values[0]
     b = values[1]
