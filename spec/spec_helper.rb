@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spork'
 
+
 Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
@@ -10,6 +11,11 @@ Spork.prefork do
   require 'capybara/rails'
   require 'capybara/rspec'
   require 'capybara/poltergeist'
+
+  #help speed up tests
+  #comment out to log to log/test.log
+  Rails.logger.level = 4
+
 
   Capybara.javascript_driver = :poltergeist
   Capybara.default_wait_time = 20
@@ -79,5 +85,9 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
 
+  #help speed up tests
+  # Forces all threads to share the same connection. This works on
+  # Capybara because it starts the web server in a thread.
+  ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 end
 
