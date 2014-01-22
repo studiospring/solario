@@ -14,13 +14,6 @@ describe Sun do
     it "should return correct azimuth in radians in the morning" do
       @sun.azimuth.should be_within(0.001).of(1.133309310)
     end
-    describe 'at solar noon' do
-      before { @sun.local_time = 16 }
-      it "should return correct azimuth in radians" do
-        pending
-        #@sun.azimuth.should eq(0)
-      end
-    end
     describe 'in the afternoon' do
       before { @sun.local_time = 16 }
       it "should return correct azimuth in radians" do
