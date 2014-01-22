@@ -49,7 +49,7 @@ describe "PvQuery" do
     end
 
   end# >>>
-  describe 'new page', js: true do# <<<
+  describe 'new page' do# <<<
     let(:heading) { 'Average annual panel output' }
     let(:submit) { 'view output' }
     before { visit new_pv_query_path }
@@ -59,7 +59,7 @@ describe "PvQuery" do
     describe 'with javascript enabled' do
       it { should have_selector("#enable_js", visible: false) }
     end
-    describe "after clicking 'add panel'" do
+    describe "after clicking 'add panel'", js: true do
       before { click_link 'add panel' }
       it { should have_selector("input#pv_query_panels_attributes_1_bearing") }
 
@@ -79,7 +79,7 @@ describe "PvQuery" do
         expect { click_button submit }.not_to change(PvQuery, :count).by(1)
       end
 
-      describe "after submitting" do
+      describe "after submitting", js: true do
         
         before { click_button submit }
         #it_should_behave_like 'all pv_query pages'
