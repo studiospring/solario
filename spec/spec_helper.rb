@@ -85,9 +85,5 @@ end
 Spork.each_run do
   # This code will be run each time you run your specs.
 
-  #help speed up tests
-  # Forces all threads to share the same connection. This works on
-  # Capybara because it starts the web server in a thread.
-  ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 end
 
