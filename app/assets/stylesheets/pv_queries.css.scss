@@ -19,6 +19,13 @@
     margin-bottom: 2em;
   }
 }
+/* saf3+, chrome1+ */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .form-control{
+    /*Safari and Chrome narrow number fields with arrows*/
+    width: 6em;
+  }
+}
 .icon{
   margin: -40px -90px -40px -50px;
   height: 300px;
@@ -72,12 +79,6 @@ $compass_points: #c8002F;
   -o-transform-style: preserve-3d; 
   transform-style: preserve-3d;
 }
-/* saf3+, chrome1+ */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  .form-control{
-    width: 6em;
-  }
-}
 $centres-compass: -18px;
 .compass{
   height: 210px;
@@ -90,6 +91,7 @@ $centres-compass: -18px;
   -webkit-border-radius: 106px;
   /*centre compass with compass points*/
   /*compensate for 45deg transform of compass points*/
+  /*this causes Safari to show compass_points above everything else*/
   -webkit-transform:  translateX($centres-compass)
                       translateY($centres-compass)
                       rotate(-45deg);
