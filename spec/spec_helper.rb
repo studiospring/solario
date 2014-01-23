@@ -77,8 +77,8 @@ Spork.prefork do
   end
   Capybara.register_driver :poltergeist do |app|
     options = { debug: false,
-                js_errors: true, #false causes phantomjs to crash
-                time_out: 130 }
+                js_errors: true, #false can cause phantomjs to crash
+                time_out: 50 }
     Capybara::Poltergeist::Driver.new(app, options)
   end
 end
