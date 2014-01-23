@@ -12,10 +12,17 @@ index<% end %>
     <li>area: <%= panel.panel_size %>m<sup>2</sup></li>
   </ul>
 <% end %>
-<p>Drag to rotate graph, scroll to zoom.</p>
-<p>Search results: <%= @pvoutput_search %></p>
+<p>PVOutput search results: </p>
+<% @pvoutput_search.each do |system| %>
+  <p>
+    <% system.each do |k, v| %>
+      <%= k %>: <%= v %>, 
+    <% end %>
+  </p>
+<% end %>
 <p>System info: <%= @pvo_system_info %></p>
-<p>Total output p.a.: <%= @total_output_pa %>megawatts</p>
+<p>Total output p.a.: <%= @total_output_pa %> megawatts</p>
+<p>Drag to rotate graph, scroll to zoom.</p>
 <%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
   <p class="alert alert-warning">Oops. There should be a pretty graph here.</p>
 <% end %>
