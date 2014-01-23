@@ -107,6 +107,11 @@ describe Panel do
       Panel.avg_efficiency(20, 0.98).should == 0.83 
     end
   end# >>>
+  describe 'overall_efficiency' do# <<<
+    it "should return correct value" do
+      Panel.overall_efficiency.should == 0.14
+    end
+  end# >>>
   describe 'diffuse_received_pa method' do# <<<
     #before { @panel.annual_dni_received() }
     it "should return a very big array" do
