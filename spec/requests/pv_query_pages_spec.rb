@@ -107,9 +107,8 @@ describe "PvQuery" do
         expect { click_button submit }.to change(PvQuery, :count).by(1)
       end
       #it "should load when form is submitted" do
-        #click_button submit
-        ##sleep(10)
         ##find 'body'
+        ##should render_template(:partial => '_results')
         #should_not have_selector('legend')
         ##save_and_open_page
         ##print page.html
