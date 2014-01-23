@@ -53,7 +53,7 @@ class PvQuery < ActiveRecord::Base
         #returns [0.0, 0.0,...] even though panel spec passes
         #return panel.dni_received_pa(dni_pa)
       end
-      efficiency = Panel.avg_efficiency(20, 0.99)
+      efficiency = Panel.avg_efficiency(20, 0.15)
       #add direct and diffuse inputs of all panels, factor in efficiency
       return panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).to_f.round(2) }
     end

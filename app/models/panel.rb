@@ -142,15 +142,23 @@ class Panel < ActiveRecord::Base
     end
     return annual_total
   end# >>>
+  #http://www.greenrhinoenergy.com/solar/technologies/pv_energy_yield.php
+  #pre = preconversion efficiency, sys = system efficiency, rel = relative
+  #module efficiency, nom = nominal module efficiency
+  #nominal (and sometimes relative) module efficiency is available from panel spec sheets
+  #TODO:refactor to panel_brand model if efficiencies vary greatly with brand
+  def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)
+    (pre * sys * rel * nom).round(2)
+  end
   #dummy method
   #currently no data to confirm solar panels behave this way!
   #efficiency must have 0 in front! eg 0.99
-  def self.avg_efficiency(lifespan, efficiency)# <<<
-    total = 0
+  def self.avg_efficiency(lifespan, overall_efficiency)# <<<
+    total_efficiency = 0
     lifespan.times do |year|
-      total = total + efficiency ** year
+      total_efficiency = total_efficiency + overall_efficiency ** year
     end
-    avg = (total / lifespan).round(2)
+    avg = (total_efficiency / lifespan).round(2)
   end# >>>
   #return angle of incident light relative to panel in radians (where 0 is
   #directly perpendicular to panel surface)
