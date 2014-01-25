@@ -7,6 +7,7 @@ FactoryGirl.define do
     state "NSW"
     latitude -13
     longitude 123.123456
+    urban false
   end
 
   factory :pv_query do
