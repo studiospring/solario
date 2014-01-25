@@ -69,6 +69,11 @@ describe PvQuery do
       @pv_query.postcode.irradiance.time_zone_corrected_dni[0..8].should == "0.50 1.66"
     end
   end# >>>
+  describe 'pvo_orientation' do
+    it "should return orientation as string" do
+      @pv_query.pvo_orientation.should == 'S'
+    end
+  end
   describe 'northmost_facing_panel' do# <<<
     before { @pv_query.panels.create(tilt: 40, bearing: 30, panel_size: 4.4) }
     it "should return northmost panel object" do
