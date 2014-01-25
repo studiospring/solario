@@ -22,8 +22,7 @@ class PvQuery < ActiveRecord::Base
 
   #return string with which to search pvo
   def pvo_search_params# <<<
-    
-    params = "#{self.postcode} #{dist} #{self.pvo_orientation} #{self.tilt}"
+    params = "#{self.postcode.pcode} #{self.dist} #{self.pvo_orientation} #{self.tilt}"
   end# >>>
   #change postcode param to postcode_id
   def postcode_to_postcode_id# <<<
@@ -146,5 +145,13 @@ class PvQuery < ActiveRecord::Base
       northmost = self.panels.first
     end
     return northmost
+  end# >>>
+  #return optimal distance to search pvo
+  def pvo_search_distance# <<<
+    if self.postcode.pcode.is_urban?
+      dist = '5km'
+    else
+      dist = '25km'
+    end
   end# >>>
 end
