@@ -19,11 +19,11 @@ describe PvQuery do
 
   it { should be_valid }
 
-  describe 'panel association' do
+  describe 'panel association' do# <<<
     it "should return panel attribute" do
       @pv_query.panels.first.tilt.should == 80
     end
-  end
+  end# >>>
   describe 'when postcode_id is not present' do# <<<
     before { @pv_query.postcode_id = nil }
     it { should_not be_valid }
@@ -67,6 +67,13 @@ describe PvQuery do
   describe 'irradiance.time_zone_corrected_dni method' do# <<<
     it "should return trimmed string" do
       @pv_query.postcode.irradiance.time_zone_corrected_dni[0..8].should == "0.50 1.66"
+    end
+  end# >>>
+  describe 'northmost_facing_panel' do# <<<
+    before { @pv_query.panels.create(tilt: 40, bearing: 30, panel_size: 4.4) }
+    it "should return northmost panel object" do
+      @pv_query.panels.count.should == 2
+      @pv_query.northmost_facing_panel.bearing.should == 30
     end
   end# >>>
 end
