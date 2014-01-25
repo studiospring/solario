@@ -69,6 +69,7 @@ describe "Postcodes" do
         fill_in "State", with: postcode.state
         fill_in "Latitude", with: postcode.latitude
         fill_in "Longitude", with: postcode.longitude
+        check "Urban"
       end
 
       it "should create a new postcode" do
@@ -135,6 +136,7 @@ describe "Postcodes" do
         fill_in "State", with: 'WA'
         fill_in "Latitude", with: 10
         fill_in "Longitude", with: 130
+        check "Urban"
         click_button submit
       end
 
