@@ -14,7 +14,7 @@
 require 'spec_helper'
 
 describe Postcode do
-  before { @postcode = Postcode.new(pcode: 4321, suburb: 'Simsville', state: 'WA', latitude: -12.123123, longitude: 123.456789) }
+  before { @postcode = Postcode.new(pcode: 4321, suburb: 'Simsville', state: 'WA', latitude: -12.123123, longitude: 123.456789, urban: false) }
   subject { @postcode }
 
   it { should respond_to(:pcode) }
@@ -22,6 +22,7 @@ describe Postcode do
   it { should respond_to(:state) }
   it { should respond_to(:latitude) }
   it { should respond_to(:longitude) }
+  it { should respond_to(:urban) }
   it { should respond_to(:pv_queries) }
 
   it { should be_valid }
@@ -77,6 +78,10 @@ describe Postcode do
   end
   describe 'when longitude is too long' do
     before { @postcode.longitude = -12.1111111 }
+    it { should_not be_valid }
+  end
+  describe 'when urban is not boolean' do
+    before { @postcode.urban = 'true' }
     it { should_not be_valid }
   end
 
