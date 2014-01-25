@@ -18,6 +18,7 @@ index<% end %>
     <col />
     <col />
     <col />
+    <col />
   </colgroup>
   <thead>
     <tr>
@@ -27,6 +28,7 @@ index<% end %>
       <th>State</th>
       <th>Latitude</th>
       <th>Longitude</th>
+      <th>Urban</th>
       <th></th>
       <th></th>
       <th></th>
@@ -41,6 +43,7 @@ index<% end %>
       <td><%= postcode.state %></td>
       <td><%= postcode.latitude %></td>
       <td><%= postcode.longitude %></td>
+      <td><%= postcode.urban %></td>
       <td><%= link_to 'Show', postcode %></td>
       <td><%= link_to 'Edit', edit_postcode_path(postcode) %></td>
       <td><%= link_to 'Delete', postcode, data: { confirm: 'Are you sure?' }, method: :delete %></td>

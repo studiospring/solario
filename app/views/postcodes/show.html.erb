@@ -31,6 +31,10 @@ index<% end %>
         <td>Longitude</td>
         <td><%= @postcode.longitude %></td>
       </tr>
+      <tr>
+        <td>Urban</td>
+        <td><%= @postcode.urban %></td>
+      </tr>
   </tbody>
 </table>
 <%= link_to 'List of postcodes', postcodes_path %> | <%= link_to 'Edit', edit_postcode_path(@postcode) %>

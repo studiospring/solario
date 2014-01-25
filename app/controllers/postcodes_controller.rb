@@ -39,7 +39,7 @@ class PostcodesController < ApplicationController
   private
     def postcode_params# <<<
       #enter mass assignable fields here
-      params.require(:postcode).permit(:pcode, :suburb, :state, :latitude, :longitude)
+      params.require(:postcode).permit(:pcode, :suburb, :state, :latitude, :longitude, :urban)
     end # >>>
 end
 

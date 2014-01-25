@@ -30,4 +30,5 @@ class Postcode < ActiveRecord::Base
     length: { maximum: 10 },
     numericality: { less_than: 160,
       greater_than: 95 }
+  validates :urban, inclusion: { in: [true, false] }
 end
