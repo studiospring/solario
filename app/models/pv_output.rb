@@ -2,6 +2,13 @@ class PvOutput
   require 'uri'
   require 'open-uri'
   
+  #return ids of pvoutput systems that are similar to queried system
+  def self.similar_systems(pvo_query, query)# <<<
+    results = self.search(query)
+    results.each do |system|
+      
+    end
+  end# >>>
   #Query must be 'string'
   #http://pvoutput.org/help.html#search
   #returns array of systems [{name: 'some_name', size: 'size,...}, {...}]

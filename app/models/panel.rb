@@ -147,9 +147,9 @@ class Panel < ActiveRecord::Base
   #module efficiency, nom = nominal module efficiency
   #nominal (and sometimes relative) module efficiency is available from panel spec sheets
   #TODO:refactor to panel_brand model if efficiencies vary greatly with brand
-  def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)
+  def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)# <<<
     (pre * sys * rel * nom).round(2)
-  end
+  end# >>>
   #dummy method
   #currently no data to confirm solar panels behave this way!
   #efficiency must have 0 in front! eg 0.99

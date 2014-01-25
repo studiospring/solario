@@ -19,8 +19,9 @@ class PvQueriesController < ApplicationController
       #@column_heights = @pv_query.column_heights
       @total_output_pa = @pv_query.total_output_pa
       @query_params = @pv_query.panels
-      @pvoutput_search = PvOutput.search('2031')
+      @pvoutput_search = PvOutput.search('2031 50km')
       @pvo_system_info = PvOutput.get_system
+      @northmost_facing_panel = @pv_query.northmost_facing_panel
 
       respond_with({output_pa: @output_pa}, location: new_pv_query_url)
     else

@@ -9,6 +9,7 @@
 #
 
 class PvQuery < ActiveRecord::Base
+  require "core_ext/numeric"
 
   has_many :panels, dependent: :destroy
   belongs_to :postcode
@@ -19,6 +20,11 @@ class PvQuery < ActiveRecord::Base
 
   after_validation :postcode_to_postcode_id
 
+  #return string with which to search pvo
+  def pvo_search_params# <<<
+    
+    params = "#{self.postcode} #{dist} #{self.pvo_orientation} #{self.tilt}"
+  end# >>>
   #change postcode param to postcode_id
   def postcode_to_postcode_id# <<<
     #prevent other postcodes from being queried bc no data available
@@ -107,4 +113,38 @@ class PvQuery < ActiveRecord::Base
       end
       return columns
     end# >>>
+  #return bearing that faces closest to north in pvo readable format
+  def pvo_orientation# <<<
+    orientation = 'N'
+    case self.bearing
+      when 337.5..360, 0..22.5
+        return orientation
+      when 22.5..67.5
+        orientation = 'NE'
+      when 292.5..337.5
+        orientation = 'NW'
+      when 67.5..112.5
+        orientation = 'E'
+      when 247.5..292.5
+        orientation = 'W'
+      when 112.5..157.5
+        orientation = 'SE'
+      when 202.5..247.5
+        orientation = 'SW'
+      else
+        orientation = 'S'
+    end
+    return orientation
+  end
+  #return panel obj that faces closest to north in one pvquery system
+  def northmost_facing_panel# <<<
+    if self.panels.count > 1
+      northmost = self.panels.inject do |current, the_next|
+        current.bearing.deg_to_north <= the_next.bearing.deg_to_north ? current : the_next
+      end
+    else
+      northmost = self.panels.first
+    end
+    return northmost
+  end# >>>
 end
