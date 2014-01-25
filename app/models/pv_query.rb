@@ -116,7 +116,7 @@ class PvQuery < ActiveRecord::Base
   #return bearing that faces closest to north in pvo readable format
   def pvo_orientation# <<<
     orientation = 'N'
-    case self.bearing
+    case self.northmost_facing_panel.bearing
       when 337.5..360, 0..22.5
         return orientation
       when 22.5..67.5
