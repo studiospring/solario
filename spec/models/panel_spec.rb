@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: panels
+#
+#  id          :integer          not null, primary key
+#  tilt        :integer
+#  bearing     :integer
+#  panel_size  :decimal(, )
+#  pv_query_id :integer
+#
+
 require 'spec_helper'
 
 describe Panel do

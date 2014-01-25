@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: postcodes
+#
+#  id        :integer          not null, primary key
+#  pcode     :integer
+#  suburb    :string(255)
+#  state     :string(255)
+#  latitude  :decimal(, )
+#  longitude :decimal(, )
+#  urban     :boolean          default(FALSE)
+#
+
 require 'spec_helper'
 
 describe Postcode do

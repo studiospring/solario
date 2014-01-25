@@ -8,6 +8,7 @@
 #  state     :string(255)
 #  latitude  :decimal(, )
 #  longitude :decimal(, )
+#  urban     :boolean          default(FALSE)
 #
 
 class Postcode < ActiveRecord::Base

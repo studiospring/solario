@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: irradiances
+#
+#  id          :integer          not null, primary key
+#  direct      :text
+#  diffuse     :text
+#  postcode_id :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 require 'spec_helper'
 
 describe Irradiance do
