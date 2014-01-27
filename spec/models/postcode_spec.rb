@@ -17,7 +17,7 @@ describe Postcode do
   before { @postcode = Postcode.new(pcode: 4321, suburb: 'Simsville', state: 'WA', latitude: -12.123123, longitude: 123.456789, urban: false) }
   subject { @postcode }
 
-  it { should respond_to(:pcode) }
+  it { should respond_to(:pcode) }# <<<
   it { should respond_to(:suburb) }
   it { should respond_to(:state) }
   it { should respond_to(:latitude) }
@@ -81,12 +81,33 @@ describe Postcode do
     it { should_not be_valid }
   end
   describe 'when urban is not boolean' do
-    before { @postcode.urban = 'true' }
+    before { @postcode.urban = 'shoe' }
     it { should_not be_valid }
   end
 
   describe 'pv_query associations' do
     before { @postcode.save }
     let(:pv_query) { FactoryGirl.create(:pv_query, postcode: @postcode) }
+  end# >>>
+  describe 'update_urban?' do
+    describe 'when urban attr is false' do
+      before do
+        results = [{postcode: 4321}, {postcode: 4321}, {postcode: 4321}, {postcode: 4321}, {postcode: 4321}]
+        @postcode.update_urban?(results)
+      end
+      it "should update urban attr to 'true' if more than 4 pv systems are found" do
+        expect { @postcode.urban }.to eq(true)
+      end
+    end
+    describe 'when urban attr is true' do
+      before do
+        @postcode.urban = true
+        results = [{postcode: 4321}, {postcode: 4321}, {postcode: 4321}, {postcode: 4321}]
+        @postcode.update_urban?(results)
+      end
+      it "should update urban attr to 'false' if fewer than 5 pv systems are found" do
+        expect { @postcode.urban }.to eq(false)
+      end
+    end
   end
 end
