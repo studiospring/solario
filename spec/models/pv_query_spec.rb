@@ -79,21 +79,21 @@ describe PvQuery do
       @pv_query.postcode.irradiance.time_zone_corrected_dni[0..8].should == "0.50 1.66"
     end
   end# >>>
-  describe 'pvo_search_params' do
+  describe 'pvo_search_params' do# <<<
     it "should return string of search params" do
       @pv_query.pvo_search_params.should == "#{postcode} #{dist} #{@pv_query.pvo_orientation} #{@pv_query.tilt}"
     end
-  end
-  describe 'pvo_search_distance' do
+  end# >>>
+  describe 'pvo_search_distance' do# <<<
     it "should return optimal search distance" do
-      @pv_query.pvo_search_distance.should == '5km'
+      @pv_query.pvo_search_distance.should == '25km'
     end
-  end
-  describe 'pvo_orientation' do
+  end# >>>
+  describe 'pvo_orientation' do# <<<
     it "should return orientation as string" do
       @pv_query.pvo_orientation.should == 'S'
     end
-  end
+  end# >>>
   describe 'northmost_facing_panel' do# <<<
     before { @pv_query.panels.create(tilt: 40, bearing: 30, panel_size: 4.4) }
     it "should return northmost panel object" do
