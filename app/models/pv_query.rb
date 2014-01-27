@@ -21,8 +21,9 @@ class PvQuery < ActiveRecord::Base
   after_validation :postcode_to_postcode_id
 
   #return string with which to search pvo
+  #e.g. "1234 25km +S 80 tilt"
   def pvo_search_params# <<<
-    params = "#{self.postcode.pcode} #{self.pvo_search_distance} #{self.pvo_orientation} #{self.tilt}"
+    params = "#{self.postcode.pcode} #{self.pvo_search_distance} +#{self.pvo_orientation} #{self.northmost_facing_panel.tilt} tilt"
   end# >>>
   #change postcode param to postcode_id
   def postcode_to_postcode_id# <<<

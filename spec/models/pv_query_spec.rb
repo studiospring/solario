@@ -81,7 +81,7 @@ describe PvQuery do
   end# >>>
   describe 'pvo_search_params' do# <<<
     it "should return string of search params" do
-      @pv_query.pvo_search_params.should == "#{postcode} #{dist} #{@pv_query.pvo_orientation} #{@pv_query.tilt}"
+      @pv_query.pvo_search_params.should == "1234 25km +S 80 tilt"
     end
   end# >>>
   describe 'pvo_search_distance' do# <<<
