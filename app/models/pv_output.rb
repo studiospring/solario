@@ -9,8 +9,9 @@ class PvOutput
       
     end
   end# >>>
-  #Query must be 'string'
+  #Query must be 'string' with params in this order, e.g. "1234 25km +S 80 tilt"
   #http://pvoutput.org/help.html#search
+  #update postcode.urban attr depending on results count
   #returns array of systems [{name: 'some_name', size: 'size,...}, {...}]
   def self.search(query)# <<<
     params = { 'q'        => query,
@@ -22,6 +23,8 @@ class PvOutput
       #merges keys and system data to hash
       results << Hash[keys.zip system_string.split(/,/)]
     end
+    postcode = Postcode.find_by pcode: query.split(' ')[0].to_i
+    postcode.update_urban?(results)
     return results
   end# >>>
   #returns hash of system info data

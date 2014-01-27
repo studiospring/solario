@@ -96,7 +96,7 @@ describe Postcode do
         @postcode.update_urban?(results)
       end
       it "should update urban attr to 'true' if more than 4 pv systems are found" do
-        expect { @postcode.urban }.to eq(true)
+        @postcode.urban.should == true
       end
     end
     describe 'when urban attr is true' do
@@ -106,7 +106,7 @@ describe Postcode do
         @postcode.update_urban?(results)
       end
       it "should update urban attr to 'false' if fewer than 5 pv systems are found" do
-        expect { @postcode.urban }.to eq(false)
+        @postcode.urban.should == false
       end
     end
   end
