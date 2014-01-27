@@ -135,7 +135,7 @@ class PvQuery < ActiveRecord::Base
         orientation = 'S'
     end
     return orientation
-  end
+  end#>>>
   #return panel obj that faces closest to north in one pvquery system
   def northmost_facing_panel# <<<
     if self.panels.count > 1
