@@ -2,14 +2,17 @@ class PvOutput
   require 'uri'
   require 'open-uri'
   
-  #return get_system hash of most similar and statistically reliable system
-  def self.similar_system(pvo_query, query)# <<<
-    results = self.search(query)
+  #return system id of most similar and statistically reliable system
+  def self.similar_system_id(pvo_search_params)# <<<
+    results = self.search(pvo_search_params)
     #order by output
     results.sort! { |a, b| a[:outputs] <=> b[:outputs]}
     results.each do |system|
-      if system[:outputs] >= 50 && system[:shade] == 'No'
-        return self.get_system(system[:system_id])
+      if system[:outputs] >= 100
+        similar_system = self.get_system(system[:system_id])
+        if similar_system[:shade] == 'No'
+          return system[:system_id]
+        end
       else
         return nil
       end
