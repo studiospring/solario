@@ -66,8 +66,8 @@ class PvOutput
     #make GET request to pvoutput api and return response
     def self.request(uri, params = {})# <<<
       uri = URI.parse('http://pvoutput.org/service/r2/' + uri + '.jsp')
-      auth_params = { 'key' => Rails.application.secrets.pv_output_api_key,
-                      'sid' => Rails.application.secrets.pv_output_system_id }
+      auth_params = { 'key' => Rails.application.secrets.pvo_api_key,
+                      'sid' => Rails.application.secrets.pvo_system_id }
       #merge params params and add to uri
       uri.query = URI.encode_www_form( auth_params.merge(params) )
       begin
