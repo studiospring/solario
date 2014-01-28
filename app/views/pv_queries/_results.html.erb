@@ -14,7 +14,7 @@ index<% end %>
 <% end %>
 <p>Northmost panel: <%= @northmost_facing_panel %> <%= @northmost_facing_panel.bearing %></p>
 <p>PVOutput search results: </p>
-<% @pvoutput_search.each do |system| %>
+<% @pvo_search.each do |system| %>
   <p>
     <% system.each do |k, v| %>
       <%= k %>: <%= v %>, 
