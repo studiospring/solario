@@ -2,6 +2,7 @@ class PvOutput
   require 'uri'
   require 'open-uri'
   
+
   #return system id of most similar and statistically reliable system
   def self.similar_system_id(pvo_search_params)# <<<
     results = self.search(pvo_search_params)
@@ -62,12 +63,12 @@ class PvOutput
     end
     return results
   end# >>>
-  #query_params include: 'df' (date from), 'dt' (date to), 'sid1'
   #return hash of system data
   #TODO: untested, unfinished. Query by system id and dates after donating
-  def get_statistic(query_params = {})# <<<
-    response = self.request('getstatistic', query_params)
-    keys = [ 'output', 'avg_efficiency', 'outputs', 'date_from', 'date_to' ] #output is in watt hours
+  def get_statistic(system_id)# <<<
+    response = self.request('getstatistic', {sid1: system_id})
+    #outputs is in watt hours
+    keys = [ 'output', 'avg_efficiency', 'outputs', 'date_from', 'date_to' ]
     results_array = response.split(/,/)
     results_array.values_at(0, 5, 6, 7, 8)
     results = Hash[keys.zip results_array]
