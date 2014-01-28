@@ -2,17 +2,25 @@ class PvOutput
   require 'uri'
   require 'open-uri'
   
-  #return ids of pvoutput systems that are similar to queried system
-  def self.similar_systems(pvo_query, query)# <<<
+  #return get_system hash of most similar and statistically reliable system
+  def self.similar_system(pvo_query, query)# <<<
     results = self.search(query)
+    #order by output
+    results.sort! { |a, b| a[:outputs] <=> b[:outputs]}
     results.each do |system|
-      
+      if system[:outputs] >= 50 && system[:shade] == 'No'
+        return self.get_system(system[:system_id])
+      else
+        return nil
+      end
     end
+    return nil
   end# >>>
-  #Query must be 'string' with params in this order, e.g. "1234 25km +S 80 tilt"
   #http://pvoutput.org/help.html#search
+  #use pv_query.pvo_search_params to generate query argument
   #update postcode.urban attr depending on results count
   #returns array of systems [{name: 'some_name', size: 'size,...}, {...}]
+  #or empty array
   def self.search(query)# <<<
     params = { 'q'        => query,
                'country'  => 'Australia' }
@@ -29,8 +37,8 @@ class PvOutput
   end# >>>
   #returns hash of system info data
   #TODO: query by system id after donating
-  def self.get_system# <<<
-    response = self.request('getsystem')
+  def self.get_system(system_id)# <<<
+    response = self.request('getsystem', {sid1: system_id})
     keys = [ 'system_watts', 'panel_count', 'panel_watts', 'bearing', 'tilt', 'shade', 'install_date', 'sec_panel_count', 'sec_panel_watts', 'sec_bearing', 'sec_tilt' ]
     results_array = response.split(/,/)
     results_array.values_at(3, 4, 9, 10, 11, 12, 16, 17, 18, 19)
