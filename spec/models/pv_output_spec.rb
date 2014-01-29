@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe PvOutput do
-  #let(:postcode) { FactoryGirl.create(:postcode) }
+  let(:pvo) { FactoryGirl.create(:pv_output) }
 
   #stubs are defined in spec_helper.rb
   describe 'actual_output_pa' do
