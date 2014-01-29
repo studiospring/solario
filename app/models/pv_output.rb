@@ -21,7 +21,7 @@ class PvOutput
     @orientation = get_system_hash[:bearing]
     @tilt = get_system_hash[:tilt]
     @shade = get_system_hash[:shade]
-    stats = self.get_statistic(@id)
+    stats = self.class.get_statistic(@id)
     @total_output = stats[:total_output]
     @efficiency = stats[:efficiency]
     @entries = stats[:entries]
@@ -31,18 +31,23 @@ class PvOutput
     
   end# >>>
   #comment
-  def actual_annual_output# <<<
-    
+  def actual_output# <<<
+    data_interval = Date.parse(self.date_to) - Date.parse(self.date_from)
+    if data_interval >= 1.year
+      return self.actual_output_pa
+    else
+      return self.actual_partial_output
+    end
   end# >>>
   #return get_system hash of most similar and statistically reliable system
-  def self.similar_system_id(pvo_search_params)# <<<
+  def self.similar_system(pvo_search_params)# <<<
     results = self.search(pvo_search_params)
-    #order by output
+    #order by number of entries
     results.sort! { |a, b| a[:entries] <=> b[:entries]}
     results.each do |system|
       if system[:entries] >= 100
         similar_system = self.get_system(system[:id])
-        if similar_system[:install_date] < 1.year.ago.strftime('%Y%m%d') && similar_system[:shade] == 'No'
+        if similar_system[:shade] == 'No'
           return similar_system
         end
       else
