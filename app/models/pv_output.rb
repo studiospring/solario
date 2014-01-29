@@ -8,7 +8,7 @@ class PvOutput
     :orientation,
     :tilt,
     :shade,
-    #:total_output,
+    :total_output,
     :efficiency,
     :entries,
     :date_from,
@@ -23,41 +23,32 @@ class PvOutput
     @tilt = get_system_hash[:tilt]
     @shade = get_system_hash[:shade]
     stats = self.class.get_statistic({sid1: @id})
-    #@total_output = stats[:total_output]
+    @total_output = stats[:total_output]
     @efficiency = stats[:efficiency]
     @entries = stats[:entries]
     @date_from = stats[:date_from]
     @date_to = stats[:date_to]
-    #express "statistical significance" of pvo values
-    #@significance = significance
-  end# >>>
-  #comment
-  def actual_output# <<<
-    recorded_period = (Date.parse(self.date_to) - Date.parse(self.date_from)).to_i
-    if recorded_period >= 1.year
-      return self.actual_output_pa
-    else
-      return self.actual_partial_output
-    end
+    #express "statistical significance" of pvo values (0 to 1)
+    #@significance = 0
   end# >>>
   #return actual average annual output (kWh)
   #TODO: does not check for missing data
   def actual_output_pa# <<<
-    #find date exactly n years before date_to
     date_from = Date.parse(self.date_from)
     date_to = Date.parse(self.date_to)
     recorded_period = (date_to - date_from).to_i
-    year_count = (recorded_period / 365).to_i
-    start_date = (date_to - year_count.years).strftime('%Y%m%d')
+    if recorded_period >= 1.year
+      #find date exactly n years before date_to
+      year_count = (recorded_period / 365).to_i
+      start_date = (date_to - year_count.years).strftime('%Y%m%d')
 
-    query_params = { sid1: self.id, date_from: start_date, date_to: self.date_to }
-    year_stats = self.get_statistic(query_params)
-    avg_output_pa = year_stats[:total_output] / year_count
-    return (avg_output_pa / 1000).round
-  end# >>>
-  #comment
-  def actual_partial_output# <<<
-    
+      query_params = { sid1: self.id, date_from: start_date, date_to: self.date_to }
+      year_stats = self.get_statistic(query_params)
+      avg_output_pa = year_stats[:total_output] / year_count
+      return (avg_output_pa / 1000).round
+    else
+      return nil
+    end
   end# >>>
   #return get_system hash of most similar and statistically reliable system
   def self.similar_system(pvo_search_params)# <<<
