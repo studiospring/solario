@@ -4,9 +4,9 @@ describe PvOutput do
   #let(:postcode) { FactoryGirl.create(:postcode) }
 
   #stubs are defined in spec_helper.rb
-  describe 'similar_system_id' do# <<<
+  describe 'similar_sytem_id' do# <<<
     it "should return hash of system info" do
-      pending 'query by system_Id'
+      pending 'query by id'
     end
   end# >>>
   describe 'search' do# <<<
@@ -15,25 +15,25 @@ describe PvOutput do
       #postcode = double('Postcode')
       #postcode.stub(:update_urban?).and_return(true)
       #expect(PvOutput.search('2031')[0]).to eq '2'
-      PvOutput.search('2031')[0].should == {"name"=>" Solar 4 US", "size"=>"9360", "postcode"=>"4280", "orientation"=>"NW", "outputs"=>"81", "last_output"=>"2 days ago", "system_id"=>"249", "panel"=>"Solarfun", "inverter"=>"Aurora", "distance"=>"NaN", "latitude"=>"-27.831402", "longitude"=>"153.028469"}
+      PvOutput.search('2031')[0].should == {"name"=>" Solar 4 US", "size"=>"9360", "postcode"=>"4280", "orientation"=>"NW", "entries"=>"81", "last_entry"=>"2 days ago", "id"=>"249", "panel"=>"Solarfun", "inverter"=>"Aurora", "distance"=>"NaN", "latitude"=>"-27.831402", "longitude"=>"153.028469"}
     end
   end# >>>
   describe 'get_system' do# <<<
-    #before { system_info = PvOutput.get_system(system_id) }
+    #before { system_info = PvOutput.get_system(id) }
     it 'returns system data from pvoutput.org' do
-      pending 'query by system_id'
+      pending 'query by id'
     end
   end# >>>
   describe 'get_output' do# <<<
-    #before { system_info = PvOutput.get_output(system_id) }
+    #before { system_info = PvOutput.get_output(id) }
     it 'returns output of system from pvoutput.org' do
-      pending 'query by system_id'
+      pending 'query by id'
     end
   end# >>>
   describe 'get_statistic' do# <<<
-    #before { statistics = PvOutput.get_statistic(system_id) }
+    #before { statistics = PvOutput.get_statistic(id) }
     it 'returns hash of system data from pvoutput.org' do
-      pending 'query by system_id'
+      pending 'query by id'
     end
   end# >>>
   
