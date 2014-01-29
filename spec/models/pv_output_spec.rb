@@ -4,7 +4,10 @@ describe PvOutput do
   #let(:postcode) { FactoryGirl.create(:postcode) }
 
   #stubs are defined in spec_helper.rb
-  describe 'similar_sytem_id' do# <<<
+  describe 'actual_output_pa' do
+    pending 'system id'
+  end
+  describe 'similar_sytem' do# <<<
     it "should return hash of system info" do
       pending 'query by id'
     end
