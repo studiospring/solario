@@ -33,7 +33,7 @@ class PvOutput
   end# >>>
   #comment
   def actual_output# <<<
-    recorded_period = (Date.parse(self.date_from) - Date.parse(self.date_to)).to_i
+    recorded_period = (Date.parse(self.date_to) - Date.parse(self.date_from)).to_i
     if recorded_period >= 1.year
       return self.actual_output_pa
     else
@@ -46,7 +46,7 @@ class PvOutput
     #find date exactly n years before date_to
     date_from = Date.parse(self.date_from)
     date_to = Date.parse(self.date_to)
-    recorded_period = (Date.parse(self.date_from) - Date.parse(self.date_to)).to_i
+    recorded_period = (date_to - date_from).to_i
     year_count = (recorded_period / 365).to_i
     start_date = (date_to - year_count.years).strftime('%Y%m%d')
 
@@ -54,6 +54,10 @@ class PvOutput
     year_stats = self.get_statistic(query_params)
     avg_output_pa = year_stats[:total_output] / year_count
     return (avg_output_pa / 1000).round
+  end# >>>
+  #comment
+  def actual_partial_output# <<<
+    
   end# >>>
   #return get_system hash of most similar and statistically reliable system
   def self.similar_system(pvo_search_params)# <<<
