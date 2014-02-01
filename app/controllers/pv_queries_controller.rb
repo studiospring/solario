@@ -19,10 +19,13 @@ class PvQueriesController < ApplicationController
       #@column_heights = @pv_query.column_heights
       @total_output_pa = @pv_query.total_output_pa
       @query_params = @pv_query.panels
-      #@pvo_search = PvOutput.search('2031 50km')
-      @pvo_search = PvOutput.search(@pv_query.pvo_search_params)
-      @pvo_system_info = PvOutput.get_system
-      @northmost_facing_panel = @pv_query.northmost_facing_panel
+      #call search, candidate_systems...
+      similar_system = PvOutput.find_similar_system(search_params)
+      if similar_system
+        @similar_pvo_system = PvOutput.new(similar_system)
+        #define other attributes by calling get_statistic
+        @similar_pvo_system.get_stats
+      end
 
       respond_with({output_pa: @output_pa}, location: new_pv_query_url)
     else

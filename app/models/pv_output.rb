@@ -1,71 +1,88 @@
 class PvOutput
   require 'uri'
   require 'open-uri'
-  attr_accessor
-    :id,
-    :system_watts,
+  attr_accessor :id,
+    :system_watts, #called 'system size' in pvoutput.org
     :postcode,
     :orientation,
     :tilt,
     :shade,
-    :total_output,
+    :total_output, #called 'energy generated' in pvoutput.org
     :efficiency,
-    :entries,
-    :date_from,
-    :date_to
-    #:significance
+    :entries, #called 'outputs' in pvoutput.org
+    :date_from, #retrieved from 'install_date' and 'date_from'
+    :date_to,
+    :significance #express "statistical significance" of pvo values (0 to 1)
 
-  def initialize(get_system_hash)# <<<
-    @id = get_system_hash[:id]
-    @system_watts = get_system_hash[:system_watts]
-    @postcode = get_system_hash[:postcode]
-    @orientation = get_system_hash[:bearing]
-    @tilt = get_system_hash[:tilt]
-    @shade = get_system_hash[:shade]
-    stats = self.class.get_statistic({sid1: @id})
-    @total_output = stats[:total_output]
-    @efficiency = stats[:efficiency]
-    @entries = stats[:entries]
-    @date_from = stats[:date_from]
-    @date_to = stats[:date_to]
-    #express "statistical significance" of pvo values (0 to 1)
-    #@significance = 0
+  #arg is hash returned by similar_system
+  def initialize(similar_system)# <<<
+    @significance = 0
+    #from search
+    @id = similar_system[:id]
+    @system_watts = similar_system[:system_watts]
+    @postcode = similar_system[:postcode]
+    @entries = similar_system[:entries]
+    @date_to = similar_system[:last_entry]
+    @orientation = similar_system[:orientation]
+    #from get_system
+    @date_from = system_info[:install_date]
+    @shade = system_info[:shade]
+    @tilt = system_info[:tilt]
+    #from get_statistic
+    @total_output = system_info[:total_output]
+    @efficiency = nil
   end# >>>
   #return actual average annual output (kWh)
   #TODO: does not check for missing data
   def actual_output_pa# <<<
     date_from = Date.parse(self.date_from)
     date_to = Date.parse(self.date_to)
-    recorded_period = (date_to - date_from).to_i
-    if recorded_period >= 1.year
+    entries_period = (date_to - date_from).to_i
+    if entries_period >= 1.year
       #find date exactly n years before date_to
-      year_count = (recorded_period / 365).to_i
+      year_count = (entries_period / 365).to_i
       start_date = (date_to - year_count.years).strftime('%Y%m%d')
-
       query_params = { sid1: self.id, date_from: start_date, date_to: self.date_to }
-      year_stats = self.get_statistic(query_params)
-      avg_output_pa = year_stats[:total_output] / year_count
+      stats = self.get_statistic(query_params)
+      avg_output_pa = stats[:total_output] / year_count
       return (avg_output_pa / 1000).round
     else
+      #TODO: get data for part of year?
       return nil
     end
   end# >>>
-  #return get_system hash of most similar and statistically reliable system
-  def self.similar_system(pvo_search_params)# <<<
-    results = self.search(pvo_search_params)
+  #assign missing attributes, using data from get_statistic
+  #failure assigns nil values
+  def get_stats# <<<
+    query_params = { sid1: self.id, date_from: self.date_from, date_to: self.date_to }
+    stats = self.get_statistic(query_params)
+    #udpate date_from to use 'actual date from', not 'install date'
+    self.date_from = stats[:date_from]
+    self.total_output = stats[:total_output]
+  end# >>>
+  #use pv_query.pvo_search_params to generate query argument
+  #return hash of most similar and statistically reliable system
+  #with data from both search and get_system (or nil)
+  #TODO: loop and change search params if it returns nil?
+  def self.find_similar_system(pvo_search_params)# <<<
+    candidate_systems = self.search(pvo_search_params)
     #order by number of entries
-    results.sort! { |a, b| a[:entries] <=> b[:entries]}
-    results.each do |system|
-      if system[:entries] >= 100
-        similar_system = self.get_system(system[:id])
-        if similar_system[:shade] == 'No'
+    candidate_systems.sort! { |a, b| a[:entries] <=> b[:entries] }
+    #limit times get_system can be called
+    candidate_systems.slice!(0, 5)
+    shaded_systems = Array.new
+    candidate_systems.each do |system|
+      if system[:entries] >= 300
+        system_info = self.get_system(system[:id])
+        if system_info[:shade] == 'No'
+          similar_system = system_info.merge(system)
           return similar_system
+        elsif system_info[:shade] == 'Low' #get one with low shade?
+          shaded_systems << system_info.merge(system)
         end
-      else
-        return nil
       end
     end
-    return nil
+    return shaded_systems[0]
   end# >>>
   #http://pvoutput.org/help.html#search
   #use pv_query.pvo_search_params to generate query argument
@@ -77,7 +94,7 @@ class PvOutput
                'country'  => 'Australia' }
     response = self.request('search', params)
     results = Array.new
-    keys = [ 'name', 'size', 'postcode', 'orientation', 'entries', 'last_entry', 'id', 'panel', 'inverter', 'distance', 'latitude', 'longitude' ]
+    keys = [ 'name', 'system_watts', 'postcode', 'orientation', 'entries', 'last_entry', 'id', 'panel', 'inverter', 'distance', 'latitude', 'longitude' ]
     response.split("\n").each do |system_string|
       #merges keys and system data to hash
       results << Hash[keys.zip system_string.split(/,/)]
@@ -90,7 +107,7 @@ class PvOutput
   #TODO: query by system id after donating
   def self.get_system(id)# <<<
     response = self.request('getsystem', {sid1: id})
-    keys = [ 'system_watts', 'panel_count', 'panel_watts', 'bearing', 'tilt', 'shade', 'install_date', 'sec_panel_count', 'sec_panel_watts', 'sec_bearing', 'sec_tilt' ]
+    keys = [ 'system_watts', 'panel_count', 'panel_watts', 'orientation', 'tilt', 'shade', 'install_date', 'sec_panel_count', 'sec_panel_watts', 'sec_bearing', 'sec_tilt' ]
     results_array = response.split(/,/)
     results_array.values_at(3, 4, 9, 10, 11, 12, 16, 17, 18, 19)
     #merges keys and system info to hash
@@ -111,20 +128,20 @@ class PvOutput
     end
     return results
   end# >>>
-  #return hash of system data
+  #return hash of system data or hash with nil values upon failure
   #keep as class method for flexibility
   #TODO: untested, unfinished. Query by system id and dates after donating
   def self.get_statistic(query_params = {})# <<<
     response = self.request('getstatistic', query_params)
     #total_output is in watt hours
-    keys = [ 'total_output', 'efficiency', 'entries', 'date_from', 'date_to' ]
+    keys = [ 'total_output', 'efficiency', 'date_from', 'date_to' ]
     results_array = response.split(/,/)
-    results_array.values_at(0, 5, 6, 7, 8)
+    results_array.values_at(0, 5, 7, 8)
     results = Hash[keys.zip results_array]
     return results
   end# >>>
   private
-    #make GET request to pvoutput api and return response
+    #make GET request to pvoutput api and return response (string)
     def self.request(uri, params = {})# <<<
       uri = URI.parse('http://pvoutput.org/service/r2/' + uri + '.jsp')
       auth_params = { 'key' => Rails.application.secrets.pvo_api_key,

@@ -12,16 +12,7 @@ index<% end %>
     <li>area: <%= panel.panel_size %>m<sup>2</sup></li>
   </ul>
 <% end %>
-<p>Northmost panel: <%= @northmost_facing_panel %> <%= @northmost_facing_panel.bearing %></p>
-<p>PVOutput search results: </p>
-<% @pvo_search.each do |system| %>
-  <p>
-    <% system.each do |k, v| %>
-      <%= k %>: <%= v %>, 
-    <% end %>
-  </p>
-<% end %>
-<p>System info: <%= @pvo_system_info %></p>
+<p>@similar_pvo_system: <%= @similar_pvo_system %></p>
 <p>Total output p.a.: <%= @total_output_pa %> megawatts</p>
 <p>Drag to rotate graph, scroll to zoom.</p>
 <%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
