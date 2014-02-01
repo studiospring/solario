@@ -7,8 +7,11 @@ describe PvOutput do
   describe 'actual_output_pa' do
     pending 'system id'
   end
-  describe 'similar_sytem' do# <<<
-    it "should return hash of system info" do
+  describe 'find_similar_sytem' do# <<<
+    it "should return hash if similar system is found" do
+      pending 'query by id'
+    end
+    it "should return empty hash if system not found" do
       pending 'query by id'
     end
   end# >>>
