@@ -19,6 +19,7 @@ class PvQueriesController < ApplicationController
       #@column_heights = @pv_query.column_heights
       @total_output_pa = @pv_query.total_output_pa
       @query_params = @pv_query.panels
+      search_params = @pv_query.pvo_search_params
       #call search, candidate_systems...
       similar_system = PvOutput.find_similar_system(search_params)
       if similar_system
