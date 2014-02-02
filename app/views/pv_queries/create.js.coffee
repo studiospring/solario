@@ -40,7 +40,7 @@ ready = ->
     # Draw our graph with the created data and options
     graph.draw(data, options)
 
-  drawVisualization()
+  drawVisualization() #>>>
 
   $('#index_link').click ->
     location.reload(true)
