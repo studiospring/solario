@@ -84,8 +84,6 @@ describe "Postcodes" do
       end
     end
 
-    it { should have_link 'List of postcodes', href: postcodes_path }
-
     describe 'when not logged in' do
       before do
         logout :user
@@ -104,7 +102,6 @@ describe "Postcodes" do
 
     it { should have_content postcode.pcode }
 
-    it { should have_link 'List of postcodes', href: postcodes_path }
     it { should have_link 'Edit', href: edit_postcode_path(postcode) }
   end# >>>
   describe 'edit page' do# <<<

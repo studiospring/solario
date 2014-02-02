@@ -44,7 +44,6 @@ describe "Panels" do
 
     it { should have_content panel.bearing }
 
-    it { should have_link 'List of Panels', href: panels_path }
     it { should have_link 'Edit', href: edit_panel_path(panel) }
   end# >>>
   describe 'edit page' do# <<<

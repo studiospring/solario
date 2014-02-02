@@ -129,7 +129,6 @@ describe "PvQuery" do
 
     it { should have_content pv_query.postcode_id }
 
-    it { should have_link 'List of Pv_queries', href: pv_queries_path }
     it { should have_link 'Edit', href: edit_pv_query_path(pv_query) }
     describe 'when not logged in' do
       before do

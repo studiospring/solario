@@ -95,7 +95,6 @@ describe "Irradiances" do
       end
     end
 
-    it { should have_link 'List of Irradiances', href: irradiances_path }
     describe 'when not logged in' do
       before do
         logout :user
@@ -115,7 +114,6 @@ describe "Irradiances" do
 
     #it { should have_content postcode.pcode }
 
-    it { should have_link 'List of Irradiances', href: irradiances_path }
     it { should have_link 'Edit', href: edit_irradiance_path(irradiance) }
     describe 'when not logged in' do
       before do
