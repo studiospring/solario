@@ -2,21 +2,31 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 /* Small devices (tablets, 768px and up) */
-.control-label{
-  width: 7em; /* keep form labels from being crushed at small screen sizes */
-}
-.form-control{
-  width: 4.5em;
-  display: inline;
-}
-.nested_fields{
+#new_pv_query{
   .control-label{
-    margin-left: 1em;
-    width: 5.5em;
+    width: 7em; /* keep form labels from being crushed at small screen sizes */
+    margin-top: .5em;
   }
-  .form-group{
-    /*space out query inputs*/
-    margin-bottom: 2em;
+  .form-control{
+    width: 4.5em;
+    display: inline;
+  }
+  .nested_fields{
+    .control-label{
+      margin-left: 1em;
+      width: 5.5em;
+    }
+    .form-group{
+      /*space out query inputs*/
+      margin-bottom: 2em;
+    }
+  }
+  .btn{
+    margin-top: 1em;
+    margin-bottom: 0em;
+  }
+  .btn-primary{
+    margin-left: 2em;
   }
 }
 /* saf3+, chrome1+ */
