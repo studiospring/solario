@@ -28,8 +28,8 @@ class PvQuery < ActiveRecord::Base
   #change postcode param to postcode_id
   def postcode_to_postcode_id# <<<
     #prevent other postcodes from being queried bc no data available
-    postcode = Postcode.where('pcode = ?', 1234).select('id').first
-    #postcode = Postcode.where('pcode = ?', self.postcode_id).select('id').first
+    #postcode = Postcode.where('pcode = ?', 1234).select('id').first
+    postcode = Postcode.where('pcode = ?', self.postcode_id).select('id').first
     #if there is no postcode, calling postcode.id will cause error
     unless postcode.nil?
       self.postcode_id = postcode.id

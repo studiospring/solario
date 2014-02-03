@@ -72,7 +72,7 @@ class PvOutput
     candidate_systems.slice!(0, 5)
     shaded_systems = Array.new
     candidate_systems.each do |system|
-      if system[:entries] >= 300
+      if system[:entries] >= 100
         system_info = self.get_system(system[:id])
         if system_info[:shade] == 'No'
           similar_system = system_info.merge(system)

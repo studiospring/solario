@@ -42,13 +42,10 @@ ready = ->
     # Draw our graph with the created data and options
     graph.draw(data, options)
 
-  #do not create graph if there is no irradiance data
   if graph_div.data('datapoints').length > 0
     drawVisualization()
   else
-    alert ('oops')
-    graph_div.children().append(' There was no solar data for your postcode.')
-  #>>>
+    graph_div.children().append(' There was no solar data for your postcode.') #>>>
 
   $('#index_link').click ->
     location.reload(true)
