@@ -14,7 +14,7 @@ class PvOutput
     :date_to,
     :significance #express "statistical significance" of pvo values (0 to 1)
 
-  #arg is hash returned by similar_system
+  #arg is hash returned by find_similar_system
   def initialize(similar_system)# <<<
     @significance = 0
     #from search
@@ -25,11 +25,11 @@ class PvOutput
     @date_to = similar_system['last_entry']
     @orientation = similar_system['orientation']
     #from get_system
-    @date_from = system_info['install_date']
-    @shade = system_info['shade']
-    @tilt = system_info['tilt']
+    @date_from = similar_system['install_date']
+    @shade = similar_system['shade']
+    @tilt = similar_system['tilt']
     #from get_statistic
-    @total_output = system_info['total_output']
+    @total_output = similar_system['total_output']
     @efficiency = nil
   end# >>>
   #return actual average annual output (kWh)
@@ -55,7 +55,7 @@ class PvOutput
   #failure assigns nil values
   def get_stats# <<<
     query_params = { sid1: self.id, date_from: self.date_from, date_to: self.date_to }
-    stats = self.get_statistic(query_params)
+    stats = self.class.get_statistic(query_params)
     #udpate date_from to use 'actual date from', not 'install date'
     self.date_from = stats['date_from']
     self.total_output = stats['total_output']
