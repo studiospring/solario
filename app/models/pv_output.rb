@@ -34,17 +34,19 @@ class PvOutput
   end# >>>
   #return actual average annual output (kWh)
   #TODO: does not check for missing data
-  def actual_output_pa# <<<
+  #TODO: account for output from secondary panels
+  def output_pa# <<<
     date_from = Date.parse(self.date_from)
     date_to = Date.parse(self.date_to)
-    entries_period = (date_to - date_from).to_i
-    if entries_period >= 1.year
+    entries_period = (date_to - date_from).to_i #in days
+    #return entries_period
+    if entries_period >= 365
       #find date exactly n years before date_to
       year_count = (entries_period / 365).to_i
       start_date = (date_to - year_count.years).strftime('%Y%m%d')
       query_params = { sid1: self.id, date_from: start_date, date_to: self.date_to }
-      stats = self.get_statistic(query_params)
-      avg_output_pa = stats['total_output'] / year_count
+      stats = self.class.get_statistic(query_params)
+      avg_output_pa = stats['total_output'].to_i / year_count
       return (avg_output_pa / 1000).round
     else
       #TODO: get data for part of year?
@@ -54,10 +56,11 @@ class PvOutput
   #assign missing attributes, using data from get_statistic
   #failure assigns nil values
   def get_stats# <<<
-    query_params = { sid1: self.id, date_from: self.date_from, date_to: self.date_to }
+    query_params = { sid1: self.id }
     stats = self.class.get_statistic(query_params)
     #udpate date_from to use 'actual date from', not 'install date'
     self.date_from = stats['date_from']
+    self.date_to = stats['date_to']
     self.total_output = stats['total_output']
   end# >>>
   #use pv_query.pvo_search_params to generate query argument
@@ -122,7 +125,8 @@ class PvOutput
   #use to compare with theoretical daily output
   #query_params include: 'df' (date from), 'dt' (date to), 'sid1'
   #TODO: untested, unfinished. Query by system id and date after donating
-  def get_output(query_params = {})# <<<
+  #unneeded?
+  def get_output# <<<
     response = self.request('getoutput', query_params)
     keys = [ 'date', 'output' ] #output is in watt hours
     results = Array.new
@@ -139,8 +143,8 @@ class PvOutput
     #total_output is in watt hours
     keys = [ 'total_output', 'efficiency', 'date_from', 'date_to' ]
     results_array = response.split(/,/)
-    results_array.values_at(0, 5, 7, 8)
-    results = Hash[keys.zip results_array]
+    selected_results = results_array.values_at(0, 5, 7, 8)
+    results = Hash[keys.zip selected_results]
     return results
   end# >>>
   private

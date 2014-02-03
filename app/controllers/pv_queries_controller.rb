@@ -25,9 +25,10 @@ class PvQueriesController < ApplicationController
       ##call search, candidate_systems...
       @similar_system = PvOutput.find_similar_system(@search_params)
       if @similar_system
-        @similar_pvo_system = PvOutput.new(@similar_system)
+        @pvo_system = PvOutput.new(@similar_system)
         #define other attributes by calling get_statistic
-        @similar_pvo_system.get_stats
+        @pvo_system.get_stats
+        #@pvo_system.output_pa
       end
 
       respond_with({output_pa: @output_pa}, location: new_pv_query_url)

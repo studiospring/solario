@@ -16,7 +16,8 @@ index<% end %>
 <p>@candidate_systems: <%= @candidate_systems.inspect %></p>
 <p>@get_system: <%= @get_system.inspect %></p>
 <p>@similar_system: <%= @similar_system.inspect %></p>
-<p>@similar_pvo_system: <%= @similar_pvo_system.inspect %></p>
+<p>@pvo_system: <%= @pvo_system.inspect %></p>
+<p>@pvo_system output: <%= @pvo_system.output_pa %>kWh</p>
 <p>Total output p.a.: <%= @total_output_pa %> megawatts</p>
 <p>Drag to rotate graph, scroll to zoom.</p>
 <%= content_tag :div, id: "output_pa", data: {datapoints: @output_pa} do %>
