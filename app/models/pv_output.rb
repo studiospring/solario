@@ -18,18 +18,18 @@ class PvOutput
   def initialize(similar_system)# <<<
     @significance = 0
     #from search
-    @id = similar_system[:id]
-    @system_watts = similar_system[:system_watts]
-    @postcode = similar_system[:postcode]
-    @entries = similar_system[:entries]
-    @date_to = similar_system[:last_entry]
-    @orientation = similar_system[:orientation]
+    @id = similar_system['id']
+    @system_watts = similar_system['system_watts']
+    @postcode = similar_system['postcode']
+    @entries = similar_system['entries']
+    @date_to = similar_system['last_entry']
+    @orientation = similar_system['orientation']
     #from get_system
-    @date_from = system_info[:install_date]
-    @shade = system_info[:shade]
-    @tilt = system_info[:tilt]
+    @date_from = system_info['install_date']
+    @shade = system_info['shade']
+    @tilt = system_info['tilt']
     #from get_statistic
-    @total_output = system_info[:total_output]
+    @total_output = system_info['total_output']
     @efficiency = nil
   end# >>>
   #return actual average annual output (kWh)
@@ -44,7 +44,7 @@ class PvOutput
       start_date = (date_to - year_count.years).strftime('%Y%m%d')
       query_params = { sid1: self.id, date_from: start_date, date_to: self.date_to }
       stats = self.get_statistic(query_params)
-      avg_output_pa = stats[:total_output] / year_count
+      avg_output_pa = stats['total_output'] / year_count
       return (avg_output_pa / 1000).round
     else
       #TODO: get data for part of year?
@@ -57,8 +57,8 @@ class PvOutput
     query_params = { sid1: self.id, date_from: self.date_from, date_to: self.date_to }
     stats = self.get_statistic(query_params)
     #udpate date_from to use 'actual date from', not 'install date'
-    self.date_from = stats[:date_from]
-    self.total_output = stats[:total_output]
+    self.date_from = stats['date_from']
+    self.total_output = stats['total_output']
   end# >>>
   #use pv_query.pvo_search_params to generate query argument
   #return hash of most similar and statistically reliable system
@@ -67,17 +67,17 @@ class PvOutput
   def self.find_similar_system(pvo_search_params)# <<<
     candidate_systems = self.search(pvo_search_params)
     #order by number of entries
-    candidate_systems.sort! { |a, b| a[:entries] <=> b[:entries] }
+    candidate_systems.sort! { |a, b| a['entries'] <=> b['entries'] }
     #limit times get_system can be called
-    candidate_systems.slice!(0, 5)
+    top5 = candidate_systems[0, 5]
     shaded_systems = Array.new
-    candidate_systems.each do |system|
-      if system[:entries] >= 100
-        system_info = self.get_system(system[:id])
-        if system_info[:shade] == 'No'
+    top5.each do |system|
+      if system['entries'].to_i >= 100
+        system_info = self.get_system(system['id'])
+        if system_info['shade'] == 'No'
           similar_system = system_info.merge(system)
           return similar_system
-        elsif system_info[:shade] == 'Low' #get one with low shade?
+        elsif system_info['shade'] == 'Low' #get one with low shade?
           shaded_systems << system_info.merge(system)
         end
       end
@@ -100,8 +100,10 @@ class PvOutput
       #merges keys and system data to hash
       results << Hash[keys.zip system_string.split(/,/)]
     end
-    #postcode = Postcode.find_by pcode: query.split(' ')[0].to_i
-    #postcode.update_urban?(results)
+    postcode = Postcode.find_by pcode: query.split(' ')[0]
+    if postcode #is found
+      postcode.update_urban?(results)
+    end
     return results
   end# >>>
   #returns hash of system info data
@@ -110,10 +112,10 @@ class PvOutput
     response = self.request('getsystem', {sid1: id})
     keys = [ 'system_watts', 'panel_count', 'panel_watts', 'orientation', 'tilt', 'shade', 'install_date', 'sec_panel_count', 'sec_panel_watts', 'sec_bearing', 'sec_tilt' ]
     results_array = response.split(/,/)
-    results_array.values_at(3, 4, 9, 10, 11, 12, 16, 17, 18, 19)
+    selected_results = results_array.values_at(1, 3, 4, 9, 10, 11, 12, 16, 17, 18, 19)
     #merges keys and system info to hash
-    results = Hash[keys.zip results_array]
-    results[:id] = id
+    results = Hash[keys.zip selected_results]
+    results['id'] = id
     return results
   end# >>>
   #return array of hashes of daily output of system

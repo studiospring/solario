@@ -23,6 +23,9 @@ describe PvOutput do
       #expect(PvOutput.search('2031')[0]).to eq '2'
       PvOutput.search('2031')[0].should == {"name"=>" Solar 4 US", "size"=>"9360", "postcode"=>"4280", "orientation"=>"NW", "entries"=>"81", "last_entry"=>"2 days ago", "id"=>"249", "panel"=>"Solarfun", "inverter"=>"Aurora", "distance"=>"NaN", "latitude"=>"-27.831402", "longitude"=>"153.028469"}
     end
+    it "should update postcode" do
+      pending
+    end
   end# >>>
   describe 'get_system' do# <<<
     #before { system_info = PvOutput.get_system(id) }

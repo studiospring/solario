@@ -23,7 +23,9 @@ class PvQuery < ActiveRecord::Base
   #return string with which to search pvo
   #e.g. "1234 25km +S 80 tilt"
   def pvo_search_params# <<<
-    params = "#{self.postcode.pcode} #{self.pvo_search_distance} +#{self.pvo_orientation} #{self.northmost_facing_panel.tilt} tilt"
+    #too many params causes nil query result even when system exists
+    #{self.pvo_search_distance} #{self.northmost_facing_panel.tilt} tilt
+    params = "#{self.postcode.pcode} +#{self.pvo_orientation}"
   end# >>>
   #change postcode param to postcode_id
   def postcode_to_postcode_id# <<<
