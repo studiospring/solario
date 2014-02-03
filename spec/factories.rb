@@ -21,7 +21,7 @@ FactoryGirl.define do
     entries 1000
     date_from '20101003'
     date_to '20140114'
-    #significance 0
+    significance 0
   end
 
   factory :pv_query do

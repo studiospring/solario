@@ -137,7 +137,6 @@ class PvOutput
   end# >>>
   #return hash of system data or hash with nil values upon failure
   #keep as class method for flexibility
-  #TODO: untested, unfinished. Query by system id and dates after donating
   def self.get_statistic(query_params = {})# <<<
     response = self.request('getstatistic', query_params)
     #total_output is in watt hours
