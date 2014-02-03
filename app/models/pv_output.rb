@@ -93,14 +93,15 @@ class PvOutput
     params = { 'q'        => query,
                'country'  => 'Australia' }
     response = self.request('search', params)
+    response.chomp!
     results = Array.new
     keys = [ 'name', 'system_watts', 'postcode', 'orientation', 'entries', 'last_entry', 'id', 'panel', 'inverter', 'distance', 'latitude', 'longitude' ]
     response.split("\n").each do |system_string|
       #merges keys and system data to hash
       results << Hash[keys.zip system_string.split(/,/)]
     end
-    postcode = Postcode.find_by pcode: query.split(' ')[0].to_i
-    postcode.update_urban?(results)
+    #postcode = Postcode.find_by pcode: query.split(' ')[0].to_i
+    #postcode.update_urban?(results)
     return results
   end# >>>
   #returns hash of system info data
