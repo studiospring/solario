@@ -34,7 +34,6 @@ class PvOutput
   end# >>>
   #return actual average annual output (kWh)
   #TODO: does not check for missing data
-  #TODO: account for output from secondary panels
   def output_pa# <<<
     date_from = Date.parse(self.date_from)
     date_to = Date.parse(self.date_to)
@@ -75,7 +74,7 @@ class PvOutput
     top5 = candidate_systems[0, 5]
     shaded_systems = Array.new
     top5.each do |system|
-      if system['entries'].to_i >= 100
+      if system['entries'].to_i >= 100 && system['panel_count'] == 'NaN'
         system_info = self.get_system(system['id'])
         if system_info['shade'] == 'No'
           similar_system = system_info.merge(system)
@@ -110,7 +109,6 @@ class PvOutput
     return results
   end# >>>
   #returns hash of system info data
-  #TODO: query by system id after donating
   def self.get_system(id)# <<<
     response = self.request('getsystem', {sid1: id})
     keys = [ 'system_watts', 'panel_count', 'panel_watts', 'orientation', 'tilt', 'shade', 'install_date', 'sec_panel_count', 'sec_panel_watts', 'sec_bearing', 'sec_tilt' ]
