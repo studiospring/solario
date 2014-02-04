@@ -1,7 +1,20 @@
 require 'spec_helper'
 
 describe PvOutput do
-  let(:pvo) { FactoryGirl.create(:pv_output) }
+  before { @pvo = PvOutput.new(
+    {'system_watts' => '2345',
+    'postcode' => '1234',
+    'orientation' => 'N',
+    'tilt' => '23',
+    'shade' => 'No',
+    'total_output' => '54433',
+    'efficiency' => '3.358',
+    'entries' => '1000',
+    'date_from' => '20101003',
+    'date_to' => '20140114',
+    'significance' => 0}
+  ) }
+  subject { @pvo }
 
   #stubs are defined in spec_helper.rb
   describe 'output_pa' do
@@ -9,10 +22,11 @@ describe PvOutput do
   end
   describe 'find_similar_sytem' do# <<<
     it "should return hash if similar system is found" do
-      pending 'query by id'
+      PvOutput.find_similar_system("4870 +NW").should == 
+        {}
     end
     it "should return empty hash if system not found" do
-      pending 'query by id'
+      PvOutput.find_similar_system("1234 +S").should == {}
     end
   end# >>>
   describe 'search' do# <<<
@@ -48,8 +62,13 @@ describe PvOutput do
   end# >>>
   describe 'get_statistic' do# <<<
     it 'returns hash of system data from pvoutput.org' do
-      query_params = { sid1: '1000', date_from: '20100901', date_to: '20100930' }
-      PvOutput.get_statistic(query_params).should == '246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916'
+      query_params = { sid1: '1000', date_from: '20100901', date_to: '20100927' }
+      PvOutput.get_statistic(query_params).should == 
+        {'total_output' => '246800', 
+         'efficiency' => '3.358',
+         'date_from' => '20100901', 
+         'date_to' => '20100927'
+        }
     end
   end# >>>
   
