@@ -20,6 +20,14 @@ class PvQuery < ActiveRecord::Base
 
   after_validation :postcode_to_postcode_id
 
+  #return possible system wattage (W)
+  def possible_system_wattage# <<<
+    system_wattage = 0
+    self.panels.each do |panel|
+      system_wattage += panel.possible_wattage
+    end
+    return system_wattage
+  end# >>>
   #return string with which to search pvo
   #e.g. "1234 25km +S 80 tilt"
   def pvo_search_params# <<<
