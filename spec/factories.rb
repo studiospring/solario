@@ -11,14 +11,14 @@ FactoryGirl.define do
   end
 
   factory :pv_output do
-    system_watts 2345
-    postcode 1234
+    system_watts '2345'
+    postcode '1234'
     orientation 'N'
     tilt '23'
     shade 'No'
-    total_output 54433
-    efficiency 3.358
-    entries 1000
+    total_output '54433'
+    efficiency '3.358'
+    entries '1000'
     date_from '20101003'
     date_to '20140114'
     significance 0
