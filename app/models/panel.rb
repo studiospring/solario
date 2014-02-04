@@ -28,6 +28,12 @@ class Panel < ActiveRecord::Base
                           inclusion: {in: 1..500,
                                       message: 'is not a valid number'}
   # >>>
+  #calculate possible system wattage from panel_size
+  def possible_wattage# <<<
+    #polycrystalline silicon, 13.1% module efficiency
+    watts_psm = 130 #per_square_metre
+    return self.panel_size * watts_psm
+  end# >>>
   #convert tilt and bearing to vector notation
   #return hash: vector[:x], [:y], [:z]
   def vector# <<<
