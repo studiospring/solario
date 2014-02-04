@@ -21,7 +21,7 @@ class PvQuery < ActiveRecord::Base
   after_validation :postcode_to_postcode_id
 
   #return possible system wattage (W)
-  def possible_system_wattage# <<<
+  def system_wattage# <<<
     system_wattage = 0
     self.panels.each do |panel|
       system_wattage += panel.possible_wattage

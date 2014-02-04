@@ -57,6 +57,11 @@ describe PvQuery do
       end
     end
   end# >>>
+  describe 'system_wattage' do# <<<
+    it "should calculate the correct value" do
+      @pv_query.system_wattage.should == 455
+    end
+  end# >>>
   describe 'avg_output_pa' do# <<<
     it "should return totals of dni values for entire pv_query" do
       #broken, panel.dni_received_pa(dni_pa) returns wrong value in tests only
