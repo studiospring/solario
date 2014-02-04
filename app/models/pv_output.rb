@@ -32,6 +32,16 @@ class PvOutput
     @total_output = similar_system['total_output']
     @efficiency = nil
   end# >>>
+  #return output_pa divided by system_watts (kWh)
+  def output_per_system_watt# <<<
+    begin #in case output_pa or system_watts is not available
+      output = self.output_pa / self.system_watts.to_i
+    rescue 
+      output = nil
+    else
+      return output
+    end   
+  end# >>>
   #return actual average annual output (kWh)
   #TODO: does not check for missing data
   def output_pa# <<<
