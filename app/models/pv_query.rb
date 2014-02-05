@@ -81,7 +81,7 @@ class PvQuery < ActiveRecord::Base
   #formula is approximation. Cannot confirm accuracy of result yet
   #untested because factory is not set up correctly
   #http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
-  #return volume under graph (MW)
+  #return volume under graph (Wh)
   def output_pa# <<<
     annual_increment = Irradiance.annual_increment
     daily_increment = Irradiance.daily_increment
@@ -95,7 +95,7 @@ class PvQuery < ActiveRecord::Base
       #vol = 0.25 * length_of_insolation_reading * readings_per_annual_increment * column.inject(:+)
       total_volume = total_volume + (volume_constant * column.inject(:+))
     end
-    return (total_volume * 0.000001).round #convert to MW
+    return (total_volume * 3600).round #convert to Wh
   end# >>>
   #protected
     #convert output_pa_array to nested array of graph's column heights

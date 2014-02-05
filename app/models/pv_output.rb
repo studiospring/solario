@@ -2,12 +2,12 @@ class PvOutput
   require 'uri'
   require 'open-uri'
   attr_accessor :id,
-    :system_watts, #called 'system size' in pvoutput.org
+    :system_watts, #called 'system size' in pvoutput.org (W)
     :postcode,
     :orientation,
     :tilt,
     :shade,
-    :total_output, #called 'energy generated' in pvoutput.org
+    :total_output, #called 'energy generated' in pvoutput.org (Wh)
     :efficiency,
     :entries, #called 'outputs' in pvoutput.org
     :date_from, #retrieved from 'install_date' and 'date_from'
@@ -32,7 +32,7 @@ class PvOutput
     @total_output = similar_system['total_output']
     @efficiency = nil
   end# >>>
-  #return output_pa divided by system_watts (kWh)
+  #return output_pa divided by system_watts (Wh)
   def output_per_system_watt# <<<
     begin #in case output_pa or system_watts is not available
       output = self.output_pa / self.system_watts.to_i
@@ -42,7 +42,7 @@ class PvOutput
       return output
     end   
   end# >>>
-  #return actual average annual output (kWh)
+  #return actual average annual output (Wh) from pvo's energy generated
   #TODO: does not check for missing data
   def output_pa# <<<
     date_from = Date.parse(self.date_from)
@@ -55,7 +55,7 @@ class PvOutput
       query_params = { sid1: self.id, date_from: start_date, date_to: self.date_to }
       stats = self.class.get_statistic(query_params)
       avg_output_pa = stats['total_output'].to_i / year_count
-      return (avg_output_pa / 1000).round
+      return avg_output_pa
     else
       return nil
     end
