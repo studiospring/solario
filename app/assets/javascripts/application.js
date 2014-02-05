@@ -17,4 +17,5 @@
 //= require jsapi
 //= require visualization
 //= require jquery.validate.min
+//= require bootstrap
 //= require_tree .

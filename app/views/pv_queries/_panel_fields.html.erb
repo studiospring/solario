@@ -4,11 +4,13 @@
     <div class="form-group">
       <%= f.label :bearing, 'Bearing', class: 'control-label' %>
       <%= f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input form-control', autocomplete: 'off' %> <sup>&deg;</sup>
+      <span id="bearing-tooltip" class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Use true north (from a map) not magnetic north"></span>
     </div>
 
     <div class="form-group">
       <%= f.label :tilt, 'Tilt', class: 'control-label' %>
       <%= f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input form-control', autocomplete: 'off' %> <sup>&deg;</sup>
+      <span id="tilt-tooltip" class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="Enter the angle measured from the horizontal"></span>
     </div>
 
     <div class="form-group">

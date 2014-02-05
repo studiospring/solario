@@ -3,6 +3,8 @@
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 ready = ->
   $('#enable_js').hide()
+  $('#new_pv_query .glyphicon').tooltip()
+  
   form = $('#new_pv_query')
   form_validation = form.validate# <<<
     #debug: true,

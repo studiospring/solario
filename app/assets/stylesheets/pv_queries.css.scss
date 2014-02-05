@@ -2,7 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 /* Small devices (tablets, 768px and up) */
+$panel_blue: #1A3771;
 #new_pv_query{
+  .glyphicon{
+    font-size: 1.6em;
+    color: $panel_blue;
+  }
+  .tooltip-arrow{
+    border-right-color: $panel_blue;
+  }
+  .tooltip-inner{
+    background-color: $panel_blue;
+  }
   .control-label{
     width: 7em; /* keep form labels from being crushed at small screen sizes */
     margin-top: .5em;
