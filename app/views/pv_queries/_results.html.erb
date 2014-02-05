@@ -12,7 +12,7 @@ index<% end %>
     <li>area: <%= panel.panel_size %>m<sup>2</sup></li>
   </ul>
 <% end %>
-<p>System size for given panel area: <%= number_to_human(@pv_query.system_watts, units: :W) %></p>
+<p>Approximate system size for given panel area: <%= number_to_human(@pv_query.system_watts, units: :W) %></p>
 <p>@search_params: <%= @search_params.inspect %></p>
 <p>@candidate_systems: <%= @candidate_systems.inspect %></p>
 <p>@get_system: <%= @get_system.inspect %></p>

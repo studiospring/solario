@@ -31,8 +31,8 @@ class Panel < ActiveRecord::Base
   #calculate possible system wattage from panel_size (W)
   def possible_watts# <<<
     #polycrystalline silicon, 13.1% module efficiency
-    watts_psm = 130 #per_square_metre
-    return self.panel_size * watts_psm
+    power_density = 130 #watts per_square_metre
+    return self.panel_size * power_density
   end# >>>
   #convert tilt and bearing to vector notation
   #return hash: vector[:x], [:y], [:z]
