@@ -57,6 +57,11 @@ describe PvQuery do
       end
     end
   end# >>>
+  describe 'empirical_output_pa' do
+    it "should return the correct value" do
+      @pv_query.empirical_output_pa(100).should == 45500
+    end
+  end
   describe 'system_watts' do# <<<
     it "should calculate the correct value" do
       @pv_query.system_watts.should == 455
