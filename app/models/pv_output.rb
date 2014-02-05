@@ -33,7 +33,7 @@ class PvOutput
     @efficiency = nil
   end# >>>
   #return output_pa divided by system_watts (Wh)
-  def output_per_system_watt# <<<
+  def output_per_system_watts# <<<
     begin #in case output_pa or system_watts is not available
       output = self.output_pa / self.system_watts.to_i
     rescue 

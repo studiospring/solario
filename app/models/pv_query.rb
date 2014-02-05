@@ -20,9 +20,9 @@ class PvQuery < ActiveRecord::Base
 
   after_validation :postcode_to_postcode_id
 
-  #return pv_query output_pa (kWh) derived from pvo empirical data
-  def empirical_output_pa(pvo_output_per_system_watt)# <<<
-    return (self.system_wattage * pvo_output_per_system_watt / 1000).round
+  #return pv_query output_pa (Wh) derived from pvo empirical data
+  def empirical_output_pa(pvo_output_per_system_watts)# <<<
+    return (self.system_watts * pvo_output_per_system_watts).round
   end# >>>
   #return possible system wattage (W)
   def system_watts# <<<
