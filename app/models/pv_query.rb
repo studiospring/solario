@@ -25,10 +25,10 @@ class PvQuery < ActiveRecord::Base
     return (self.system_wattage * pvo_output_per_system_watt / 1000).round
   end# >>>
   #return possible system wattage (W)
-  def system_wattage# <<<
+  def system_watts# <<<
     system_wattage = 0
     self.panels.each do |panel|
-      system_wattage += panel.possible_wattage
+      system_wattage += panel.possible_watts
     end
     return system_wattage
   end# >>>

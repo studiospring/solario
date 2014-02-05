@@ -29,7 +29,7 @@ class Panel < ActiveRecord::Base
                                       message: 'is not a valid number'}
   # >>>
   #calculate possible system wattage from panel_size (W)
-  def possible_wattage# <<<
+  def possible_watts# <<<
     #polycrystalline silicon, 13.1% module efficiency
     watts_psm = 130 #per_square_metre
     return self.panel_size * watts_psm

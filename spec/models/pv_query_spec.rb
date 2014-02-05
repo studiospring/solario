@@ -57,9 +57,9 @@ describe PvQuery do
       end
     end
   end# >>>
-  describe 'system_wattage' do# <<<
+  describe 'system_watts' do# <<<
     it "should calculate the correct value" do
-      @pv_query.system_wattage.should == 455
+      @pv_query.system_watts.should == 455
     end
   end# >>>
   describe 'output_pa_array' do# <<<

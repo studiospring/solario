@@ -76,9 +76,9 @@ describe Panel do
     #before { @panel.pv_query_id = nil }
     #it { should_not be_valid }
   #end# >>>
-  describe 'possible_wattage' do# <<<
+  describe 'possible_watts' do# <<<
     it "should calculate correct value" do
-      @panel.possible_wattage.should == 4030
+      @panel.possible_watts.should == 4030
     end
   end# >>>
   describe 'vector instance method' do# <<<
