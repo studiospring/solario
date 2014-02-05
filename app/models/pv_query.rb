@@ -82,7 +82,7 @@ class PvQuery < ActiveRecord::Base
   #untested because factory is not set up correctly
   #http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
   #return volume under graph (MW)
-  def total_output_pa# <<<
+  def output_pa# <<<
     annual_increment = Irradiance.annual_increment
     daily_increment = Irradiance.daily_increment
     #15hrs in seconds divided by number of data intervals per day

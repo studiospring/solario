@@ -1,5 +1,5 @@
 ready = ->
-  $('#content').html("<%=j render partial: "results", locals: {output_pa: @output_pa} %>")
+  $('#content').html("<%=j render partial: "results", locals: {output_pa_array: @output_pa_array} %>")
   #draw graph# <<<
   data = null
   graph = null

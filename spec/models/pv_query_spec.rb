@@ -74,9 +74,9 @@ describe PvQuery do
       end
     end
   end# >>>
-  describe 'total_output_pa' do# <<<
+  describe 'output_pa_array' do# <<<
     it "should return the volume under the graph" do
-      @pv_query.total_output_pa.should == '1234'
+      @pv_query.output_pa_array.should == '1234'
     end
   end# >>>
   describe 'irradiance.time_zone_corrected_dni method' do# <<<

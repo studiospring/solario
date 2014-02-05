@@ -15,9 +15,9 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.new(pv_query_params)
 
     if @pv_query.save
-      @output_pa = @pv_query.output_pa_array.join(' ') #convert from array to string
+      @output_pa_array = @pv_query.output_pa_array.join(' ') #convert from array to string
       #@column_heights = @pv_query.column_heights
-      @total_output_pa = @pv_query.total_output_pa
+      @output_pa = @pv_query.output_pa
       @query_params = @pv_query.panels
       @search_params = @pv_query.pvo_search_params
       @candidate_systems = PvOutput.search(@search_params)
@@ -31,7 +31,7 @@ class PvQueriesController < ApplicationController
         @empirical_output_pa = @pv_query.empirical_output_pa(@pvo_system.output_per_system_watt)
       end
 
-      respond_with({output_pa: @output_pa}, location: new_pv_query_url)
+      respond_with({output_pa_array: @output_pa_array}, location: new_pv_query_url)
     else
       render 'new'
     end
