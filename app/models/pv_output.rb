@@ -37,7 +37,7 @@ class PvOutput
     begin #in case output_pa or system_watts is not available
       output = self.output_pa / self.system_watts.to_i
     rescue 
-      output = nil
+      output = 0
     else
       return output
     end   
@@ -48,7 +48,6 @@ class PvOutput
     date_from = Date.parse(self.date_from)
     date_to = Date.parse(self.date_to)
     entries_period = (date_to - date_from).to_i #in days
-    #return entries_period
     if entries_period >= 365
       #find date exactly n years before date_to
       year_count = (entries_period / 365).to_i
@@ -58,7 +57,6 @@ class PvOutput
       avg_output_pa = stats['total_output'].to_i / year_count
       return (avg_output_pa / 1000).round
     else
-      #TODO: get data for part of year?
       return nil
     end
   end# >>>
@@ -84,6 +82,7 @@ class PvOutput
     top5 = candidate_systems[0, 5]
     shaded_systems = Array.new
     top5.each do |system|
+      #get rid of systems with secondary panels
       if system['entries'].to_i >= 100 && system['panel_count'] == 'NaN'
         system_info = self.get_system(system['id'])
         if system_info['shade'] == 'No'

@@ -20,7 +20,7 @@ class PvQueriesController < ApplicationController
       @total_output_pa = @pv_query.total_output_pa
       @query_params = @pv_query.panels
       @search_params = @pv_query.pvo_search_params
-      #@candidate_systems = PvOutput.search(@search_params)
+      @candidate_systems = PvOutput.search(@search_params)
       #@get_system = PvOutput.get_system(453)
       ##call search, candidate_systems...
       @similar_system = PvOutput.find_similar_system(@search_params)
@@ -28,7 +28,7 @@ class PvQueriesController < ApplicationController
         @pvo_system = PvOutput.new(@similar_system)
         #define other attributes by calling get_statistic
         @pvo_system.get_stats
-        #@pvo_system.output_pa
+        @empirical_output_pa = @pv_query.empirical_output_pa(@pvo_system.output_per_system_watt)
       end
 
       respond_with({output_pa: @output_pa}, location: new_pv_query_url)

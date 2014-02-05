@@ -20,6 +20,10 @@ class PvQuery < ActiveRecord::Base
 
   after_validation :postcode_to_postcode_id
 
+  #return pv_query output_pa (kWh) derived from pvo empirical data
+  def empirical_output_pa(pvo_output_per_system_watt)# <<<
+    return (self.system_wattage * pvo_output_per_system_watt / 1000).round
+  end# >>>
   #return possible system wattage (W)
   def system_wattage# <<<
     system_wattage = 0
@@ -77,7 +81,7 @@ class PvQuery < ActiveRecord::Base
   #formula is approximation. Cannot confirm accuracy of result yet
   #untested because factory is not set up correctly
   #http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
-  #return volume under graph (kW)
+  #return volume under graph (MW)
   def total_output_pa# <<<
     annual_increment = Irradiance.annual_increment
     daily_increment = Irradiance.daily_increment
@@ -88,11 +92,9 @@ class PvQuery < ActiveRecord::Base
     volume_constant = 0.25 * length_of_insolation_reading * readings_per_annual_increment
     total_volume = 0
     self.column_heights.each do |column|
-      #dummy = 2
       #vol = 0.25 * length_of_insolation_reading * readings_per_annual_increment * column.inject(:+)
       total_volume = total_volume + (volume_constant * column.inject(:+))
     end
-    #return dummy 
     return (total_volume * 0.000001).round #convert to MW
   end# >>>
   #protected
