@@ -15,7 +15,7 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.new(pv_query_params)
 
     if @pv_query.save
-      @output_pa = @pv_query.avg_output_pa.join(' ') #convert from array to string
+      @output_pa = @pv_query.output_pa_array.join(' ') #convert from array to string
       #@column_heights = @pv_query.column_heights
       @total_output_pa = @pv_query.total_output_pa
       @query_params = @pv_query.panels

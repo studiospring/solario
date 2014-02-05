@@ -51,7 +51,7 @@ class PvQuery < ActiveRecord::Base
   end# >>>
   #return array of combined output for all panels in pv array
   #array must be converted to string to be used by graph (join(' '))
-  def avg_output_pa# <<<
+  def output_pa_array# <<<
     #return self.postcode_id
     postcode_id = self.postcode.try('id')
     if postcode_id.nil?
@@ -98,12 +98,12 @@ class PvQuery < ActiveRecord::Base
     return (total_volume * 0.000001).round #convert to MW
   end# >>>
   #protected
-    #convert avg_output_pa array to nested array of graph's column heights
+    #convert output_pa_array to nested array of graph's column heights
     #returns [[a, b, f, g], [b, c, g, h]...]
     def column_heights# <<<
       annual_increment = Irradiance.annual_increment
       daily_increment = Irradiance.daily_increment
-      graph_array = self.avg_output_pa
+      graph_array = self.output_pa_array
       #[[jan1, jan2...], [feb1, feb2...]...]
       data_by_month = Array.new
       annual_increment.times { data_by_month << graph_array.shift(daily_increment) }

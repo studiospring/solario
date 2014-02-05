@@ -62,15 +62,15 @@ describe PvQuery do
       @pv_query.system_wattage.should == 455
     end
   end# >>>
-  describe 'avg_output_pa' do# <<<
+  describe 'output_pa_array' do# <<<
     it "should return totals of dni values for entire pv_query" do
       #broken, panel.dni_received_pa(dni_pa) returns wrong value in tests only
-      @pv_query.avg_output_pa.should == '1 2'
+      @pv_query.output_pa_array.should == '1 2'
     end
     describe 'when no associated postcode is found' do
       before { @pv_query.postcode = nil }
       it "should not raise an error" do
-        lambda { @pv_query.avg_output_pa }.should_not raise_error
+        lambda { @pv_query.output_pa_array }.should_not raise_error
       end
     end
   end# >>>
