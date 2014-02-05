@@ -25,3 +25,10 @@ en:
     submit:
       create: "Add %{model}"
       update: "Update %{model}"
+
+  Wh:
+    unit: "Wh"
+    thousand: "kWh"
+    million: "MWh"
+    billion: "GWh"
+    trillion: "TWh"
