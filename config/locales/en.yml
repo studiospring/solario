@@ -26,6 +26,13 @@ en:
       create: "Add %{model}"
       update: "Update %{model}"
 
+  W:
+    unit: "W"
+    thousand: "kW"
+    million: "MW"
+    billion: "GW"
+    trillion: "TW"
+
   Wh:
     unit: "Wh"
     thousand: "kWh"
