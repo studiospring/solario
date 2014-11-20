@@ -14,3 +14,4 @@ script/*
 config/database.yml 
 config/secrets.yml 
 .secret
+.mailmap
