@@ -21,26 +21,26 @@ class PvQuery < ActiveRecord::Base
   after_validation :postcode_to_postcode_id
 
   #return pv_query output_pa (Wh) derived from pvo empirical data
-  def empirical_output_pa(pvo_output_per_system_watts)# <<<
+  def empirical_output_pa(pvo_output_per_system_watts)
     return (self.system_watts * pvo_output_per_system_watts).round
-  end# >>>
+  end
   #return possible system wattage (W)
-  def system_watts# <<<
+  def system_watts
     system_wattage = 0
     self.panels.each do |panel|
       system_wattage += panel.possible_watts
     end
     return system_wattage
-  end# >>>
+  end
   #return string with which to search pvo
   #e.g. "1234 25km +S 80 tilt"
-  def pvo_search_params# <<<
+  def pvo_search_params
     #too many params causes nil query result even when system exists
     #{self.pvo_search_distance} #{self.northmost_facing_panel.tilt} tilt
     params = "#{self.postcode.pcode} +#{self.pvo_orientation}"
-  end# >>>
+  end
   #change postcode param to postcode_id
-  def postcode_to_postcode_id# <<<
+  def postcode_to_postcode_id
     #prevent other postcodes from being queried bc no data available
     #postcode = Postcode.where('pcode = ?', 1234).select('id').first
     postcode = Postcode.where('pcode = ?', self.postcode_id).select('id').first
@@ -48,10 +48,10 @@ class PvQuery < ActiveRecord::Base
     unless postcode.nil?
       self.postcode_id = postcode.id
     end
-  end# >>>
+  end
   #return array of combined output for all panels in pv array
   #array must be converted to string to be used by graph (join(' '))
-  def output_pa_array# <<<
+  def output_pa_array
     #return self.postcode_id
     postcode_id = self.postcode.try('id')
     if postcode_id.nil?
@@ -77,12 +77,12 @@ class PvQuery < ActiveRecord::Base
       #add direct and diffuse inputs of all panels, factor in efficiency
       return panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).to_f.round(2) }
     end
-  end# >>>
+  end
   #formula is approximation. Cannot confirm accuracy of result yet
   #untested because factory is not set up correctly
   #http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
   #return volume under graph (Wh)
-  def output_pa# <<<
+  def output_pa
     annual_increment = Irradiance.annual_increment
     daily_increment = Irradiance.daily_increment
     #15hrs in seconds divided by number of data intervals per day
@@ -96,11 +96,11 @@ class PvQuery < ActiveRecord::Base
       total_volume = total_volume + (volume_constant * column.inject(:+))
     end
     return (total_volume * 3600).round #convert to Wh
-  end# >>>
+  end
   #protected
     #convert output_pa_array to nested array of graph's column heights
     #returns [[a, b, f, g], [b, c, g, h]...]
-    def column_heights# <<<
+    def column_heights
       annual_increment = Irradiance.annual_increment
       daily_increment = Irradiance.daily_increment
       graph_array = self.output_pa_array
@@ -124,9 +124,9 @@ class PvQuery < ActiveRecord::Base
         end
       end
       return columns
-    end# >>>
+    end
   #return bearing that faces closest to north in pvo readable format
-  def pvo_orientation# <<<
+  def pvo_orientation
     orientation = 'N'
     case self.northmost_facing_panel.bearing
       when 337.5..360, 0..22.5
@@ -149,7 +149,7 @@ class PvQuery < ActiveRecord::Base
     return orientation
   end#>>>
   #return panel obj that faces closest to north in one pvquery system
-  def northmost_facing_panel# <<<
+  def northmost_facing_panel
     if self.panels.count > 1
       northmost = self.panels.inject do |current, the_next|
         current.bearing.deg_to_north <= the_next.bearing.deg_to_north ? current : the_next
@@ -158,13 +158,13 @@ class PvQuery < ActiveRecord::Base
       northmost = self.panels.first
     end
     return northmost
-  end# >>>
+  end
   #return optimal distance to search pvo
-  def pvo_search_distance# <<<
+  def pvo_search_distance
     if self.postcode.urban
       dist = '5km'
     else
       dist = '25km'
     end
-  end# >>>
+  end
 end

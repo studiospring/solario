@@ -30,7 +30,7 @@ describe Panel do
 
   it { should be_valid }
 
-  #validation# <<<
+  #validation
   describe 'when tilt is not present' do
     before { @panel.tilt = ' ' }
     it { should_not be_valid }
@@ -75,13 +75,13 @@ describe Panel do
   #describe "when pv_query_id is not present" do
     #before { @panel.pv_query_id = nil }
     #it { should_not be_valid }
-  #end# >>>
-  describe 'possible_watts' do# <<<
+  #end
+  describe 'possible_watts' do
     it "should calculate correct value" do
       @panel.possible_watts.should == 4030
     end
-  end# >>>
-  describe 'vector instance method' do# <<<
+  end
+  describe 'vector instance method' do
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
       #when bearing is 150 deg
@@ -95,8 +95,8 @@ describe Panel do
       #when tilt is 60 deg
       @panel.vector[:z].should be_within(0.001).of(0.5)
     end
-  end# >>>
-  describe 'dni_received_pa method' do# <<<
+  end
+  describe 'dni_received_pa method' do
     it "should return correct array" do
       @panel.dni_received_pa(irradiance.direct[0..-8])[5].should == 6.82 #correct time_zone difference
     end
@@ -108,8 +108,8 @@ describe Panel do
         lambda { @panel.dni_received_pa(irradiance.direct[0..-8]) }.should_not raise_error
       end
     end
-  end# >>>
-  describe 'dni_hash_received_pa method' do# <<<
+  end
+  describe 'dni_hash_received_pa method' do
     before do
       @dni_pa = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
     end
@@ -117,21 +117,21 @@ describe Panel do
       pending 'if this method is really necessary'
       #@panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
     end
-  end# >>>
-  describe 'avg_efficiency method' do# <<<
+  end
+  describe 'avg_efficiency method' do
     it "should return correct value" do
       Panel.avg_efficiency(20, 0.98).should == 0.83 
     end
-  end# >>>
-  describe 'overall_efficiency' do# <<<
+  end
+  describe 'overall_efficiency' do
     it "should return correct value" do
       Panel.overall_efficiency.should == 0.14
     end
-  end# >>>
-  describe 'diffuse_received_pa method' do# <<<
+  end
+  describe 'diffuse_received_pa method' do
     #before { @panel.annual_dni_received() }
     it "should return a very big array" do
       pending 'dummy data'
     end
-  end# >>>
+  end
 end

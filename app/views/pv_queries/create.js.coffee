@@ -1,6 +1,6 @@
 ready = ->
   $('#content').html("<%=j render partial: "results", locals: {output_pa_array: @output_pa_array} %>")
-  #draw graph# <<<
+  #draw graph
   data = null
   graph = null
   google.load("visualization", "1")

@@ -26,7 +26,7 @@ describe Irradiance do
   it { should be_valid }
 
   #validation
-  describe 'when direct is not present' do# <<<
+  describe 'when direct is not present' do
     before { @irradiance.direct = ' ' }
     it { should_not be_valid }
   end
@@ -38,5 +38,5 @@ describe Irradiance do
   #describe "when pv_query_id is not present" do
     #before { @irradiance.pv_query_id = nil }
     #it { should_not be_valid }
-  #end# >>>
+  #end
 end

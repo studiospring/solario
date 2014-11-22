@@ -15,7 +15,7 @@ describe "Postcodes" do
   before do 
     login_as(admin, :scope => :user)
   end
-  describe 'index page' do# <<<
+  describe 'index page' do
     let(:heading) { 'Postcodes' }
     before { visit postcodes_path }
 
@@ -40,8 +40,8 @@ describe "Postcodes" do
       
       it { should have_selector("h1", text: "Sign in") }
     end
-  end# >>>
-  describe 'new page' do# <<<
+  end
+  describe 'new page' do
     let(:heading) { 'Add postcode' }
     let(:submit) { "Add Postcode" }
     before { visit new_postcode_path }
@@ -92,8 +92,8 @@ describe "Postcodes" do
       
       it { should have_selector("h1", text: "Sign in") }
     end
-  end# >>>
-  describe 'show page' do# <<<
+  end
+  describe 'show page' do
     let(:heading) { 'Postcode' }
     before { visit postcode_path(postcode) }
 
@@ -103,8 +103,8 @@ describe "Postcodes" do
     it { should have_content postcode.pcode }
 
     it { should have_link 'Edit', href: edit_postcode_path(postcode) }
-  end# >>>
-  describe 'edit page' do# <<<
+  end
+  describe 'edit page' do
     let(:heading) { 'Update postcode' }
     let(:submit) { "Update Postcode" }
     before { visit edit_postcode_path(postcode) }
@@ -141,5 +141,5 @@ describe "Postcodes" do
       it { should have_selector("div.alert-success", text: 'Postcode updated') }
       specify { expect(postcode.reload.suburb).to eq new_suburb }
     end
-  end# >>>
+  end
 end

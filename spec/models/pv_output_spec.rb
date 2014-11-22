@@ -20,7 +20,7 @@ describe PvOutput do
   describe 'output_pa' do
     pending 'system id'
   end
-  describe 'find_similar_sytem' do# <<<
+  describe 'find_similar_sytem' do
     it "should return hash if similar system is found" do
       PvOutput.find_similar_system("4870 +NW").should == 
         {}
@@ -28,16 +28,16 @@ describe PvOutput do
     it "should return empty hash if system not found" do
       PvOutput.find_similar_system("1234 +S").should == {}
     end
-  end# >>>
-  describe 'search' do# <<<
+  end
+  describe 'search' do
     it 'returns array of systems from pvoutput.org' do
       PvOutput.search('4280 +NW')[0].should == {"name"=>" Solar 4 US", "system_watts"=>"9360", "postcode"=>"4280", "orientation"=>"NW", "entries"=>"81", "last_entry"=>"2 days ago", "id"=>"249", "panel"=>"Solarfun", "inverter"=>"Aurora", "distance"=>"NaN", "latitude"=>"-27.831402", "longitude"=>"153.028469"}
     end
     it "should update postcode" do
       pending
     end
-  end# >>>
-  describe 'get_system' do# <<<
+  end
+  describe 'get_system' do
     it 'should return system data from pvoutput.org' do
       PvOutput.get_system('100').should == 
         { 'id' => '100',
@@ -54,13 +54,13 @@ describe PvOutput do
           'sec_tilt' => '30.5'
         }
     end
-  end# >>>
-  describe 'get_output' do# <<<
+  end
+  describe 'get_output' do
     it 'returns output of system from pvoutput.org' do
       pending 'query by id'
     end
-  end# >>>
-  describe 'get_statistic' do# <<<
+  end
+  describe 'get_statistic' do
     it 'returns hash of system data from pvoutput.org' do
       query_params = { sid1: '1000', date_from: '20100901', date_to: '20100927' }
       PvOutput.get_statistic(query_params).should == 
@@ -70,6 +70,6 @@ describe PvOutput do
          'date_to' => '20100927'
         }
     end
-  end# >>>
+  end
   
 end

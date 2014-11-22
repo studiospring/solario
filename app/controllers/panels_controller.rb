@@ -1,15 +1,15 @@
 class PanelsController < ApplicationController
   before_filter :require_admin
-  def index# <<<
+  def index
     @panels = Panel.all
-  end# >>>
-  def show# <<<
+  end
+  def show
     @panel = Panel.find(params[:id])
-  end# >>>
-  def edit# <<<
+  end
+  def edit
     @panel = Panel.find(params[:id])
-  end# >>>
-  def update# <<<
+  end
+  def update
     @panel = Panel.find(params[:id])
     if @panel.update(panel_params)
       flash[:success] = 'Panel updated'
@@ -17,15 +17,15 @@ class PanelsController < ApplicationController
     else
       render "edit"
     end
-  end# >>>
-  def destroy# <<<
+  end
+  def destroy
     @panel = Panel.find(params[:id])
     @panel.destroy
     redirect_to panels_url
-  end# >>>
+  end
   private
-    def panel_params# <<<
+    def panel_params
       #enter mass assignable fields here
       params.require(:panel).permit(:tilt, :bearing, :panel_size)
-    end # >>>
+    end 
 end

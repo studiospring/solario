@@ -15,7 +15,7 @@ class Panel < ActiveRecord::Base
 
   belongs_to :pv_query
 
-  validates :tilt,        presence: true, # <<<
+  validates :tilt,        presence: true, 
                           length: { maximum: 2 },
                           numericality: { greater_than_or_equal_to: 0,
                           less_than_or_equal_to: 90 }
@@ -27,37 +27,37 @@ class Panel < ActiveRecord::Base
     #TODO: not producing error on 0. Numericality does not work either.
                           inclusion: {in: 1..500,
                                       message: 'is not a valid number'}
-  # >>>
+  
   #calculate possible system wattage from panel_size (W)
-  def possible_watts# <<<
+  def possible_watts
     #polycrystalline silicon, 13.1% module efficiency
     power_density = 130 #watts per_square_metre
     return self.panel_size * power_density
-  end# >>>
+  end
   #convert tilt and bearing to vector notation
   #return hash: vector[:x], [:y], [:z]
-  def vector# <<<
+  def vector
     vector = Hash.new
     hypotenuse = Math.cos((90 - self.tilt).to_rad).abs
     vector[:x] = hypotenuse * Math.cos(self.bearing.to_rad)
     vector[:y] = hypotenuse * Math.sin(self.bearing.to_rad)
     vector[:z] = Math.sin((90 - self.tilt).to_rad)
     return vector
-  end# >>>
+  end
   #no longer necessary?
   #return input (Watts/sqm) for one hr from direct normal irradiance (dni)
-  def hourly_direct_input(hourly_dni)# <<<
+  def hourly_direct_input(hourly_dni)
     input = hourly_dni * Math.cos(self.relative_angle())
-  end# >>>
+  end
   #return output of solar panel (kWh)
-  def hourly_output# <<<
+  def hourly_output
     output = self.hourly_direct_input(dni)
-  end# >>>
+  end
   #return array of hourly Direct Normal Insolation received by panel over the
   #course of 1 year (in kW) [0, 2.4, 3.0, ...]
   #0 kW values must be included so that time can be calculated from position in string
   #use this instead of dni_hash_received_pa because graph uses string format 
-  def dni_received_pa(time_zone_corrected_dni_pa)# <<<
+  def dni_received_pa(time_zone_corrected_dni_pa)
     annual_increment = Irradiance.annual_increment
     days_in_increment = (365 / annual_increment).round
     begin #in case there is no postcode
@@ -92,14 +92,14 @@ class Panel < ActiveRecord::Base
       end
       return dni_received_pa
     end
-  end# >>>
+  end
   #return hash of hourly Direct Normal Insolation received by panel over the
   #course of 1 year (in kW)
   #{ day1: [kW1, kW2...]... }
   #0 kW values must be included so that time can be calculated from position in array
   #dni_pa is irradiances.direct ( string )
   #currently broken
-  def dni_hash_received_pa(dni_pa)# <<<
+  def dni_hash_received_pa(dni_pa)
     annual_increment = Irradiance.annual_increment
     days_in_increment = (365 / annual_increment).round
     dni_received_pa_hash = dni_pa.data_string_to_hash(annual_increment)
@@ -122,12 +122,12 @@ class Panel < ActiveRecord::Base
       sun.day = sun.day + days_in_increment
     end
     return dni_received_pa_hash
-  end# >>>
+  end
   #return array of hourly diffuse insolation received by panel over the course
   #of 1 year (in kW)
   #[kWh1, kWh2...]
   #0 KWh values must be included so that time can be calculated from position in array
-  def diffuse_received_pa# <<<
+  def diffuse_received_pa
     #TODO: refactor, add test
     #no diffuse data in database, so cannot debug
     irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.pv_query.postcode_id).first
@@ -136,10 +136,10 @@ class Panel < ActiveRecord::Base
     diffuse_array = diffuse.split(" ").map { |s| s.to_i }
     diffuse_array.collect! { |value| (value * self.panel_size).to_i }
     return diffuse_array
-  end# >>>
+  end
   #currently not in use
   #add annual insolation hash to return total energy received
-  def self.annual_received_total(annual_received_hash)# <<<
+  def self.annual_received_total(annual_received_hash)
     annual_total = 0
     annual_received_hash. each do |day, hourly_dni|
       #add array
@@ -147,34 +147,34 @@ class Panel < ActiveRecord::Base
       annual_total = annual_total + daily_total
     end
     return annual_total
-  end# >>>
+  end
   #http://www.greenrhinoenergy.com/solar/technologies/pv_energy_yield.php
   #pre = preconversion efficiency, sys = system efficiency, rel = relative
   #module efficiency, nom = nominal module efficiency
   #nominal (and sometimes relative) module efficiency is available from panel spec sheets
   #TODO:refactor to panel_brand model if efficiencies vary greatly with brand
-  def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)# <<<
+  def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)
     (pre * sys * rel * nom).round(2)
-  end# >>>
+  end
   #dummy method
   #currently no data to confirm solar panels behave this way!
   #efficiency must have 0 in front! eg 0.99
-  def self.avg_efficiency(lifespan, overall_efficiency)# <<<
+  def self.avg_efficiency(lifespan, overall_efficiency)
     total_efficiency = 0
     lifespan.times do |year|
       total_efficiency = total_efficiency + overall_efficiency ** year
     end
     avg = (total_efficiency / lifespan).round(2)
-  end# >>>
+  end
   #return angle of incident light relative to panel in radians (where 0 is
   #directly perpendicular to panel surface)
-  def relative_angle(sun_vector)# <<<
+  def relative_angle(sun_vector)
     panel_vector = self.vector
     angle = Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) * Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
-  end# >>>
+  end
   #TODO: apparently above method is not accurate, try different formula
   #http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
-  def relative_angle2(sun_vector)# <<<
+  def relative_angle2(sun_vector)
     panel_vector = self.vector
 
     #dot_product(a,b) == length(a) * length(b) * cos(angle)
@@ -187,10 +187,10 @@ class Panel < ActiveRecord::Base
 #c = dot_product(a,b)
 #angle = atan2(s, c)
     
-  end# >>>
+  end
   #return insolation received by 1sqm module via vector method
   #S_module = S_incident * cos(relative_angle)
-  def panel_insolation(incident_light, relative_angle)# <<<
+  def panel_insolation(incident_light, relative_angle)
     #calculate only if relative angle <= 90 degrees, else return 0
     if relative_angle <= 1.57
       insolation_received = (incident_light * Math.cos(relative_angle)).round(2)      
@@ -198,5 +198,5 @@ class Panel < ActiveRecord::Base
       insolation_received = 0
     end
     return insolation_received
-  end# >>>
+  end
 end

@@ -13,7 +13,7 @@ describe "Authentication" do
     #cannot access helpers without calling 'ApplicationController...'
     it { should have_title(ApplicationController.helpers.full_title(heading)) }
   end
-  describe 'admin login page' do# <<<
+  describe 'admin login page' do
     let(:heading) { 'Sign in' }
     let(:submit) { "Sign in" }
     before do
@@ -46,8 +46,8 @@ describe "Authentication" do
         it { should have_link 'Login' }
       end
     end
-  end# >>>
-  describe 'admin edit page' do# <<<
+  end
+  describe 'admin edit page' do
     let(:heading) { 'Edit profile' }
     let(:submit) { "Update" }
     before do
@@ -58,5 +58,5 @@ describe "Authentication" do
     it_should_behave_like 'all authentication pages'
     it { should have_button(submit) }
     Warden.test_reset! 
-  end# >>>
+  end
 end

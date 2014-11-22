@@ -8,7 +8,7 @@ describe "<%= class_name.pluralize %>" do
   shared_examples_for "all <%= plural_table_name %> pages" do
     it { should have_selector('h1', text: heading) }
   end
-  describe '<%= action %> page' do# <<<
+  describe '<%= action %> page' do
     let(:heading) { '<%= class_name %>' }
     before { visit postcodes_path }
 
@@ -25,7 +25,7 @@ describe "<%= class_name.pluralize %>" do
     end
 
     it { should have_link 'Add postcode', href: new_postcode_path }
-  end# >>>
+  end
   describe "GET /<%= table_name %>" do
     it "works! (now write some real specs)" do
 <% if webrat? -%>

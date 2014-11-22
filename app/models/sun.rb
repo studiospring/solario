@@ -16,7 +16,7 @@ class Sun
   #return hash: vector[:x], [:y], [:z]
   #insert 24hr hourly time: 9, 12, 13 ...
   #eg 13.5 is 13:30pm
-  def vector# <<<
+  def vector
     lst = self.to_lst
     hra = self.hra
     vector = Hash.new
@@ -27,21 +27,21 @@ class Sun
     vector[:y] = hypotenuse * Math.sin(az)
     vector[:z] = Math.sin(elev)
     return vector
-  end# >>>
+  end
   #return declination in radians
-  def declination# <<<
+  def declination
     declination = Math.asin(0.3979486313076103 * Math.sin(0.017214206 * (self.day - 81))).abs
-  end# >>>
+  end
   #input hra in degrees bc degs is easier to understand
   #return elevation of sun in radians
-  def elevation# <<<
+  def elevation
     dec = self.declination
     lat = self.latitude.to_rad
     elevation = Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(self.hra.to_rad))
-  end# >>>
+  end
   #input hra in degrees bc degs is easier to understand
   #return azimuth in radians
-  def azimuth# <<<
+  def azimuth
     dec = self.declination
     lat = self.latitude.to_rad
     hra = self.hra.to_rad
@@ -52,5 +52,5 @@ class Sun
       azimuth = 0
     end
     return azimuth
-  end# >>>
+  end
 end

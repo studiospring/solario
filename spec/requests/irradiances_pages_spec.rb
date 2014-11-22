@@ -17,7 +17,7 @@ describe "Irradiances" do
   before do 
     login_as(admin, :scope => :user)
   end
-  describe 'index page' do# <<<
+  describe 'index page' do
     let(:heading) { 'Irradiances' }
     before { visit irradiances_path }
 
@@ -50,8 +50,8 @@ describe "Irradiances" do
       
       it { should have_selector("h1", text: "Sign in") }
     end
-  end# >>>
-  describe 'new page' do# <<<
+  end
+  describe 'new page' do
     let(:heading) { 'Add Irradiance' }
     let(:submit) { "Add Irradiance" }
     before { visit new_irradiance_path }
@@ -103,8 +103,8 @@ describe "Irradiances" do
       
       it { should have_selector("h1", text: "Sign in") }
     end
-  end# >>>
-  describe 'show page' do# <<<
+  end
+  describe 'show page' do
     let(:heading) { 'Irradiance' }
     let(:heading) { 'Irradiance' }
     before { visit irradiance_path(irradiance) }
@@ -123,8 +123,8 @@ describe "Irradiances" do
       
       it { should have_selector("h1", text: "Sign in") }
     end
-  end# >>>
-  describe 'edit page' do# <<<
+  end
+  describe 'edit page' do
     let(:heading) { 'Update Irradiance' }
     let(:submit) { "Update Irradiance" }
     before { visit edit_irradiance_path(irradiance) }
@@ -165,5 +165,5 @@ describe "Irradiances" do
       
       it { should have_selector("h1", text: "Sign in") }
     end
-  end# >>>
+  end
 end

@@ -17,7 +17,7 @@ describe Postcode do
   before { @postcode = Postcode.new(pcode: 4321, suburb: 'Simsville', state: 'WA', latitude: -12.123123, longitude: 123.456789, urban: false) }
   subject { @postcode }
 
-  it { should respond_to(:pcode) }# <<<
+  it { should respond_to(:pcode) }
   it { should respond_to(:suburb) }
   it { should respond_to(:state) }
   it { should respond_to(:latitude) }
@@ -88,7 +88,7 @@ describe Postcode do
   describe 'pv_query associations' do
     before { @postcode.save }
     let(:pv_query) { FactoryGirl.create(:pv_query, postcode: @postcode) }
-  end# >>>
+  end
   describe 'update_urban?' do
     describe 'when urban attr is false' do
       before do

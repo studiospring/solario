@@ -16,7 +16,7 @@ describe "Panels" do
   before do 
     login_as(admin, :scope => :user)
   end
-  describe 'index page' do# <<<
+  describe 'index page' do
     let(:heading) { 'Panels' }
     before { visit panels_path }
 
@@ -33,8 +33,8 @@ describe "Panels" do
     end
 
     it { should have_link 'Add panel', href: new_panel_path }
-  end# >>>
-  describe 'show page' do# <<<
+  end
+  describe 'show page' do
     let(:heading) { 'Panel' }
     let(:heading) { 'Panel' }
     before { visit panel_path(panel) }
@@ -45,8 +45,8 @@ describe "Panels" do
     it { should have_content panel.bearing }
 
     it { should have_link 'Edit', href: edit_panel_path(panel) }
-  end# >>>
-  describe 'edit page' do# <<<
+  end
+  describe 'edit page' do
     let(:heading) { 'Update panel' }
     let(:submit) { "Update Panel" }
     before { visit edit_panel_path(panel) }
@@ -78,5 +78,5 @@ describe "Panels" do
       it { should have_selector('h1', text: 'Panel') }
       it { should have_selector("div.alert-success", text: "Panel updated") }
     end
-  end# >>>
+  end
 end

@@ -33,7 +33,7 @@ class Postcode < ActiveRecord::Base
   validates :urban, inclusion: { in: [true, false] }
 
   #update urban attr if postcode has enough pv systems to be considered 'urban'
-  def update_urban?(pvo_query_results)# <<<
+  def update_urban?(pvo_query_results)
     system_count = 0
     #find out how many systems from queried postcode (not including surrounds) are returned
     pvo_query_results.each do |system|
@@ -50,5 +50,5 @@ class Postcode < ActiveRecord::Base
     else
       return false
     end
-  end# >>>
+  end
 end

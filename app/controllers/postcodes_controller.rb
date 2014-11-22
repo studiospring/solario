@@ -1,18 +1,18 @@
 class PostcodesController < ApplicationController
   before_filter :require_admin
-  def index# <<<
+  def index
     @postcodes = Postcode.all.limit(10)
-  end# >>>
-  def show# <<<
+  end
+  def show
     @postcode = Postcode.find(params[:id])
-  end# >>>
-  def new# <<<
+  end
+  def new
     @postcode = Postcode.new
-  end# >>>
-  def edit# <<<
+  end
+  def edit
     @postcode = Postcode.find(params[:id])
-  end# >>>
-  def create# <<<
+  end
+  def create
     @postcode = Postcode.new(postcode_params)
 
     if @postcode.save
@@ -21,8 +21,8 @@ class PostcodesController < ApplicationController
     else
       render "new"
     end
-  end# >>>
-  def update# <<<
+  end
+  def update
     @postcode = Postcode.find(params[:id])
     if @postcode.update(postcode_params)
       flash[:success] = 'Postcode updated'
@@ -30,16 +30,16 @@ class PostcodesController < ApplicationController
     else
       render "edit"
     end
-  end# >>>
-  def destroy# <<<
+  end
+  def destroy
     @postcode = Postcode.find(params[:id])
     @postcode.destroy
     redirect_to postcodes_url
-  end# >>>
+  end
   private
-    def postcode_params# <<<
+    def postcode_params
       #enter mass assignable fields here
       params.require(:postcode).permit(:pcode, :suburb, :state, :latitude, :longitude, :urban)
-    end # >>>
+    end 
 end
 

@@ -31,7 +31,7 @@ describe Sun do
       @sun.lstm.should eq(150)
     end
   end
-  describe 'vector instance method' do# <<<
+  describe 'vector instance method' do
     it "should return correct value for @sun.vector[:x]" do
       @sun.vector[:x].should be_within(0.001).of(0.422625918)
     end
@@ -41,6 +41,6 @@ describe Sun do
     it "should return correct value for @sun.vector[:z]" do
       @sun.vector[:z].should be_within(0.001).of(0.0699772)
     end
-  end# >>>
+  end
 end
 

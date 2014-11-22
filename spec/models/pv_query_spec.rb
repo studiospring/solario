@@ -29,20 +29,20 @@ describe PvQuery do
 
   it { should be_valid }
 
-  describe 'panel association' do# <<<
+  describe 'panel association' do
     it "should return panel attribute" do
       @pv_query.panels.first.tilt.should == 80
     end
-  end# >>>
-  describe 'when postcode_id is not present' do# <<<
+  end
+  describe 'when postcode_id is not present' do
     before { @pv_query.postcode_id = nil }
     it { should_not be_valid }
   end
   describe 'when postcode_id is not a number' do
     before { @pv_query.postcode_id = 'abcd' }
     it { should_not be_valid }
-  end# >>>
-  describe 'panel association' do# <<<
+  end
+  describe 'panel association' do
     before do
       @pv_query.save
     end
@@ -56,18 +56,18 @@ describe PvQuery do
         expect(Panel.where(id: panel.id)).to be_empty
       end
     end
-  end# >>>
+  end
   describe 'empirical_output_pa' do
     it "should return the correct value" do
       @pv_query.empirical_output_pa(100).should == 45500
     end
   end
-  describe 'system_watts' do# <<<
+  describe 'system_watts' do
     it "should calculate the correct value" do
       @pv_query.system_watts.should == 455
     end
-  end# >>>
-  describe 'output_pa_array' do# <<<
+  end
+  describe 'output_pa_array' do
     it "should return totals of dni values for entire pv_query" do
       #broken, panel.dni_received_pa(dni_pa) returns wrong value in tests only
       @pv_query.output_pa_array.should == '1 2'
@@ -78,37 +78,37 @@ describe PvQuery do
         lambda { @pv_query.output_pa_array }.should_not raise_error
       end
     end
-  end# >>>
-  describe 'output_pa_array' do# <<<
+  end
+  describe 'output_pa_array' do
     it "should return the volume under the graph" do
       @pv_query.output_pa_array.should == '1234'
     end
-  end# >>>
-  describe 'irradiance.time_zone_corrected_dni method' do# <<<
+  end
+  describe 'irradiance.time_zone_corrected_dni method' do
     it "should return trimmed string" do
       @pv_query.postcode.irradiance.time_zone_corrected_dni[0..8].should == "0.50 1.66"
     end
-  end# >>>
-  describe 'pvo_search_params' do# <<<
+  end
+  describe 'pvo_search_params' do
     it "should return string of search params" do
       @pv_query.pvo_search_params.should == "1234 +S"
     end
-  end# >>>
-  describe 'pvo_search_distance' do# <<<
+  end
+  describe 'pvo_search_distance' do
     it "should return optimal search distance" do
       @pv_query.pvo_search_distance.should == '25km'
     end
-  end# >>>
-  describe 'pvo_orientation' do# <<<
+  end
+  describe 'pvo_orientation' do
     it "should return orientation as string" do
       @pv_query.pvo_orientation.should == 'S'
     end
-  end# >>>
-  describe 'northmost_facing_panel' do# <<<
+  end
+  describe 'northmost_facing_panel' do
     before { @pv_query.panels.create(tilt: 40, bearing: 30, panel_size: 4.4) }
     it "should return northmost panel object" do
       @pv_query.panels.count.should == 2
       @pv_query.northmost_facing_panel.bearing.should == 30
     end
-  end# >>>
+  end
 end

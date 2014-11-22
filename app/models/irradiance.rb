@@ -24,21 +24,21 @@ class Irradiance < ActiveRecord::Base
   #correct for difference between local timezone and timezone at which
   #insolation measurements were made (AEST)
   #return string of dni values
-  def time_zone_corrected_dni# <<<
+  def time_zone_corrected_dni
     irradiance = Irradiance.select('direct').where('postcode_id = ?', self.postcode_id).first
     self.correct_time_zone_diff(irradiance.direct)
-  end# >>>
+  end
   #correct for difference between local timezone and timezone at which
   #insolation measurements were made (AEST)
   #return string of diffuse insolation values
-  def time_zone_corrected_diffuse# <<<
+  def time_zone_corrected_diffuse
     irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.postcode_id).first
     self.correct_time_zone_diff(irradiance.diffuse)
-  end# >>>
+  end
   protected
     #remove insolation values from beginning or end of day (depending on time zone)
     #so that local time zone and times of insolation measurement match up
-    def correct_time_zone_diff(insolation_string)# <<<
+    def correct_time_zone_diff(insolation_string)
       insolation_array = insolation_string.split(' ')
       annual_increment = Irradiance.annual_increment
       data_count = insolation_array.count #say, 180 
@@ -65,17 +65,17 @@ class Irradiance < ActiveRecord::Base
       end 
       
       return synced_array.flatten.join(' ')
-    end# >>>
+    end
     #set annual increment of insolation data here
-    def self.annual_increment# <<<
+    def self.annual_increment
       return 12
-    end# >>>
+    end
     #set daily increment of insolation data here
     #irradiance data spans 17 hours, but 2 hours are chopped off to account for
     #timezone differences. Graph shows irradiance from 5am to 8pm, local
     #standard time.
     #Currently set at 30min intervals. Therefore (15 * 2) + 1 (fencepost) = 31
-    def self.daily_increment# <<<
+    def self.daily_increment
       return 31
-    end# >>>
+    end
 end

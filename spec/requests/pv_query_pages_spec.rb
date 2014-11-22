@@ -16,7 +16,7 @@ describe "PvQuery" do
   shared_examples_for "all pv_query pages" do
     it { should have_selector('h1', text: heading) }
   end
-  describe 'index page' do# <<<
+  describe 'index page' do
     let(:heading) { 'Queries' }
     before do
       login_as(admin, :scope => :user)
@@ -48,8 +48,8 @@ describe "PvQuery" do
       end
     end
 
-  end# >>>
-  describe 'new page' do# <<<
+  end
+  describe 'new page' do
     let(:heading) { 'Average annual panel output' }
     let(:submit) { 'view output' }
     before { visit new_pv_query_path }
@@ -116,8 +116,8 @@ describe "PvQuery" do
 
     end
     
-  end# >>>
-  describe 'show page' do# <<<
+  end
+  describe 'show page' do
     let(:heading) { 'Pv_query' }
     before do 
       login_as(admin, :scope => :user)
@@ -139,8 +139,8 @@ describe "PvQuery" do
       it { should have_selector("h1", text: "Sign in") }
     end
     Warden.test_reset! 
-  end# >>>
-  describe 'edit page' do# <<<
+  end
+  describe 'edit page' do
     let(:heading) { 'Edit pv_query' }
     let(:submit) { "Update Pv query" }
     before do 
@@ -185,5 +185,5 @@ describe "PvQuery" do
       it { should have_selector("h1", text: "Sign in") }
     end
     Warden.test_reset! 
-  end# >>>
+  end
 end

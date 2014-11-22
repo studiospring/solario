@@ -6,12 +6,12 @@ ready = ->
   $('body').tooltip(placement: 'right', selector: '[rel=tooltip]')
   
   form = $('#new_pv_query')
-  form_validation = form.validate# <<<
+  form_validation = form.validate
     #debug: true,
     errorClass: 'alert-warning',
     errorPlacement: (error, element) ->
-      element.parent().append(error)# >>>
-  #add/remove nested forms without link_to_function (which has been deprecated)# <<<
+      element.parent().append(error)
+  #add/remove nested forms without link_to_function (which has been deprecated)
   add_fields = (event) ->
     #clone fields
     last_fieldset = $('fieldset.nested_fields').last()
@@ -54,8 +54,8 @@ ready = ->
 
   $(document).on 'click', '.remove_fields', (event) ->
     event.preventDefault()
-    remove_fields(event)# >>>
-  #animate panel icon# <<<
+    remove_fields(event)
+  #animate panel icon
   $('.bearing_input').change ->
     if form_validation.valid()
       bearing = this.value - 45
@@ -98,7 +98,7 @@ ready = ->
       unless typeof(icon.find('.compass').css('transform')) == 'undefined'
         optimise_viewing_angle(icon)
 
-  optimise_viewing_angle = (icon) -># <<<
+  optimise_viewing_angle = (icon) ->
     #if typeof(icon.find('.compass').css('transform')) == 'undefined'
       #return false
     compass = icon.find('.compass')
@@ -127,8 +127,8 @@ ready = ->
       '-o-transform':       'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       'transform':          'rotateX(70deg) rotateZ(' + new_compass_angle + 'deg)',
       'transition':         'transform 2s'
-    })# >>>
-# >>>
+    })
+
   #prevent double submit
   $('#new_pv_query').submit ->
     $('input[type=submit]', this).addClass('.test')
@@ -139,7 +139,7 @@ ready = ->
     if $('input[type=submit]').attr('disabled') == 'disabled' && form.valid() 
       $('input[type=submit]').removeAttr('disabled')
   #rules must be here to work!
-  $('#pv_query_postcode_id').rules(# <<<
+  $('#pv_query_postcode_id').rules(
     'add',
       required: true,
       digits: true,
@@ -165,7 +165,7 @@ ready = ->
       required: true,
       number: true,
       min: 0
-  )# >>>
+  )
 #get turbolinks to load js on page load, not second time around
 $(document).ready(ready)
 $(document).on('page:load', ready)
