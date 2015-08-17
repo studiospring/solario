@@ -9,13 +9,13 @@ Spork.prefork do
   require 'webmock/rspec'
   require 'capybara/rails'
   require 'capybara/rspec'
-  require 'capybara/poltergeist'
+  # require 'capybara/poltergeist'
 
   #help speed up tests
   #comment out to log to log/test.log
   Rails.logger.level = 4
 
-  Capybara.javascript_driver = :poltergeist
+  # Capybara.javascript_driver = :poltergeist
   Capybara.default_wait_time = 20
   WebMock.disable_net_connect!(allow_localhost: true)
   # Requires supporting ruby files with custom matchers and macros, etc,
@@ -27,7 +27,7 @@ Spork.prefork do
   ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
   RSpec.configure do |config|
-    #replace requests to Pvoutput.org with stubs, using Webmock 
+    #replace requests to Pvoutput.org with stubs, using Webmock
     config.before(:each) do
       stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=4280%20%2BNW&sid=#{Rails.application.secrets.pvo_system_id}").
         to_return(
@@ -40,7 +40,7 @@ Spork.prefork do
       #for find_similar_system spec
       #stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=1234%20%2BS&sid=#{Rails.application.secrets.pvo_system_id}").
         #to_return(
-          #:status => 200, 
+          #:status => 200,
           #:body => " Solar 4 US,9360,4280,NW,81,2 days ago,249,Solarfun,Aurora,NaN,-27.831402,153.028469
                  #Solar Chaos,1480,4870,NW,14,5 weeks ago,694,ET Solar ET-M572185,PCM Solar King 1500,NaN,-16.883938,145.746732
                  #Solar Frontier 2.97KW 2768,2952,2768,W,72,Yesterday,387,Solar Frontier,Xantrex 2.8 AU,NaN,-33.737863,150.922732
@@ -48,28 +48,28 @@ Spork.prefork do
       stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=1234%20%2BS&sid=#{Rails.application.secrets.pvo_system_id}").
       #stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=d4688e594b218f1746dec6cff0e34c2216dc675e&q=1234%20%2BS&sid=26011").
          to_return(
-           :status => 200, 
+           :status => 200,
            :body => "")
 
       #stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=d4688e594b218f1746dec6cff0e34c2216dc675e&q=4870%20%2BNW&sid=26011").
       stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=4870%20%2BNW&sid=#{Rails.application.secrets.pvo_system_id}").
          to_return(
-           :status => 200, 
+           :status => 200,
            :body => "")
 
        stub_request(:get, "http://pvoutput.org/service/r2/getsystem.jsp?key=d4688e594b218f1746dec6cff0e34c2216dc675e&sid=26011&sid1=151").
          to_return(
-           :status => 200, 
+           :status => 200,
            :body => "" )
 
       stub_request(:get, "http://pvoutput.org/service/r2/getsystem.jsp?key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=100").
         to_return(
-          :status => 200, 
+          :status => 200,
           :body => "PVOutput Demo,2450,2199,14,175,Enertech,1,2000,CMS,N,NaN,No,20100101,-33.907725,151.026108,5;60.0,10,190,W,30.5,40.0;1,12,93;1")
 
       stub_request(:get, "http://pvoutput.org/service/r2/getstatistic.jsp?date_from=20100901&date_to=20100927&key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=1000").
          to_return(
-           :status => 200, 
+           :status => 200,
            :body => "246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916")
 
     end
@@ -105,12 +105,12 @@ Spork.prefork do
     config.order = "random"
     config.include Capybara::DSL
   end
-  Capybara.register_driver :poltergeist do |app|
-    options = { debug: false,
-                js_errors: true, #false can cause phantomjs to crash
-                time_out: 50 }
-    Capybara::Poltergeist::Driver.new(app, options)
-  end
+  # Capybara.register_driver :poltergeist do |app|
+  #   options = { debug: false,
+  #               js_errors: true, #false can cause phantomjs to crash
+  #               time_out: 50 }
+  #   Capybara::Poltergeist::Driver.new(app, options)
+  # end
 end
 Spork.each_run do
   # This code will be run each time you run your specs.
