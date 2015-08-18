@@ -93,12 +93,10 @@ class PvQuery < ActiveRecord::Base
   # http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
   # @return [Float] volume under graph (Wh).
   def output_pa
-    annual_increment = Irradiance.annual_increment
-    daily_increment = Irradiance.daily_increment
     # 15hrs in seconds divided by number of data intervals per day
-    length_of_insolation_reading = 54_000 / (daily_increment - 1)
+    length_of_insolation_reading = 54_000 / (Irradiance::DAILY_INCREMENT - 1)
     # number of times that length_of_insolation_reading is used per year
-    readings_per_annual_increment = 365 / annual_increment
+    readings_per_annual_increment = 365 / Irradiance::ANNUAL_INCREMENT
     volume_constant = 0.25 * length_of_insolation_reading * readings_per_annual_increment
     total_volume = 0
     self.column_heights.each do |column|
@@ -113,20 +111,18 @@ class PvQuery < ActiveRecord::Base
   # Convert output_pa_array to nested array of graph's column heights.
   # @return [Array<Array<Float>>] [[a, b, f, g], [b, c, g, h]...]
   def column_heights
-    annual_increment = Irradiance.annual_increment
-    daily_increment = Irradiance.daily_increment
     graph_array = self.output_pa_array
     # [[jan1, jan2...], [feb1, feb2...]...]
     data_by_month = []
-    annual_increment.times { data_by_month << graph_array.shift(daily_increment) }
+    Irradiance::ANNUAL_INCREMENT.times { data_by_month << graph_array.shift(Irradiance::DAILY_INCREMENT) }
     # Duplicate and append jan data so that dec-jan volume can be easily calculated.
     data_by_month << data_by_month[0]
 
     # [[a, b, f, g], [b, c, g, h]...]
     columns = []
 
-    annual_increment.times do |month|
-      (daily_increment - 1).times do |time|
+    Irradiance::ANNUAL_INCREMENT.times do |month|
+      (Irradiance::DAILY_INCREMENT - 1).times do |time|
         column_data = [data_by_month[month][time].to_f,
                        data_by_month[month][time + 1].to_f,
                        data_by_month[month + 1][time].to_f,

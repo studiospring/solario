@@ -71,8 +71,7 @@ class Panel < ActiveRecord::Base
   # 0 kW values must be included so that time can be calculated from position in array.
   # Use this instead of dni_hash_received_pa because graph uses string format.
   def dni_received_pa(time_zone_corrected_dni_pa)
-    annual_increment = Irradiance.annual_increment
-    days_in_increment = (365 / annual_increment).round
+    days_in_increment = (365 / Irradiance::ANNUAL_INCREMENT).round
     # In case there is no postcode.
     begin
       latitude = self.pv_query.postcode.latitude
@@ -85,7 +84,7 @@ class Panel < ActiveRecord::Base
       sun = Sun.new(latitude, longitude, state, 1, 5)
       dni_pa_array = time_zone_corrected_dni_pa.split(' ')
       dni_count = dni_pa_array.count # say, 420
-      dnis_per_day = dni_count / annual_increment # 420 / 12 = 31
+      dnis_per_day = dni_count / Irradiance::ANNUAL_INCREMENT # 420 / 12 = 31
       dni_received_pa = []
 
       dni_pa_array.each_with_index do |datum, i|
@@ -114,9 +113,8 @@ class Panel < ActiveRecord::Base
   # dni_pa is irradiances.direct ( string )
   # Currently broken.
   def dni_hash_received_pa(dni_pa)
-    annual_increment = Irradiance.annual_increment
-    days_in_increment = (365 / annual_increment).round
-    dni_received_pa_hash = dni_pa.data_string_to_hash(annual_increment)
+    days_in_increment = (365 / Irradiance::ANNUAL_INCREMENT).round
+    dni_received_pa_hash = dni_pa.data_string_to_hash(Irradiance::ANNUAL_INCREMENT)
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1, 6)
