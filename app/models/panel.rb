@@ -15,28 +15,36 @@ class Panel < ActiveRecord::Base
 
   belongs_to :pv_query
 
-  validates :tilt,        :presence => true,
-                          :length => { :maximum => 2 },
-                          :numericality => { :greater_than_or_equal_to => 0,
-                                             :less_than_or_equal_to => 90 }
-  validates :bearing,     :presence => true,
-                          :length => { :maximum => 3 },
-                          :numericality => { :greater_than_or_equal_to => 0,
-                                             :less_than_or_equal_to => 360 }
-  validates :panel_size,  :presence => true,
-                          # TODO: not producing error on 0. Numericality does not work either.
-                          :inclusion => {:in => 1..500,
-                                         :message => 'is not a valid number'}
+  validates :tilt,
+    :presence => true,
+    :length => { :maximum => 2 },
+    :numericality => { :greater_than_or_equal_to => 0,
+                       :less_than_or_equal_to => 90 }
+  validates :bearing,
+    :presence => true,
+    :length => { :maximum => 3 },
+    :numericality => { :greater_than_or_equal_to => 0,
+                       :less_than_or_equal_to => 360 }
+  validates :panel_size,
+    :presence => true,
+    # TODO: not producing error on 0. Numericality does not work either.
+    :inclusion => {:in => 1..500,
+                   :message => 'is not a valid number'}
 
-  # calculate possible system wattage from panel_size (W)
+  # Polycrystalline silicon, 13.1% module efficiency.
+  # Watts per_square_metre.
+  POWER_DENSITY = 130
+  GRAPH_START_TIME = 5
+  # Increment graph by this amount (30 min)
+  DAILY_INCREMENT = 0.5
+
+  # @return [Float]
   def possible_watts
-    # polycrystalline silicon, 13.1% module efficiency
-    power_density = 130 # watts per_square_metre
-    self.panel_size * power_density
+    self.panel_size * POWER_DENSITY
   end
 
-  # convert tilt and bearing to vector notation
-  # return hash: vector[:x], [:y], [:z]
+  # Convert tilt and bearing to vector notation.
+  # @return [Hash<Hash, Float>]: vector[:x], [:y], [:z].
   def vector
     vector = {}
     hypotenuse = Math.cos((90 - self.tilt).to_rad).abs
@@ -47,31 +55,33 @@ class Panel < ActiveRecord::Base
   end
 
   # no longer necessary?
-  # return input (Watts/sqm) for one hr from direct normal irradiance (dni)
+  # @param [Num]
+  # @return [Float] input (Watts/sqm) for one hr from direct normal irradiance (dni).
   def hourly_direct_input(hourly_dni)
     hourly_dni * Math.cos(self.relative_angle())
   end
 
-  # return output of solar panel (kWh)
+  # @return [Float] output of solar panel (kWh).
   def hourly_output
     self.hourly_direct_input(dni)
   end
 
-  # return array of hourly Direct Normal Insolation received by panel over the
-  # course of 1 year (in kW) [0, 2.4, 3.0, ...]
-  # 0 kW values must be included so that time can be calculated from position in string
-  # use this instead of dni_hash_received_pa because graph uses string format
+  # @return [Array<Num>] hourly Direct Normal Insolation received by panel over the
+  #   course of 1 year (in kW) [0, 2.4, 3.0, ...].
+  # 0 kW values must be included so that time can be calculated from position in array.
+  # Use this instead of dni_hash_received_pa because graph uses string format.
   def dni_received_pa(time_zone_corrected_dni_pa)
     annual_increment = Irradiance.annual_increment
     days_in_increment = (365 / annual_increment).round
-    begin # in case there is no postcode
+    # In case there is no postcode.
+    begin
       latitude = self.pv_query.postcode.latitude
       longitude = self.pv_query.postcode.longitude
       state = self.pv_query.postcode.state
     rescue
       return []
     else
-      # set graph start time here (and below) and in pv_queries.js.coffee
+      # Set graph start time here (and below) and in pv_queries.js.coffee.
       sun = Sun.new(latitude, longitude, state, 1, 5)
       dni_pa_array = time_zone_corrected_dni_pa.split(' ')
       dni_count = dni_pa_array.count # say, 420
@@ -85,25 +95,24 @@ class Panel < ActiveRecord::Base
         # dni_received_pa << sun.hra
         dni_received_pa << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
 
-        # set daily increment here
-        sun.local_time = sun.local_time + 0.5
-        # change sun values only after 1 day has looped
+        sun.local_time = sun.local_time + DAILY_INCREMENT
+        # Change sun values only after 1 day has looped.
         if (i - dnis_per_day + 1) % dnis_per_day == 0
-          sun.local_time = 5 # set graph start time here
-          # increment sun's day so that sun vector is correct
+          sun.local_time = GRAPH_START_TIME
+          # Increment sun's day so that sun vector is correct.
           sun.day = sun.day + days_in_increment
         end
       end
+
       return dni_received_pa
     end
   end
 
-  # return hash of hourly Direct Normal Insolation received by panel over the
-  # course of 1 year (in kW)
+  # @return [Hash] hourly Direct Normal Insolation received by panel over the course of 1 year (in kW).
   # { day1: [kW1, kW2...]... }
-  # 0 kW values must be included so that time can be calculated from position in array
+  # 0 kW values must be included so that time can be calculated from position in hash.
   # dni_pa is irradiances.direct ( string )
-  # currently broken
+  # Currently broken.
   def dni_hash_received_pa(dni_pa)
     annual_increment = Irradiance.annual_increment
     days_in_increment = (365 / annual_increment).round
@@ -120,7 +129,7 @@ class Panel < ActiveRecord::Base
         relative_angle = self.relative_angle(sun.vector)
         panel_insolation << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
         # set daily increment here
-        local_time = local_time + 3
+        local_time += 3
       end
       dni_received_pa_hash[key] = panel_insolation
       # increment sun's day so that sun vector is correct
@@ -129,30 +138,29 @@ class Panel < ActiveRecord::Base
     dni_received_pa_hash
   end
 
-  # return array of hourly diffuse insolation received by panel over the course
-  # of 1 year (in kW)
+  # @return [Array<Num>] hourly diffuse insolation received by panel over the course of 1 year (in kW).
   # [kWh1, kWh2...]
-  # 0 KWh values must be included so that time can be calculated from position in array
+  # 0 KWh values must be included so that time can be calculated from position in array.
   def diffuse_received_pa
     # TODO: refactor, add test
-    # no diffuse data in database, so cannot debug
+    # No diffuse data in database, so cannot debug.
     irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.pv_query.postcode_id).first
     irradiance.nil? ? diffuse = nil : diffuse = irradiance.diffuse
-    # convert string to array
     diffuse_array = diffuse.split(" ").map { |s| s.to_i }
     diffuse_array.map! { |value| (value * self.panel_size).to_i }
     diffuse_array
   end
 
-  # currently not in use
-  # add annual insolation hash to return total energy received
+  # Currently not in use
+  # Add annual insolation hash to return total energy received.
   def self.annual_received_total(annual_received_hash)
     annual_total = 0
-    annual_received_hash. each do |_day, hourly_dni|
-      # add array
+
+    annual_received_hash.each do |_day, hourly_dni|
       daily_total = hourly_dni.inject(:+)
-      annual_total = annual_total + daily_total
+      annual_total += daily_total
     end
+
     annual_total
   end
 
@@ -160,7 +168,7 @@ class Panel < ActiveRecord::Base
   # pre = preconversion efficiency, sys = system efficiency, rel = relative
   # module efficiency, nom = nominal module efficiency
   # nominal (and sometimes relative) module efficiency is available from panel spec sheets
-  # TODO:refactor to panel_brand model if efficiencies vary greatly with brand
+  # TODO: refactor to panel_brand model if efficiencies vary greatly with brand
   def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)
     (pre * sys * rel * nom).round(2)
   end
@@ -170,18 +178,26 @@ class Panel < ActiveRecord::Base
   # efficiency must have 0 in front! eg 0.99
   def self.avg_efficiency(lifespan, overall_efficiency)
     total_efficiency = 0
+
     lifespan.times do |year|
-      total_efficiency = total_efficiency + overall_efficiency**year
+      total_efficiency += overall_efficiency**year
     end
+
     (total_efficiency / lifespan).round(2)
   end
 
-  # return angle of incident light relative to panel in radians (where 0 is
-  # directly perpendicular to panel surface)
+  # @param [Hash<Hash, Float>]
+  # @return [Float] angle of incident light relative to panel in radians
+  #   (where 0 is directly perpendicular to panel surface).
   def relative_angle(sun_vector)
     panel_vector = self.vector
-    Math.acos((panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z]) / (Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2) * Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2))).round(2)
+    foo = (panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z])
+    bar = Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2)
+    baz = Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2)
+    Math.acos(foo / bar * baz).round(2)
   end
+
+  # @param [Hash<Hash, Float>]
   # TODO: apparently above method is not accurate, try different formula
   # http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
   def relative_angle2(sun_vector)
@@ -199,15 +215,14 @@ class Panel < ActiveRecord::Base
 
   end
 
-  # return insolation received by 1sqm module via vector method
+  # @return [Float] insolation received by 1sqm module via vector method.
   # S_module = S_incident * cos(relative_angle)
   def panel_insolation(incident_light, relative_angle)
     # calculate only if relative angle <= 90 degrees, else return 0
     if relative_angle <= 1.57
-      insolation_received = (incident_light * Math.cos(relative_angle)).round(2)
+      (incident_light * Math.cos(relative_angle)).round(2)
     else
-      insolation_received = 0
+      0
     end
-    insolation_received
   end
 end
