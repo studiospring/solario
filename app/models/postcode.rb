@@ -15,40 +15,44 @@ class Postcode < ActiveRecord::Base
   has_one :irradiance
   has_many :pv_queries
 
-  validates :pcode,     presence: true,
+  validates :pcode,
+    presence: true,
     length: { maximum: 4 },
     numericality: { only_integer: true }
-  validates :suburb,    presence: true
-  validates :state,     presence: true,
+  validates :suburb,
+    presence: true
+  validates :state,
+    presence: true,
     inclusion: { in: %w(ACT NSW NT QLD SA TAS VIC WA) }
-  validates :latitude,  presence: true,
+  validates :latitude,
+    presence: true,
     length: { maximum: 11 }
-  validates :latitude,  presence: true,
-    numericality: { less_than: 50, 
-      greater_than: -44 }
-  validates :longitude, presence: true,
+  validates :latitude,
+    presence: true,
+    numericality: { less_than: 50, greater_than: -44 }
+  validates :longitude,
+    presence: true,
     length: { maximum: 10 },
-    numericality: { less_than: 160,
-      greater_than: 95 }
+    numericality: { less_than: 160, greater_than: 95 }
   validates :urban, inclusion: { in: [true, false] }
 
-  #update urban attr if postcode has enough pv systems to be considered 'urban'
-  def update_urban?(pvo_query_results)
-    system_count = 0
-    #find out how many systems from queried postcode (not including surrounds) are returned
-    pvo_query_results.each do |system|
-      if system[:postcode] == self.pcode
-        system_count += 1
-      end
-    end
-    if self.urban == false && system_count > 4
-      self.urban = true
-      return true
-    elsif self.urban == true && system_count < 5 
-      self.urban = false
-      return true
-    else
-      return false
-    end
+  URBAN_PV_SYSTEM_THRESHOLD = 5
+
+  def update_urban
+    self.urban = !self.urban
   end
+
+  def update_urban?(pvo_query_results)
+    self.urban != define_as_urban?(pvo_query_results)
+  end
+
+  private
+
+    def define_as_urban?(pvo_query_results)
+      system_count_per_postcode(pvo_query_results) >= URBAN_PV_SYSTEM_THRESHOLD
+    end
+
+    def system_count_per_postcode(pvo_query_results)
+      pvo_query_results.count { |system| system[:postcode] == self.pcode }
+    end
 end
