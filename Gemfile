@@ -27,6 +27,7 @@ group :development, :test do
   gem 'childprocess', '0.3.6'
   gem 'capybara'
   gem 'annotate', '>=2.5.0'
+  gem 'rubocop'
 end
 group :test do
   gem 'webmock' #for testing http requests to pvoutput.org
