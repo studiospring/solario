@@ -6,10 +6,10 @@ require 'net/http'
 class UrlValidator < ActiveModel::EachValidator
 
   def validate_each(object, attribute, value)
-    raise(ArgumentError, "A regular expression must be supplied as the :format option of the options hash") unless options[:format].nil? or options[:format].is_a?(Regexp)
+    raise(ArgumentError, "A regular expression must be supplied as the :format option of the options hash") unless options[:format].nil? || options[:format].is_a?(Regexp)
     configuration = { :message => "is invalid or not responding", :format => URI::regexp(%w(http https)) }
     configuration.update(options)
-    
+
     if value =~ configuration[:format]
       begin # check header response
         case Net::HTTP.get_response(URI.parse(value))
@@ -23,6 +23,5 @@ class UrlValidator < ActiveModel::EachValidator
       object.errors.add(attribute, configuration[:message]) and false
     end
   end
-  
-end
 
+end

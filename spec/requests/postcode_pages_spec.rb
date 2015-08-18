@@ -10,9 +10,9 @@ describe "Postcodes" do
   subject { page }
 
   shared_examples_for "all postcode pages" do
-    it { should have_selector('h1', text: heading) }
+    it { should have_selector('h1', :text => heading) }
   end
-  before do 
+  before do
     login_as(admin, :scope => :user)
   end
   describe 'index page' do
@@ -24,21 +24,21 @@ describe "Postcodes" do
 
     it "should list each postcode" do
       Postcode.all.each do |postcode|
-        page.should have_selector('td', text: postcode.pcode)
-        page.should have_link('Show', href: postcode_path(postcode))
-        page.should have_link('Delete', href: postcode_path(postcode))
-        expect { click_link 'Delete', href: postcode_path(postcode) }.to change(Postcode, :count).by(-1)
+        page.should have_selector('td', :text => postcode.pcode)
+        page.should have_link('Show', :href => postcode_path(postcode))
+        page.should have_link('Delete', :href => postcode_path(postcode))
+        expect { click_link 'Delete', :href => postcode_path(postcode) }.to change(Postcode, :count).by(-1)
       end
     end
-    it { should have_link 'Add postcode', href: new_postcode_path }
+    it { should have_link 'Add postcode', :href => new_postcode_path }
 
     describe 'when not logged in' do
       before do
         logout :user
         visit postcodes_path
       end
-      
-      it { should have_selector("h1", text: "Sign in") }
+
+      it { should have_selector("h1", :text => "Sign in") }
     end
   end
   describe 'new page' do
@@ -64,11 +64,11 @@ describe "Postcodes" do
 
     describe 'with valid inputs' do
       before do
-        fill_in "Postcode", with: postcode.pcode
-        fill_in "Suburb", with: postcode.suburb
-        fill_in "State", with: postcode.state
-        fill_in "Latitude", with: postcode.latitude
-        fill_in "Longitude", with: postcode.longitude
+        fill_in "Postcode", :with => postcode.pcode
+        fill_in "Suburb", :with => postcode.suburb
+        fill_in "State", :with => postcode.state
+        fill_in "Latitude", :with => postcode.latitude
+        fill_in "Longitude", :with => postcode.longitude
         check "Urban"
       end
 
@@ -79,8 +79,8 @@ describe "Postcodes" do
       describe 'after saving the postcode' do
         before { click_button submit }
 
-        it { should have_selector('h1', text: "Postcode") }
-        it { should have_selector("div.alert-success", text: "Postcode created") }
+        it { should have_selector('h1', :text => "Postcode") }
+        it { should have_selector("div.alert-success", :text => "Postcode created") }
       end
     end
 
@@ -89,8 +89,8 @@ describe "Postcodes" do
         logout :user
         visit new_postcode_path
       end
-      
-      it { should have_selector("h1", text: "Sign in") }
+
+      it { should have_selector("h1", :text => "Sign in") }
     end
   end
   describe 'show page' do
@@ -102,7 +102,7 @@ describe "Postcodes" do
 
     it { should have_content postcode.pcode }
 
-    it { should have_link 'Edit', href: edit_postcode_path(postcode) }
+    it { should have_link 'Edit', :href => edit_postcode_path(postcode) }
   end
   describe 'edit page' do
     let(:heading) { 'Update postcode' }
@@ -115,8 +115,8 @@ describe "Postcodes" do
 
     describe 'with invalid inputs' do
       before do
-        fill_in "State", with: " "
-        click_button submit 
+        fill_in "State", :with => " "
+        click_button submit
       end
 
       describe "error message" do
@@ -128,17 +128,17 @@ describe "Postcodes" do
     describe 'with valid inputs' do
       let(:new_suburb)  { "Newville" }
       before do
-        fill_in "Postcode", with: 8888
-        fill_in "Suburb", with: 'Newville'
-        fill_in "State", with: 'WA'
-        fill_in "Latitude", with: 10
-        fill_in "Longitude", with: 130
+        fill_in "Postcode", :with => 8888
+        fill_in "Suburb", :with => 'Newville'
+        fill_in "State", :with => 'WA'
+        fill_in "Latitude", :with => 10
+        fill_in "Longitude", :with => 130
         check "Urban"
         click_button submit
       end
 
-      it { should have_selector('h1', text: "Postcode") }
-      it { should have_selector("div.alert-success", text: 'Postcode updated') }
+      it { should have_selector('h1', :text => "Postcode") }
+      it { should have_selector("div.alert-success", :text => 'Postcode updated') }
       specify { expect(postcode.reload.suburb).to eq new_suburb }
     end
   end

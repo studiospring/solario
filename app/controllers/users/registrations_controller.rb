@@ -9,6 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render "new"
     end
   end
+
   def update
     @user = current_user
     @user.admin = params[:user][:admin]
@@ -20,8 +21,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
   private
-    def user_params
-      #enter mass assignable fields here
-      params.require(:user).permit(:username, :email)
-    end 
+  def user_params
+    # enter mass assignable fields here
+    params.require(:user).permit(:username, :email)
+  end
 end

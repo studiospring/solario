@@ -16,25 +16,25 @@ class Postcode < ActiveRecord::Base
   has_many :pv_queries
 
   validates :pcode,
-    presence: true,
-    length: { maximum: 4 },
-    numericality: { only_integer: true }
+            :presence => true,
+            :length => { :maximum => 4 },
+            :numericality => { :only_integer => true }
   validates :suburb,
-    presence: true
+            :presence => true
   validates :state,
-    presence: true,
-    inclusion: { in: %w(ACT NSW NT QLD SA TAS VIC WA) }
+            :presence => true,
+            :inclusion => { :in => %w(ACT NSW NT QLD SA TAS VIC WA) }
   validates :latitude,
-    presence: true,
-    length: { maximum: 11 }
+            :presence => true,
+            :length => { :maximum => 11 }
   validates :latitude,
-    presence: true,
-    numericality: { less_than: 50, greater_than: -44 }
+            :presence => true,
+            :numericality => { :less_than => 50, :greater_than => -44 }
   validates :longitude,
-    presence: true,
-    length: { maximum: 10 },
-    numericality: { less_than: 160, greater_than: 95 }
-  validates :urban, inclusion: { in: [true, false] }
+            :presence => true,
+            :length => { :maximum => 10 },
+            :numericality => { :less_than => 160, :greater_than => 95 }
+  validates :urban, :inclusion => { :in => [true, false] }
 
   URBAN_PV_SYSTEM_THRESHOLD = 5
 
@@ -48,11 +48,11 @@ class Postcode < ActiveRecord::Base
 
   private
 
-    def define_as_urban?(pvo_query_results)
-      system_count_per_postcode(pvo_query_results) >= URBAN_PV_SYSTEM_THRESHOLD
-    end
+  def define_as_urban?(pvo_query_results)
+    system_count_per_postcode(pvo_query_results) >= URBAN_PV_SYSTEM_THRESHOLD
+  end
 
-    def system_count_per_postcode(pvo_query_results)
-      pvo_query_results.count { |system| system[:postcode] == self.pcode }
-    end
+  def system_count_per_postcode(pvo_query_results)
+    pvo_query_results.count { |system| system[:postcode] == self.pcode }
+  end
 end

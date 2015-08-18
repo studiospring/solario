@@ -23,8 +23,8 @@ require 'spec_helper'
 
 describe User do
   before do
-    @user = User.new(username: 'Joe_user', email: 'joe@example.com', 
-                     admin: false, password: 'password', password_confirmation: 'password')
+    @user = User.new(:username => 'Joe_user', :email => 'joe@example.com',
+                     :admin => false, :password => 'password', :password_confirmation => 'password')
   end
   subject { @user }
 

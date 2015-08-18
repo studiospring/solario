@@ -11,14 +11,14 @@
 require 'spec_helper'
 
 describe PvQuery do
-  #prevent tests from failing because of postcode_to_postcode_id callback
-  #PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
+  # prevent tests from failing because of postcode_to_postcode_id callback
+  # PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
   let(:postcode) { FactoryGirl.create(:postcode) }
   before do
     @pv_query = postcode.pv_queries.create()
-    @pv_query.panels.create(tilt: 80, bearing: 180, panel_size: 3.5)
+    @pv_query.panels.create(:tilt => 80, :bearing => 180, :panel_size => 3.5)
   end
-  let!(:irradiance) { FactoryGirl.create(:irradiance, postcode_id: @pv_query.postcode_id) }
+  let!(:irradiance) { FactoryGirl.create(:irradiance, :postcode_id => @pv_query.postcode_id) }
 
   subject { @pv_query }
 
@@ -46,20 +46,20 @@ describe PvQuery do
     before do
       @pv_query.save
     end
-    let!(:panel) { FactoryGirl.create(:panel, pv_query: @pv_query) }
+    let!(:panel) { FactoryGirl.create(:panel, :pv_query => @pv_query) }
 
     it "should destroy associated panels" do
       panels = @pv_query.panels.to_a
       @pv_query.destroy
       expect(panels).not_to be_empty
       panels.each do |panel|
-        expect(Panel.where(id: panel.id)).to be_empty
+        expect(Panel.where(:id => panel.id)).to be_empty
       end
     end
   end
   describe 'empirical_output_pa' do
     it "should return the correct value" do
-      @pv_query.empirical_output_pa(100).should == 45500
+      @pv_query.empirical_output_pa(100).should == 45_500
     end
   end
   describe 'system_watts' do
@@ -69,7 +69,7 @@ describe PvQuery do
   end
   describe 'output_pa_array' do
     it "should return totals of dni values for entire pv_query" do
-      #broken, panel.dni_received_pa(dni_pa) returns wrong value in tests only
+      # broken, panel.dni_received_pa(dni_pa) returns wrong value in tests only
       @pv_query.output_pa_array.should == '1 2'
     end
     describe 'when no associated postcode is found' do
@@ -105,7 +105,7 @@ describe PvQuery do
     end
   end
   describe 'northmost_facing_panel' do
-    before { @pv_query.panels.create(tilt: 40, bearing: 30, panel_size: 4.4) }
+    before { @pv_query.panels.create(:tilt => 40, :bearing => 30, :panel_size => 4.4) }
     it "should return northmost panel object" do
       @pv_query.panels.count.should == 2
       @pv_query.northmost_facing_panel.bearing.should == 30

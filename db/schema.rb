@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140125040123) do
+ActiveRecord::Schema.define(:version => 20_140_125_040_123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "irradiances", force: true do |t|
+  create_table "irradiances", :force => true do |t|
     t.text     "direct"
     t.text     "diffuse"
     t.integer  "postcode_id"
@@ -24,39 +24,39 @@ ActiveRecord::Schema.define(version: 20140125040123) do
     t.datetime "updated_at"
   end
 
-  add_index "irradiances", ["postcode_id"], name: "index_irradiances_on_postcode_id", using: :btree
+  add_index "irradiances", ["postcode_id"], :name => "index_irradiances_on_postcode_id", :using => :btree
 
-  create_table "panels", force: true do |t|
+  create_table "panels", :force => true do |t|
     t.integer "tilt"
     t.integer "bearing"
     t.decimal "panel_size"
     t.integer "pv_query_id"
   end
 
-  add_index "panels", ["pv_query_id"], name: "index_panels_on_pv_query_id", using: :btree
+  add_index "panels", ["pv_query_id"], :name => "index_panels_on_pv_query_id", :using => :btree
 
-  create_table "postcodes", force: true do |t|
+  create_table "postcodes", :force => true do |t|
     t.integer "pcode"
     t.string  "suburb"
     t.string  "state"
     t.decimal "latitude"
     t.decimal "longitude"
-    t.boolean "urban",     default: false
+    t.boolean "urban",     :default => false
   end
 
-  create_table "pv_queries", force: true do |t|
+  create_table "pv_queries", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "postcode_id"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
+  create_table "users", :force => true do |t|
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,     null: false
+    t.integer  "sign_in_count",          :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -64,10 +64,10 @@ ActiveRecord::Schema.define(version: 20140125040123) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
-    t.boolean  "admin",                  default: false
+    t.boolean  "admin",                  :default => false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true, :using => :btree
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true, :using => :btree
 
 end

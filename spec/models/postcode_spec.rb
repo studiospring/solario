@@ -15,7 +15,7 @@ require 'spec_helper'
 
 describe Postcode do
 
-  before { @postcode = Postcode.new(pcode: 4321, suburb: 'Simsville', state: 'WA', latitude: -12.123123, longitude: 123.456789, urban: false) }
+  before { @postcode = Postcode.new(:pcode => 4321, :suburb => 'Simsville', :state => 'WA', :latitude => -12.123123, :longitude => 123.456789, :urban => false) }
   subject { @postcode }
 
   it { should respond_to(:pcode) }
@@ -63,11 +63,11 @@ describe Postcode do
     it { should_not be_valid }
   end
 
-  #problem with bigdecimal or negative values?
-  #describe 'when latitude is outside range' do
-    #before { @postcode.latitude = 42 }
-    #it { should_not be_valid }
-  #end
+  # problem with bigdecimal or negative values?
+  # describe 'when latitude is outside range' do
+  # before { @postcode.latitude = 42 }
+  # it { should_not be_valid }
+  # end
 
   describe 'when latitude is too long' do
     before { @postcode.latitude = -12.45678911 }
@@ -96,13 +96,13 @@ describe Postcode do
 
   describe 'pv_query associations' do
     before { @postcode.save }
-    let(:pv_query) { FactoryGirl.create(:pv_query, postcode: @postcode) }
+    let(:pv_query) { FactoryGirl.create(:pv_query, :postcode => @postcode) }
   end
 
   describe 'update_urban?' do
     describe 'when urban attr is false' do
       before do
-        results = [{postcode: 4321}, {postcode: 4321}, {postcode: 4321}, {postcode: 4321}, {postcode: 4321}]
+        results = [{:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}]
         @postcode.update_urban if @postcode.update_urban?(results)
       end
 
@@ -114,7 +114,7 @@ describe Postcode do
     describe 'when urban attr is true' do
       before do
         @postcode.urban = true
-        results = [{postcode: 4321}, {postcode: 4321}, {postcode: 4321}, {postcode: 4321}]
+        results = [{:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}]
         @postcode.update_urban if @postcode.update_urban?(results)
       end
 

@@ -12,12 +12,12 @@
 require 'spec_helper'
 
 describe Panel do
-  #prevent tests from failing because of postcode_to_postcode_id callback
+  # prevent tests from failing because of postcode_to_postcode_id callback
   PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
   let(:pv_query) { FactoryGirl.create(:pv_query) }
-  let!(:irradiance) { FactoryGirl.create(:irradiance, postcode_id: pv_query.postcode_id) }
+  let!(:irradiance) { FactoryGirl.create(:irradiance, :postcode_id => pv_query.postcode_id) }
   before do
-    @panel = pv_query.panels.build(tilt: 60, bearing: 150, panel_size: 31 )
+    @panel = pv_query.panels.build(:tilt => 60, :bearing => 150, :panel_size => 31)
   end
   subject { @panel }
 
@@ -30,7 +30,7 @@ describe Panel do
 
   it { should be_valid }
 
-  #validation
+  # validation
   describe 'when tilt is not present' do
     before { @panel.tilt = ' ' }
     it { should_not be_valid }
@@ -71,11 +71,11 @@ describe Panel do
     before { @panel.panel_size = 'abc' }
     it { should_not be_valid }
   end
-  #prevents form from being submitted
-  #describe "when pv_query_id is not present" do
-    #before { @panel.pv_query_id = nil }
-    #it { should_not be_valid }
-  #end
+  # prevents form from being submitted
+  # describe "when pv_query_id is not present" do
+  # before { @panel.pv_query_id = nil }
+  # it { should_not be_valid }
+  # end
   describe 'possible_watts' do
     it "should calculate correct value" do
       @panel.possible_watts.should == 4030
@@ -84,25 +84,25 @@ describe Panel do
   describe 'vector instance method' do
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
-      #when bearing is 150 deg
+      # when bearing is 150 deg
       @panel.vector[:x].should be_within(0.001).of(-0.75000)
     end
     it "should return correct value for @panel.vector[:y]" do
-      #when bearing is 150 deg
+      # when bearing is 150 deg
       @panel.vector[:y].should be_within(0.01).of(0.433012701)
     end
     it "should return correct value for @panel.vector[:z]" do
-      #when tilt is 60 deg
+      # when tilt is 60 deg
       @panel.vector[:z].should be_within(0.001).of(0.5)
     end
   end
   describe 'dni_received_pa method' do
     it "should return correct array" do
-      @panel.dni_received_pa(irradiance.direct[0..-8])[5].should == 6.82 #correct time_zone difference
+      @panel.dni_received_pa(irradiance.direct[0..-8])[5].should == 6.82 # correct time_zone difference
     end
     describe 'when no associated postcode is found' do
       before do
-        @panel.pv_query.postcode = nil 
+        @panel.pv_query.postcode = nil
       end
       it "should not raise an error" do
         lambda { @panel.dni_received_pa(irradiance.direct[0..-8]) }.should_not raise_error
@@ -115,12 +115,12 @@ describe Panel do
     end
     it "should return a very big hash" do
       pending 'if this method is really necessary'
-      #@panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
+      # @panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
     end
   end
   describe 'avg_efficiency method' do
     it "should return correct value" do
-      Panel.avg_efficiency(20, 0.98).should == 0.83 
+      Panel.avg_efficiency(20, 0.98).should == 0.83
     end
   end
   describe 'overall_efficiency' do
@@ -129,7 +129,7 @@ describe Panel do
     end
   end
   describe 'diffuse_received_pa method' do
-    #before { @panel.annual_dni_received() }
+    # before { @panel.annual_dni_received() }
     it "should return a very big array" do
       pending 'dummy data'
     end

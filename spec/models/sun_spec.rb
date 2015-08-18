@@ -23,7 +23,7 @@ describe Sun do
   end
   describe 'declination method' do
     it "should return angle in radians" do
-      @sun.declination.should be_within(0.001).of(0.38333384764823003) 
+      @sun.declination.should be_within(0.001).of(0.38333384764823003)
     end
   end
   describe 'lstm method' do
@@ -43,4 +43,3 @@ describe Sun do
     end
   end
 end
-
