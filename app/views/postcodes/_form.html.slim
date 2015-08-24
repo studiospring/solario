@@ -1,0 +1,27 @@
+= form_for @postcode, :validate => true do |f|
+  = render 'shared/error_messages', object: f.object
+  = f.label :pcode, 'Postcode'
+  br
+  = f.number_field :pcode
+  br
+  = f.label :suburb
+  br
+  = f.text_field :suburb
+  br
+  = f.label :state
+  br
+  = f.text_field :state
+  br
+  = f.label :latitude
+  br
+  = f.number_field :latitude
+  br
+  = f.label :longitude
+  br
+  = f.number_field :longitude
+  br
+  = f.label :urban
+  br
+  = f.check_box :urban
+  br
+  = f.submit class: 'btn btn-primary'

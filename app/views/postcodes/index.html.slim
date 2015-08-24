@@ -1,0 +1,64 @@
+- content_for :head_tags do
+  = stylesheet_link_tag "shared/tables"
+- content_for :body_id do
+  |  index
+= provide(:title, 'Postcodes' )
+h1
+  | Postcodes
+table.table.table-striped
+  caption
+  colgroup
+    col
+    col
+    col
+    col
+    col
+    col
+    col
+    col
+    col
+    col
+  thead
+    tr
+      th
+        | ID
+      th
+        | Postcode
+      th
+        | Suburb
+      th
+        | State
+      th
+        | Latitude
+      th
+        | Longitude
+      th
+        | Urban
+      th
+      th
+      th
+  tbody
+    - @postcodes.each do |postcode|
+      tr
+        td
+          = postcode.id
+        td
+          = postcode.pcode
+        td
+          = postcode.suburb
+        td
+          = postcode.state
+        td
+          = postcode.latitude
+        td
+          = postcode.longitude
+        td
+          = postcode.urban
+        td
+          = link_to 'Show', postcode
+        td
+          = link_to 'Edit', edit_postcode_path(postcode)
+        td
+          = link_to 'Delete', postcode, data: { confirm: 'Are you sure?' }, method: :delete
+br
+= link_to 'Add postcode', new_postcode_path

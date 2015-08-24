@@ -1,0 +1,53 @@
+- content_for :head_tags do
+  = stylesheet_link_tag "shared/tables"
+- content_for :body_id do
+  |  index
+= provide(:title, 'Queries' )
+h1
+  | Queries
+table.table.table-striped
+  caption
+  colgroup
+    col
+    col
+    col
+    col
+    col
+    col
+    col
+  thead
+    tr
+      th
+        | Postcode_id
+      th
+        | Panel count
+      th
+        | First panel
+      th
+        | Created
+      th
+      th
+      th
+  tbody
+    - @pv_queries.each do |pv_query|
+      tr
+        td
+          = pv_query.postcode_id
+        td
+          = pv_query.panels.count
+        - pv_query.panels.each do |panel|
+          td
+            | tilt: 
+            = panel.tilt
+            | ° bearing: 
+            = panel.bearing
+            | °
+          - break
+        td
+          = l pv_query.created_at, format: :short
+        td
+          = link_to 'Show', pv_query
+        td
+          = link_to 'Edit', edit_pv_query_path(pv_query)
+        td
+          = link_to 'Delete', pv_query, data: { confirm: 'Are you sure?' }, method: :delete

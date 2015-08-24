@@ -1,0 +1,10 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Find your solar output' )
+p.alert.alert-warning
+  | This app is an alpha release and uses dummy data! Enjoy!
+p#enable_js.alert.alert-warning
+  | This site works best with Javascript!
+p
+  | Please enter your desired solar panel configuration.
+= render 'form'

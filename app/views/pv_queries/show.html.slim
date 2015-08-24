@@ -1,0 +1,43 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Pv_query' )
+h1
+  | Pv_query
+p#notice
+  = notice
+table.table
+  caption
+  colgroup
+    col#column1
+    col#column2
+    col#column3
+    col#column4
+    col#column5
+  tbody
+    tr
+      td
+        | Postcode_id
+      td
+        = @pv_query.postcode_id
+    - @pv_query.panels.each do |panel|
+      tr
+        td
+          | Tilt:
+        td
+          = panel.tilt
+      tr
+        td
+          | Bearing: 
+        td
+          = panel.bearing
+      tr
+        td
+          | Panel size:
+        td
+          = panel.panel_size
+    tr
+      td
+        | Created:
+      td
+        = l @pv_query.created_at, format: :short
+= link_to 'Edit', edit_pv_query_path(@pv_query)

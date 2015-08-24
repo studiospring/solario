@@ -1,0 +1,88 @@
+doctype html
+html[lang="en-AU"]
+  head
+    meta[charset="UTF-8"]
+    meta[name="author" content="Design Studio Spring"]
+    meta[name="copyright" content="Design Studio Spring"]
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title
+      = full_title(yield(:title))
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  body
+    #holder
+      #banner.container
+        .row
+          .left_col.col-xs-12.col-sm-6.col-md-6
+            .banner_panel
+            .banner_panel
+            .banner_panel
+            a#index_link[href="/"]
+
+            .banner_panel.coloured_panel
+              | solario
+          .hidden-xs.col-xs-12.col-md-6.col-sm-6
+            .banner_panel
+            .banner_panel.coloured_panel
+            .banner_panel.coloured_panel
+            .banner_panel
+        .row
+          .left_col.col-xs-12.col-md-6.col-sm-6
+            .banner_panel
+              #last_slogan.panel_content
+                | ...financial gain or drain?
+            .banner_panel
+              .panel_content
+                | solar panels...
+            .banner_panel
+            .banner_panel
+          .hidden-xs.col-xs-12.col-md-6.col-sm-6
+            .banner_panel
+            .banner_panel.coloured_panel
+            .banner_panel.coloured_panel
+            .banner_panel
+          - #<img id="logo" src="/assets/images/logo.svg" alt="" />
+          img#graph_img.hidden-xs[src="/assets/graph.png" alt="sample graph"]
+      main#content.container
+        .row
+          - if user_signed_in?
+            nav#admin_nav.col-sm-12.col-md-2
+              ul.nav.nav-pills.nav-stacked
+                li
+                  = link_to 'Queries', pv_queries_path
+                li
+                  = link_to 'Postcodes', postcodes_path
+                li
+                  = link_to 'Irradiances', irradiances_path
+                li
+                  = link_to 'Panels', panels_path
+          .col-sm-10.col-md-10
+            - flash.each do |key, value|
+              |  <div class="alert alert-
+              = key
+              | ">
+              = value
+          = yield
+    footer
+      nav.navbar.navbar-default.navbar-fixed-bottom
+        = debug(params) if Rails.env.development?
+        p#copyright.navbar-text
+          span.copyright-symbol
+            | ©
+          |  - Solario 
+        ul.nav.nav-pills
+          - if user_signed_in?
+            li
+              = link_to "Profile", edit_user_registration_path
+            li
+              = link_to "Logout", destroy_user_session_path, method: :delete
+          - else
+            li
+              = link_to "Login", new_user_session_path
+          li
+            = link_to "About", about_path
+          li
+            = link_to "Contact", contact_path
+          li
+            - # link_to "Terms", terms_path

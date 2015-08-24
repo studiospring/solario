@@ -1,0 +1,20 @@
+= form_for @panel, :validate => true do |f|
+  - if @panel.errors.any?
+    #error_explanation
+      h2
+        = pluralize(@panel.errors.count, "error")
+        |  prohibited this panel from being saved:
+      ul
+        - @panel.errors.full_messages.each do |msg|
+          li
+            = msg
+  = f.label :tilt
+  br
+  = f.number_field :tilt
+  = f.label :bearing
+  br
+  = f.number_field :bearing
+  = f.label :panel_size
+  br
+  = f.text_field :panel_size
+  = f.submit class: 'btn btn-primary'

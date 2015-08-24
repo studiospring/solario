@@ -1,0 +1,64 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Results' )
+h2
+  | Average annual panel output
+p.alert.alert-warning
+  | This app is an alpha release and uses dummy data! Enjoy!
+- @query_params.each_with_index do |panel, i|
+  p
+    | Panel 
+    = i + 1
+    | :
+  ul
+    li
+      | bearing: 
+      = panel.bearing
+      sup
+        | °
+    li
+      | tilt: 
+      = panel.tilt
+      sup
+        | °
+    li
+      | area: 
+      = panel.panel_size
+      | m
+      sup
+        | 2
+p
+  | Approximate system size for given panel area: 
+  = number_to_human(@pv_query.system_watts, units: :W)
+p
+  | @search_params: 
+  = @search_params.inspect
+p
+  | @candidate_systems: 
+  = @candidate_systems.inspect
+p
+  | @get_system: 
+  = @get_system.inspect
+p
+  | @similar_system: 
+  = @similar_system.inspect
+p
+  | @pvo_system: 
+  = @pvo_system.inspect
+p
+  | @pvo_system output: 
+  - # @pvo_system.output_pa
+  | kWh
+p
+  | Empirical output for pv_query: 
+  = number_to_human(@empirical_output_pa, units: :Wh)
+p
+  | Output p.a.: 
+  = number_to_human(@output_pa, units: :Wh)
+p
+  | Drag to rotate graph, scroll to zoom.
+= content_tag :div, id: "output_pa", data: {datapoints: @output_pa_array} do
+  p.alert.alert-warning
+    | Oops. There should be a pretty graph here.
+button#reload_page.btn.btn-primary[type="button" autofocus="true"]
+  | Try again

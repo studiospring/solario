@@ -1,0 +1,44 @@
+- content_for :head_tags do
+  = stylesheet_link_tag "shared/tables"
+- content_for :body_id do
+  |  index
+= provide(:title, 'Irradiances' )
+h1
+  | Irradiances
+table.table.table-striped
+  caption
+  colgroup
+    col
+    col
+    col
+    col
+    col
+    col
+  thead
+    tr
+      th
+        | Postcode ID
+      th
+        | Postcode
+      th
+        | Suburb
+      th
+      th
+      th
+  tbody
+    - @irradiances.each do |irradiance|
+      tr
+        td
+          = irradiance.postcode.id
+        td
+          = irradiance.postcode.pcode
+        td
+          = irradiance.postcode.suburb
+        td
+          = link_to 'Show', irradiance
+        td
+          = link_to 'Edit', edit_irradiance_path(irradiance)
+        td
+          = link_to 'Delete', irradiance, data: { confirm: 'Are you sure?' }, method: :delete
+br
+= link_to 'Add irradiance', new_irradiance_path

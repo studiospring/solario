@@ -1,0 +1,7 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Update postcode' )
+h1
+  | Update postcode
+= render 'form'
+= link_to 'Show', @postcode

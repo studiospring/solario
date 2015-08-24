@@ -1,0 +1,8 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Add postcode' )
+h1
+  | Add postcode
+p#enable_js.error
+  | Please enable Javascript in your browser and reload the page for best results.
+= render 'form'

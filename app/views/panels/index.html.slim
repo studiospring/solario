@@ -1,0 +1,40 @@
+- content_for :head_tags do
+  = stylesheet_link_tag "shared/tables"
+- content_for :body_id do
+  |  index
+= provide(:title, 'Panels' )
+h1
+  | Panels
+table.table.table-striped
+  caption
+  colgroup
+    col
+    col
+  thead
+    tr
+      th
+        | Tilt
+      th
+        | Bearing
+      th
+        | Panel size
+      th
+      th
+      th
+  tbody
+    - @panels.each do |panel|
+      tr
+        td
+          = panel.tilt
+        td
+          = panel.bearing
+        td
+          = panel.panel_size
+        td
+          = link_to 'Show', panel
+        td
+          = link_to 'Edit', edit_panel_path(panel)
+        td
+          = link_to 'Delete', panel, data: { confirm: 'Are you sure?' }, method: :delete
+br
+= link_to 'Add panel', new_panel_path

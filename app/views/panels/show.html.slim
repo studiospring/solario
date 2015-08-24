@@ -1,0 +1,29 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Panel' )
+h1
+  | Panel
+p#notice
+  = notice
+table.table
+  caption
+  colgroup
+    col#column1
+    col#column2
+  tbody
+    tr
+      td
+        | Tilt
+      td
+        = @panel.tilt
+    tr
+      td
+        | Bearing
+      td
+        = @panel.bearing
+    tr
+      td
+        | Panel size
+      td
+        = @panel.panel_size
+= link_to 'Edit', edit_panel_path(@panel)

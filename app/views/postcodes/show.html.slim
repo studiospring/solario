@@ -1,0 +1,44 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Postcode' )
+h1
+  | Postcode
+p#notice
+  = notice
+table.table
+  caption
+  colgroup
+    col#column1
+    col#column2
+  tbody
+    tr
+      td
+        | Postcode
+      td
+        = @postcode.pcode
+    tr
+      td
+        | Suburb
+      td
+        = @postcode.suburb
+    tr
+      td
+        | State
+      td
+        = @postcode.state
+    tr
+      td
+        | Latitude
+      td
+        = @postcode.latitude
+    tr
+      td
+        | Longitude
+      td
+        = @postcode.longitude
+    tr
+      td
+        | Urban
+      td
+        = @postcode.urban
+= link_to 'Edit', edit_postcode_path(@postcode)

@@ -1,0 +1,7 @@
+- content_for :body_id do
+  |  index
+= provide(:title, 'Update panel' )
+h1
+  | Update panel
+= render 'form'
+= link_to 'Show', @panel
