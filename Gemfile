@@ -28,6 +28,7 @@ group :development, :test do
   gem 'capybara'
   gem 'annotate', '>=2.5.0'
   gem 'rubocop'
+  gem 'spring'
 end
 group :test do
   gem 'webmock' #for testing http requests to pvoutput.org
