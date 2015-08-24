@@ -14,7 +14,7 @@ end
   gem 'coffee-rails'
   #put this outside assets group, or heroku will complain
   gem 'bootstrap-sass', '~>3.0.3.0'
-  gem 'sass-rails', '~> 4.0.1'
+  gem 'sass-rails', '~> 4.0.2'
 
 group :development, :test do
   gem 'rspec-rails'
