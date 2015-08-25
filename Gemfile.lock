@@ -124,6 +124,8 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     kgio (2.9.3)
+    libnotify (0.9.1)
+      ffi (>= 1.0.11)
     listen (3.0.3)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -296,6 +298,7 @@ DEPENDENCIES
   guard-spork
   jbuilder (~> 1.2)
   jquery-rails
+  libnotify
   pg (= 0.17.1)
   poltergeist
   rails (~> 4.2)

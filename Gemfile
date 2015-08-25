@@ -24,6 +24,7 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'spork-rails', github: 'sporkrb/spork-rails'
   gem 'guard-spork'
+  gem 'libnotify'
   gem 'childprocess', '0.3.6'
   gem 'capybara'
   gem 'annotate', '>=2.5.0'
