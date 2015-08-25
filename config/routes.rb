@@ -1,4 +1,4 @@
-Solar::Application.routes.draw do
+Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :irradiances
 
@@ -55,7 +55,7 @@ Solar::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

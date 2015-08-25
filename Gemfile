@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.2.0'
-gem 'rails', github: 'rails/rails', branch: 'master'
+ruby '2.2.2'
+gem 'rails', '~>4.2'
 
 gem 'pg', '0.17.1' #postgres
 gem 'devise'
@@ -21,9 +21,9 @@ group :development, :test do
   gem 'poltergeist' #headless driver for js testing
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
-  gem 'guard-rspec', '4.2.4'
+  gem 'guard-rspec'
   gem 'spork-rails', github: 'sporkrb/spork-rails'
-  gem 'guard-spork', '1.5.1'
+  gem 'guard-spork'
   gem 'childprocess', '0.3.6'
   gem 'capybara'
   gem 'annotate', '>=2.5.0'

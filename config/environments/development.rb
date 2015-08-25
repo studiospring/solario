@@ -1,4 +1,4 @@
-Solar::Application.configure do
+Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -30,4 +30,8 @@ Solar::Application.configure do
   config.assets.debug = true
 
   Slim::Engine.set_options pretty: true, sort_attrs: false
+
+  config.assets.digest = true
+
+  config.assets.raise_runtime_errors = true
 end
