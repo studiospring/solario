@@ -17,7 +17,7 @@ end
   gem 'sass-rails', '~> 4.0.2'
 
 group :development, :test do
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails', '~>3.3'
   gem 'poltergeist' #headless driver for js testing
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
