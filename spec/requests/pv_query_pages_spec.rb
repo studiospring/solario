@@ -75,6 +75,7 @@ describe "PvQuery" do
         fill_in "Tilt", :with => ''
         fill_in "Area", :with => ''
       end
+
       it "should not create a new pv_query" do
         expect { click_button submit }.not_to change(PvQuery, :count).by(1)
       end

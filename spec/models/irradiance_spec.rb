@@ -21,7 +21,9 @@ describe Irradiance do
   it { should respond_to(:diffuse) }
   it { should respond_to(:postcode_id) }
   it { should respond_to(:postcode) }
-  its(:postcode) { should eq postcode }
+
+  specify { expect(subject.postcode).to eq(postcode) }
+  # its(:postcode) { should eq postcode }
 
   it { should be_valid }
 

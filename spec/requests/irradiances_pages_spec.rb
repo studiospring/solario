@@ -17,6 +17,7 @@ describe "Irradiances" do
   before do
     login_as(admin, :scope => :user)
   end
+
   describe 'index page' do
     let(:heading) { 'Irradiances' }
     before { visit irradiances_path }
@@ -29,7 +30,7 @@ describe "Irradiances" do
     end
 
     it "should not be able to delete a postcode" do
-      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.not_to change(Postcode, :count).by(-1)
+      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.not_to change(Postcode, :count)
     end
 
     it "should list each irradiance" do

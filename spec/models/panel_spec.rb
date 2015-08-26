@@ -26,7 +26,8 @@ describe Panel do
   it { should respond_to(:panel_size) }
   it { should respond_to(:pv_query_id) }
   it { should respond_to(:pv_query) }
-  its(:pv_query) { should eq pv_query }
+
+  specify { expect(subject.pvquery).to eq(pv_query) }
 
   it { should be_valid }
 
