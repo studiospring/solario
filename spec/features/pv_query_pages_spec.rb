@@ -28,9 +28,9 @@ describe "PvQuery" do
 
     it "should list each query" do
       PvQuery.all.each do |query|
-        page.should have_selector('td', :text => query.postcode_id)
-        page.should have_link('Show', :href => pv_query_path(query))
-        page.should have_link('Delete', :href => pv_query_path(query))
+        expect(page).to have_selector('td', :text => query.postcode_id)
+        expect(page).to have_link('Show', :href => pv_query_path(query))
+        expect(page).to have_link('Delete', :href => pv_query_path(query))
         expect { click_link 'Delete', :href => pv_query_path(query) }.to change(PvQuery, :count).by(-1)
       end
     end
@@ -44,11 +44,12 @@ describe "PvQuery" do
       end
 
       it "should redirect to sign-in page" do
-        page.should have_selector("h1", :text => "Sign in")
+        expect(page).to have_selector("h1", :text => "Sign in")
       end
     end
 
   end
+
   describe 'new page' do
     let(:heading) { 'Average annual panel output' }
     let(:submit) { 'view output' }
@@ -68,6 +69,7 @@ describe "PvQuery" do
         it { should_not have_selector("input#pv_query_panels_attributes_1_bearing") }
       end
     end
+
     describe 'with invalid inputs' do
       before do
         fill_in "Postcode", :with => 123
@@ -77,7 +79,7 @@ describe "PvQuery" do
       end
 
       it "should not create a new pv_query" do
-        expect { click_button submit }.not_to change(PvQuery, :count).by(1)
+        expect { click_button submit }.not_to change(PvQuery, :count)
       end
 
       describe "after submitting", :js => true do
@@ -97,6 +99,7 @@ describe "PvQuery" do
 
       it { should_not have_selector('h2', :text => heading) }
     end
+
     describe 'with valid inputs' do
       before do
         fill_in "Postcode", :with => 1234
@@ -104,9 +107,11 @@ describe "PvQuery" do
         fill_in "Tilt", :with => 15
         fill_in "Area", :with => 15
       end
+
       it "should create a new pv_query" do
-        expect { click_button submit }.to change(PvQuery, :count).by(1)
+        expect { click_button submit }.to change(PvQuery, :count)
       end
+
       # it "should load when form is submitted" do
       # #find 'body'
       # #should render_template(:partial => '_results')
@@ -116,8 +121,8 @@ describe "PvQuery" do
       # end
 
     end
-
   end
+
   describe 'show page' do
     let(:heading) { 'Pv_query' }
     before do

@@ -35,9 +35,9 @@ describe "Irradiances" do
 
     it "should list each irradiance" do
       Irradiance.all.each do |irradiance|
-        page.should have_selector('td', :text => postcode.pcode)
-        page.should have_link('Show', :href => irradiance_path(irradiance))
-        page.should have_link('Delete', :href => irradiance_path(irradiance))
+        expect(page).to have_selector('td', :text => postcode.pcode)
+        expect(page).to have_link('Show', :href => irradiance_path(irradiance))
+        expect(page).to have_link('Delete', :href => irradiance_path(irradiance))
       end
     end
 
@@ -92,7 +92,7 @@ describe "Irradiances" do
       end
 
       it "should associate with the correct postcode" do
-        pending 'figuring out how to do it'
+        skip 'figuring out how to do it'
       end
     end
 
@@ -105,9 +105,11 @@ describe "Irradiances" do
       it { should have_selector("h1", :text => "Sign in") }
     end
   end
+
   describe 'show page' do
     let(:heading) { 'Irradiance' }
     let(:heading) { 'Irradiance' }
+
     before { visit irradiance_path(irradiance) }
 
     it_should_behave_like 'all irradiance pages'
@@ -125,6 +127,7 @@ describe "Irradiances" do
       it { should have_selector("h1", :text => "Sign in") }
     end
   end
+
   describe 'edit page' do
     let(:heading) { 'Update Irradiance' }
     let(:submit) { "Update Irradiance" }
@@ -136,12 +139,14 @@ describe "Irradiances" do
 
     describe 'with invalid inputs' do
       before { fill_in 'Direct irradiance', :with => ' ' }
+
       it "should not create a new irradiance" do
         expect { click_button submit }.not_to change(Irradiance, :count)
       end
 
       describe "after submitting" do
         before { click_button submit }
+
         it_should_behave_like 'all irradiance pages'
         it { should have_selector("div.alert.alert-danger", :text => "error") }
       end
@@ -149,6 +154,7 @@ describe "Irradiances" do
 
     describe 'with valid inputs' do
       let(:new_diffuse)  { "888" }
+
       before do
         fill_in "Diffuse irradiance", :with => "888"
         click_button submit
@@ -158,6 +164,7 @@ describe "Irradiances" do
       it { should have_selector("div.alert-success", :text => "Irradiance updated") }
       specify { expect(irradiance.reload.diffuse).to eq new_diffuse }
     end
+
     describe 'when not logged in' do
       before do
         logout :user
