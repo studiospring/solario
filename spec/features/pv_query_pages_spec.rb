@@ -106,6 +106,15 @@ describe "PvQuery" do
         fill_in "Bearing", :with => 15
         fill_in "Tilt", :with => 15
         fill_in "Area", :with => 15
+
+        stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=1234%20%2BN&sid=#{Rails.application.secrets.pvo_system_id}").
+       with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+       to_return(:status => 200, :body => "", :headers => {})
+
+        stub_request(:get, "http://pvoutput.org/service/r2/getstatistic.jsp?date_from=20100901&date_to=20100927&key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=1000").
+         to_return(
+           :status => 200,
+           :body => "246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916")
       end
 
       it "should create a new pv_query" do
