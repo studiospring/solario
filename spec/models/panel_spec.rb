@@ -9,16 +9,19 @@
 #  pv_query_id :integer
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Panel do
   # prevent tests from failing because of postcode_to_postcode_id callback
   PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
+
   let(:pv_query) { FactoryGirl.create(:pv_query) }
   let!(:irradiance) { FactoryGirl.create(:irradiance, :postcode_id => pv_query.postcode_id) }
+
   before do
     @panel = pv_query.panels.build(:tilt => 60, :bearing => 150, :panel_size => 31)
   end
+
   subject { @panel }
 
   it { should respond_to(:tilt) }
@@ -27,7 +30,7 @@ describe Panel do
   it { should respond_to(:pv_query_id) }
   it { should respond_to(:pv_query) }
 
-  specify { expect(subject.pvquery).to eq(pv_query) }
+  specify { expect(subject.pv_query).to eq(pv_query) }
 
   it { should be_valid }
 
@@ -90,7 +93,7 @@ describe Panel do
 
   describe 'possible_watts' do
     it "should calculate correct value" do
-      @panel.possible_watts.should == 4030
+      expect(@panel.possible_watts).to eq(4030)
     end
   end
 
@@ -98,23 +101,23 @@ describe Panel do
     before { @panel.vector }
     it "should return correct value for @panel.vector[:x]" do
       # when bearing is 150 deg
-      @panel.vector[:x].should be_within(0.001).of(-0.75000)
+      expect(@panel.vector[:x]).to be_within(0.001).of(-0.75000)
     end
 
     it "should return correct value for @panel.vector[:y]" do
       # when bearing is 150 deg
-      @panel.vector[:y].should be_within(0.01).of(0.433012701)
+      expect(@panel.vector[:y]).to be_within(0.01).of(0.433012701)
     end
 
     it "should return correct value for @panel.vector[:z]" do
       # when tilt is 60 deg
-      @panel.vector[:z].should be_within(0.001).of(0.5)
+      expect(@panel.vector[:z]).to be_within(0.001).of(0.5)
     end
   end
 
   describe 'dni_received_pa method' do
     it "should return correct array" do
-      @panel.dni_received_pa(irradiance.direct[0..-8])[5].should == 6.82 # correct time_zone difference
+      expect(@panel.dni_received_pa(irradiance.direct[0..-8])[5]).to eq(6.82) # correct time_zone difference
     end
 
     describe 'when no associated postcode is found' do
@@ -123,7 +126,7 @@ describe Panel do
       end
 
       it "should not raise an error" do
-        lambda { @panel.dni_received_pa(irradiance.direct[0..-8]) }.should_not raise_error
+        expect(lambda { @panel.dni_received_pa(irradiance.direct[0..-8]) }).not_to raise_error
       end
     end
   end
@@ -134,27 +137,27 @@ describe Panel do
     end
 
     it "should return a very big hash" do
-      pending 'if this method is really necessary'
+      skip 'if this method is really necessary'
       # @panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
     end
   end
 
   describe 'avg_efficiency method' do
     it "should return correct value" do
-      Panel.avg_efficiency(20, 0.98).should == 0.83
+      expect(Panel.avg_efficiency(20, 0.98)).to eq(0.83)
     end
   end
 
   describe 'overall_efficiency' do
     it "should return correct value" do
-      Panel.overall_efficiency.should == 0.14
+      expect(Panel.overall_efficiency).to eq(0.14)
     end
   end
 
   describe 'diffuse_received_pa method' do
     # before { @panel.annual_dni_received() }
     it "should return a very big array" do
-      pending 'dummy data'
+      skip 'dummy data'
     end
   end
 end

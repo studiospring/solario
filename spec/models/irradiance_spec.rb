@@ -10,7 +10,7 @@
 #  updated_at  :datetime
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Irradiance do
   let(:postcode) { FactoryGirl.create(:postcode) }
@@ -23,7 +23,6 @@ describe Irradiance do
   it { should respond_to(:postcode) }
 
   specify { expect(subject.postcode).to eq(postcode) }
-  # its(:postcode) { should eq postcode }
 
   it { should be_valid }
 

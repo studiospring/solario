@@ -11,7 +11,7 @@
 #  urban     :boolean          default(FALSE)
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe Postcode do
 
@@ -89,11 +89,6 @@ describe Postcode do
     it { should_not be_valid }
   end
 
-  describe 'when urban is not boolean' do
-    before { @postcode.urban = 'shoe' }
-    it { should_not be_valid }
-  end
-
   describe 'pv_query associations' do
     before { @postcode.save }
     let(:pv_query) { FactoryGirl.create(:pv_query, :postcode => @postcode) }
@@ -107,7 +102,7 @@ describe Postcode do
       end
 
       it "should update urban attr to 'true' if more than 4 pv systems are found" do
-        @postcode.urban.should == true
+        expect(@postcode.urban).to be(true)
       end
     end
 
@@ -119,7 +114,7 @@ describe Postcode do
       end
 
       it "should update urban attr to 'false' if fewer than 5 pv systems are found" do
-        @postcode.urban.should == false
+        expect(@postcode.urban).to be(false)
       end
     end
   end
