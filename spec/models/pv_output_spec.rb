@@ -16,13 +16,27 @@ describe PvOutput do
               'date_to' => '20140114',
               'significance' => 0 }
             )
+
+    stub_request(:get, "http://pvoutput.org/service/r2/getstatistic.jsp?date_from=20100901&date_to=20100927&key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=1000").
+     to_return(
+       :status => 200,
+       :body => "246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916")
+
+    stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=4870%20%2BNW&sid=#{Rails.application.secrets.pvo_system_id}").
+     to_return(
+       :status => 200,
+       :body => "")
+
+    stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=1234%20%2BS&sid=#{Rails.application.secrets.pvo_system_id}").
+     to_return(
+       :status => 200,
+       :body => "")
   end
 
   let(:postcode) { FactoryGirl.create(:postcode) }
 
   subject { @pvo }
 
-  # stubs are defined in rails_helper.rb
   describe 'output_pa' do
     skip 'system id'
   end

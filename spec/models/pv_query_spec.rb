@@ -85,7 +85,7 @@ describe PvQuery do
       before { @pv_query.postcode = nil }
 
       it "should not raise an error" do
-        lambda { @pv_query.output_pa_array }.should_not raise_error
+        expect { @pv_query.output_pa_array }.not_to raise_error
       end
     end
   end
