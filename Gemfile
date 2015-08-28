@@ -21,9 +21,7 @@ group :development, :test do
   gem 'poltergeist' #headless driver for js testing
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
-  gem 'guard-rspec'
-  gem 'spork-rails', github: 'sporkrb/spork-rails'
-  gem 'guard-spork'
+  gem 'guard-rspec', require: false
   gem 'libnotify'
   gem 'childprocess'
   gem 'capybara'
