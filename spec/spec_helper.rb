@@ -20,6 +20,11 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+# Speed up tests.
+# Comment out to log to log/test.log.
+Rails.logger.level = 4
+
+
 Capybara.javascript_driver = :poltergeist
 Capybara.default_max_wait_time = 20
 WebMock.disable_net_connect!(:allow_localhost => true)
@@ -66,4 +71,7 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
+
+  # enable Devise test helpers like 'sign_in'
+  config.include Devise::TestHelpers, :type => :controller
 end
