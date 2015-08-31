@@ -16,6 +16,7 @@ describe "Panels" do
   before do
     login_as(admin, :scope => :user)
   end
+
   describe 'index page' do
     let(:heading) { 'Panels' }
     before { visit panels_path }
@@ -28,12 +29,14 @@ describe "Panels" do
         page.should have_selector('td', :text => panel)
         page.should have_link('Show', :href => panel_path(panel))
         page.should have_link('Delete', :href => panel_path(panel))
-        expect { click_link 'Delete', :href => panel_path(panel) }.to change(Panel, :count).by(-1)
+        expect { click_link 'Delete', :href => panel_path(panel) }.
+          to change(Panel, :count).by(-1)
       end
     end
 
     it { should have_link 'Add panel', :href => new_panel_path }
   end
+
   describe 'show page' do
     let(:heading) { 'Panel' }
     let(:heading) { 'Panel' }
@@ -41,11 +44,10 @@ describe "Panels" do
 
     it_should_behave_like 'all panel pages'
     it { should have_title(full_title(heading)) }
-
     it { should have_content panel.bearing }
-
     it { should have_link 'Edit', :href => edit_panel_path(panel) }
   end
+
   describe 'edit page' do
     let(:heading) { 'Update panel' }
     let(:submit) { "Update Panel" }
@@ -69,6 +71,7 @@ describe "Panels" do
 
     describe 'with valid inputs' do
       let(:new_panel_size) { 244 }
+
       before do
         fill_in "Panel size", :with => 244
         click_button submit

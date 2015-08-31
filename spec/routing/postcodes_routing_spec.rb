@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe PostcodesController do
   describe "routing" do
-
     it "routes to #index" do
       expect(get("/postcodes")).to route_to("postcodes#index")
     end

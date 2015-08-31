@@ -12,9 +12,11 @@ describe "Postcodes" do
   shared_examples_for "all postcode pages" do
     it { should have_selector('h1', :text => heading) }
   end
+
   before do
     login_as(admin, :scope => :user)
   end
+
   describe 'index page' do
     let(:heading) { 'Postcodes' }
     before { visit postcodes_path }
@@ -30,6 +32,7 @@ describe "Postcodes" do
         expect { click_link 'Delete', :href => postcode_path(postcode) }.to change(Postcode, :count).by(-1)
       end
     end
+
     it { should have_link 'Add postcode', :href => new_postcode_path }
 
     describe 'when not logged in' do
@@ -41,6 +44,7 @@ describe "Postcodes" do
       it { should have_selector("h1", :text => "Sign in") }
     end
   end
+
   describe 'new page' do
     let(:heading) { 'Add postcode' }
     let(:submit) { "Add Postcode" }
@@ -93,17 +97,17 @@ describe "Postcodes" do
       it { should have_selector("h1", :text => "Sign in") }
     end
   end
+
   describe 'show page' do
     let(:heading) { 'Postcode' }
     before { visit postcode_path(postcode) }
 
     it_should_behave_like 'all postcode pages'
     it { should have_title(full_title('Postcode')) }
-
     it { should have_content postcode.pcode }
-
     it { should have_link 'Edit', :href => edit_postcode_path(postcode) }
   end
+
   describe 'edit page' do
     let(:heading) { 'Update postcode' }
     let(:submit) { "Update Postcode" }
@@ -126,7 +130,8 @@ describe "Postcodes" do
     end
 
     describe 'with valid inputs' do
-      let(:new_suburb)  { "Newville" }
+      let(:new_suburb) { "Newville" }
+
       before do
         fill_in "Postcode", :with => 8888
         fill_in "Suburb", :with => 'Newville'

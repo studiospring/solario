@@ -26,11 +26,13 @@ describe "Irradiances" do
     it { should have_title(full_title(heading)) }
 
     it "should be able to delete an irradiance" do
-      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.to change(Irradiance, :count).by(-1)
+      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.
+        to change(Irradiance, :count).by(-1)
     end
 
     it "should not be able to delete a postcode" do
-      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.not_to change(Postcode, :count)
+      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.
+        not_to change(Postcode, :count)
     end
 
     it "should list each irradiance" do
@@ -52,6 +54,7 @@ describe "Irradiances" do
       it { should have_selector("h1", :text => "Sign in") }
     end
   end
+
   describe 'new page' do
     let(:heading) { 'Add Irradiance' }
     let(:submit) { "Add Irradiance" }

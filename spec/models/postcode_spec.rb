@@ -14,7 +14,6 @@
 require 'rails_helper'
 
 describe Postcode do
-
   before { @postcode = Postcode.new(:pcode => 4321, :suburb => 'Simsville', :state => 'WA', :latitude => -12.123123, :longitude => 123.456789, :urban => false) }
   subject { @postcode }
 

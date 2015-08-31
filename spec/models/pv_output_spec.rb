@@ -1,36 +1,35 @@
 require 'rails_helper'
 
 describe PvOutput do
-
   before(:all) do
     @pvo = PvOutput.new(
-            { 'system_watts' => '2345',
-              'postcode' => '1234',
-              'orientation' => 'N',
-              'tilt' => '23',
-              'shade' => 'No',
-              'total_output' => '54433',
-              'efficiency' => '3.358',
-              'entries' => '1000',
-              'date_from' => '20101003',
-              'date_to' => '20140114',
-              'significance' => 0 }
-            )
+      { 'system_watts' => '2345',
+        'postcode' => '1234',
+        'orientation' => 'N',
+        'tilt' => '23',
+        'shade' => 'No',
+        'total_output' => '54433',
+        'efficiency' => '3.358',
+        'entries' => '1000',
+        'date_from' => '20101003',
+        'date_to' => '20140114',
+        'significance' => 0 }
+    )
 
-    stub_request(:get, "http://pvoutput.org/service/r2/getstatistic.jsp?date_from=20100901&date_to=20100927&key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=1000").
-     to_return(
-       :status => 200,
-       :body => "246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916")
+    stub_request(:get, "http://pvoutput.org/service/r2/getstatistic.jsp?date_from=20100901&date_to=20100927&key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=1000")
+      .to_return(
+        :status => 200,
+        :body => "246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916")
 
-    stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=4870%20%2BNW&sid=#{Rails.application.secrets.pvo_system_id}").
-     to_return(
-       :status => 200,
-       :body => "")
+    stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=4870%20%2BNW&sid=#{Rails.application.secrets.pvo_system_id}")
+      .to_return(
+        :status => 200,
+        :body => "")
 
-    stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=1234%20%2BS&sid=#{Rails.application.secrets.pvo_system_id}").
-     to_return(
-       :status => 200,
-       :body => "")
+    stub_request(:get, "http://pvoutput.org/service/r2/search.jsp?country=Australia&key=#{Rails.application.secrets.pvo_api_key}&q=1234%20%2BS&sid=#{Rails.application.secrets.pvo_system_id}")
+      .to_return(
+        :status => 200,
+        :body => "")
   end
 
   let(:postcode) { FactoryGirl.create(:postcode) }
@@ -54,17 +53,17 @@ describe PvOutput do
   describe 'search' do
     it 'returns array of systems from pvoutput.org' do
       pvo_systems = { "name" => " Solar 4 US",
-                       "system_watts" => "9360",
-                       "postcode" => "4280",
-                       "orientation" => "NW",
-                       "entries" => "81",
-                       "last_entry" => "2 days ago",
-                       "id" => "249",
-                       "panel" => "Solarfun",
-                       "inverter" => "Aurora",
-                       "distance" => "NaN",
-                       "latitude" => "-27.831402",
-                       "longitude" => "153.028469" }
+                      "system_watts" => "9360",
+                      "postcode" => "4280",
+                      "orientation" => "NW",
+                      "entries" => "81",
+                      "last_entry" => "2 days ago",
+                      "id" => "249",
+                      "panel" => "Solarfun",
+                      "inverter" => "Aurora",
+                      "distance" => "NaN",
+                      "latitude" => "-27.831402",
+                      "longitude" => "153.028469" }
 
       expect(PvOutput.search('4280 +NW')[0]).to eq(pvo_systems)
     end
@@ -76,10 +75,10 @@ describe PvOutput do
 
   describe 'get_system' do
     before do
-    stub_request(:get, "http://pvoutput.org/service/r2/getsystem.jsp?key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=100").
-      to_return(
-        :status => 200,
-        :body => "PVOutput Demo,2450,2199,14,175,Enertech,1,2000,CMS,N,NaN,No,20100101,-33.907725,151.026108,5;60.0,10,190,W,30.5,40.0;1,12,93;1")
+      stub_request(:get, "http://pvoutput.org/service/r2/getsystem.jsp?key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=100")
+        .to_return(
+          :status => 200,
+          :body => "PVOutput Demo,2450,2199,14,175,Enertech,1,2000,CMS,N,NaN,No,20100101,-33.907725,151.026108,5;60.0,10,190,W,30.5,40.0;1,12,93;1")
     end
 
     it 'should return system data from pvoutput.org' do
@@ -109,10 +108,10 @@ describe PvOutput do
 
   describe 'get_statistic' do
     before do
-      stub_request(:get, "http://pvoutput.org/service/r2/getstatistic.jsp?date_from=20100901&date_to=20100927&key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=1000").
-       to_return(
-         :status => 200,
-         :body => "246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916")
+      stub_request(:get, "http://pvoutput.org/service/r2/getstatistic.jsp?date_from=20100901&date_to=20100927&key=#{Rails.application.secrets.pvo_api_key}&sid=#{Rails.application.secrets.pvo_system_id}&sid1=1000")
+        .to_return(
+          :status => 200,
+          :body => "246800,246800,8226,2000,11400,3.358,27,20100901,20100927,4.653,20100916")
     end
 
     it 'returns hash of system data from pvoutput.org' do

@@ -17,12 +17,9 @@ describe Panel do
 
   let(:pv_query) { FactoryGirl.create(:pv_query) }
   let!(:irradiance) { FactoryGirl.create(:irradiance, :postcode_id => pv_query.postcode_id) }
+  let!(:panel) { pv_query.panels.build(:tilt => 60, :bearing => 150, :panel_size => 31) }
 
-  before do
-    @panel = pv_query.panels.build(:tilt => 60, :bearing => 150, :panel_size => 31)
-  end
-
-  subject { @panel }
+  subject { panel }
 
   it { should respond_to(:tilt) }
   it { should respond_to(:bearing) }
@@ -36,97 +33,97 @@ describe Panel do
 
   # validation
   describe 'when tilt is not present' do
-    before { @panel.tilt = ' ' }
+    before { panel.tilt = ' ' }
     it { should_not be_valid }
   end
 
   describe 'when tilt is too low' do
-    before { @panel.tilt = -1 }
+    before { panel.tilt = -1 }
     it { should_not be_valid }
   end
 
   describe 'when tilt is too high' do
-    before { @panel.tilt = 181 }
+    before { panel.tilt = 181 }
     it { should_not be_valid }
   end
 
   describe 'when tilt is not a number' do
-    before { @panel.tilt = 'cd' }
+    before { panel.tilt = 'cd' }
     it { should_not be_valid }
   end
 
   describe 'when bearing is not present' do
-    before { @panel.bearing = ' ' }
+    before { panel.bearing = ' ' }
     it { should_not be_valid }
   end
 
   describe 'when bearing is too low' do
-    before { @panel.bearing = -1 }
+    before { panel.bearing = -1 }
     it { should_not be_valid }
   end
 
   describe 'when bearing is too high' do
-    before { @panel.bearing = 361 }
+    before { panel.bearing = 361 }
     it { should_not be_valid }
   end
 
   describe 'when bearing is not a number' do
-    before { @panel.bearing = 'abc' }
+    before { panel.bearing = 'abc' }
     it { should_not be_valid }
   end
 
   describe 'when panel_size is not present' do
-    before { @panel.panel_size = ' ' }
+    before { panel.panel_size = ' ' }
     it { should_not be_valid }
   end
 
   describe 'when panel_size is not a number' do
-    before { @panel.panel_size = 'abc' }
+    before { panel.panel_size = 'abc' }
     it { should_not be_valid }
   end
 
   # prevents form from being submitted
   # describe "when pv_query_id is not present" do
-  # before { @panel.pv_query_id = nil }
+  # before { panel.pv_query_id = nil }
   # it { should_not be_valid }
   # end
 
   describe 'possible_watts' do
     it "should calculate correct value" do
-      expect(@panel.possible_watts).to eq(4030)
+      expect(panel.possible_watts).to eq(4030)
     end
   end
 
   describe 'vector instance method' do
-    before { @panel.vector }
-    it "should return correct value for @panel.vector[:x]" do
+    before { panel.vector }
+    it "should return correct value for panel.vector[:x]" do
       # when bearing is 150 deg
-      expect(@panel.vector[:x]).to be_within(0.001).of(-0.75000)
+      expect(panel.vector[:x]).to be_within(0.001).of(-0.75000)
     end
 
-    it "should return correct value for @panel.vector[:y]" do
+    it "should return correct value for panel.vector[:y]" do
       # when bearing is 150 deg
-      expect(@panel.vector[:y]).to be_within(0.01).of(0.433012701)
+      expect(panel.vector[:y]).to be_within(0.01).of(0.433012701)
     end
 
-    it "should return correct value for @panel.vector[:z]" do
+    it "should return correct value for panel.vector[:z]" do
       # when tilt is 60 deg
-      expect(@panel.vector[:z]).to be_within(0.001).of(0.5)
+      expect(panel.vector[:z]).to be_within(0.001).of(0.5)
     end
   end
 
   describe 'dni_received_pa method' do
     it "should return correct array" do
-      expect(@panel.dni_received_pa(irradiance.direct[0..-8])[5]).to eq(6.82) # correct time_zone difference
+      expect(panel.dni_received_pa(irradiance.direct[0..-8])[5]).to eq(6.82) # correct time_zone difference
     end
 
     describe 'when no associated postcode is found' do
       before do
-        @panel.pv_query.postcode = nil
+        panel.pv_query.postcode = nil
       end
 
       it "should not raise an error" do
-        expect(lambda { @panel.dni_received_pa(irradiance.direct[0..-8]) }).not_to raise_error
+        expect(-> { panel.dni_received_pa(irradiance.direct[0..-8]) }).not_to raise_error
       end
     end
   end
@@ -138,7 +135,7 @@ describe Panel do
 
     it "should return a very big hash" do
       skip 'if this method is really necessary'
-      # @panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
+      # panel.dni_received_pa(@dni_pa)[0][0].should == BigDecimal('0.4')
     end
   end
 
@@ -155,7 +152,7 @@ describe Panel do
   end
 
   describe 'diffuse_received_pa method' do
-    # before { @panel.annual_dni_received() }
+    # before { panel.annual_dni_received() }
     it "should return a very big array" do
       skip 'dummy data'
     end
