@@ -6,14 +6,15 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, :if => :devise_controller?
 
   protected
-  # permit additional devise user parameters
+
+  # Permit additional devise user parameters.
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:username) }
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username) }
     devise_parameter_sanitizer.for(:edit_user) { |u| u.permit(:username, :email) }
   end
 
-  # for use with Devise
+  # For use with Devise.
   def require_admin
     unless current_user && current_user.admin
       flash[:alert] = "You must sign in to view this page"

@@ -37,7 +37,7 @@ class PvOutput
   def output_per_system_watts
     output = self.output_pa / self.system_watts.to_i
   rescue
-    output = 0
+    0
   else
     output
   end
@@ -56,8 +56,6 @@ class PvOutput
       query_params = { :sid1 => self.id, :date_from => start_date, :date_to => self.date_to }
       stats = self.class.get_statistic(query_params)
       stats['total_output'].to_i / year_count
-    else
-      nil
     end
   end
 

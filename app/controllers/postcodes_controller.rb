@@ -1,5 +1,6 @@
 class PostcodesController < ApplicationController
   before_filter :require_admin
+
   def index
     @postcodes = Postcode.all.limit(10)
   end
@@ -29,6 +30,7 @@ class PostcodesController < ApplicationController
 
   def update
     @postcode = Postcode.find(params[:id])
+
     if @postcode.update(postcode_params)
       flash[:success] = 'Postcode updated'
       redirect_to @postcode
@@ -42,9 +44,10 @@ class PostcodesController < ApplicationController
     @postcode.destroy
     redirect_to postcodes_url
   end
+
   private
+
   def postcode_params
-    # enter mass assignable fields here
     params.require(:postcode).permit(:pcode, :suburb, :state, :latitude, :longitude, :urban)
   end
 end

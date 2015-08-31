@@ -3,6 +3,7 @@ class PvQueriesController < ApplicationController
   before_filter :require_admin, :except => [:new, :create]
 
   respond_to :html, :js
+
   def index
     @pv_queries = PvQuery.all
   end
@@ -11,12 +12,14 @@ class PvQueriesController < ApplicationController
     @pv_query = PvQuery.new
     @pv_query.panels.build
   end
-  # renders in new page, via create.js.coffee
+
+  # Renders in new page, via create.js.coffee.
   def create
     @pv_query = PvQuery.new(pv_query_params)
 
     if @pv_query.save
-      @output_pa_array = @pv_query.output_pa_array.join(' ') # convert from array to string
+      # Convert from array to string.
+      @output_pa_array = @pv_query.output_pa_array.join(' ')
       # @column_heights = @pv_query.column_heights
       @output_pa = @pv_query.output_pa
       @query_params = @pv_query.panels
@@ -25,6 +28,7 @@ class PvQueriesController < ApplicationController
       # @get_system = PvOutput.get_system(453)
       # #call search, candidate_systems...
       @similar_system = PvOutput.find_similar_system(@search_params)
+
       if @similar_system
         @pvo_system = PvOutput.new(@similar_system)
         # define other attributes by calling get_statistic
@@ -49,6 +53,7 @@ class PvQueriesController < ApplicationController
 
   def update
     @pv_query = PvQuery.find(params[:id])
+
     if @pv_query.update(pv_query_params)
       flash[:success] = 'Pv query updated'
       redirect_to @pv_query
@@ -62,9 +67,11 @@ class PvQueriesController < ApplicationController
     @pv_query.destroy
     redirect_to pv_queries_url
   end
+
   private
+
   def pv_query_params
-    # enter mass assignable fields here
-    params.require(:pv_query).permit(:postcode_id, :panels_attributes => [:tilt, :bearing, :panel_size])
+    params.require(:pv_query).permit(:postcode_id,
+                                     :panels_attributes => [:tilt, :bearing, :panel_size])
   end
 end

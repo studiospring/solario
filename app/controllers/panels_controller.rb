@@ -1,5 +1,6 @@
 class PanelsController < ApplicationController
   before_filter :require_admin
+
   def index
     @panels = Panel.all
   end
@@ -14,6 +15,7 @@ class PanelsController < ApplicationController
 
   def update
     @panel = Panel.find(params[:id])
+
     if @panel.update(panel_params)
       flash[:success] = 'Panel updated'
       redirect_to @panel
@@ -27,9 +29,10 @@ class PanelsController < ApplicationController
     @panel.destroy
     redirect_to panels_url
   end
+
   private
+
   def panel_params
-    # enter mass assignable fields here
     params.require(:panel).permit(:tilt, :bearing, :panel_size)
   end
 end

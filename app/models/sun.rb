@@ -11,11 +11,10 @@ class Sun
     @local_time = local_time
   end
 
-  # convert azimuth and elevation in to vector notation:
+  # Convert azimuth and elevation in to vector notation:
   # S = Sx + Sy + Sz
-  # return hash: vector[:x], [:y], [:z]
-  # insert 24hr hourly time: 9, 12, 13 ...
-  # eg 13.5 is 13:30pm
+  # @return [Hash] vector[:x], [:y], [:z].
+  # Insert 24hr hourly time: 9, 12, 13, eg 13.5 is 13:30pm.
   def vector
     vector = {}
     elev = self.elevation
@@ -27,21 +26,21 @@ class Sun
     vector
   end
 
-  # return declination in radians
+  # @return [Float] declination in radians.
   def declination
     Math.asin(0.3979486313076103 * Math.sin(0.017214206 * (self.day - 81))).abs
   end
 
-  # input hra in degrees bc degs is easier to understand
-  # return elevation of sun in radians
+  # Input hra in degrees bc degs is easier to understand.
+  # @return [Float] elevation of sun in radians.
   def elevation
     dec = self.declination
     lat = self.latitude.to_rad
     Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(self.hra.to_rad))
   end
 
-  # input hra in degrees bc degs is easier to understand
-  # return azimuth in radians
+  # Input hra in degrees bc degs is easier to understand.
+  # @return [Float] azimuth in radians.
   def azimuth
     dec = self.declination
     lat = self.latitude.to_rad

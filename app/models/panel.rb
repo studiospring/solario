@@ -16,20 +16,20 @@ class Panel < ActiveRecord::Base
   belongs_to :pv_query
 
   validates :tilt,
-    :presence => true,
-    :length => { :maximum => 2 },
-    :numericality => { :greater_than_or_equal_to => 0,
-                       :less_than_or_equal_to => 90 }
+            :presence => true,
+            :length => { :maximum => 2 },
+            :numericality => { :greater_than_or_equal_to => 0,
+                               :less_than_or_equal_to => 90 }
   validates :bearing,
-    :presence => true,
-    :length => { :maximum => 3 },
-    :numericality => { :greater_than_or_equal_to => 0,
-                       :less_than_or_equal_to => 360 }
+            :presence => true,
+            :length => { :maximum => 3 },
+            :numericality => { :greater_than_or_equal_to => 0,
+                               :less_than_or_equal_to => 360 }
   validates :panel_size,
-    :presence => true,
-    # TODO: not producing error on 0. Numericality does not work either.
-    :inclusion => {:in => 1..500,
-                   :message => 'is not a valid number'}
+            :presence => true,
+            # TODO: not producing error on 0. Numericality does not work either.
+            :inclusion => {:in => 1..500,
+                           :message => 'is not a valid number'}
 
   # Polycrystalline silicon, 13.1% module efficiency.
   # Watts per_square_metre.
@@ -138,7 +138,7 @@ class Panel < ActiveRecord::Base
     dni_received_pa_hash.each do |key, diurnal_dni|
       # assume 6am is the Universal Time of first value
       local_time = 6
-      panel_insolation = Array.new
+      panel_insolation = []
       diurnal_dni.map do |dni|
         relative_angle = self.relative_angle(sun.vector)
         panel_insolation << (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
@@ -160,7 +160,7 @@ class Panel < ActiveRecord::Base
     # No diffuse data in database, so cannot debug.
     irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.pv_query.postcode_id).first
     irradiance.nil? ? diffuse = nil : diffuse = irradiance.diffuse
-    diffuse_array = diffuse.split(" ").map { |s| s.to_i }
+    diffuse_array = diffuse.split(" ").map(&:to_i)
     diffuse_array.map! { |value| (value * self.panel_size).to_i }
     diffuse_array
   end
@@ -226,7 +226,6 @@ class Panel < ActiveRecord::Base
     # s = length(cross_product(a,b))
     # c = dot_product(a,b)
     # angle = atan2(s, c)
-
   end
 
   # @return [Float] insolation received by 1sqm module via vector method.
