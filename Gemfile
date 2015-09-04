@@ -43,6 +43,10 @@ group :production do
   gem 'rails_12factor', '0.0.2'
 end
 
+gem 'pv_output_wrapper',
+  :git => '/home/sean/dev/pv_output_wrapper',
+  :branch => 'master'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

@@ -1,3 +1,11 @@
+GIT
+  remote: /home/sean/dev/pv_output_wrapper
+  revision: 55c877f13880208c13955064e79fe995c37281ec
+  branch: master
+  specs:
+    pv_output_wrapper (0.1.0)
+      addressable (~> 2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -288,6 +296,7 @@ DEPENDENCIES
   pg (= 0.17.1)
   poltergeist
   pry-rails
+  pv_output_wrapper!
   rails (~> 4.2)
   rails-footnotes (>= 3.7.9)
   rails_12factor (= 0.0.2)
