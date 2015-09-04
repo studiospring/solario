@@ -54,7 +54,7 @@ class PvOutput
       year_count = (entries_period / 365).to_i
       start_date = (date_to - year_count.years).strftime('%Y%m%d')
       query_params = { :sid1 => self.id, :date_from => start_date, :date_to => self.date_to }
-      stats = self.class.get_statistic(query_params)
+      stats = PvOutputWrapper::Request.get_statistic(query_params)
       stats['total_output'].to_i / year_count
     end
   end
@@ -63,7 +63,7 @@ class PvOutput
   # Failure assigns nil values.
   def get_stats
     query_params = { :sid1 => self.id }
-    stats = self.class.get_statistic(query_params)
+    stats = PvOutputWrapper::Request.get_statistic(query_params)
     # udpate date_from to use 'actual date from', not 'install date'
     self.date_from = stats['date_from']
     self.date_to = stats['date_to']
