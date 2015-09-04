@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 gem 'rails', '~>4.2'
 
-gem 'pg', '0.17.1' #postgres
+gem 'pg', '0.17.1'
 gem 'devise'
 
 group :assets do
@@ -10,18 +10,20 @@ group :assets do
   # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '>= 1.3.0'
 end
-  # Use CoffeeScript for .js.coffee assets and views
-  gem 'coffee-rails'
-  #put this outside assets group, or heroku will complain
-  gem 'bootstrap-sass', '~>3.0.3.0'
-  gem 'sass-rails', '~> 4.0.2'
+
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails'
+# Put this outside assets group, or heroku will complain
+gem 'bootstrap-sass', '~>3.0.3.0'
+gem 'sass-rails', '~> 4.0.2'
 
 group :development, :test do
   gem 'rspec-rails', '~>3.3'
-  gem 'poltergeist' #headless driver for js testing
+  # Headless driver for js testing
+  gem 'poltergeist'
   gem 'rails-footnotes', '>= 3.7.9'
   gem 'factory_girl_rails'
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec', :require => false
   gem 'libnotify'
   gem 'childprocess'
   gem 'capybara'
@@ -30,11 +32,15 @@ group :development, :test do
   gem 'spring'
   gem 'pry-rails'
 end
+
 group :test do
-  gem 'webmock' #for testing http requests to pvoutput.org
+  # For testing http requests to pvoutput.org
+  gem 'webmock'
 end
+
 group :production do
-  gem 'rails_12factor', '0.0.2' #used by Heroku
+  # Used by Heroku
+  gem 'rails_12factor', '0.0.2'
 end
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -54,7 +60,7 @@ gem 'slim'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+  gem 'sdoc', :require => false
 end
 
 # Use ActiveModel has_secure_password
