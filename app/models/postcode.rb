@@ -38,20 +38,26 @@ class Postcode < ActiveRecord::Base
 
   URBAN_PV_SYSTEM_THRESHOLD = 5
 
-  def update_urban
-    self.urban = !self.urban
+  # Update urban attr only if it needs changing.
+  # @arg [Array] PvOutput.search results.
+  def update_urban(pvo_query_results)
+    self.urban = !self.urban if update_urban?(pvo_query_results)
   end
 
+  # @arg [Array] PvOutput.search results.
   def update_urban?(pvo_query_results)
-    self.urban != define_as_urban?(pvo_query_results)
+    self.urban != is_urban?(pvo_query_results)
   end
 
   private
 
-  def define_as_urban?(pvo_query_results)
+  # @arg [String] PvQuery.pvo_search_params
+  def is_urban?(pvo_query_results)
     system_count_per_postcode(pvo_query_results) >= URBAN_PV_SYSTEM_THRESHOLD
   end
 
+  # @arg [String] PvQuery.pvo_search_params
+  # @return [Fixnum]
   def system_count_per_postcode(pvo_query_results)
     pvo_query_results.count { |system| system[:postcode] == self.pcode }
   end

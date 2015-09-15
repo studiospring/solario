@@ -97,7 +97,7 @@ describe Postcode do
     describe 'when urban attr is false' do
       before do
         results = [{:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}]
-        @postcode.update_urban if @postcode.update_urban?(results)
+        @postcode.update_urban(results) if @postcode.update_urban?(results)
       end
 
       it "should update urban attr to 'true' if more than 4 pv systems are found" do
@@ -109,7 +109,7 @@ describe Postcode do
       before do
         @postcode.urban = true
         results = [{:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}, {:postcode => 4321}]
-        @postcode.update_urban if @postcode.update_urban?(results)
+        @postcode.update_urban(results)if @postcode.update_urban?(results)
       end
 
       it "should update urban attr to 'false' if fewer than 5 pv systems are found" do
