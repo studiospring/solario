@@ -124,7 +124,11 @@ class PvOutput
     end
 
     postcode = Postcode.find_by :pcode => query.split(' ')[0]
-    postcode.update_urban if postcode.update_urban?(results)
+
+    if postcode
+      postcode.update_urban if postcode.update_urban?(results)
+    end
+
     results
   end
 
