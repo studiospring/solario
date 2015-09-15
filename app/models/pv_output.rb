@@ -1,18 +1,25 @@
 class PvOutput
   require 'uri'
   require 'open-uri'
+  require 'pv_output_wrapper'
+
   attr_accessor :id,
-                :system_watts, # called 'system size' in pvoutput.org (W)
+                # Called 'system size' in pvoutput.org (W).
+                :system_watts,
                 :postcode,
                 :orientation,
                 :tilt,
                 :shade,
-                :total_output, # called 'energy generated' in pvoutput.org (Wh)
+                # Called 'energy generated' in pvoutput.org (Wh).
+                :total_output,
                 :efficiency,
-                :entries, # called 'outputs' in pvoutput.org
-                :date_from, # retrieved from 'install_date' and 'date_from'
+                # Called 'outputs' in pvoutput.org.
+                :entries,
+                # Retrieved from 'install_date' and 'date_from'
+                :date_from,
                 :date_to,
-                :significance # express "statistical significance" of pvo values (0 to 1)
+                # Expresses "statistical significance" of pvo values (0 to 1).
+                :significance
 
   # @param [Hash] returned by find_similar_system
   def initialize(similar_system)
@@ -70,7 +77,7 @@ class PvOutput
     self.total_output = stats['total_output']
   end
 
-  # Use pv_query.pvo_search_params to generate query argument.
+  # @arg [String] PvQuery.pvo_search_params
   # @return [Hash] of most similar and statistically reliable system
   #   with data from both search and get_system (or nil).
   # TODO: loop and change search params if it returns nil?
@@ -100,6 +107,7 @@ class PvOutput
   # http://pvoutput.org/help.html#search
   # use pv_query.pvo_search_params to generate query argument
   # Update postcode.urban attr depending on results count.
+  # @arg [String] PvQuery.pvo_search_params
   # @return [Array<Hash>] of systems [{name: 'some_name', size: 'size,...}, {...}]
   #   or empty array.
   def self.search(query)
