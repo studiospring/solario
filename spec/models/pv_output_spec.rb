@@ -5,26 +5,7 @@ describe PvOutput do
   let(:api_key) { Rails.application.secrets.pvo_api_key }
   let(:system_id) { Rails.application.secrets.pvo_system_id }
 
-  before(:all) do
-    @pvo = PvOutput.new(
-      { 'system_watts' => '2345',
-        'postcode' => '1234',
-        'orientation' => 'N',
-        'tilt' => '23',
-        'shade' => 'No',
-        'total_output' => '54433',
-        'efficiency' => '3.358',
-        'entries' => '1000',
-        'date_from' => '20101003',
-        'date_to' => '20140114',
-        'significance' => 0 }
-    )
-
-  end
-
   let(:postcode) { FactoryGirl.create(:postcode) }
-
-  subject { @pvo }
 
   describe 'output_pa' do
     skip 'system id'
