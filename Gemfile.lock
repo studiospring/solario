@@ -1,6 +1,6 @@
 GIT
   remote: /home/sean/dev/pv_output_wrapper
-  revision: 55c877f13880208c13955064e79fe995c37281ec
+  revision: 52b2090b03c9da6af2ddf9ef26d86b3d6786833c
   branch: master
   specs:
     pv_output_wrapper (0.1.0)
