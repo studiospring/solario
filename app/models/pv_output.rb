@@ -40,6 +40,7 @@ class PvOutput
     @efficiency = nil
   end
 
+  # TODO: fix me!
   # @return output_pa divided by system_watts (Wh).
   def output_per_system_watts
     output = self.output_pa / self.system_watts.to_i
@@ -92,6 +93,7 @@ class PvOutput
     top5.each do |system|
       # get rid of systems with secondary panels
       if system['entries'].to_i >= 100 && system['panel_count'] == 'NaN'
+        # returning nil here in spec
         system_info = self.get_system(system['id'])
         if system_info['shade'] == 'No'
           similar_system = system_info.merge(system)
@@ -111,9 +113,12 @@ class PvOutput
   # @return [Array<Hash>] of systems [{name: 'some_name', size: 'size,...}, {...}]
   #   or empty array.
   def self.search(query)
-    params = { 'q'        => query,
-               'country'  => 'Australia' }
-    response = self.request('search', params)
+    params = { :q        => query,
+               :country  => 'Australia' }
+    request = PvOutputWrapper::Request.new(Rails.application.secrets.pvo_api_key,
+                                            Rails.application.secrets.pvo_system_id)
+    response = request.search(params).body
+    # response = self.request('search', params)
     response.chomp!
     results = []
     keys = ['name', 'system_watts', 'postcode', 'orientation', 'entries', 'last_entry', 'id', 'panel', 'inverter', 'distance', 'latitude', 'longitude']
@@ -133,6 +138,7 @@ class PvOutput
   end
 
   # @param [Fixnum]
+  # TODO handle nil/empty resultset
   # @return [Hash] of system info data.
   def self.get_system(id)
     response = self.request('getsystem', {:sid1 => id})
