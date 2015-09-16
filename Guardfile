@@ -24,6 +24,7 @@
 #  * zeus: 'zeus rspec' (requires the server to be started separately)
 #  * 'just' rspec: 'rspec'
 
+# notification :libnotify, :timeout => 5
 
 guard :rspec, cmd: "bundle exec rspec" do
   require "guard/rspec/dsl"
