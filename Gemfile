@@ -17,6 +17,8 @@ gem 'coffee-rails'
 gem 'bootstrap-sass', '~>3.0.3.0'
 gem 'sass-rails', '~> 4.0.2'
 
+gem 'responders'
+
 group :development, :test do
   gem 'rspec-rails', '~>3.3'
   # Headless driver for js testing

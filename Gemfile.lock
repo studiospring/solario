@@ -300,6 +300,7 @@ DEPENDENCIES
   rails (~> 4.2)
   rails-footnotes (>= 3.7.9)
   rails_12factor (= 0.0.2)
+  responders
   rspec-rails (~> 3.3)
   rubocop
   sass-rails (~> 4.0.2)
