@@ -33,6 +33,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'spring'
   gem 'pry-rails'
+  gem 'byebug'
 end
 
 group :test do
