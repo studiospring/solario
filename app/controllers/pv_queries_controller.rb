@@ -21,20 +21,20 @@ class PvQueriesController < ApplicationController
       # Convert from array to string.
       @output_pa_array = @pv_query.output_pa_array.join(' ')
       # @column_heights = @pv_query.column_heights
-      @output_pa = @pv_query.output_pa
+      # @output_pa = @pv_query.output_pa
       @query_params = @pv_query.panels
-      @search_params = @pv_query.pvo_search_params
-      @candidate_systems = PvOutput.search(@search_params)
-      # @get_system = PvOutput.get_system(453)
-      # #call search, candidate_systems...
-      @similar_system = PvOutput.find_similar_system(@search_params)
+      # @search_params = @pv_query.pvo_search_params
+      # @candidate_systems = PvOutput.search(@search_params)
+      # # @get_system = PvOutput.get_system(453)
+      # # #call search, candidate_systems...
+      # @similar_system = PvOutput.find_similar_system(@search_params)
 
-      if @similar_system
-        @pvo_system = PvOutput.new(@similar_system)
-        # define other attributes by calling get_statistic
-        @pvo_system.get_stats
-        @empirical_output_pa = @pv_query.empirical_output_pa(@pvo_system.output_per_system_watt)
-      end
+      # if @similar_system
+      #   @pvo_system = PvOutput.new(@similar_system)
+      #   # define other attributes by calling get_statistic
+      #   @pvo_system.get_stats
+      #   @empirical_output_pa = @pv_query.empirical_output_pa(@pvo_system.output_per_system_watt)
+      # end
 
       respond_with({:output_pa_array => @output_pa_array}, :location => new_pv_query_url)
     else
