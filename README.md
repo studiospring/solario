@@ -52,15 +52,15 @@ Start up your local server:
 
     rails server
 
-View site at http://localhost:3000. When you have everything set up, you will want to create an admin account at http://localhost:3000/sign_up and add some dummy data.
+View site at http://localhost:3000. When you have everything set up, you will want to create an admin account at http://localhost:3000/users/sign_up and add some dummy data.
 
 Testing
 -------
 
-[Rspec](https://www.relishapp.com/rspec/rspec-rails/docs), [Guard](https://github.com/guard/guard-rspec) and [Spork](https://github.com/sporkrb/spork-rails) are used to test this app.
+[Rspec](https://www.relishapp.com/rspec/rspec-rails/docs) and [Guard](https://github.com/guard/guard-rspec) are used to test this app.
 To run the tests, after you have started rails, in your shell:
 
-    guard
+    bundle exec guard
 
 Authentication/Authorisation
 ----------------------------
@@ -89,4 +89,4 @@ License
 -------
 
 This software is licensed under the AGPL.
-Copyright (c) 2013 Sean Loughman.
+Copyright (c) 2015 Sean Loughman.
