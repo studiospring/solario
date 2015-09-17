@@ -32,7 +32,9 @@ class User < ActiveRecord::Base
   validates :username,
             :presence => true,
             :uniqueness => true
-  validates :email,
+  validates :password,
+            :confirmation => true
+  validates :password_confirmation,
             :presence => true
   validates :admin,
             :inclusion => { :in => [true, false] }
