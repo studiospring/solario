@@ -1,6 +1,6 @@
 class PvQueriesController < ApplicationController
-  # before_filter :authenticate_user!, except: [:new, :results]
-  before_filter :require_admin, :except => [:new, :create]
+  # before_action :authenticate_user!, except: [:new, :results]
+  before_action :require_admin, :except => [:new, :create]
 
   respond_to :html, :js
 

@@ -1,5 +1,5 @@
 class IrradiancesController < ApplicationController
-  before_filter :require_admin
+  before_action :require_admin
 
   def index
     @irradiances = Irradiance.all
