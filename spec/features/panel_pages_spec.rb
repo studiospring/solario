@@ -10,7 +10,7 @@ describe "Panels" do
   subject { page }
 
   shared_examples_for "all panel pages" do
-    it { should have_selector('h1', :text => heading) }
+    it { expect(page).to have_selector('h1', :text => heading) }
   end
 
   before do
@@ -22,19 +22,19 @@ describe "Panels" do
     before { visit panels_path }
 
     it_should_behave_like 'all panel pages'
-    it { should have_title(full_title(heading)) }
+    it { expect(page).to have_title(full_title(heading)) }
 
-    it "should list each panel" do
+    it "expect(page).to list each panel" do
       Panel.all.each do |panel|
-        page.should have_selector('td', :text => panel)
-        page.should have_link('Show', :href => panel_path(panel))
-        page.should have_link('Delete', :href => panel_path(panel))
-        expect { click_link 'Delete', :href => panel_path(panel) }.
-          to change(Panel, :count).by(-1)
+        expect(page).to have_selector('td', :text => panel)
+        expect(page).to have_link('Show', :href => panel_path(panel))
+        expect(page).to have_link('Delete', :href => panel_path(panel))
+        expect { click_link 'Delete', :href => panel_path(panel) }
+          .to change(Panel, :count).by(-1)
       end
     end
 
-    it { should have_link 'Add panel', :href => new_panel_path }
+    it { expect(page).to have_link 'Add panel', :href => new_panel_path }
   end
 
   describe 'show page' do
@@ -43,9 +43,9 @@ describe "Panels" do
     before { visit panel_path(panel) }
 
     it_should_behave_like 'all panel pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_content panel.bearing }
-    it { should have_link 'Edit', :href => edit_panel_path(panel) }
+    it { expect(page).to have_title(full_title(heading)) }
+    it { expect(page).to have_content panel.bearing }
+    it { expect(page).to have_link 'Edit', :href => edit_panel_path(panel) }
   end
 
   describe 'edit page' do
@@ -54,8 +54,8 @@ describe "Panels" do
     before { visit edit_panel_path(panel) }
 
     it_should_behave_like 'all panel pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_button('Update Panel') }
+    it { expect(page).to have_title(full_title(heading)) }
+    it { expect(page).to have_button('Update Panel') }
 
     describe 'with invalid inputs' do
       before do
@@ -65,7 +65,7 @@ describe "Panels" do
 
       describe "error message" do
         it_should_behave_like 'all panel pages'
-        it { should have_content('error') }
+        it { expect(page).to have_content('error') }
       end
     end
 
@@ -78,8 +78,8 @@ describe "Panels" do
       end
 
       specify { expect(panel.reload.panel_size).to eq new_panel_size }
-      it { should have_selector('h1', :text => 'Panel') }
-      it { should have_selector("div.alert-success", :text => "Panel updated") }
+      it { expect(page).to have_selector('h1', :text => 'Panel') }
+      it { expect(page).to have_selector("div.alert-success", :text => "Panel updated") }
     end
   end
 end

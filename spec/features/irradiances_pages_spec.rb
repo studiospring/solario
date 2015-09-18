@@ -11,7 +11,7 @@ describe "Irradiances" do
   subject { page }
 
   shared_examples_for "all irradiance pages" do
-    it { should have_selector('h1', :text => heading) }
+    it { expect(page).to have_selector('h1', :text => heading) }
   end
 
   before do
@@ -23,16 +23,16 @@ describe "Irradiances" do
     before { visit irradiances_path }
 
     it_should_behave_like 'all irradiance pages'
-    it { should have_title(full_title(heading)) }
+    it { expect(page).to have_title(full_title(heading)) }
 
     it "should be able to delete an irradiance" do
-      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.
-        to change(Irradiance, :count).by(-1)
+      expect { click_link 'Delete', :href => irradiance_path(irradiance) }
+        .to change(Irradiance, :count).by(-1)
     end
 
     it "should not be able to delete a postcode" do
-      expect { click_link 'Delete', :href => irradiance_path(irradiance) }.
-        not_to change(Postcode, :count)
+      expect { click_link 'Delete', :href => irradiance_path(irradiance) }
+        .not_to change(Postcode, :count)
     end
 
     it "should list each irradiance" do
@@ -43,7 +43,7 @@ describe "Irradiances" do
       end
     end
 
-    it { should have_link 'Add irradiance', :href => new_irradiance_path }
+    it { expect(page).to have_link 'Add irradiance', :href => new_irradiance_path }
 
     describe 'when not logged in' do
       before do
@@ -51,7 +51,7 @@ describe "Irradiances" do
         visit irradiances_path
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
   end
 
@@ -61,8 +61,8 @@ describe "Irradiances" do
     before { visit new_irradiance_path }
 
     it_should_behave_like 'all irradiance pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_button("Add Irradiance") }
+    it { expect(page).to have_title(full_title(heading)) }
+    it { expect(page).to have_button("Add Irradiance") }
 
     describe 'with invalid inputs' do
       it "should not create a new irradiance" do
@@ -72,7 +72,7 @@ describe "Irradiances" do
       describe "error message" do
         before { click_button submit }
         it_should_behave_like 'all irradiance pages'
-        it { should have_content('error') }
+        it { expect(page).to have_content('error') }
       end
     end
 
@@ -90,8 +90,8 @@ describe "Irradiances" do
       describe 'after saving the irradiance' do
         before { click_button submit }
 
-        it { should have_selector('h1', :text => "Irradiance") }
-        it { should have_selector("div.alert-success", :text => "New irradiance created") }
+        it { expect(page).to have_selector('h1', :text => "Irradiance") }
+        it { expect(page).to have_selector("div.alert-success", :text => "New irradiance created") }
       end
 
       it "should associate with the correct postcode" do
@@ -105,7 +105,7 @@ describe "Irradiances" do
         visit new_irradiance_path
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
   end
 
@@ -116,18 +116,18 @@ describe "Irradiances" do
     before { visit irradiance_path(irradiance) }
 
     it_should_behave_like 'all irradiance pages'
-    it { should have_title(full_title(heading)) }
+    it { expect(page).to have_title(full_title(heading)) }
 
-    # it { should have_content postcode.pcode }
+    # it {expect(page).to have_content postcode.pcode }
 
-    it { should have_link 'Edit', :href => edit_irradiance_path(irradiance) }
+    it { expect(page).to have_link 'Edit', :href => edit_irradiance_path(irradiance) }
     describe 'when not logged in' do
       before do
         logout :user
         visit irradiance_path(irradiance)
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
   end
 
@@ -137,8 +137,8 @@ describe "Irradiances" do
     before { visit edit_irradiance_path(irradiance) }
 
     it_should_behave_like 'all irradiance pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_button('Update Irradiance') }
+    it { expect(page).to have_title(full_title(heading)) }
+    it { expect(page).to have_button('Update Irradiance') }
 
     describe 'with invalid inputs' do
       before { fill_in 'Direct irradiance', :with => ' ' }
@@ -151,7 +151,7 @@ describe "Irradiances" do
         before { click_button submit }
 
         it_should_behave_like 'all irradiance pages'
-        it { should have_selector("div.alert.alert-danger", :text => "error") }
+        it { expect(page).to have_selector("div.alert.alert-danger", :text => "error") }
       end
     end
 
@@ -163,8 +163,8 @@ describe "Irradiances" do
         click_button submit
       end
 
-      it { should have_selector('h1', :text => "Irradiance") }
-      it { should have_selector("div.alert-success", :text => "Irradiance updated") }
+      it { expect(page).to have_selector('h1', :text => "Irradiance") }
+      it { expect(page).to have_selector("div.alert-success", :text => "Irradiance updated") }
       specify { expect(irradiance.reload.diffuse).to eq new_diffuse }
     end
 
@@ -174,7 +174,7 @@ describe "Irradiances" do
         visit edit_irradiance_path(irradiance)
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
   end
 end

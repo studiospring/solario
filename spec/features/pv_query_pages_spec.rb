@@ -91,22 +91,22 @@ describe "PvQuery" do
         # TODO: Test incorrectly fails with alphabet.
         it do
           should have_selector("label.alert-warning",
-           :text => "Please enter at least 4 characters.")
+                               :text => "Please enter at least 4 characters.")
+        end
+
+        it do
+          expect(page).to have_selector("label.alert-warning",
+                                        :text => "Please enter a value less than or equal to 360.")
         end
 
         it do
           should have_selector("label.alert-warning",
-            :text => "Please enter a value less than or equal to 360.")
+                               :text => "This field is required.")
         end
 
         it do
           should have_selector("label.alert-warning",
-            :text => "This field is required.")
-        end
-
-        it do
-          should have_selector("label.alert-warning",
-            :text => "This field is required.")
+                               :text => "This field is required.")
         end
       end
 
@@ -134,13 +134,14 @@ describe "PvQuery" do
         expect { click_button submit }.to change(PvQuery, :count)
       end
 
-      # it "should load when form is submitted" do
-      # #find 'body'
-      # #should render_template(:partial => '_results')
-      # should_not have_selector('legend')
-      # #save_and_open_page
-      # #print page.html
-      # end
+      it "should load when form is submitted" do
+        # find 'body'
+        expect(page).to have_selector('legend')
+        # should render_template(:partial => '_results')
+        # should_not have_selector('legend')
+        # save_and_open_page
+        # print page.html
+      end
     end
   end
 
@@ -163,7 +164,7 @@ describe "PvQuery" do
         visit pv_query_path(pv_query)
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
     Warden.test_reset!
   end
@@ -178,8 +179,8 @@ describe "PvQuery" do
     end
 
     it_should_behave_like 'all pv_query pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_button("Update Pv query") }
+    it { expect(page).to have_title(full_title(heading)) }
+    it { expect(page).to have_button("Update Pv query") }
 
     describe 'with invalid inputs' do
       before do
@@ -189,7 +190,7 @@ describe "PvQuery" do
 
       describe "error message" do
         it_should_behave_like 'all pv_query pages'
-        it { should have_content('error') }
+        it { expect(page).to have_content('error') }
       end
     end
 
@@ -197,14 +198,15 @@ describe "PvQuery" do
       before do
         fill_in "Postcode", :with => 130
       end
+
       skip
     end
 
     describe 'after saving the pv_query' do
       before { click_button submit }
 
-      it { should have_selector('h1', :text => "Pv_query") }
-      it { should have_selector("div.alert-success", :text => 'Pv query updated') }
+      it { expect(page).to have_selector('h1', :text => "Pv_query") }
+      it { expect(page).to have_selector("div.alert-success", :text => 'Pv query updated') }
     end
 
     describe 'when not logged in' do
@@ -213,7 +215,7 @@ describe "PvQuery" do
         visit edit_pv_query_path(pv_query)
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
 
     Warden.test_reset!

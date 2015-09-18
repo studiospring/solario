@@ -8,9 +8,9 @@ describe "Authentication" do
   subject { page }
 
   shared_examples_for "all authentication pages" do
-    it { should have_selector('h1', :text => heading) }
+    it { expect(page).to have_selector('h1', :text => heading) }
     # Cannot access helpers without calling 'ApplicationController...'
-    it { should have_title(ApplicationController.helpers.full_title(heading)) }
+    it { expect(page).to have_title(ApplicationController.helpers.full_title(heading)) }
   end
 
   describe 'admin login page' do
@@ -23,14 +23,14 @@ describe "Authentication" do
     end
 
     it_should_behave_like 'all authentication pages'
-    it { should have_button(submit) }
+    it { expect(page).to have_button(submit) }
 
     describe 'with invalid inputs' do
       before { click_button submit }
 
       describe "should have error message" do
         it_should_behave_like 'all authentication pages'
-        it { should have_selector("div.alert", :text => "Invalid") }
+        it { expect(page).to have_selector("div.alert", :text => "Invalid") }
       end
     end
 
@@ -41,15 +41,16 @@ describe "Authentication" do
         click_button submit
       end
 
-      it { should have_selector("div.alert-notice", :text => "Signed in") }
-      it { should have_link 'Logout', :href => destroy_user_session_path }
+      it { expect(page).to have_selector("div.alert-notice", :text => "Signed in") }
+      it { expect(page).to have_link 'Logout', :href => destroy_user_session_path }
 
       describe 'and logout' do
         before { click_link "Logout" }
-        it { should have_link 'Login' }
+        it { expect(page).to have_link 'Login' }
       end
     end
   end
+
   describe 'admin edit page' do
     let(:heading) { 'Edit profile' }
     let(:submit) { "Update" }
@@ -60,7 +61,7 @@ describe "Authentication" do
     end
 
     it_should_behave_like 'all authentication pages'
-    it { should have_button(submit) }
+    it { expect(page).to have_button(submit) }
     Warden.test_reset!
   end
 end

@@ -10,7 +10,7 @@ describe "Postcodes" do
   subject { page }
 
   shared_examples_for "all postcode pages" do
-    it { should have_selector('h1', :text => heading) }
+    it { expect(page).to have_selector('h1', :text => heading) }
   end
 
   before do
@@ -22,18 +22,18 @@ describe "Postcodes" do
     before { visit postcodes_path }
 
     it_should_behave_like 'all postcode pages'
-    it { should have_title(full_title('Postcodes')) }
+    it { expect(page).to have_title(full_title('Postcodes')) }
 
     it "should list each postcode" do
       Postcode.all.each do |postcode|
-        page.should have_selector('td', :text => postcode.pcode)
-        page.should have_link('Show', :href => postcode_path(postcode))
-        page.should have_link('Delete', :href => postcode_path(postcode))
+        expect(page).to have_selector('td', :text => postcode.pcode)
+        expect(page).to have_link('Show', :href => postcode_path(postcode))
+        expect(page).to have_link('Delete', :href => postcode_path(postcode))
         expect { click_link 'Delete', :href => postcode_path(postcode) }.to change(Postcode, :count).by(-1)
       end
     end
 
-    it { should have_link 'Add postcode', :href => new_postcode_path }
+    it { expect(page).to have_link 'Add postcode', :href => new_postcode_path }
 
     describe 'when not logged in' do
       before do
@@ -41,7 +41,7 @@ describe "Postcodes" do
         visit postcodes_path
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
   end
 
@@ -51,8 +51,8 @@ describe "Postcodes" do
     before { visit new_postcode_path }
 
     it_should_behave_like 'all postcode pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_button("Add Postcode") }
+    it { expect(page).to have_title(full_title(heading)) }
+    it { expect(page).to have_button("Add Postcode") }
 
     describe 'with invalid inputs' do
       it "should not create a new postcode" do
@@ -62,7 +62,7 @@ describe "Postcodes" do
       describe "error message" do
         before { click_button submit }
         it_should_behave_like 'all postcode pages'
-        it { should have_content('error') }
+        it { expect(page).to have_content('error') }
       end
     end
 
@@ -83,8 +83,8 @@ describe "Postcodes" do
       describe 'after saving the postcode' do
         before { click_button submit }
 
-        it { should have_selector('h1', :text => "Postcode") }
-        it { should have_selector("div.alert-success", :text => "Postcode created") }
+        it { expect(page).to have_selector('h1', :text => "Postcode") }
+        it { expect(page).to have_selector("div.alert-success", :text => "Postcode created") }
       end
     end
 
@@ -94,7 +94,7 @@ describe "Postcodes" do
         visit new_postcode_path
       end
 
-      it { should have_selector("h1", :text => "Sign in") }
+      it { expect(page).to have_selector("h1", :text => "Sign in") }
     end
   end
 
@@ -103,9 +103,9 @@ describe "Postcodes" do
     before { visit postcode_path(postcode) }
 
     it_should_behave_like 'all postcode pages'
-    it { should have_title(full_title('Postcode')) }
-    it { should have_content postcode.pcode }
-    it { should have_link 'Edit', :href => edit_postcode_path(postcode) }
+    it { expect(page).to have_title(full_title('Postcode')) }
+    it { expect(page).to have_content postcode.pcode }
+    it { expect(page).to have_link 'Edit', :href => edit_postcode_path(postcode) }
   end
 
   describe 'edit page' do
@@ -114,8 +114,8 @@ describe "Postcodes" do
     before { visit edit_postcode_path(postcode) }
 
     it_should_behave_like 'all postcode pages'
-    it { should have_title(full_title(heading)) }
-    it { should have_button("Update Postcode") }
+    it { expect(page).to have_title(full_title(heading)) }
+    it { expect(page).to have_button("Update Postcode") }
 
     describe 'with invalid inputs' do
       before do
@@ -125,7 +125,7 @@ describe "Postcodes" do
 
       describe "error message" do
         it_should_behave_like 'all postcode pages'
-        it { should have_content('error') }
+        it { expect(page).to have_content('error') }
       end
     end
 
@@ -142,8 +142,8 @@ describe "Postcodes" do
         click_button submit
       end
 
-      it { should have_selector('h1', :text => "Postcode") }
-      it { should have_selector("div.alert-success", :text => 'Postcode updated') }
+      it { expect(page).to have_selector('h1', :text => "Postcode") }
+      it { expect(page).to have_selector("div.alert-success", :text => 'Postcode updated') }
       specify { expect(postcode.reload.suburb).to eq new_suburb }
     end
   end
