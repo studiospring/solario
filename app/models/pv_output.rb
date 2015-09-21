@@ -61,7 +61,7 @@ class PvOutput
       # Find date exactly n years before date_to.
       year_count = (entries_period / 365).to_i
       start_date = (date_to - year_count.years).strftime('%Y%m%d')
-      query_params = { :sid1 => self.id, :date_from => start_date, :date_to => self.date_to }
+      query_params = { :sid1 => self.id, :df => start_date, :dt => self.date_to }
       stats = PvOutputWrapper::Request.get_statistic(query_params)
       stats['total_output'].to_i / year_count
     end
@@ -116,9 +116,8 @@ class PvOutput
     params = { :q        => query,
                :country  => 'Australia' }
     request = PvOutputWrapper::Request.new(Rails.application.secrets.pvo_api_key,
-                                            Rails.application.secrets.pvo_system_id)
+                                           Rails.application.secrets.pvo_system_id)
     response = request.search(params).body
-    # response = self.request('search', params)
     response.chomp!
     results = []
     keys = ['name', 'system_watts', 'postcode', 'orientation', 'entries', 'last_entry', 'id', 'panel', 'inverter', 'distance', 'latitude', 'longitude']
@@ -138,10 +137,12 @@ class PvOutput
   end
 
   # @param [Fixnum]
-  # TODO handle nil/empty resultset
+  # TODO: handle nil/empty resultset
   # @return [Hash] of system info data.
   def self.get_system(id)
-    response = self.request('getsystem', {:sid1 => id})
+    request = PvOutputWrapper::Request.new(Rails.application.secrets.pvo_api_key,
+                                           Rails.application.secrets.pvo_system_id)
+    response = request.get_system({:sid1 => id}).body
     keys = %w(system_watts panel_count panel_watts orientation tilt shade install_date sec_panel_count sec_panel_watts sec_bearing sec_tilt)
     results_array = response.split(/,/)
     selected_results = results_array.values_at(1, 3, 4, 9, 10, 11, 12, 16, 17, 18, 19)
@@ -168,10 +169,13 @@ class PvOutput
     results
   end
 
+  # @arg [Hash]
   # @return [Hash<String, >] system data or nil values upon failure.
   # Keep as class method for flexibility.
   def self.get_statistic(query_params={})
-    response = self.request('getstatistic', query_params)
+    request = PvOutputWrapper::Request.new(Rails.application.secrets.pvo_api_key,
+                                           Rails.application.secrets.pvo_system_id)
+    response = request.get_statistic(query_params).body
     # total_output is in watt hours
     keys = ['total_output', 'efficiency', 'date_from', 'date_to']
     results_array = response.split(/,/)
