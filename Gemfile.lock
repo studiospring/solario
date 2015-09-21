@@ -1,9 +1,9 @@
 GIT
   remote: /home/sean/dev/pv_output_wrapper
-  revision: 3d36d9f5db18d0062f9f7f87f550cc3381cd78a9
+  revision: f95acca96bd2f4ee1529bd76faed4fc1c8b0f013
   branch: master
   specs:
-    pv_output_wrapper (0.1.0)
+    pv_output_wrapper (0.1.1)
       addressable (~> 2.3)
 
 GEM
