@@ -45,7 +45,7 @@ ready = ->
   if graph_div.data('datapoints').length > 0
     drawVisualization()
   else
-    graph_div.children().append(' There was no solar data for your postcode.') #>>>
+    graph_div.children().append(' There was no solar data for your postcode.')
 
   $('#index_link').click ->
     location.reload(true)

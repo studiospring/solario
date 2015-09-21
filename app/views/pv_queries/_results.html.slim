@@ -7,53 +7,54 @@ p.alert.alert-warning
   | This app is an alpha release and uses dummy data! Enjoy!
 - @query_params.each_with_index do |panel, i|
   p
-    | Panel 
+    | Panel
     = i + 1
     | :
   ul
     li
-      | bearing: 
+      | bearing:
       = panel.bearing
       sup
         | °
     li
-      | tilt: 
+      | tilt:
       = panel.tilt
       sup
         | °
     li
-      | area: 
+      | area:
       = panel.panel_size
       | m
       sup
         | 2
-p
-  | Approximate system size for given panel area: 
+
+
+  | Approximate system size for given panel area:
   = number_to_human(@pv_query.system_watts, units: :W)
 p
-  | @search_params: 
+  | @search_params:
   = @search_params.inspect
 p
-  | @candidate_systems: 
+  | @candidate_systems:
   = @candidate_systems.inspect
 p
-  | @get_system: 
+  | @get_system:
   = @get_system.inspect
 p
-  | @similar_system: 
+  | @similar_system:
   = @similar_system.inspect
 p
-  | @pvo_system: 
+  | @pvo_system:
   = @pvo_system.inspect
 p
-  | @pvo_system output: 
+  | @pvo_system output:
   - # @pvo_system.output_pa
   | kWh
 p
-  | Empirical output for pv_query: 
+  | Empirical output for pv_query:
   = number_to_human(@empirical_output_pa, units: :Wh)
 p
-  | Output p.a.: 
+  | Output p.a.:
   = number_to_human(@output_pa, units: :Wh)
 p
   | Drag to rotate graph, scroll to zoom.
