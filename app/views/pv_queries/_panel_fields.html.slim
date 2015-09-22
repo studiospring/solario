@@ -6,13 +6,13 @@ fieldset.row.nested_fields
       = f.label :bearing, 'Bearing', class: 'control-label'
       = f.number_field :bearing, step: 'any', min: '0', max: '360', class: 'bearing_input form-control', autocomplete: 'off'
       sup
-        | °
+        |  °
       span.glyphicon.glyphicon-question-sign[rel="tooltip" data-toggle="tooltip" title="Use true north (from a map) not magnetic north"]
     .form-group
       = f.label :tilt, 'Tilt', class: 'control-label'
       = f.number_field :tilt, step: 'any', min: '0', max: '180', class: 'tilt_input form-control', autocomplete: 'off'
       sup
-        | °
+        |  °
       span.glyphicon.glyphicon-question-sign[rel="tooltip" data-toggle="tooltip" title="Enter the angle measured from the horizontal"]
     .form-group
       = f.label :panel_size, raw('Area'), class: 'control-label'
