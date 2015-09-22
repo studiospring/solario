@@ -4,6 +4,7 @@
 /* Small devices (tablets, 768px and up) */
 $panel_blue: #1A3771;
 #new_pv_query{
+  margin-left: 3em;
   .glyphicon{
     font-size: 1.6em;
     color: $panel_blue;
@@ -47,10 +48,11 @@ $panel_blue: #1A3771;
     width: 6em;
   }
 }
+
 .icon{
-  margin: -40px -90px -40px -50px;
+  margin: -30px -90px -40px -30px;
   height: 300px;
-  width: 200px;
+  width: 300px;
   -webkit-transform-style: preserve-3d; 
   -moz-transform-style: preserve-3d; 
   -o-transform-style: preserve-3d; 
