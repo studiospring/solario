@@ -25,11 +25,13 @@ $panel_blue: #1A3771;
   }
   .nested_fields{
     .control-label{
-      margin-left: 1em;
       width: 5.5em;
     }
     .form-group{
       /*space out query inputs*/
+      input{
+        margin-left: 1.3em;
+      }
       margin-bottom: 2em;
     }
   }
