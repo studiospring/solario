@@ -43,7 +43,7 @@ end
 
 group :production do
   # Used by Heroku
-  gem 'rails_12factor', '0.0.2'
+  gem 'rails_12factor'
 end
 
 gem 'pv_output_wrapper',
