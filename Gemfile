@@ -23,7 +23,7 @@ group :development, :test do
   gem 'rspec-rails', '~>3.3'
   # Headless driver for js testing
   gem 'poltergeist'
-  gem 'rails-footnotes', '>= 3.7.9'
+  gem 'rails-footnotes'
   gem 'factory_girl_rails'
   gem 'guard-rspec', :require => false
   gem 'libnotify'
