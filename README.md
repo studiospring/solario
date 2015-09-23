@@ -11,12 +11,11 @@ The goal of Solario is to inform you of the various financial costs and benefits
 
 This project has been broken up in to the following tentative stages:
 
-*   Show power output via 3D graph (release code up to here on GitHub)
+*   Show power output via 3D graph
 *   Calculate total annual power output
 *   Access empirical data from pvoutput.org
 *   Tweak BOM data to use in database
 *   Tweak accuracy of power output algorithm to match empirical data
-*   Release public beta
 *   Calculate installation costs
 *   Calculate rebates and savings (based on electricity consumption patterns?)
 *   Calculate break-even point
@@ -25,20 +24,15 @@ This project has been broken up in to the following tentative stages:
 Installation
 ------------
 
-You will need [Ruby on Rails 4.1](http://rubyonrails.org/) and [Postgresql 9.2](http://www.postgresql.org/). Other dependencies are listed in the Gemfile. If you are not familiar with these, please read the [Rails Getting Started Guide](http://guides.rubyonrails.org/getting_started.html) and [PostgreSQL Installation Guide](http://wiki.postgresql.org/wiki/Detailed_installation_guides) first. 
+You will need [Ruby 2.2.3](https://ruby-lang.org/), [bundler](http://bundler.io) and a recent version of [Postgresql](http://www.postgresql.org/). Other dependencies are listed in the Gemfile. If you are not familiar with these, please read the [Rails Getting Started Guide](http://guides.rubyonrails.org/getting_started.html) and [PostgreSQL Installation Guide](http://wiki.postgresql.org/wiki/Detailed_installation_guides) first. 
 
-After you have installed the Rails dependencies and PostgreSQL, you can install Solario:
+After you have installed Ruby and PostgreSQL, you can install Solario:
 
     cd to/whereever/you/want/to/install
     git clone git@github.com:studiospring/solario.git
     cd solario
+    gem install bundler
     bundle install
-
-### Security ###
-Generate new hashes for secret variables in config/secrets.yml. You can use
-
-    rake secret
-to generate hashes.
 
 ### Database ###
 
@@ -48,9 +42,18 @@ Configure your database name and username in config/database.yml. Then run:
 
 Please note that database seed data is not supplied. The Irradiances.direct field is a space delimited text field that takes 180 datapoints (e.g. "3.4 4.0 4.4 ...") to generate the 3D graph. Other fields are pretty self-explanatory.
 
+### Security ###
+
+Generate new hashes for secret variables in config/secrets.yml. You can use
+
+    bundle exec rake secret
+to generate hashes.
+
+### Start Up ###
+
 Start up your local server:
 
-    rails server
+    bundle exec unicorn -p 3000
 
 View site at http://localhost:3000. When you have everything set up, you will want to create an admin account at http://localhost:3000/users/sign_up and add some dummy data.
 
