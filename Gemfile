@@ -46,7 +46,7 @@ group :production do
 end
 
 gem 'pv_output_wrapper',
-  :git => '/home/sean/dev/pv_output_wrapper',
+  :github => 'studiospring/pv_output_wrapper',
   :branch => 'master'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes

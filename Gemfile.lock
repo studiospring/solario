@@ -1,6 +1,6 @@
 GIT
-  remote: /home/sean/dev/pv_output_wrapper
-  revision: f95acca96bd2f4ee1529bd76faed4fc1c8b0f013
+  remote: git://github.com/studiospring/pv_output_wrapper.git
+  revision: ae53371ab6aa2a788954349219d83978b1b80c7b
   branch: master
   specs:
     pv_output_wrapper (0.1.1)
