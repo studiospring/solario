@@ -29,7 +29,6 @@ group :development, :test do
   gem 'libnotify'
   gem 'childprocess'
   gem 'capybara'
-  gem 'annotate', '>=2.5.0'
   gem 'rubocop'
   gem 'spring'
   gem 'pry-rails'

@@ -1,14 +1,3 @@
-# == Schema Information
-#
-# Table name: panels
-#
-#  id          :integer          not null, primary key
-#  tilt        :integer
-#  bearing     :integer
-#  panel_size  :decimal(, )
-#  pv_query_id :integer
-#
-
 class Panel < ActiveRecord::Base
   require 'core_ext/numeric'
   require 'core_ext/string'

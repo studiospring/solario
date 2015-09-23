@@ -1,15 +1,3 @@
-# == Schema Information
-#
-# Table name: irradiances
-#
-#  id          :integer          not null, primary key
-#  direct      :text
-#  diffuse     :text
-#  postcode_id :integer
-#  created_at  :datetime
-#  updated_at  :datetime
-#
-
 class Irradiance < ActiveRecord::Base
   belongs_to :postcode
   # serialize :direct

@@ -1,13 +1,3 @@
-# == Schema Information
-#
-# Table name: pv_queries
-#
-#  id          :integer          not null, primary key
-#  created_at  :datetime
-#  updated_at  :datetime
-#  postcode_id :integer
-#
-
 require 'rails_helper'
 
 describe PvQuery do

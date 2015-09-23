@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: postcodes
-#
-#  id        :integer          not null, primary key
-#  pcode     :integer
-#  suburb    :string(255)
-#  state     :string(255)
-#  latitude  :decimal(, )
-#  longitude :decimal(, )
-#  urban     :boolean          default(FALSE)
-#
-
 class Postcode < ActiveRecord::Base
   has_one :irradiance
   has_many :pv_queries
