@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.3'
 gem 'rails', '~>4.2'
 
-gem 'pg', '0.17.1'
+gem 'pg'
 gem 'devise'
 
 group :assets do
