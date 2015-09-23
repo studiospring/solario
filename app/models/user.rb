@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable,
          :rememberable,
          :validatable
-         # :trackable
+  # :trackable
 
   validates :username,
             :presence => true,

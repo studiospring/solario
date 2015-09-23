@@ -33,13 +33,13 @@ class Postcode < ActiveRecord::Base
 
   # @arg [Array] PvOutput.search results.
   def update_urban?(pvo_query_results)
-    self.urban != is_urban?(pvo_query_results)
+    self.urban != urban?(pvo_query_results)
   end
 
   private
 
   # @arg [String] PvQuery.pvo_search_params
-  def is_urban?(pvo_query_results)
+  def urban?(pvo_query_results)
     system_count_per_postcode(pvo_query_results) >= URBAN_PV_SYSTEM_THRESHOLD
   end
 

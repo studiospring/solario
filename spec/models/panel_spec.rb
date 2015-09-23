@@ -103,7 +103,8 @@ describe Panel do
 
   describe 'dni_received_pa method' do
     it "should return correct array" do
-      expect(panel.dni_received_pa(irradiance.direct[0..-8])[5]).to eq(6.82) # correct time_zone difference
+      expect(panel.dni_received_pa(irradiance.direct[0..-8])[5])
+        .to eq(6.82) # correct time_zone difference
     end
 
     describe 'when no associated postcode is found' do
@@ -118,9 +119,11 @@ describe Panel do
   end
 
   describe 'dni_hash_received_pa method' do
+    # rubocop:disable  Metrics/LineLength
     before do
       @dni_pa = "2.4 4.8 9.6 4.8 2.4 2.2 4.4 8.8 4.4 2.2 2.1 4.2 8.4 4.2 2.1 1.8 3.6 7.2 3.6 1.8 1.5 3.0 6.0 3.0 1.5 1.4 2.8 5.6 2.8 1.4 1.5 3.0 6.0 3.0 1.5 1.8 3.6 7.2 3.6 1.8 2.2 4.4 8.8 4.4 2.2 2.4 4.8 9.6 4.8 2.4 2.6 5.2 10.4 5.2 2.6 2.5 5.0 10.0 5.0 2.5"
     end
+    # rubocop:enable  Metrics/LineLength
 
     it "should return a very big hash" do
       skip 'if this method is really necessary'

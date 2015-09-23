@@ -104,7 +104,11 @@ class PvQuery < ActiveRecord::Base
     graph_array = self.output_pa_array
     # [[jan1, jan2...], [feb1, feb2...]...]
     data_by_month = []
-    Irradiance::ANNUAL_INCREMENT.times { data_by_month << graph_array.shift(Irradiance::DAILY_INCREMENT) }
+
+    Irradiance::ANNUAL_INCREMENT.times do
+      data_by_month << graph_array.shift(Irradiance::DAILY_INCREMENT)
+    end
+
     # Duplicate and append jan data so that dec-jan volume can be easily calculated.
     data_by_month << data_by_month[0]
 

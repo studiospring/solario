@@ -17,14 +17,16 @@ class Irradiance < ActiveRecord::Base
   # Currently set at 30min intervals. Therefore (15 * 2) + 1 (fencepost) = 31.
   DAILY_INCREMENT = 31
 
-  # Correct for difference between local timezone and timezone at which insolation measurements were made (AEST).
+  # Correct for difference between local timezone and timezone at which
+  #   insolation measurements were made (AEST).
   # @return [String] dni values.
   def time_zone_corrected_dni
     irradiance = Irradiance.select('direct').where('postcode_id = ?', self.postcode_id).first
     self.correct_time_zone_diff(irradiance.direct)
   end
 
-  # Correct for difference between local timezone and timezone at which insolation measurements were made (AEST).
+  # Correct for difference between local timezone and timezone at which
+  #   insolation measurements were made (AEST).
   # @return [String] diffuse insolation values.
   def time_zone_corrected_diffuse
     irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.postcode_id).first

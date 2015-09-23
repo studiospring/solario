@@ -112,9 +112,11 @@ class Panel < ActiveRecord::Base
     (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
   end
 
-  # @return [Hash] hourly Direct Normal Insolation received by panel over the course of 1 year (in kW).
+  # @return [Hash] hourly Direct Normal Insolation received by panel
+  #   over the course of 1 year (in kW).
   # { day1: [kW1, kW2...]... }
-  # 0 kW values must be included so that time can be calculated from position in hash.
+  # 0 kW values must be included so that time can be calculated from
+  #   position in hash.
   # dni_pa is irradiances.direct ( string )
   # Currently broken.
   def dni_hash_received_pa(dni_pa)
@@ -141,8 +143,8 @@ class Panel < ActiveRecord::Base
     dni_received_pa_hash
   end
 
-  # @return [Array<Num>] hourly diffuse insolation received by panel over the course of 1 year (in kW).
-  # [kWh1, kWh2...]
+  # @return [Array<Num>] hourly diffuse insolation received by panel over
+  #   the course of 1 year (in kWh).
   # 0 KWh values must be included so that time can be calculated from position in array.
   def diffuse_received_pa
     # TODO: refactor, add test
