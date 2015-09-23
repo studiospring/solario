@@ -45,7 +45,7 @@ class Panel < ActiveRecord::Base
   end
 
   # no longer necessary?
-  # @param [Num]
+  # @arg [Num]
   # @return [Float] input (Watts/sqm) for one hr from direct normal irradiance (dni).
   def hourly_direct_input(hourly_dni)
     hourly_dni * Math.cos(self.relative_angle())
@@ -191,7 +191,7 @@ class Panel < ActiveRecord::Base
     (total_efficiency / lifespan).round(2)
   end
 
-  # @param [Hash<Hash, Float>]
+  # @arg [Hash<Hash, Float>]
   # @return [Float] angle of incident light relative to panel in radians
   #   (where 0 is directly perpendicular to panel surface).
   def relative_angle(sun_vector)
@@ -202,7 +202,7 @@ class Panel < ActiveRecord::Base
     Math.acos(foo / bar * baz).round(2)
   end
 
-  # @param [Hash<Hash, Float>]
+  # @arg [Hash<Hash, Float>]
   # TODO: apparently above method is not accurate, try different formula
   # http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
   def relative_angle2(sun_vector)

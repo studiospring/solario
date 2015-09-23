@@ -21,7 +21,7 @@ class PvOutput
                 # Expresses "statistical significance" of pvo values (0 to 1).
                 :significance
 
-  # @param [Hash] returned by find_similar_system
+  # @arg [Hash] returned by find_similar_system
   def initialize(similar_system)
     @significance = 0
     # from search
@@ -136,7 +136,7 @@ class PvOutput
     results
   end
 
-  # @param [Fixnum]
+  # @arg [Fixnum]
   # TODO: handle nil/empty resultset
   # @return [Hash] of system info data.
   def self.get_system(id)
