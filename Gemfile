@@ -15,7 +15,7 @@ end
 gem 'coffee-rails'
 # Put this outside assets group, or heroku will complain
 gem 'bootstrap-sass', '~>3.0.3.0'
-gem 'sass-rails', '~> 4.0.2'
+gem 'sass-rails'
 
 gem 'responders'
 
