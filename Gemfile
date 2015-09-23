@@ -14,7 +14,7 @@ end
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
 # Put this outside assets group, or heroku will complain
-gem 'bootstrap-sass', '~>3.0.3.0'
+gem 'bootstrap-sass'
 gem 'sass-rails'
 
 gem 'responders'
