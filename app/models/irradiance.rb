@@ -6,8 +6,10 @@ class Irradiance < ActiveRecord::Base
   validates :direct,       :presence => true
   validates :diffuse,      :presence => true
   validates :postcode_id,  :presence => { :message => 'id cannot be blank' },
-                           :numericality => { :only_integer => true,
-                                              :message => 'id is not a number' }
+                           :numericality => {
+                             :only_integer => true,
+                             :message => 'id is not a number',
+                           }
   # Annual increment of insolation data.
   ANNUAL_INCREMENT = 12
 

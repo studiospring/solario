@@ -19,10 +19,13 @@ describe Irradiance do
     before { @irradiance.direct = ' ' }
     it { should_not be_valid }
   end
+
   describe 'when diffuse is not present' do
     before { @irradiance.diffuse = ' ' }
     it { should_not be_valid }
   end
+
+  #
   # prevents form from being submitted
   # describe "when pv_query_id is not present" do
   # before { @irradiance.pv_query_id = nil }
