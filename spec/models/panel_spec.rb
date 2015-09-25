@@ -143,10 +143,16 @@ describe Panel do
     end
   end
 
-  describe 'diffuse_received_pa method' do
-    # before { panel.annual_dni_received() }
-    it "should return a very big array" do
-      skip 'dummy data'
+  describe 'dni_received method' do
+    let(:latitude) { -13 }
+    let(:longitude) { 123.123456 }
+    let(:state) { 'NSW' }
+    let(:sun) { Sun.new(latitude, longitude, state, 1, 12) }
+    let(:dni) { 12 }
+
+    it "should return a Fixnum" do
+      # No guarantee that the formula is correct, just that the formula works!
+      expect(panel.dni_received(sun, dni)).to eq(92.38)
     end
   end
 end

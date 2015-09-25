@@ -106,10 +106,11 @@ class Panel < ActiveRecord::Base
     dni_count / Irradiance::ANNUAL_INCREMENT
   end
 
+  # arg [Sun], [Float].
   # @return [Float]
   def dni_received(sun, dni)
     relative_angle = self.relative_angle(sun.vector)
-    (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2)
+    (self.panel_insolation(dni, relative_angle) * self.panel_size).round(2).to_f
   end
 
   # @return [Hash] hourly Direct Normal Insolation received by panel
