@@ -126,13 +126,20 @@ describe "PvQuery" do
         expect { click_button submit }.to change(PvQuery, :count)
       end
 
-      it "should load when form is submitted" do
-        # find 'body'
-        expect(page).to have_selector('legend')
-        # should render_template(:partial => '_results')
-        # should_not have_selector('legend')
-        # save_and_open_page
-        # print page.html
+      describe "results page", :js => true do
+        before do
+          click_button submit
+        end
+
+        it "should show graph when form is submitted" do
+          # find 'body'
+          # expect(page).to have_selector('legend')
+          pp page.find('#output_pa')[:"data-datapoints"]
+          expect(page).to have_selector('#output_pa')
+          # should_not have_selector('legend')
+          # save_and_open_page
+          # print page.html
+        end
       end
     end
   end
