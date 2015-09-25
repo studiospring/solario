@@ -52,4 +52,8 @@ module SolarTime
   def hra
     15 * (self.to_lst - 12)
   end
+
+  def hra_in_radians
+    self.hra.to_rad
+  end
 end

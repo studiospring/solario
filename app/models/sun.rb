@@ -3,6 +3,9 @@ class Sun
   require 'core_ext/numeric'
   attr_accessor :latitude, :longitude, :state, :day, :local_time
 
+  # @arg [Fixnum], [Fixnum], [String]
+  # @arg [Fixnum] day is [1..365].
+  # @arg [Fixnum] local_time is decimal time in 24hr time, eg 13.5 is 13:30pm.
   def initialize(latitude, longitude, state, day, local_time)
     @latitude = latitude
     @longitude = longitude
@@ -11,46 +14,63 @@ class Sun
     @local_time = local_time
   end
 
-  # Convert azimuth and elevation in to vector notation:
+  # Converts azimuth and elevation in to vector notation:
   # S = Sx + Sy + Sz
   # @return [Hash] vector[:x], [:y], [:z].
-  # Insert 24hr hourly time: 9, 12, 13, eg 13.5 is 13:30pm.
   def vector
-    vector = {}
-    elev = self.elevation
-    az = self.azimuth
+    elev = elevation
+    az = azimuth
     hypotenuse = Math.cos(elev)
-    vector[:x] = hypotenuse * Math.cos(az)
-    vector[:y] = hypotenuse * Math.sin(az)
-    vector[:z] = Math.sin(elev)
-    vector
+    {
+      :x => hypotenuse * Math.cos(az),
+      :y => hypotenuse * Math.sin(az),
+      :z => Math.sin(elev),
+    }
   end
 
   # @return [Float] declination in radians.
   def declination
-    Math.asin(0.3979486313076103 * Math.sin(0.017214206 * (self.day - 81))).abs
+    Math.asin(0.3979486313076103 * Math.sin(0.017214206 * (day - 81))).abs
   end
 
   # Input hra in degrees bc degs is easier to understand.
   # @return [Float] elevation of sun in radians.
   def elevation
-    dec = self.declination
-    lat = self.latitude.to_rad
-    Math.asin(Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) * Math.cos(self.hra.to_rad))
+    Math.asin(elevation_formula)
   end
 
   # Input hra in degrees bc degs is easier to understand.
   # @return [Float] azimuth in radians.
   def azimuth
-    dec = self.declination
-    lat = self.latitude.to_rad
-    hra = self.hra.to_rad
-    azimuth = Math.acos((Math.sin(dec) * Math.cos(lat) - Math.cos(dec) * Math.sin(lat) * Math.cos(hra) / Math.cos(self.elevation)))
-    if self.hra > 0
-      azimuth = 360.to_rad - azimuth
-    elsif self.hra == 0
-      azimuth = 0
+    case
+    when hra > 0
+      360.to_rad - azimuth_formula
+    when hra == 0
+      0
+    else
+      azimuth_formula
     end
-    azimuth
+  end
+
+  protected
+
+  def elevation_formula
+    dec = declination
+    lat = latitude.to_rad
+    Math.sin(dec) * Math.sin(lat) + Math.cos(dec) * Math.cos(lat) *
+      Math.cos(hra_in_radians)
+  end
+
+  def azimuth_formula
+    Math.acos(azimuth_add - azimuth_subtract)
+  end
+
+  def azimuth_add
+    Math.sin(declination) * Math.cos(latitude.to_rad)
+  end
+
+  def azimuth_subtract
+    Math.cos(declination) * Math.sin(latitude.to_rad) * Math.cos(hra_in_radians) /
+      Math.cos(elevation)
   end
 end
