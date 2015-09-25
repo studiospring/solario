@@ -24,9 +24,17 @@ ActiveRecord::Migration.maintain_test_schema!
 # Comment out to log to log/test.log.
 Rails.logger.level = 4
 
-
 Capybara.javascript_driver = :poltergeist
 Capybara.default_max_wait_time = 20
+# Fixes click_link bug, in which link is not found due to difference between page
+#   size and driver window size.
+# See https://github.com/teampoltergeist/poltergeist/issues/520
+capybara_options = { :window_size => [1920, 6000] }
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, capybara_options)
+end
+
 WebMock.disable_net_connect!(:allow_localhost => true)
 
 RSpec.configure do |config|
