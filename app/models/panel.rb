@@ -36,12 +36,12 @@ class Panel < ActiveRecord::Base
   # Convert tilt and bearing to vector notation.
   # @return [Hash<Hash, Float>]: vector[:x], [:y], [:z].
   def vector
-    vector = {}
     hypotenuse = Math.cos((90 - self.tilt).to_rad).abs
-    vector[:x] = hypotenuse * Math.cos(self.bearing.to_rad)
-    vector[:y] = hypotenuse * Math.sin(self.bearing.to_rad)
-    vector[:z] = Math.sin((90 - self.tilt).to_rad)
-    vector
+    {
+      :x => hypotenuse * Math.cos(self.bearing.to_rad),
+      :y => hypotenuse * Math.sin(self.bearing.to_rad),
+      :z => Math.sin((90 - self.tilt).to_rad),
+    }
   end
 
   # no longer necessary?
