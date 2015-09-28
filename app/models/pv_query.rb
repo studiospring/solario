@@ -31,13 +31,11 @@ class PvQuery < ActiveRecord::Base
 
   # Change postcode param to postcode_id.
   def postcode_to_postcode_id
-    # prevent other postcodes from being queried bc no data available
-    # postcode = Postcode.where('pcode = ?', 1234).select('id').first
-    postcode = Postcode.where('pcode = ?', self.postcode_id).select('id').first
-    # if there is no postcode, calling postcode.id will cause error
-    unless postcode.nil?
-      self.postcode_id = postcode.id
-    end
+    postcode.id = 1234 if Rails.env == 'production'
+
+    pcode = Postcode.where('pcode = ?', postcode.id).select('id').first
+    # Without this, rspec fails.
+    self.postcode_id = pcode.id unless pcode.nil?
   end
 
   # @return [Array<Float>] of combined output for all panels in pv array.
@@ -67,7 +65,9 @@ class PvQuery < ActiveRecord::Base
   # @return [Float] volume under graph (Wh).
   def output_pa
     const = volume_constant
+    # rubocop:disable Style/SingleLineBlockParams
     column_heights.reduce(0) { |a, col| a + (const * col.reduce(:+)) }.round
+    # rubocop:enable Style/SingleLineBlockParams
   end
 
   # TODO: check this formula!
