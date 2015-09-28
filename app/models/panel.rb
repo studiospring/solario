@@ -56,48 +56,47 @@ class Panel < ActiveRecord::Base
     self.hourly_direct_input(dni)
   end
 
-  # @return [Array<Num>] hourly Direct Normal Insolation received by panel over the
+  # @arg [Array] irradiance values.
+  # @return [Array<Fixnum>] hourly Direct Normal Insolation received by panel over the
   #   course of 1 year (in kW) [0, 2.4, 3.0, ...].
   # 0 kW values must be included so that time can be calculated from position in array.
   # Use this instead of dni_hash_received_pa because graph uses string format.
   def dni_received_pa(time_zone_corrected_dni_pa)
-    days_per_increment = days_in_increment
-    # In case there is no postcode.
     begin
       latitude = self.pv_query.postcode.latitude
       longitude = self.pv_query.postcode.longitude
       state = self.pv_query.postcode.state
     rescue
-      return []
-    else
-      sun = Sun.new(latitude, longitude, state, 1, 5)
-      dni_pa_array = time_zone_corrected_dni_pa.split(' ')
-      dnis_per_day = dnis_per_day(dni_pa_array)
-      dni_received_pa = []
-
-      dni_pa_array.each_with_index do |datum, i|
-        dni = datum.to_f
-        # dni_received_pa << sun.hra
-        dni_received_pa << dni_received(sun, dni)
-
-        sun.local_time = sun.local_time + DAILY_INCREMENT
-        # Change sun values only after 1 day has looped.
-        if (i - dnis_per_day + 1) % dnis_per_day == 0
-          sun.local_time = GRAPH_START_TIME
-          # Increment sun's day so that sun vector is correct.
-          sun.day = sun.day + days_per_increment
-        end
-      end
-
-      return dni_received_pa
+      raise "No postcode found for this query."
     end
+
+    days_per_increment = days_in_increment
+    sun = Sun.new(latitude, longitude, state, 1, 5)
+    dnis_per_day = dnis_per_day(time_zone_corrected_dni_pa)
+    dni_received_pa = []
+
+    time_zone_corrected_dni_pa.each_with_index do |datum, i|
+      dni = datum.to_f
+      dni_received_pa << dni_received(sun, dni)
+
+      sun.local_time = sun.local_time + DAILY_INCREMENT
+      # Change sun values only after 1 day has looped.
+      if (i - dnis_per_day + 1) % dnis_per_day == 0
+        sun.local_time = GRAPH_START_TIME
+        # Increment sun's day so that sun vector is correct.
+        sun.day = sun.day + days_per_increment
+      end
+    end
+
+    dni_received_pa
   end
 
-  # These methods should be in a different model/module
+  # TODO: These methods should be in a different model/module
   def days_in_increment
     (365 / Irradiance::ANNUAL_INCREMENT).round
   end
 
+  # @arg [Array]
   # @return [Fixnum/Float]
   def dnis_per_day(dni_pa_array)
     # say, 420

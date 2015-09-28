@@ -21,7 +21,7 @@ class Irradiance < ActiveRecord::Base
 
   # Correct for difference between local timezone and timezone at which
   #   insolation measurements were made (AEST).
-  # @return [String] dni values.
+  # @return [Array] dni values.
   def time_zone_corrected_dni
     irradiance = Irradiance.select('direct').where('postcode_id = ?', self.postcode_id).first
     self.correct_time_zone_diff(irradiance.direct)
@@ -29,7 +29,7 @@ class Irradiance < ActiveRecord::Base
 
   # Correct for difference between local timezone and timezone at which
   #   insolation measurements were made (AEST).
-  # @return [String] diffuse insolation values.
+  # @return [Array] diffuse insolation values.
   def time_zone_corrected_diffuse
     irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.postcode_id).first
     self.correct_time_zone_diff(irradiance.diffuse)
@@ -39,7 +39,7 @@ class Irradiance < ActiveRecord::Base
 
   # Remove insolation values from beginning or end of day (depending on time zone)
   #   so that local time zone and times of insolation measurement match up.
-  # @return [String]
+  # @return [Array]
   def correct_time_zone_diff(insolation_string)
     insolation_array = insolation_string.split(' ')
     data_count = insolation_array.count # say, 180
@@ -66,6 +66,6 @@ class Irradiance < ActiveRecord::Base
       end
     end
 
-    synced_array.flatten.join(' ')
+    synced_array.flatten
   end
 end

@@ -103,7 +103,7 @@ describe Panel do
 
   describe 'dni_received_pa method' do
     it "should return correct array" do
-      expect(panel.dni_received_pa(irradiance.direct[0..-8])[5])
+      expect(panel.dni_received_pa(irradiance.time_zone_corrected_dni)[5])
         .to eq(6.82) # correct time_zone difference
     end
 
@@ -112,8 +112,8 @@ describe Panel do
         panel.pv_query.postcode = nil
       end
 
-      it "should not raise an error" do
-        expect(-> { panel.dni_received_pa(irradiance.direct[0..-8]) }).not_to raise_error
+      it "should raise an error" do
+        expect(-> { panel.dni_received_pa(irradiance.direct[0..-8]) }).to raise_error
       end
     end
   end
