@@ -195,11 +195,21 @@ class Panel < ActiveRecord::Base
   # @return [Float] angle of incident light relative to panel in radians
   #   (where 0 is directly perpendicular to panel surface).
   def relative_angle(sun_vector)
-    panel_vector = self.vector
-    foo = (panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z])
-    bar = Math.sqrt(panel_vector[:x]**2 + panel_vector[:y]**2 + panel_vector[:z]**2)
-    baz = Math.sqrt(sun_vector[:x]**2 + sun_vector[:y]**2 + sun_vector[:z]**2)
-    Math.acos(foo / bar * baz).round(2)
+    denominator = relative_angle_denominator(self.vector) * relative_angle_denominator(sun_vector)
+    Math.acos(relative_angle_numerator(sun_vector) / denominator).round(2)
+  end
+
+  # @arg [Hash]
+  # @return [Fixnum]
+  def relative_angle_numerator(sun_vector)
+    combined_vectors = self.vector.values.zip(sun_vector.values)
+    combined_vectors.reduce(0) { |sum, pair| sum + pair.reduce(:*) }
+  end
+
+  # @arg [Hash]
+  # @return [Fixnum]
+  def relative_angle_denominator(vector)
+    Math.sqrt(vector.reduce(0) { |sum, (_, v)| sum + v**2 })
   end
 
   # @arg [Hash<Hash, Float>]
@@ -209,7 +219,9 @@ class Panel < ActiveRecord::Base
     panel_vector = self.vector
 
     # dot_product(a,b) == length(a) * length(b) * cos(angle)
-    (panel_vector[:x] * sun_vector[:x] + panel_vector[:y] * sun_vector[:y] + panel_vector[:z] * sun_vector[:z])
+    panel_vector[:x] * sun_vector[:x] +
+      panel_vector[:y] * sun_vector[:y] +
+      panel_vector[:z] * sun_vector[:z]
     # length(cross_product(a,b)) == length(a) * length(b) * sin(angle)
 
     # For a robust angle between 3-D vectors, your actual computation should be:
