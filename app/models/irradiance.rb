@@ -10,62 +10,52 @@ class Irradiance < ActiveRecord::Base
                              :only_integer => true,
                              :message => 'id is not a number',
                            }
-  # Annual increment of insolation data.
-  ANNUAL_INCREMENT = 12
 
-  # Daily increment of insolation data.
+  # Number of data points in each direct and diffuse string.
+  TOTAL_INSOLATION_COUNT = 420
+
+  # Irradiance is averaged per month.
+  GRADATIONS_PER_YEAR = 12
+
+  TOTAL_GRADATIONS_PER_DAY = TOTAL_INSOLATION_COUNT / GRADATIONS_PER_YEAR
+
+  # Irradiance is averaged every 30 mins.
+  DAILY_INTERVAL = 30
+
   # Irradiance data spans 17 hours, but 2 hours are chopped off to account for
   #   timezone differences. Graph shows irradiance from 5am to 8pm, local standard time.
-  # Currently set at 30min intervals. Therefore (15 * 2) + 1 (fencepost) = 31.
-  DAILY_INCREMENT = 31
+  USABLE_GRADATIONS_PER_DAY = TOTAL_GRADATIONS_PER_DAY - (2 * 60) / DAILY_INTERVAL
 
-  # Correct for difference between local timezone and timezone at which
-  #   insolation measurements were made (AEST).
-  # @return [Array] dni values.
-  def time_zone_corrected_dni
-    irradiance = Irradiance.select('direct').where('postcode_id = ?', self.postcode_id).first
-    self.correct_time_zone_diff(irradiance.direct)
+  # Remove irradiance values from beginning or end of day (depending on time zone)
+  #   so that local time zone and times of irradiance measurement match up.
+  # @arg [String] 'direct' or 'diffuse'.
+  # @return [Array]
+  def tz_corrected_irradiance(type)
+    irradiance_array = local_irradiance(:type => type).split
+
+    # Irradiance split into values for each month.
+    irradiance_by_month = irradiance_array.each_slice(TOTAL_GRADATIONS_PER_DAY)
+    irradiance_by_month.flat_map { |month| month.slice!(tz_slice_index, USABLE_GRADATIONS_PER_DAY) }
   end
 
-  # Correct for difference between local timezone and timezone at which
-  #   insolation measurements were made (AEST).
-  # @return [Array] diffuse insolation values.
-  def time_zone_corrected_diffuse
-    irradiance = Irradiance.select('diffuse').where('postcode_id = ?', self.postcode_id).first
-    self.correct_time_zone_diff(irradiance.diffuse)
+  # @arg [String] 'direct' or 'diffuse'
+  # @return [String] annual direct normal insolation values.
+  def local_irradiance(type: 'direct')
+    irradiance = Irradiance.select(type).where('postcode_id = ?', postcode_id).first
+    irradiance.send(type)
+  rescue ActiveModel::MissingAttributeError
+    ''
   end
 
   protected
 
-  # Remove insolation values from beginning or end of day (depending on time zone)
-  #   so that local time zone and times of insolation measurement match up.
-  # @return [Array]
-  def correct_time_zone_diff(insolation_string)
-    insolation_array = insolation_string.split(' ')
-    data_count = insolation_array.count # say, 180
-    data_per_day = data_count / ANNUAL_INCREMENT # 180 / 12 = 15
-    synced_array = []
-
+  # @return [Fixnum] index to begin slice of irradiance array, depending on timezone.
+  def tz_slice_index
     case self.postcode.state
-    when 'WA' # remove first 4 values per month (assuming 1/2 hrly dni readings)
-      ANNUAL_INCREMENT.times do
-        insolation_array.slice!(0, 4)
-        synced_array << insolation_array.shift(data_per_day - 4)
-      end
-    when 'SA', 'NT'
-      ANNUAL_INCREMENT.times do
-        insolation_array.slice!(1)
-        synced_array << insolation_array.shift(data_per_day - 3)
-        insolation_array.slice!(0, 3)
-      end
-    # Remove last 4 values per month.
+    when 'WA' then (2 * 60) / DAILY_INTERVAL
+    when 'SA', 'NT' then 30 / DAILY_INTERVAL
     else
-      ANNUAL_INCREMENT.times do
-        synced_array << insolation_array.shift(data_per_day - 4)
-        insolation_array.slice!(0, 4)
-      end
+      0
     end
-
-    synced_array.flatten
   end
 end
