@@ -23,28 +23,51 @@ describe Irradiance do
 
   specify { expect(subject.postcode).to eq(postcode) }
 
-  it { should be_valid }
+  describe 'validation' do
+    it { should be_valid }
 
-  # validation
-  describe 'when direct is not present' do
-    before { irradiance.direct = ' ' }
-    it { should_not be_valid }
+    context 'when direct is not present' do
+      before { irradiance.direct = ' ' }
+      it { should_not be_valid }
+    end
+
+    context 'when diffuse is not present' do
+      before { irradiance.diffuse = ' ' }
+      it { should_not be_valid }
+    end
   end
 
-  describe 'when diffuse is not present' do
-    before { irradiance.diffuse = ' ' }
-    it { should_not be_valid }
-  end
-
-  #
   # prevents form from being submitted
   # describe "when pv_query_id is not present" do
-  # before { @irradiance.pv_query_id = nil }
+  # before { irradiance.pv_query_id = nil }
   # it { should_not be_valid }
   # end
-  describe 'irradiance.time_zone_corrected_dni method' do
-    it "should return trimmed string" do
-      expect(pv_query.postcode.irradiance.time_zone_corrected_dni[1]).to eq("1.66")
+
+  describe 'irradiance.tz_corrected_irradiance method' do
+    let(:tz_corrected) do
+      pv_query.postcode.irradiance.tz_corrected_irradiance('direct')
+    end
+
+    context 'when the state is NSW' do
+      it "should return trimmed string" do
+        expect(tz_corrected[-2]).to eq("1.16")
+      end
+    end
+
+    context 'when the state is SA' do
+      before { postcode.state = 'SA' }
+
+      it "should return trimmed string" do
+        expect(tz_corrected[8]).to eq("8.06")
+      end
+    end
+
+    context 'when the state is WA' do
+      before { postcode.state = 'WA' }
+
+      it "should return trimmed string" do
+        expect(tz_corrected[4]).to eq("7.54")
+      end
     end
   end
 end
