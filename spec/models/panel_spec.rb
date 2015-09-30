@@ -103,7 +103,7 @@ describe Panel do
 
   describe 'dni_received_pa method' do
     it "should return correct array" do
-      expect(panel.dni_received_pa(irradiance.time_zone_corrected_dni)[5])
+      expect(panel.dni_received_pa(irradiance.tz_corrected_irradiance('direct'))[5])
         .to eq(6.82) # correct time_zone difference
     end
 

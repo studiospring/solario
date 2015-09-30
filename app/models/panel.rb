@@ -93,7 +93,7 @@ class Panel < ActiveRecord::Base
 
   # TODO: These methods should be in a different model/module
   def days_in_increment
-    (365 / Irradiance::ANNUAL_INCREMENT).round
+    (365 / Irradiance::GRADATIONS_PER_YEAR).round
   end
 
   # @arg [Array]
@@ -102,7 +102,7 @@ class Panel < ActiveRecord::Base
     # say, 420
     dni_count = dni_pa_array.count
     # 420 / 12 = 31
-    dni_count / Irradiance::ANNUAL_INCREMENT
+    dni_count / Irradiance::GRADATIONS_PER_YEAR
   end
 
   # arg [Sun], [Float].
@@ -120,8 +120,8 @@ class Panel < ActiveRecord::Base
   # dni_pa is irradiances.direct ( string )
   # Currently broken.
   def dni_hash_received_pa(dni_pa)
-    days_in_increment = (365 / Irradiance::ANNUAL_INCREMENT).round
-    dni_received_pa_hash = dni_pa.data_string_to_hash(Irradiance::ANNUAL_INCREMENT)
+    days_in_increment = (365 / Irradiance::GRADATIONS_PER_YEAR).round
+    dni_received_pa_hash = dni_pa.data_string_to_hash(Irradiance::GRADATIONS_PER_YEAR)
     latitude = self.pv_query.postcode.latitude
     longitude = self.pv_query.postcode.longitude
     sun = Sun.new(latitude, longitude, 1, 6)

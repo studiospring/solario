@@ -78,17 +78,11 @@ describe PvQuery do
     end
   end
 
-  describe 'output_pa_array' do
-    it "should return the volume under the graph" do
-      expect(pv_query.output_pa_array).to eq('1234')
-    end
-  end
-
-  describe 'irradiance.time_zone_corrected_dni method' do
-    it "should return trimmed string" do
-      expect(pv_query.postcode.irradiance.time_zone_corrected_dni[0..8]).to eq("0.50 1.66")
-    end
-  end
+  # describe 'output_pa_array' do
+  #   it "should return the volume under the graph" do
+  #     expect(pv_query.output_pa_array).to eq('1234')
+  #   end
+  # end
 
   describe 'pvo_search_params' do
     it "should return string of search params" do

@@ -56,9 +56,9 @@ class PvQuery < ActiveRecord::Base
     end
     # in case values have not been input for this postcode.
     begin
-      dni_pa = self.postcode.irradiance.time_zone_corrected_dni
+      dni_pa = self.postcode.irradiance.tz_corrected_irradiance('direct')
       # TODO: method not created yet
-      # diffuse_pa = self.postcode.irradiance.time_zone_corrected_diffuse
+      # diffuse_pa = self.postcode.irradiance.tz_corrected_diffuse
     rescue
       []
     else
