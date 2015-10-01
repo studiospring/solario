@@ -5,6 +5,8 @@ class PvQuery < ActiveRecord::Base
   belongs_to :postcode
   accepts_nested_attributes_for :panels # , reject_if: lambda { |a| a[:tilt].blank? }
 
+  delegate :irradiance, :to => :postcode
+
   validates :postcode_id,  :presence => true,
                            :numericality => { :only_integer => true }
 
@@ -41,8 +43,7 @@ class PvQuery < ActiveRecord::Base
   # @return [Array<Float>] of combined output for all panels in pv array.
   # Array must be converted to string to be used by graph (join(' ')).
   def output_pa_array
-    # return self.postcode_id
-    postcode_id = self.postcode.try('id')
+    postcode_id = postcode.try('id')
 
     if postcode_id.nil?
       # handle error
@@ -50,9 +51,9 @@ class PvQuery < ActiveRecord::Base
     end
     # in case values have not been input for this postcode.
     begin
-      dni_pa = self.postcode.irradiance.tz_corrected_irradiance('direct')
+      dni_pa = irradiance.tz_corrected_irradiance('direct')
       # TODO: method not created yet
-      # diffuse_pa = self.postcode.irradiance.tz_corrected_diffuse
+      # diffuse_pa = irradiance.tz_corrected_diffuse
     rescue
       []
     else
@@ -84,7 +85,8 @@ class PvQuery < ActiveRecord::Base
     volume_constant = 0.25 * length_of_insolation_reading * readings_per_annual_increment
     total_volume = 0
     self.column_heights.each do |column|
-      # vol = 0.25 * length_of_insolation_reading * readings_per_annual_increment * column.inject(:+)
+      # vol = 0.25 * length_of_insolation_reading *
+      #   readings_per_annual_increment * column.inject(:+)
       total_volume += (volume_constant * column.inject(:+))
     end
     # convert to Wh
