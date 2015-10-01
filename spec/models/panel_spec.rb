@@ -20,84 +20,67 @@ describe Panel do
 
   it { should be_valid }
 
-  # validation
-  describe 'when tilt is not present' do
-    before { panel.tilt = ' ' }
-    it { should_not be_valid }
-  end
+  describe 'validation' do
+    context 'when tilt is not present' do
+      before { panel.tilt = ' ' }
+      it { should_not be_valid }
+    end
 
-  describe 'when tilt is too low' do
-    before { panel.tilt = -1 }
-    it { should_not be_valid }
-  end
+    context 'when tilt is too low' do
+      before { panel.tilt = -1 }
+      it { should_not be_valid }
+    end
 
-  describe 'when tilt is too high' do
-    before { panel.tilt = 181 }
-    it { should_not be_valid }
-  end
+    context 'when tilt is too high' do
+      before { panel.tilt = 181 }
+      it { should_not be_valid }
+    end
 
-  describe 'when tilt is not a number' do
-    before { panel.tilt = 'cd' }
-    it { should_not be_valid }
-  end
+    context 'when tilt is not a number' do
+      before { panel.tilt = 'cd' }
+      it { should_not be_valid }
+    end
 
-  describe 'when bearing is not present' do
-    before { panel.bearing = ' ' }
-    it { should_not be_valid }
-  end
+    context 'when bearing is not present' do
+      before { panel.bearing = ' ' }
+      it { should_not be_valid }
+    end
 
-  describe 'when bearing is too low' do
-    before { panel.bearing = -1 }
-    it { should_not be_valid }
-  end
+    context 'when bearing is too low' do
+      before { panel.bearing = -1 }
+      it { should_not be_valid }
+    end
 
-  describe 'when bearing is too high' do
-    before { panel.bearing = 361 }
-    it { should_not be_valid }
-  end
+    context 'when bearing is too high' do
+      before { panel.bearing = 361 }
+      it { should_not be_valid }
+    end
 
-  describe 'when bearing is not a number' do
-    before { panel.bearing = 'abc' }
-    it { should_not be_valid }
-  end
+    context 'when bearing is not a number' do
+      before { panel.bearing = 'abc' }
+      it { should_not be_valid }
+    end
 
-  describe 'when panel_size is not present' do
-    before { panel.panel_size = ' ' }
-    it { should_not be_valid }
-  end
+    context 'when panel_size is not present' do
+      before { panel.panel_size = ' ' }
+      it { should_not be_valid }
+    end
 
-  describe 'when panel_size is not a number' do
-    before { panel.panel_size = 'abc' }
-    it { should_not be_valid }
-  end
+    context 'when panel_size is not a number' do
+      before { panel.panel_size = 'abc' }
+      it { should_not be_valid }
+    end
 
-  # prevents form from being submitted
-  # describe "when pv_query_id is not present" do
-  # before { panel.pv_query_id = nil }
-  # it { should_not be_valid }
-  # end
+    # prevents form from being submitted
+    # context "when pv_query_id is not present" do
+    # before { panel.pv_query_id = nil }
+    # it { should_not be_valid }
+    # end
+  end
 
   describe 'possible_watts' do
     it "should calculate correct value" do
       expect(panel.possible_watts).to eq(4030)
-    end
-  end
-
-  describe 'vector instance method' do
-    before { panel.vector }
-    it "should return correct value for panel.vector[:x]" do
-      # when bearing is 150 deg
-      expect(panel.vector[:x]).to be_within(0.001).of(-0.75000)
-    end
-
-    it "should return correct value for panel.vector[:y]" do
-      # when bearing is 150 deg
-      expect(panel.vector[:y]).to be_within(0.01).of(0.433012701)
-    end
-
-    it "should return correct value for panel.vector[:z]" do
-      # when tilt is 60 deg
-      expect(panel.vector[:z]).to be_within(0.001).of(0.5)
     end
   end
 
@@ -107,7 +90,7 @@ describe Panel do
         .to eq(6.82) # correct time_zone difference
     end
 
-    describe 'when no associated postcode is found' do
+    context 'when no associated postcode is found' do
       before do
         panel.pv_query.postcode = nil
       end
@@ -140,19 +123,6 @@ describe Panel do
   describe 'overall_efficiency' do
     it "should return correct value" do
       expect(Panel.overall_efficiency).to eq(0.14)
-    end
-  end
-
-  describe 'dni_received method' do
-    let(:latitude) { -13 }
-    let(:longitude) { 123.123456 }
-    let(:state) { 'NSW' }
-    let(:sun) { Sun.new(latitude, longitude, state, 1, 12) }
-    let(:dni) { 12 }
-
-    it "should return a Fixnum" do
-      # No guarantee that the formula is correct, just that the formula works!
-      expect(panel.dni_received(sun, dni)).to eq(92.38)
     end
   end
 end

@@ -16,7 +16,7 @@ class Irradiance < ActiveRecord::Base
 
   # Irradiance is averaged per month.
   GRADATIONS_PA = 12
-
+  DAYS_IN_ANNUAL_GRADATION = (365 / GRADATIONS_PA).round
   DATAPOINTS_PER_DAY = DATAPOINT_COUNT / GRADATIONS_PA
 
   # Irradiance is averaged every 30 mins.
@@ -35,7 +35,7 @@ class Irradiance < ActiveRecord::Base
 
     # Irradiance split into values for each month.
     irradiance_by_month = irradiance_array.each_slice(DATAPOINTS_PER_DAY)
-    irradiance_by_month.flat_map { |month| month.slice!(tz_slice_index, USABLE_DATAPOINTS_PER_DAY) }
+    irradiance_by_month.map { |month| month.slice!(tz_slice_index, USABLE_DATAPOINTS_PER_DAY) }
   end
 
   # @arg [String] 'direct' or 'diffuse'
