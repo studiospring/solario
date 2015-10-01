@@ -50,7 +50,7 @@ describe Irradiance do
 
     context 'when the state is NSW' do
       it "should return trimmed string" do
-        expect(tz_corrected[-2]).to eq("1.16")
+        expect(tz_corrected[-2]).to eq(1.16)
       end
     end
 
@@ -58,7 +58,7 @@ describe Irradiance do
       before { postcode.state = 'SA' }
 
       it "should return trimmed string" do
-        expect(tz_corrected[8]).to eq("8.06")
+        expect(tz_corrected[8]).to eq(8.06)
       end
     end
 
@@ -66,7 +66,7 @@ describe Irradiance do
       before { postcode.state = 'WA' }
 
       it "should return trimmed string" do
-        expect(tz_corrected[4]).to eq("7.54")
+        expect(tz_corrected[4]).to eq(7.54)
       end
     end
   end

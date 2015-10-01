@@ -29,9 +29,9 @@ class Irradiance < ActiveRecord::Base
   # Remove irradiance values from beginning or end of day (depending on time zone)
   #   so that local time zone and times of irradiance measurement match up.
   # @arg [String] 'direct' or 'diffuse'.
-  # @return [Array]
+  # @return [Array<Float>]
   def tz_corrected_irradiance(type)
-    irradiance_array = local_irradiance(:type => type).split
+    irradiance_array = local_irradiance(:type => type).split.map(&:to_f)
 
     # Irradiance split into values for each month.
     irradiance_by_month = irradiance_array.each_slice(TOTAL_GRADATIONS_PER_DAY)
