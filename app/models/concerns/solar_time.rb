@@ -11,7 +11,7 @@ module SolarTime
   # TODO: refactor 'B' variable used in EoT and declination methods.
   # @return [Float] radians.
   def b
-    (360 / 365.0) * (self.day - 81).to_rad
+    (360 / 365.0) * (day - 81).to_rad
   end
 
   # @return [Float] Equation of Time in minutes.
@@ -25,7 +25,7 @@ module SolarTime
   # Broken Hill is actually 142.5, Xmas Is, Lord Howe have diff timezones.
   # Does not account for DST.
   def lstm
-    case self.state
+    case state
     when 'SA', 'NT'
       lstm = 142.5
     when 'WA'
@@ -39,21 +39,21 @@ module SolarTime
   # @return [Float] minutes by which local time should be corrected, to account for
   #   position and day of year.
   def time_correction
-    4 * (self.longitude - self.lstm) + self.eot
+    4 * (longitude - lstm) + eot
   end
 
   # @return [Float] local solar time in decimal notation from local time
   #   eg 13.5 is returned for 13:30pm.
   def to_lst
-    self.local_time + (self.time_correction / 60)
+    local_time + (time_correction / 60)
   end
 
   # @return hour angle [Float] in degrees.
   def hra
-    15 * (self.to_lst - 12)
+    15 * (to_lst - 12)
   end
 
   def hra_in_radians
-    self.hra.to_rad
+    hra.to_rad
   end
 end
