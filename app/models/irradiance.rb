@@ -12,19 +12,19 @@ class Irradiance < ActiveRecord::Base
                            }
 
   # Number of data points in each direct and diffuse string.
-  TOTAL_INSOLATION_COUNT = 420
+  DATAPOINT_COUNT = 420
 
   # Irradiance is averaged per month.
-  GRADATIONS_PER_YEAR = 12
+  GRADATIONS_PA = 12
 
-  TOTAL_GRADATIONS_PER_DAY = TOTAL_INSOLATION_COUNT / GRADATIONS_PER_YEAR
+  DATAPOINTS_PER_DAY = DATAPOINT_COUNT / GRADATIONS_PA
 
   # Irradiance is averaged every 30 mins.
   DAILY_INTERVAL = 30
 
   # Irradiance data spans 17 hours, but 2 hours are chopped off to account for
   #   timezone differences. Graph shows irradiance from 5am to 8pm, local standard time.
-  USABLE_GRADATIONS_PER_DAY = TOTAL_GRADATIONS_PER_DAY - (2 * 60) / DAILY_INTERVAL
+  USABLE_DATAPOINTS_PER_DAY = DATAPOINTS_PER_DAY - (2 * 60) / DAILY_INTERVAL
 
   # Remove irradiance values from beginning or end of day (depending on time zone)
   #   so that local time zone and times of irradiance measurement match up.
@@ -34,8 +34,8 @@ class Irradiance < ActiveRecord::Base
     irradiance_array = local_irradiance(:type => type).split.map(&:to_f)
 
     # Irradiance split into values for each month.
-    irradiance_by_month = irradiance_array.each_slice(TOTAL_GRADATIONS_PER_DAY)
-    irradiance_by_month.flat_map { |month| month.slice!(tz_slice_index, USABLE_GRADATIONS_PER_DAY) }
+    irradiance_by_month = irradiance_array.each_slice(DATAPOINTS_PER_DAY)
+    irradiance_by_month.flat_map { |month| month.slice!(tz_slice_index, USABLE_DATAPOINTS_PER_DAY) }
   end
 
   # @arg [String] 'direct' or 'diffuse'
