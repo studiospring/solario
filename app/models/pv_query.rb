@@ -17,13 +17,7 @@ class PvQuery < ActiveRecord::Base
 
   # @return [Float] possible system wattage (W).
   def system_watts
-    system_wattage = 0
-
-    self.panels.each do |panel|
-      system_wattage += panel.possible_watts
-    end
-
-    system_wattage
+    panels.reduce(0) { |a, e| a + e.possible_watts }
   end
 
   # @return string with which to search pvo e.g. "1234 25km +S 80 tilt".
