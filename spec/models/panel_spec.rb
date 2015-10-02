@@ -116,7 +116,9 @@ describe Panel do
 
   describe 'avg_efficiency method' do
     it "should return correct value" do
-      expect(Panel.avg_efficiency(20, 0.98)).to eq(0.83)
+      # rubocop:disable Style/HashSyntax
+      expect(Panel.avg_efficiency(lifespan: 20, overall_efficiency: 0.98)).to eq(0.83)
+      # rubocop:enable Style/HashSyntax
     end
   end
 

@@ -91,14 +91,11 @@ class Panel < ActiveRecord::Base
     (pre * sys * rel * nom).round(2)
   end
 
-  # dummy method
   # currently no data to confirm solar panels behave this way!
   # efficiency must have 0 in front! eg 0.99
-  def self.avg_efficiency(lifespan, overall_efficiency)
-    total_efficiency = 0
-
-    lifespan.times do |year|
-      total_efficiency += overall_efficiency**year
+  def self.avg_efficiency(lifespan: 25, overall_efficiency: 0.97)
+    total_efficiency = lifespan.times.reduce(0) do |total_eff, year|
+      total_eff + overall_efficiency**year
     end
 
     (total_efficiency / lifespan).round(2)
