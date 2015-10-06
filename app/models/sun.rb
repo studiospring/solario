@@ -3,6 +3,7 @@ class Sun
   require 'core_ext/numeric'
   attr_accessor :latitude, :longitude, :state, :day, :local_time
 
+  # Using Postcode instance messes things up...
   # @arg [Fixnum], [Fixnum], [String]
   # @arg [Fixnum] day is [1..365].
   # @arg [Fixnum] local_time is decimal time in 24hr time, eg 13.5 is 13:30pm.
