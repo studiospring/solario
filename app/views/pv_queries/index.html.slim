@@ -1,5 +1,3 @@
-- content_for :head_tags do
-  = stylesheet_link_tag "shared/tables"
 - content_for :body_id do
   |  index
 = provide(:title, 'Queries' )
@@ -37,9 +35,9 @@ table.table.table-striped
           = pv_query.panels.count
         - pv_query.panels.each do |panel|
           td
-            | tilt: 
+            | tilt:
             = panel.tilt
-            | ° bearing: 
+            | ° bearing:
             = panel.bearing
             | °
           - break
