@@ -5,10 +5,14 @@ describe PvQuery do
   # PvQuery.skip_callback(:validation, :before, :postcode_to_postcode_id)
   let(:postcode) { FactoryGirl.create(:postcode) }
   let(:pv_query) { postcode.pv_queries.create() }
+  let!(:irradiance) do
+    FactoryGirl.create(:irradiance,
+                       :postcode_id => postcode.id)
+  end
 
   before do
-    pv_query.panels.create(:tilt => 80,
-                           :bearing => 180,
+    pv_query.panels.create(:tilt => 20,
+                           :bearing => 20,
                            :panel_size => 3.5,
                           )
   end
@@ -25,7 +29,7 @@ describe PvQuery do
 
   describe 'panel association' do
     it "should return panel attribute" do
-      expect(pv_query.panels.first.tilt).to eq(80)
+      expect(pv_query.panels.first.tilt).to eq(20)
     end
   end
 
@@ -64,16 +68,16 @@ describe PvQuery do
   end
 
   describe 'output_pa_array' do
-    # it "should return totals of dni values for entire pv_query" do
-    #   # broken, panel.dni_received_pa(dni_pa) returns wrong value in tests only
-    #   expect(pv_query.output_pa_array).to eq('1 2')
-    # end
+    it "should return totals of dni values for entire pv_query" do
+      # broken, panel.dni_received_pa(dni_pa) returns wrong value in tests only
+      expect(pv_query.output_pa_array[8]).to eq(10.78)
+    end
 
     describe 'when no associated postcode is found' do
       before { pv_query.postcode = nil }
 
-      it "should not raise an error" do
-        expect { pv_query.output_pa_array }.not_to raise_error
+      it "should raise an error" do
+        expect { pv_query.output_pa_array }.to raise_error(Module::DelegationError)
       end
     end
   end
@@ -86,7 +90,7 @@ describe PvQuery do
 
   describe 'pvo_search_params' do
     it "should return string of search params" do
-      expect(pv_query.pvo_search_params).to eq("1234 +S")
+      expect(pv_query.pvo_search_params).to eq("1234 +N")
     end
   end
 
@@ -98,21 +102,21 @@ describe PvQuery do
 
   describe 'pvo_orientation' do
     it "should return orientation as string" do
-      expect(pv_query.pvo_orientation).to eq('S')
+      expect(pv_query.pvo_orientation).to eq('N')
     end
   end
 
   describe 'northmost_facing_panel' do
     before do
       pv_query.panels.create(:tilt => 40,
-                             :bearing => 30,
+                             :bearing => 10,
                              :panel_size => 4.4,
                             )
     end
 
     it "should return northmost panel object" do
       expect(pv_query.panels.count).to eq(2)
-      expect(pv_query.northmost_facing_panel.bearing).to eq(30)
+      expect(pv_query.northmost_facing_panel.bearing).to eq(10)
     end
   end
 end
