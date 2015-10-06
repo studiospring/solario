@@ -82,25 +82,6 @@ class Panel < ActiveRecord::Base
     annual_total
   end
 
-  # http://www.greenrhinoenergy.com/solar/technologies/pv_energy_yield.php
-  # pre = preconversion efficiency, sys = system efficiency, rel = relative
-  # module efficiency, nom = nominal module efficiency
-  # nominal (and sometimes relative) module efficiency is available from panel spec sheets
-  # TODO: refactor to panel_brand model if efficiencies vary greatly with brand
-  def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)
-    (pre * sys * rel * nom).round(2)
-  end
-
-  # currently no data to confirm solar panels behave this way!
-  # efficiency must have 0 in front! eg 0.99
-  def self.avg_efficiency(lifespan: 25, overall_efficiency: 0.97)
-    total_efficiency = lifespan.times.reduce(0) do |total_eff, year|
-      total_eff + overall_efficiency**year
-    end
-
-    (total_efficiency / lifespan).round(2)
-  end
-
   # @arg [Hash<Hash, Float>]
   # TODO: apparently above method is not accurate, try different formula
   # http://www.juergenwiki.de/work/wiki/doku.php?id=public:angle_between_two_vectors
@@ -121,6 +102,31 @@ class Panel < ActiveRecord::Base
   end
 
   private
+
+  # http://www.greenrhinoenergy.com/solar/technologies/pv_energy_yield.php
+  # pre = preconversion efficiency, sys = system efficiency, rel = relative
+  # module efficiency, nom = nominal module efficiency
+  # nominal (and sometimes relative) module efficiency is available from panel spec sheets
+  # TODO: refactor to panel_brand model if efficiencies vary greatly with brand
+  def self.overall_efficiency(pre: 0.96, sys: 0.98, rel: 0.95, nom: 0.16)
+    (pre * sys * rel * nom).round(2)
+  end
+
+  # currently no data to confirm solar panels behave this way!
+  # efficiency must have 0 in front! eg 0.99
+  def self.avg_efficiency(lifespan: 25, overall_efficiency: 0.97)
+    # rubocop:enable Style/HashSyntax
+    total_efficiency = lifespan.times.reduce(0) do |total_eff, year|
+      total_eff + overall_efficiency**year
+    end
+
+    (total_efficiency / lifespan).round(2)
+  end
+
+  def factor_in_efficiency
+    efficiency = avg_efficiency
+    ->(x) { (x * efficiency).to_f.round(2) }
+  end
 
   # arg [Sun], [Float].
   # @return [Float].
