@@ -31,10 +31,10 @@ class PvQuery < ActiveRecord::Base
 
   # Change postcode param to postcode_id.
   def postcode_to_postcode_id
-    postcode.id = 1234 if Rails.env == 'production'
+    self.postcode_id = 1234 if Rails.env == 'production'
 
-    pcode = Postcode.where('pcode = ?', postcode.id).select('id').first
-    # Without this, rspec fails.
+    pcode = Postcode.where('pcode = ?', self.postcode_id).select('id').first
+
     self.postcode_id = pcode.id unless pcode.nil?
   end
 
