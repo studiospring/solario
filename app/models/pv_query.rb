@@ -63,19 +63,11 @@ class PvQuery < ActiveRecord::Base
   end
 
   # Formula is approximation. Cannot confirm accuracy of result yet.
-  # Untested because factory is not set up correctly.
   # http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
   # @return [Float] volume under graph (Wh).
   def output_pa
-    total_volume = 0
     const = volume_constant
-    self.column_heights.each do |column|
-      # vol = 0.25 * length_of_insolation_reading *
-      #   readings_per_annual_increment * column.inject(:+)
-      total_volume += (const * column.inject(:+))
-    end
-    # convert to Wh
-    (total_volume * 3600).round
+    column_heights.reduce(0) { |a, col| a + (const * col.reduce(:+)) }.round
   end
 
   # TODO: check this formula!

@@ -82,9 +82,21 @@ describe PvQuery do
     end
   end
 
-  # describe 'output_pa_array' do
+  # describe 'output_pa' do
   #   it "should return the volume under the graph" do
-  #     expect(pv_query.output_pa_array).to eq('1234')
+  #     expect(pv_query.output_pa).to eq(1789171)
+  #   end
+  # end
+
+  # describe 'column_heights' do
+  #   it "should return the volume under the graph" do
+  #     expect(pv_query.column_heights).to eq(6441016320)
+  #   end
+  # end
+  #
+  # describe 'volume_constant' do
+  #   it 'should return the correct constant' do
+  #     expect(pv_query.volume_constant).to eq(90.0)
   #   end
   # end
 
