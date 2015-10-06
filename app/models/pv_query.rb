@@ -46,7 +46,7 @@ class PvQuery < ActiveRecord::Base
   def output_pa_array
     # efficiency = Panel.avg_efficiency(20, 0.15)
     # add direct and diffuse inputs of all panels, factor in efficiency
-    add_all_panels_outputs#.map { |x| (x * efficiency).to_f.round(2) }
+    add_all_panels_outputs # .map { |x| (x * efficiency).to_f.round(2) }
   end
 
   # @return [Array<Float>] annual irradiances sums direct and diffuse of all panel.
@@ -58,8 +58,8 @@ class PvQuery < ActiveRecord::Base
       # a <<panel.dni_received_pa(irradiance.tz_corrected_irradiance('diffuse'))
     end.transpose.reduce(:+)
     # If postcode.irradiance is nil.
-    rescue
-      raise Module::DelegationError
+  rescue
+    raise Module::DelegationError
   end
 
   # Formula is approximation. Cannot confirm accuracy of result yet.
@@ -86,12 +86,11 @@ class PvQuery < ActiveRecord::Base
   # Convert output_pa_array to nested array of graph's column heights.
   # @return [Array<Array<Float>>] [[a, b, f, g], [b, c, g, h]...]
   def column_heights
-    graph_array = self.output_pa_array
     # [[jan1, jan2...], [feb1, feb2...]...]
     data_by_month = []
 
     Irradiance::ANNUAL_INCREMENT.times do
-      data_by_month << graph_array.shift(Irradiance::DAILY_INCREMENT)
+      data_by_month << output_pa_array.shift(Irradiance::DAILY_INCREMENT)
     end
 
     # Duplicate and append jan data so that dec-jan volume can be easily calculated.
