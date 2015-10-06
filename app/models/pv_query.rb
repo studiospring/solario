@@ -92,8 +92,8 @@ class PvQuery < ActiveRecord::Base
     # [[jan1, jan2...], [feb1, feb2...]...]
     data_by_month = []
 
-    Irradiance::ANNUAL_INCREMENT.times do
-      data_by_month << output_pa_array.shift(Irradiance::DAILY_INCREMENT)
+    Irradiance::GRADATIONS_PA.times do
+      data_by_month << output_pa_array.shift(Irradiance::USABLE_DATAPOINTS_PER_DAY)
     end
 
     # Duplicate and append jan data so that dec-jan volume can be easily calculated.
@@ -102,8 +102,8 @@ class PvQuery < ActiveRecord::Base
     # [[a, b, f, g], [b, c, g, h]...]
     columns = []
 
-    Irradiance::ANNUAL_INCREMENT.times do |month|
-      (Irradiance::DAILY_INCREMENT - 1).times do |time|
+    Irradiance::GRADATIONS_PA.times do |month|
+      (Irradiance::USABLE_DATAPOINTS_PER_DAY - 1).times do |time|
         column_data = [data_by_month[month][time].to_f,
                        data_by_month[month][time + 1].to_f,
                        data_by_month[month + 1][time].to_f,
