@@ -134,12 +134,8 @@ class PvQuery < ActiveRecord::Base
 
   # @return [Panel] panel that faces closest to north in one pvquery system.
   def northmost_facing_panel
-    if self.panels.count > 1
-      self.panels.reduce do |current, the_next|
-        current.bearing.deg_to_north <= the_next.bearing.deg_to_north ? current : the_next
-      end
-    else
-      self.panels.first
+    panels.reduce do |current, the_next|
+      current.bearing.deg_to_north <= the_next.bearing.deg_to_north ? current : the_next
     end
   end
 
