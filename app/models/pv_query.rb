@@ -42,35 +42,24 @@ class PvQuery < ActiveRecord::Base
 
   # @return [Array<Float>] of combined output for all panels in pv array.
   # Array must be converted to string to be used by graph (join(' ')).
+  # move to Panel, rename => add_all_panels_outputs?
   def output_pa_array
-    postcode_id = postcode.try('id')
+    # efficiency = Panel.avg_efficiency(20, 0.15)
+    # add direct and diffuse inputs of all panels, factor in efficiency
+    add_all_panels_outputs#.map { |x| (x * efficiency).to_f.round(2) }
+  end
 
-    if postcode_id.nil?
-      # handle error
-      []
-    end
-    # in case values have not been input for this postcode.
-    begin
-      dni_pa = irradiance.tz_corrected_irradiance('direct')
+  # @return [Array<Float>] annual irradiances sums direct and diffuse of all panel.
+  def add_all_panels_outputs
+    panels.reduce([]) do |a, panel|
+      a << panel.dni_received_pa(irradiance.tz_corrected_irradiance('direct'))
+
       # TODO: method not created yet
-      # diffuse_pa = irradiance.tz_corrected_diffuse
+      # a <<panel.dni_received_pa(irradiance.tz_corrected_irradiance('diffuse'))
+    end.transpose.reduce(:+)
+    # If postcode.irradiance is nil.
     rescue
-      []
-    else
-      panels_array = []
-
-      self.panels.each do |panel|
-        panels_array << panel.dni_received_pa(dni_pa)
-        # TODO: method not created yet
-        # panels_array << panel.diffuse_received_pa(diffuse_pa)
-        # returns [0.0, 0.0,...] even though panel spec passes
-        # return panel.dni_received_pa(dni_pa)
-      end
-
-      efficiency = Panel.avg_efficiency(20, 0.15)
-      # add direct and diffuse inputs of all panels, factor in efficiency
-      panels_array.transpose.map { |x| ((x.reduce(:+)) * efficiency).to_f.round(2) }
-    end
+      raise Module::DelegationError
   end
 
   # Formula is approximation. Cannot confirm accuracy of result yet.
@@ -93,7 +82,7 @@ class PvQuery < ActiveRecord::Base
     (total_volume * 3600).round
   end
 
-  # protected
+  # private
   # Convert output_pa_array to nested array of graph's column heights.
   # @return [Array<Array<Float>>] [[a, b, f, g], [b, c, g, h]...]
   def column_heights
