@@ -67,19 +67,22 @@ class PvQuery < ActiveRecord::Base
   # http://math.stackexchange.com/questions/438766/volume-of-irregular-solid
   # @return [Float] volume under graph (Wh).
   def output_pa
-    # 15hrs in seconds divided by number of data intervals per day
-    length_of_insolation_reading = 54_000 / (Irradiance::DAILY_INCREMENT - 1)
-    # number of times that length_of_insolation_reading is used per year
-    readings_per_annual_increment = 365 / Irradiance::ANNUAL_INCREMENT
-    volume_constant = 0.25 * length_of_insolation_reading * readings_per_annual_increment
     total_volume = 0
+    const = volume_constant
     self.column_heights.each do |column|
       # vol = 0.25 * length_of_insolation_reading *
       #   readings_per_annual_increment * column.inject(:+)
-      total_volume += (volume_constant * column.inject(:+))
+      total_volume += (const * column.inject(:+))
     end
     # convert to Wh
     (total_volume * 3600).round
+  end
+
+  # TODO: check this formula!
+  # @return [Fixnum] length of side of graph column (kinda).
+  def volume_constant
+    daily_int_in_hrs = Irradiance::DAILY_INTERVAL / 60.0
+    daily_int_in_hrs * Irradiance::DAYS_IN_ANNUAL_GRADATION * 24 / 4
   end
 
   # private
