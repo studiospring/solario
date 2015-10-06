@@ -117,24 +117,19 @@ class PvQuery < ActiveRecord::Base
 
   # @return [String] bearing that faces closest to north in pvo readable format.
   def pvo_orientation
-    case self.northmost_facing_panel.bearing
-    when 337.5..360, 0..22.5
-      'N'
-    when 22.5..67.5
-      'NE'
-    when 292.5..337.5
-      'NW'
-    when 67.5..112.5
-      'E'
-    when 247.5..292.5
-      'W'
-    when 112.5..157.5
-      'SE'
-    when 202.5..247.5
-      'SW'
-    else
-      'S'
-    end
+    o = Hash[
+      337.5..360, 'N',
+      0..22.5, 'N',
+      22.5..67.5, 'NE',
+      292.5..337.5, 'NW',
+      67.5..112.5, 'E',
+      247.5..292.5, 'W',
+      112.5..157.5, 'SE',
+      202.5..247.5, 'SW',
+      157.5..202.5, 'S'
+    ]
+
+    o.find { |k, _| k.include?(northmost_facing_panel.bearing) }.last
   end
 
   # @return [Panel] panel that faces closest to north in one pvquery system.
